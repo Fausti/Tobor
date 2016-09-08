@@ -64,6 +64,10 @@ class Room {
 			
 			e.room = this;
 			entities.push(e);
+			
+			if (e.isStatic) {
+				redraw = true;
+			}
 		}
 	}
 	

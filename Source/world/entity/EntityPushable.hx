@@ -13,7 +13,7 @@ class EntityPushable extends EntityMoveable {
 	public function new() {
 		super();
 		
-		gfx = new Sprite(Tobor.Tileset.tile(15, 0));
+		gfx = new Sprite(Tobor.Tileset.find("Isolator_0"));
 	}
 	
 	override public function isSolid(e:Entity):Bool {

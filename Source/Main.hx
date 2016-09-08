@@ -70,6 +70,14 @@ class Main extends Application {
 		// super.render(renderer);
 	}
 	
+	override public function onWindowResize(window:Window, width:Int, height:Int):Void {
+		super.onWindowResize(window, width, height);
+		
+		trace("RESIZE: ", width, height);
+		
+		game.resize(width, height);
+	}
+	
 	// Mausevents
 	
 	override public function onMouseMove(window:Window, x:Float, y:Float):Void {
@@ -77,6 +85,42 @@ class Main extends Application {
 		
 		Input.mouseX = Std.int(x);
 		Input.mouseY = Std.int(y);
+	}
+	
+	override public function onMouseDown(window:Window, x:Float, y:Float, button:Int):Void {
+		super.onMouseDown(window, x, y, button);
+		
+		Input.mouseX = Std.int(x);
+		Input.mouseY = Std.int(y);
+		
+		switch(button) {
+			case 0:
+				Input.mouseBtnLeft = true;
+			case 1:
+				Input.mouseBtnMiddle = true;
+			case 2:
+				Input.mouseBtnRight = true;
+			default:
+				trace("Mousebutton: " + button);
+		}
+	}
+	
+	override public function onMouseUp(window:Window, x:Float, y:Float, button:Int):Void {
+		super.onMouseUp(window, x, y, button);
+		
+		Input.mouseX = Std.int(x);
+		Input.mouseY = Std.int(y);
+		
+		switch(button) {
+			case 0:
+				Input.mouseBtnLeft = false;
+			case 1:
+				Input.mouseBtnMiddle = false;
+			case 2:
+				Input.mouseBtnRight = false;
+			default:
+				trace("Mousebutton: " + button);
+		}
 	}
 	
 	override public function onWindowEnter(window:Window):Void {

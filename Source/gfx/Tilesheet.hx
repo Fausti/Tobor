@@ -53,6 +53,14 @@ class Tilesheet {
 	}
 	
 	public function find(key:String):Rectangle {
-		return registry.get(key.toUpperCase());
+		var r = registry.get(key.toUpperCase());
+		
+		if (r == null) {
+			// kleiner Shortcut für Einzelbilder
+			
+			r = registry.get(key.toUpperCase() + "_0");
+		}
+		
+		return r;
 	}
 }

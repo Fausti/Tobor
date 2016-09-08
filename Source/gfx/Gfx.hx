@@ -18,6 +18,9 @@ class Gfx {
 	static var offsetX:Int = 0;
 	static var offsetY:Int = 0;
 	
+	public static var scaleX:Float = 0;
+	public static var scaleY:Float = 0;
+	
 	public static function setOffset(x:Int, y:Int) {
 		offsetX = x;
 		offsetY = y;

@@ -25,6 +25,14 @@ class WorldData {
 			[9, 0]
 		]);
 		
+		tileset.register("Isolator", [
+			[15, 0], 
+		]);
+		
+		tileset.register("Elektrozaun", [
+			[4, 1], 
+		]);
+		
 		tileset.register("Mauer", [
 			// ätzbar
 			[10, 0],

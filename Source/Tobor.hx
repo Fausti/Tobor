@@ -2,8 +2,11 @@ package;
 import gfx.Batch;
 import gfx.Color;
 import gfx.Font;
+import gfx.Frame;
 import gfx.Framebuffer;
 import gfx.Gfx;
+import lime.math.Rectangle;
+import screens.EditorScreen;
 import screens.Screen;
 import gfx.Shader;
 import gfx.Texture;
@@ -26,6 +29,8 @@ class Tobor {
 	
 	public static var Font8:Font;
 	public static var Font16:Font;
+	public static var Frame8:Frame;
+	public static var Frame16:Frame;
 	public static var Tileset:Tilesheet;
 	
 	var screen:Screen;
@@ -40,6 +45,8 @@ class Tobor {
 	
 	var frameBuffer:Framebuffer;
 	
+	// Frame
+	
 	public function new(window:Window) {
 		Tobor.window = window;
 		
@@ -48,6 +55,8 @@ class Tobor {
 	
 	public function init() {
 		frameBuffer = new Framebuffer(640, 348);
+		Gfx.scaleX = frameBuffer.width / window.width;
+		Gfx.scaleY = frameBuffer.height / window.height;
 		
 		// Texture
 		
@@ -63,6 +72,9 @@ class Tobor {
 		Tobor.Font16 = new Font(16, 10, 252);
 		Tobor.Font8 = new Font(8, 10, 322);
 		
+		Tobor.Frame16 = new Frame(128, 324, 16, 12);
+		Tobor.Frame8 = new Frame(128, 360, 8, 10);
+		
 		// Shader
 		
 		shader = new Shader(Gfx.VERT_SPRITE_RAW, Gfx.FRAG_SPRITE_RAW);
@@ -76,7 +88,7 @@ class Tobor {
 			lime.ui.Mouse.hide();
 		}
 		
-		screen = new Screen(this);
+		screen = new EditorScreen(this);
 	
 		batchUI = new Batch(true);
 	
@@ -129,30 +141,9 @@ class Tobor {
 		}
 	}
 	
-	function renderStatusLine() {
-		for (x in 0 ... 8) {
-			Gfx.drawRect(x * Entity.WIDTH, 0, Tobor.Tileset.tile(15, 0));
-			Gfx.drawRect((39 - x) * Entity.WIDTH, 0, Tobor.Tileset.tile(15, 0));
-		}
-		
-		// TODO: Blaumann! Oder Charlieobjekt fragen?
-		Gfx.drawRect(8 * Entity.WIDTH + Entity.WIDTH / 2, 0, Tobor.Tileset.tile(2, 0));
-		
-		var punkte = 0;
-		var leben = 3;
-		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
-		Font8.drawString(224, 0, strStatus, Color.BLACK);
-		
-		var gold = 999;
-		if (gold > 0) {
-			Gfx.drawRect(416, 0, Tobor.Tileset.tile(6, 1));
-			Font8.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
-		}
-		
-		var weight = 32;
-		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
-		Gfx.drawRect(471, 0, Tobor.Tileset.tile(7, 1));
-		Font8.drawString(488, 0, strWeight, Color.BLACK);
+	public function resize(w:Int, h:Int) {
+		Gfx.scaleX = frameBuffer.width / window.width;
+		Gfx.scaleY = frameBuffer.height / window.height;
 	}
 	
 	function renderUI() {
@@ -160,10 +151,8 @@ class Tobor {
 		Gfx.setBatch(batchUI);
 		
 		batchUI.clear();
-
-		// Statuslinie
 		
-		renderStatusLine();
+		screen.renderUI();
 		
 		// Mauszeiger
 		
@@ -177,6 +166,10 @@ class Tobor {
 				);
 			}
 		}
+		
+		// Frametest
+		
+		Frame8.drawBox(16, 12, 4, 4);
 		
 		batchUI.bind();
 		batchUI.draw();
