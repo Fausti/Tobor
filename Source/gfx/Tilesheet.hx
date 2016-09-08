@@ -1,5 +1,7 @@
 package gfx;
 
+import lime.Assets;
+import lime.graphics.Image;
 import lime.math.Rectangle;
 
 /**
@@ -11,18 +13,18 @@ class Tilesheet {
 	public var height:Int;
 	
 	var tileset:Array<Rectangle> = [];
+	var registry:Map<String, Rectangle>;
 	
 	public function new(sourceTexture:Texture) {
 		this.width = sourceTexture.width;
 		this.height = sourceTexture.height;
 		
 		generateRects();
+		
+		registry = new Map<String, Rectangle>();
 	}
 	
 	function generateRects() {
-		// var sizeW:Float = 16 / 256;
-		// var sizeH:Float = 12 / 504;
-		
 		var sizeW:Float = 16 / width;
 		var sizeH:Float = 12 / height;
 		
@@ -39,5 +41,18 @@ class Tilesheet {
 	
 	public inline function rect(x:Int, y:Int, w:Int, h:Int):Rectangle {
 		return new Rectangle(x / width, y / height, w / width, h / height);
+	}
+	
+	public function register(key:String, indexes:Array<Array<Int>>) {
+		var count:Int = 0;
+		
+		for (index in indexes) {
+			registry.set(key.toUpperCase() + "_" + count, tile(index[0], index[1]));
+			count++;
+		}
+	}
+	
+	public function find(key:String):Rectangle {
+		return registry.get(key.toUpperCase());
 	}
 }

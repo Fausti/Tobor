@@ -9,12 +9,20 @@ class Room {
 	public static inline var SIZE_X:Int = 40;
 	public static inline var SIZE_Y:Int = 28;
 	
+	public var worldX:Int;
+	public var worldY:Int;
+	public var worldZ:Int;
+	
 	public var entities:Array<Entity>;
 	public var redraw:Bool = true;
 	
 	public var collisions:Array<Entity> = [];
 	
-	public function new() {
+	public function new(x:Int, y:Int, level:Int) {
+		this.worldX = x;
+		this.worldY = y;
+		this.worldZ = level;
+		
 		entities = [];
 	}
 	

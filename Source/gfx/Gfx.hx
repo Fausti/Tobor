@@ -2,6 +2,7 @@ package gfx;
 
 import lime.graphics.GLRenderContext;
 import lime.math.Rectangle;
+import world.entity.Entity;
 
 /**
  * ...
@@ -83,6 +84,10 @@ class Gfx {
 		);
 		
 		batchCurrent.addIndices([0, 1, 2, 2, 3, 0]);
+	}
+	
+	public static inline function drawRect(x:Float, y:Float, rect:Rectangle, ?color:Color = null) {
+		drawTexture(x, y, Entity.WIDTH, Entity.HEIGHT, rect, color);
 	}
 	
 	// Tileset

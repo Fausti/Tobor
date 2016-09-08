@@ -16,6 +16,7 @@ class Input {
 	
 	public static var key:Map<KeyCode, Bool> = new Map<KeyCode, Bool>();
 	
+	public static var ESC = [KeyCode.ESCAPE];
 	public static var UP = [KeyCode.W, KeyCode.UP];
 	public static var DOWN = [KeyCode.S, KeyCode.DOWN];
 	public static var LEFT = [KeyCode.A, KeyCode.LEFT];

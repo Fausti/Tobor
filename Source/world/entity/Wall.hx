@@ -11,7 +11,7 @@ class Wall extends Entity {
 	public function new() {
 		super();
 		
-		gfx = new Sprite(Tobor.Tileset.tile(10, 0));
+		gfx = new Sprite(Tobor.Tileset.find("Mauer_0"));
 	}
 	
 	override

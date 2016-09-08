@@ -11,10 +11,10 @@ class Animation implements IDrawable {
 	
 	var index:Int = 0;
 	
-	var frameSpeed:Float = 1;
-	var frameTime:Float = 0;
+	var speed:Float = 1;
+	var timeLeft:Float = 0;
 	
-	var active:Bool = false;
+	public var active:Bool = false;
 	
 	public function new() {
 	
@@ -23,12 +23,14 @@ class Animation implements IDrawable {
 	public function update(deltaTime:Float) {
 		if (!active) return;
 		
-		frameTime -= deltaTime;
-		while (frameTime <= 0) {
-			index++;
-			if (index >= sequence.length) index = 0;
-			
-			frameTime += frameSpeed;
+		if (timeLeft < deltaTime) timeLeft = deltaTime;
+		timeLeft -= deltaTime;
+		
+		index = Math.floor(Utils.clamp((speed - timeLeft) / speed, 0.0, 1.0) * sequence.length);
+		
+		if (timeLeft <= 0) {
+			timeLeft = 0;
+			active = false;
 		}
 	}
 	
@@ -37,8 +39,7 @@ class Animation implements IDrawable {
 		
 		active = true;
 		
-		frameTime = frameSpeed;
-		index = 0;
+		reset();
 	}
 	
 	public function stop() {
@@ -47,11 +48,11 @@ class Animation implements IDrawable {
 	
 	public function reset() {
 		index = 0;
-		frameTime = frameSpeed;
+		timeLeft = speed;
 	}
 	
 	public function setSpeed(spd:Float) {
-		frameSpeed = spd / sequence.length;
+		speed = spd;
 	}
 	
 	public function addFrame(r:Rectangle) {
@@ -63,13 +64,13 @@ class Animation implements IDrawable {
 		} else {
 			sequence.push(index);
 		}
-		
-		trace(frames);
-		trace(sequence);
 	}
 
 	public function getUV():Rectangle {
 		if (active) {
+			// sicherheitshalber...
+			if (index >= sequence.length) index = sequence.length - 1;
+			
 			return frames[sequence[index]];
 		}
 		

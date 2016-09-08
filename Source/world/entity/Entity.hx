@@ -1,6 +1,6 @@
 package world.entity;
 import gfx.Gfx;
-import gfx.Screen;
+import screens.Screen;
 import lime.math.Vector2;
 import world.Room;
 
@@ -11,6 +11,8 @@ import world.Room;
 class Entity {
 	public static inline var WIDTH:Int = 16;
 	public static inline var HEIGHT:Int = 12;
+	
+	public var isAlive:Bool = true;
 	
 	public var isStatic:Bool = true;
 	public var changed:Bool = true;

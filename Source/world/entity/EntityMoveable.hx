@@ -27,7 +27,9 @@ class EntityMoveable extends Entity {
 			if (timeLeft < deltaTime) timeLeft = deltaTime;
 			timeLeft -= deltaTime;
 			
-			var perc:Float = clamp((speed - timeLeft) / speed, 0.0, 1.0);
+			// trace("M: " + timeLeft, deltaTime);
+			
+			var perc:Float = Utils.clamp((speed - timeLeft) / speed, 0.0, 1.0);
 			
 			movement.x = perc * Entity.WIDTH * direction.x;
 			movement.y = perc * Entity.HEIGHT * direction.y;
@@ -57,22 +59,13 @@ class EntityMoveable extends Entity {
 		
 	}
 	
-	function clamp(value:Float, min:Float, max:Float):Float {
-		if (value < min) {
-			return min;
-		} else if (value > max) {
-			return max;
-		}
-		
-		return value;
-	}
-	
 	public var isMoving(get, null):Bool;
 	function get_isMoving():Bool {
 		return (direction.x != 0.0 || direction.y != 0.0);
 	}
 	
 	public function move(dirX:Int, dirY:Int) {
+		if (!isAlive) return;
 		if (isMoving) return;
 		if (dirX == 0 && dirY == 0) return;
 		
@@ -85,7 +78,7 @@ class EntityMoveable extends Entity {
 		if (canMove) {
 			direction.x = dirX;
 			direction.y = dirY;
-		
+			
 			timeLeft = speed;
 			
 			onStartMoving();
