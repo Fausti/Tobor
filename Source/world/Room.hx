@@ -1,5 +1,7 @@
 package world;
-import world.entity.Entity;
+
+import world.entities.Entity;
+import world.entities.core.Charlie;
 
 /**
  * ...
@@ -9,6 +11,7 @@ class Room {
 	public static inline var SIZE_X:Int = 40;
 	public static inline var SIZE_Y:Int = 28;
 	
+	public var world:world.World;
 	public var worldX:Int;
 	public var worldY:Int;
 	public var worldZ:Int;
@@ -18,7 +21,9 @@ class Room {
 	
 	public var collisions:Array<Entity> = [];
 	
-	public function new(x:Int, y:Int, level:Int) {
+	public function new(world:World, x:Int, y:Int, level:Int) {
+		this.world = world;
+		
 		this.worldX = x;
 		this.worldY = y;
 		this.worldZ = level;
@@ -88,6 +93,45 @@ class Room {
 		}
 		
 		return collisions;
+	}
+	
+	public function clear() {
+		entities = [];
+		
+		redraw = true;
+	}
+	
+	public function load(data:Array<Map<String, Dynamic>>) {
+		clear();
+		
+		for (o in data) {
+			trace(o);
+			
+			var entity:Entity = EntityFactory.createFromID(o.get("id"), o.get("type"));
+			
+			if (!Std.is(entity, Charlie)) {
+				entity.gridX = o.get("x");
+				entity.gridY = o.get("y");
+			
+				add(entity);
+			}
+		}
+		
+		add(world.player);
+	}
+	
+	public function save():Array<Map<String, Dynamic>> {
+		var data:Array<Map<String, Dynamic>> = [];
+		
+		for (e in entities) {
+			if (e != null) {
+				if (!Std.is(e, Charlie)) {
+					data.push(e.save());
+				}
+			}
+		}
+		
+		return data;
 	}
 	
 	public static inline var LAYER_BACKGROUND:Int = 0;

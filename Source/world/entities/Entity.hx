@@ -1,7 +1,8 @@
-package world.entity;
+package world.entities;
 import gfx.Gfx;
 import screens.Screen;
 import lime.math.Vector2;
+import world.EntityTemplate;
 import world.Room;
 
 /**
@@ -11,6 +12,8 @@ import world.Room;
 class Entity {
 	public static inline var WIDTH:Int = 16;
 	public static inline var HEIGHT:Int = 12;
+	
+	private var classPath:String;
 	
 	public var isAlive:Bool = true;
 	
@@ -22,6 +25,16 @@ class Entity {
 	public var room:Room;
 	
 	var gfx:gfx.IDrawable;
+	
+	public var type:Int;
+	
+	public function new(?type:Int = 0) {
+		classPath = Type.getClassName(Type.getClass(this));
+		
+		this.type = type;
+		
+		position = new Vector2();
+	}
 	
 	// Bildschirmposition
 	
@@ -81,10 +94,6 @@ class Entity {
 	
 	// ---
 	
-	public function new() {
-		position = new Vector2();
-	}
-	
 	public function draw() {
 		if (gfx == null) return;
 		
@@ -95,5 +104,50 @@ class Entity {
 		if (gfx != null) gfx.update(deltaTime);
 		
 		changed = false;
+	}
+	
+	public function destroy() {
+		room.remove(this);
+	}
+	
+	// STATIC
+	
+	public function getClassPath():String {
+		return classPath;
+	}
+	
+	public function save():Map<String, Dynamic> {
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+		
+		var id:Int = EntityFactory.findIDFromObject(this);
+		var def:EntityTemplate = EntityFactory.table[id];
+		
+		data.set("id", def.name);
+		data.set("type", type);
+		data.set("x", gridX);
+		data.set("y", gridY);
+		
+		return data;
+	}
+	
+	public function toString():String {
+		var id:Int = EntityFactory.findIDFromObject(this);
+		trace(id);
+		
+		var temp:EntityTemplate = EntityFactory.table[id];
+		trace(temp);
+		
+		var s = new StringBuf();
+		s.add("[ ");
+		s.add(id + ", ");
+		s.add(getClassPath() + ", ");
+		s.add(temp.classPath + ", ");
+		s.add(temp.name + ", ");
+		s.add(type + ", ");
+		s.add(gridX + ", ");
+		s.add(gridY);
+		s.add(" ]");
+		
+		return s.toString();
 	}
 }

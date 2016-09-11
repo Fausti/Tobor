@@ -1,10 +1,10 @@
 package screens;
 
 import world.Room;
-import world.entity.Charlie;
-import world.entity.Entity;
-import world.entity.EntityPushable;
-import world.entity.Wall;
+import world.entities.core.Charlie;
+import world.entities.Entity;
+import world.entities.EntityPushable;
+import world.entities.core.Mauer;
 import lime.Assets;
 import lime.graphics.GLRenderContext;
 import lime.graphics.Image;
@@ -49,6 +49,10 @@ class Screen {
 	}
 	
 	public function renderUI() {
+		
+	}
+	
+	public function onMouseMove(x:Float, y:Float) {
 		
 	}
 }

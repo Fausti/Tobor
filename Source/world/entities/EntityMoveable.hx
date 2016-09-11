@@ -1,4 +1,4 @@
-package world.entity;
+package world.entities;
 
 import lime.math.Vector2;
 
@@ -14,8 +14,8 @@ class EntityMoveable extends Entity {
 	var speed:Float = 1 / 4;
 	var timeLeft:Float = 0.0;
 	
-	public function new() {
-		super();
+	public function new(?type:Int = 0) {
+		super(type);
 		
 		isStatic = false;
 	}

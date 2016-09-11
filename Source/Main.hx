@@ -17,8 +17,6 @@ class Main extends Application {
 	}
 	
 	override public function onWindowCreate(window:Window):Void {
-		trace("onWindowCreate");
-		
 		switch(window.renderer.context) {
 			case OPENGL(gl):
 				Gfx.gl = gl;
@@ -73,25 +71,28 @@ class Main extends Application {
 	override public function onWindowResize(window:Window, width:Int, height:Int):Void {
 		super.onWindowResize(window, width, height);
 		
-		trace("RESIZE: ", width, height);
-		
-		game.resize(width, height);
+		game.onResize(width, height);
 	}
 	
 	// Mausevents
 	
+	public function updateMouse(x:Float, y:Float) {
+		Input.mouseX = Std.int(x);
+		Input.mouseY = Std.int(y);
+	}
+	
 	override public function onMouseMove(window:Window, x:Float, y:Float):Void {
 		super.onMouseMove(window, x, y);
 		
-		Input.mouseX = Std.int(x);
-		Input.mouseY = Std.int(y);
+		updateMouse(x, y);
+		
+		game.onMouseMove(x, y);
 	}
 	
 	override public function onMouseDown(window:Window, x:Float, y:Float, button:Int):Void {
 		super.onMouseDown(window, x, y, button);
 		
-		Input.mouseX = Std.int(x);
-		Input.mouseY = Std.int(y);
+		updateMouse(x, y);
 		
 		switch(button) {
 			case 0:
@@ -108,8 +109,7 @@ class Main extends Application {
 	override public function onMouseUp(window:Window, x:Float, y:Float, button:Int):Void {
 		super.onMouseUp(window, x, y, button);
 		
-		Input.mouseX = Std.int(x);
-		Input.mouseY = Std.int(y);
+		updateMouse(x, y);
 		
 		switch(button) {
 			case 0:
@@ -140,14 +140,12 @@ class Main extends Application {
 	override public function onKeyDown(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
 		super.onKeyDown(window, keyCode, modifier);
 		
-		Input.key[keyCode] = true;
-		
-		// trace(keyCode, modifier);
+		Input.setKey(keyCode, true);
 	}
 	
 	override public function onKeyUp(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
 		super.onKeyUp(window, keyCode, modifier);
 		
-		Input.key[keyCode] = false;
+		Input.setKey(keyCode, false);
 	}
 }

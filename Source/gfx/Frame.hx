@@ -8,8 +8,8 @@ import gfx.Gfx;
  * @author Matthias Faust
  */
 class Frame {
-	var sizeX:Int;
-	var sizeY:Int;
+	public var sizeX:Int;
+	public var sizeY:Int;
 	
 	var rTopLeft:Rectangle;
 	var rTop:Rectangle;
@@ -62,7 +62,7 @@ class Frame {
 		var r:Rectangle;
 		
 		// Hintergrund
-		Gfx.drawTexture(x, y, w * sizeX, h * sizeY, rBackground, Color.DARK_GREEN); // MIDDLE
+		Gfx.drawTexture(x, y, w * sizeX, h * sizeY, rBackground, Color.WHITE); // MIDDLE
 		
 		for (i in 0 ... w) {
 			// Obere Zeile

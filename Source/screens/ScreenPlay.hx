@@ -4,7 +4,7 @@ package screens;
  * ...
  * @author Matthias Faust
  */
-class PlayScreen extends Screen {
+class ScreenPlay extends Screen {
 
 	public function new(game:Tobor) {
 		super(game);

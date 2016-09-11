@@ -5,8 +5,11 @@ import gfx.Font;
 import gfx.Frame;
 import gfx.Framebuffer;
 import gfx.Gfx;
+import haxe.Timer;
 import lime.math.Rectangle;
-import screens.EditorScreen;
+import lime.system.System;
+import screens.ScreenIntro;
+import screens.ScreenEditor;
 import screens.Screen;
 import gfx.Shader;
 import gfx.Texture;
@@ -17,7 +20,8 @@ import lime.utils.Float32Array;
 import lime.math.Matrix4;
 import lime.Assets;
 import world.WorldData;
-import world.entity.Entity;
+import world.EntityFactory;
+import world.entities.Entity;
 
 import gfx.Gfx.gl;
 /**
@@ -33,7 +37,7 @@ class Tobor {
 	public static var Frame16:Frame;
 	public static var Tileset:Tilesheet;
 	
-	var screen:Screen;
+	var currentScreen:Screen;
 	var batchUI:Batch;
 	
 	// Intern
@@ -48,9 +52,16 @@ class Tobor {
 	// Frame
 	
 	public function new(window:Window) {
+		CompileTime.importPackage("world.entities.core");
+		
 		Tobor.window = window;
 		
-		// window.resize(Config.gfx.width * 2, Config.gfx.height * 2);
+		window.move(320, 240);
+		window.resize(Config.gfx.width * 2, Config.gfx.height * 2);
+	}
+	
+	public function exit(exitCode:Int) {
+		System.exit(exitCode);
 	}
 	
 	public function init() {
@@ -68,6 +79,10 @@ class Tobor {
 		Tobor.Tileset = new Tilesheet(texture);
 
 		WorldData.initTilesheet(Tobor.Tileset);
+		
+		if (!EntityFactory.init()) {
+			exit(EXIT_ERROR);
+		}
 		
 		Tobor.Font16 = new Font(16, 10, 252);
 		Tobor.Font8 = new Font(8, 10, 322);
@@ -88,19 +103,22 @@ class Tobor {
 			lime.ui.Mouse.hide();
 		}
 		
-		screen = new EditorScreen(this);
+		currentScreen = new ScreenIntro(this);
 	
 		batchUI = new Batch(true);
 	
 		world = new world.World();
+		world.load("tobor.ep");
 		
 		running = true;
 	}
 	
 	public function update(deltaTime:Float) {
+		Input.update(deltaTime);
+		
 		if (!running) return;
 		
-		screen.update(deltaTime);
+		currentScreen.update(deltaTime);
 	}
 	
 	public static inline var USE_FRAMEBUFFER:Bool = true;
@@ -124,7 +142,7 @@ class Tobor {
 		gl.uniform1i(shader.u_Texture0, 0);
 		gl.uniformMatrix4fv(shader.u_camMatrix, false, camMatrix);
 		
-		screen.render();
+		currentScreen.render();
 		
 		renderUI();
 		
@@ -141,9 +159,15 @@ class Tobor {
 		}
 	}
 	
-	public function resize(w:Int, h:Int) {
+	public function onResize(w:Int, h:Int) {
 		Gfx.scaleX = frameBuffer.width / window.width;
 		Gfx.scaleY = frameBuffer.height / window.height;
+	}
+	
+	public function onMouseMove(x:Float, y:Float) {
+		if (currentScreen != null) {
+			currentScreen.onMouseMove(x, y);
+		}
 	}
 	
 	function renderUI() {
@@ -152,7 +176,7 @@ class Tobor {
 		
 		batchUI.clear();
 		
-		screen.renderUI();
+		currentScreen.renderUI();
 		
 		// Mauszeiger
 		
@@ -167,12 +191,12 @@ class Tobor {
 			}
 		}
 		
-		// Frametest
-		
-		Frame8.drawBox(16, 12, 4, 4);
-		
 		batchUI.bind();
 		batchUI.draw();
+	}
+	
+	public function switchScreen(newScreen:Screen) {
+		currentScreen = newScreen;
 	}
 	
 	public static var Config = {
@@ -185,4 +209,7 @@ class Tobor {
 	}
 	
 	public static var window:Window;
+	
+	public static inline var EXIT_OK:Int = 0;
+	public static inline var EXIT_ERROR:Int = 1;
 }

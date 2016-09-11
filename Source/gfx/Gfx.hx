@@ -2,7 +2,7 @@ package gfx;
 
 import lime.graphics.GLRenderContext;
 import lime.math.Rectangle;
-import world.entity.Entity;
+import world.entities.Entity;
 
 /**
  * ...

@@ -1,5 +1,8 @@
 package world;
-import world.entity.Charlie;
+import haxe.ds.StringMap;
+import sys.io.File;
+import tjson.TJSON;
+import world.entities.core.Charlie;
 
 /**
  * ...
@@ -17,7 +20,7 @@ class World {
 		player.gridX = 0;
 		player.gridY = 0;
 		
-		var room = new Room(0, 0, 0);
+		var room = new Room(this, 0, 0, 0);
 		addRoom(room);
 		
 		switchRoom(room);
@@ -63,5 +66,101 @@ class World {
 		switchRoom(nextRoom);
 		
 		return currentRoom;
+	}
+	
+	// Save / Load
+	
+	public function load(fileName:String) {
+		currentRoom = null;
+		rooms = [];
+		
+		var fin = File.read(fileName, false);
+		var fileData = fin.readAll().toString();
+		fin.close();
+		
+		var data = TJSON.parse(fileData);
+		
+		for (key in Reflect.fields(data)) {
+			switch(key) {
+			case "player":
+				parsePlayer(Reflect.field(data, "player"));
+			default:
+				if (StringTools.startsWith(key, "ROOM_")) {
+					parseRoom(Reflect.field(data, key));
+				} else {
+					trace("Unknown key '" + key + "' in WorldData!");
+				}
+			}
+		}
+		
+		/*
+		for (roomData in data.data) {
+			
+		}
+		*/
+	}
+	
+	function parseRoom(data) {
+		var rx:Int = -1;
+		var ry:Int = -1;
+		var rz:Int = -1;
+		var rdata = null;
+		
+		for (key in Reflect.fields(data)) {
+			switch(key) {
+			case "x":
+				rx = Reflect.field(data, "x");
+			case "y":
+				ry = Reflect.field(data, "y");
+			case "z":
+				rz = Reflect.field(data, "z");
+			case "data":
+				rdata = Reflect.field(data, "data");
+			default:
+			}
+		}
+		
+		var newRoom:Room = new Room(this, rx, ry, rz);
+		newRoom.load(rdata);
+		
+		addRoom(newRoom);
+		switchRoom(newRoom);
+	}
+	
+	function parsePlayer(data) {
+		for (key in Reflect.fields(data)) {
+			switch (key) {
+			case "x":
+				player.gridX = Reflect.field(data, "x");
+			case "y":
+				player.gridY = Reflect.field(data, "y");
+			default:
+			}
+		}
+	}
+	
+	public function save(fileName:String) {
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+		
+		data.set("name", "Tobor I");
+		data.set("player", player.save());
+		
+		for (r in rooms) {
+			var rData:Map<String, Dynamic> = new Map();
+			
+			rData.set("x", r.worldX);
+			rData.set("y", r.worldY);
+			rData.set("z", r.worldZ);
+			
+			rData.set("data", r.save());
+			
+			data.set("ROOM_" + r.worldX + "" + r.worldY + "" + r.worldZ, rData);
+		}
+		
+		trace(data);
+		
+		var fout = File.write(fileName, false);
+		fout.writeString(TJSON.encode(data, 'fancy'));
+		fout.close();
 	}
 }

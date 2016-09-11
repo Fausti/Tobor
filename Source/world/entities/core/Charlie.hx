@@ -1,4 +1,4 @@
-package world.entity;
+package world.entities.core;
 
 import gfx.Animation;
 import gfx.Gfx;
@@ -9,6 +9,10 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class Charlie extends EntityMoveable {
+	
+	public var lives:Int = 3;
+	public var points:Int = 0;
+	public var gold:Int = 0;
 	
 	// Animation
 	var animWalking:Animation;
@@ -22,20 +26,20 @@ class Charlie extends EntityMoveable {
 		// Stand- / Gehanimation
 		
 		animWalking = new Animation();
-		animWalking.addFrame(Tobor.Tileset.find("Charlie_0"));
-		animWalking.addFrame(Tobor.Tileset.find("Charlie_1"));
-		animWalking.addFrame(Tobor.Tileset.find("Charlie_2"));
+		animWalking.addFrame(Tobor.Tileset.find("SPR_CHARLIE_0"));
+		animWalking.addFrame(Tobor.Tileset.find("SPR_CHARLIE_1"));
+		animWalking.addFrame(Tobor.Tileset.find("SPR_CHARLIE_2"));
 		
 		animWalking.setSpeed(speed);
 		
 		// "Explositions"animation
 		
 		animDeath = new Animation();
-		animDeath.addFrame(Tobor.Tileset.find("Explosion_0"));
-		animDeath.addFrame(Tobor.Tileset.find("Explosion_1"));
-		animDeath.addFrame(Tobor.Tileset.find("Explosion_2"));
-		animDeath.addFrame(Tobor.Tileset.find("Explosion_3"));
-		animDeath.addFrame(Tobor.Tileset.find("Explosion_4"));
+		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_0"));
+		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_1"));
+		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_2"));
+		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_3"));
+		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_4"));
 		
 		animDeath.setSpeed(5);
 		
@@ -57,6 +61,8 @@ class Charlie extends EntityMoveable {
 	}
 	
 	public function die() {
+		lives--;
+		
 		if (!isMoving) {
 			isAlive = false;
 			
@@ -81,4 +87,14 @@ class Charlie extends EntityMoveable {
 		// Gfx.drawTexture(x, y, 16, 12, anim.getUV());
 	}
 	*/
+	
+	override public function save():Map<String, Dynamic> {
+		var out = super.save();
+		
+		out.set("lives", lives);
+		out.set("gold", gold);
+		out.set("points", points);
+		
+		return out;
+	}
 }
