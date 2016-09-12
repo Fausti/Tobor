@@ -1,5 +1,10 @@
 package screens;
 
+import gfx.Gfx;
+import gfx.Color;
+import world.Room;
+import world.entities.Entity;
+
 /**
  * ...
  * @author Matthias Faust
@@ -10,6 +15,7 @@ class ScreenPlay extends Screen {
 		super(game);
 	}
 	
+	override
 	public function update(deltaTime:Float) {
 		var mx:Int = 0;
 		var my:Int = 0;
@@ -22,12 +28,15 @@ class ScreenPlay extends Screen {
 		game.world.player.move(mx, my);
 		
 		if (Input.keyDown(Input.ESC)) {
-			game.world.player.die();
+			Input.wait(2);
+				
+			game.switchScreen(new ScreenMainMenu(game));
 		}
 		
 		game.world.room.update(deltaTime);
 	}
 	
+	override
 	public function render() {
 		Gfx.clear(backgroundColor);
 		
@@ -44,6 +53,7 @@ class ScreenPlay extends Screen {
 		renderSprites();
 	}
 	
+	override
 	public function renderUI() {
 		renderStatusLine();
 	}
@@ -57,21 +67,22 @@ class ScreenPlay extends Screen {
 		// TODO: Blaumann! Oder Charlieobjekt fragen?
 		Gfx.drawRect(8 * Entity.WIDTH + Entity.WIDTH / 2, 0, Tobor.Tileset.tile(2, 0));
 		
-		var punkte = 0;
-		var leben = 3;
-		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
-		Font8.drawString(224, 0, strStatus, Color.BLACK);
+		var punkte = game.world.player.points;
+		var leben = game.world.player.lives;
 		
-		var gold = 999;
+		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
+		Tobor.Font8.drawString(224, 0, strStatus, Color.BLACK);
+		
+		var gold = game.world.player.gold;
 		if (gold > 0) {
 			Gfx.drawRect(416, 0, Tobor.Tileset.tile(6, 1));
-			Font8.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
+			Tobor.Font8.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
 		var weight = 32;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawRect(471, 0, Tobor.Tileset.tile(7, 1));
-		Font8.drawString(488, 0, strWeight, Color.BLACK);
+		Tobor.Font8.drawString(488, 0, strWeight, Color.BLACK);
 	}
 	
 	function renderStatic() {

@@ -16,13 +16,22 @@ class Elektrozaun extends EntityPushable {
 	}
 	
 	
-	override public function isSolid(e:Entity):Bool {
+	override public function canEnter(e:Entity):Bool {
 		if (Std.is(e, Charlie)) {
-			return false;
+			return true;
 		} else if (Std.is(e, EntityAI)) {
-			return false;
+			return true;
 		}
 		
-		return super.isSolid(e);
+		return super.canEnter(e);
+	}
+	
+	override public function onEnter(e:Entity) {
+		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+			destroy();
+			e.die();
+		}
+		
+		super.onEnter(e);
 	}
 }

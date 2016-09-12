@@ -56,6 +56,10 @@ class Gfx {
 	}
 	
 	public static inline function drawTexture(x:Float, y:Float, w:Float, h:Float, rect:Rectangle, ?color:Color = null) {
+		if (batchCurrent == null) {
+			trace("GFX ERROR: No batch bound!");
+		}
+		
 		if (color == null) color = colorCurrent;
 		
 		batchCurrent.pushVertex(

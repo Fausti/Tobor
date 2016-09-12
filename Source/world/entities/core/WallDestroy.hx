@@ -6,7 +6,7 @@ import world.entities.Entity;
  * ...
  * @author Matthias Faust
  */
-class MauerZersetzen extends Entity {
+class WallDestroy extends Entity {
 	var speed:Float = 20.0;
 	var timeLeft:Float;
 	
@@ -45,7 +45,7 @@ class MauerZersetzen extends Entity {
 	}
 	
 	override
-	public function isSolid(e:Entity):Bool {
-		return true;
+	public function canEnter(e:Entity):Bool {
+		return false;
 	}
 }

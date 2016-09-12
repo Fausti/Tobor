@@ -44,6 +44,10 @@ class EntityMoveable extends Entity {
 				
 				direction.setTo(0.0, 0.0);
 				
+				for (e in room.getEntitiesAt(gridX, gridY, this)) {
+					e.onEnter(this);
+				}
+				
 				onStopMoving();
 			}
 			
@@ -72,7 +76,7 @@ class EntityMoveable extends Entity {
 		var canMove:Bool = true;
 		
 		for (e in room.getEntitiesAt(gridX + dirX, gridY + dirY, this)) {
-			if (e.isSolid(this)) canMove = false;
+			if (!e.canEnter(this)) canMove = false;
 		}
 		
 		if (canMove) {

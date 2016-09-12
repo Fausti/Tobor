@@ -1,4 +1,4 @@
-package screens.dialog;
+package dialog;
 import world.EntityFactory;
 
 import screens.ScreenEditor;
@@ -13,17 +13,17 @@ import world.entities.Entity;
  * @author Matthias Faust
  */
 class DialogTileChooser extends Dialog {
-	var owner:ScreenEditor;
-	
 	var cursorX:Int = 0;
 	var cursorY:Int = 0;
 	
 	public static inline var MAX_ITEMS:Int = 32;
 	
+	var editor:ScreenEditor;
+	
 	public function new(screen:ScreenEditor) {
-		super(0, 0);
+		super(screen, 0, 0);
 		
-		this.owner = screen;
+		editor = screen;
 	}
 	
 	override
@@ -33,7 +33,7 @@ class DialogTileChooser extends Dialog {
 			cursorY = Math.floor((Input.mouseY * Gfx.scaleY) / Entity.HEIGHT);
 		}
 		
-		var tile:Int = owner.currentTile;
+		var tile:Int = editor.currentTile;
 		
 		if (Input.keyDown(Input.RIGHT)) {
 			tile++;
@@ -55,7 +55,7 @@ class DialogTileChooser extends Dialog {
 			tile = EntityFactory.table.length - 1;
 		}
 		
-		owner.currentTile = tile;
+		editor.currentTile = tile;
 	}
 	
 	override
@@ -85,7 +85,7 @@ class DialogTileChooser extends Dialog {
 			
 			Gfx.drawRect(16 * 4 + tX * Entity.WIDTH, tY * Entity.HEIGHT, Tobor.Tileset.find("SPR_NONE"));
 			
-			if (owner.currentTile == i) {
+			if (editor.currentTile == i) {
 				Gfx.drawRect(16 * 4 + tX * Entity.WIDTH, tY * Entity.HEIGHT, Tobor.Tileset.find(t.editorSprite));
 			} else {
 				Gfx.drawRect(16 * 4 + tX * Entity.WIDTH, tY * Entity.HEIGHT, Tobor.Tileset.find(t.editorSprite), Color.GRAY);

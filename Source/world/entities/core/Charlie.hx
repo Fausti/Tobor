@@ -40,6 +40,7 @@ class Charlie extends EntityMoveable {
 		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_2"));
 		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_3"));
 		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_4"));
+		animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_5"));
 		
 		animDeath.setSpeed(5);
 		
@@ -60,10 +61,14 @@ class Charlie extends EntityMoveable {
 		}
 	}
 	
+	override
 	public function die() {
 		lives--;
 		
+		trace("ENTITY SNAP TO GRID ON DEATH! FOR ANIMATION!");
+		
 		if (!isMoving) {
+			trace("---");
 			isAlive = false;
 			
 			gfx = animDeath;

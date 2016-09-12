@@ -1,8 +1,8 @@
 package screens;
 
 import lime.math.Rectangle;
-import screens.dialog.Dialog;
-import screens.dialog.DialogTileChooser;
+import dialog.Dialog;
+import dialog.DialogTileChooser;
 import tjson.TJSON;
 import world.Room;
 import gfx.Gfx;
@@ -11,7 +11,8 @@ import world.WorldData;
 import world.EntityFactory;
 import world.entities.Entity;
 import world.entities.EntityPushable;
-import world.entities.core.Mauer;
+import world.entities.core.Wall;
+import dialog.DialogMenu;
 
 import sys.io.File;
 
@@ -28,7 +29,6 @@ class ScreenEditor extends Screen {
 	var SPR_ISOLATOR:Rectangle;
 	var SPR_ELEKTROZAUN:Rectangle;
 	
-	var dialogCurrent:Dialog;
 	var dialogTileset:Dialog;
 	
 	var saveGame:String;
@@ -39,10 +39,7 @@ class ScreenEditor extends Screen {
 		SPR_ISOLATOR = Tobor.Tileset.find("SPR_ISOLATOR");
 		SPR_ELEKTROZAUN = Tobor.Tileset.find("SPR_ELEKTROZAUN");
 		
-		dialogCurrent = null;
 		dialogTileset = new DialogTileChooser(this);
-		
-		game.world.room.redraw = true;
 	}
 	
 	override
@@ -54,35 +51,12 @@ class ScreenEditor extends Screen {
 			cursorY = Math.floor((Input.mouseY * Gfx.scaleY) / Entity.HEIGHT);
 		}
 		
-		if (Input.keyDown(Input.F5)) {
-			Input.wait(2);
+		if (dialog == null) {
+			if (Input.keyDown(Input.ESC)) {
+				Input.wait(2);
+				showMainMenu();
+			}
 			
-			/*
-			var fin = File.read("room_000.map", false);
-			saveGame = fin.readAll().toString();
-			fin.close();
-			
-			game.world.room.load(TJSON.parse(saveGame));
-			*/
-			
-			game.world.load("tobor.ep");
-		}
-		
-		if (Input.keyDown(Input.F2)) {
-			Input.wait(2);
-			
-			/*
-			saveGame = TJSON.encode(game.world.room.save());
-			
-			var fout = File.write("room_000.map", false);
-			fout.writeString(saveGame);
-			fout.close();
-			*/
-			
-			game.world.save("tobor.ep");
-		}
-		
-		if (dialogCurrent == null) {
 			// Spielerbewegung
 		
 			var mx:Int = 0;
@@ -100,16 +74,10 @@ class ScreenEditor extends Screen {
 			game.world.room.update(deltaTime);
 			
 			if (Input.keyDown(Input.TAB)) {
-				if (dialogCurrent != dialogTileset) {
-					dialogCurrent = dialogTileset;
+				if (dialog != dialogTileset) {
+					dialog = dialogTileset;
 					Input.wait(2);
 				}
-			}
-			
-			if (Input.keyDown(Input.ESC)) {
-				Input.wait(2);
-				
-				game.switchScreen(new ScreenMainMenu(game));
 			}
 			
 			if (cursorY > 0) {
@@ -148,11 +116,11 @@ class ScreenEditor extends Screen {
 		} else {
 			// -- Editorstuff
 		
-			if (dialogCurrent != null) dialogCurrent.update(deltaTime);
+			if (dialog != null) dialog.update(deltaTime);
 		
 			if (Input.keyDown(Input.ESC) || Input.keyDown(Input.TAB)) {
-				if (dialogCurrent != null) {
-					dialogCurrent = null;
+				if (dialog != null) {
+					dialog = null;
 					Input.wait(2);
 				}
 			}
@@ -178,10 +146,14 @@ class ScreenEditor extends Screen {
 	
 	override
 	public function renderUI() {
-		if (dialogCurrent != null) {
+		if (dialog != null) {
 			// Wenn Dialog offen:
 			
-			dialogCurrent.render();
+			if (Std.is(dialog, DialogMenu)) {
+				renderStatusLine();
+			}
+			
+			dialog.render();
 		} else {
 			// ansonsten:
 			renderStatusLine();
@@ -211,7 +183,7 @@ class ScreenEditor extends Screen {
 		
 		
 		var countEntities:Int = game.world.room.entities.length;
-		var strStatus:String = "Entities: " + StringTools.lpad(Std.string(countEntities), "0", 4);
+		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
 		Tobor.Font8.drawString(224, 0, strStatus, Color.BLACK);
 	}
 	
@@ -237,5 +209,33 @@ class ScreenEditor extends Screen {
 				
 		batchSprites.bind();
 		batchSprites.draw();
+	}
+	
+	function showMainMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			["Laden", ""],		// 0
+			["Speichern", ""], 	// 1
+			["Ende", "F9"],		// 2
+		]);
+		
+		dialog = menu;
+		
+		dialog.onEXIT = function () {
+			dialog = null;
+		};
+			
+		dialog.onOK = function () {
+			switch(menu.getSelected()) {
+				case 0:
+					game.world.load("tobor.ep");
+				case 1:
+					game.world.save("tobor.ep");
+				case 2:
+					game.switchScreen(new ScreenMainMenu(game));
+				default:
+			}
+
+			dialog = null;
+		};
 	}
 }

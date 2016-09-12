@@ -26,6 +26,7 @@ class WorldData {
 		]);
 		
 		tileset.register("SPR_EXPLOSION", [
+			[4, 0], 
 			[5, 0], 
 			[6, 0], 
 			[7, 0], 
@@ -68,16 +69,55 @@ class WorldData {
 			[14, 0], 
 		]);
 		
-/*
-			// dunkel
-			[3, 11],
-			
-			// Ecken (dunkel)
-			[4, 11],
-			[5, 11],
-			[6, 11],
-			[7, 11],
-*/
+		tileset.register("SPR_MAUER_BLACK", [
+			[3, 11], 
+		]);
+		
+		tileset.register("SPR_MAUER_BLACK_SW", [
+			[4, 11], 
+		]);
+		
+		tileset.register("SPR_MAUER_BLACK_NE", [
+			[5, 11], 
+		]);
+		
+		tileset.register("SPR_MAUER_BLACK_NW", [
+			[6, 11], 
+		]);
+		
+		tileset.register("SPR_MAUER_BLACK_SE", [
+			[7, 11], 
+		]);
+		
+		// Pfeile
+		
+		tileset.register("SPR_PFEIL_E", [
+			[6, 2], 
+		]);
+		
+		tileset.register("SPR_PFEIL_N", [
+			[7, 2], 
+		]);
+		
+		tileset.register("SPR_PFEIL_W", [
+			[8, 2], 
+		]);
+		
+		tileset.register("SPR_PFEIL_S", [
+			[9, 2], 
+		]);
+		
+		tileset.register("SPR_AUSGANG", [
+			[0, 1], 
+		]);
+		
+		tileset.register("SPR_AUSGANG_WE", [
+			[1, 1], 
+		]);
+		
+		tileset.register("SPR_AUSGANG_NS", [
+			[2, 1], 
+		]);
 		
 		tileset.register("SPR_MAUER_AUFLOESEN", [
 			[0, 5],
@@ -90,77 +130,85 @@ class WorldData {
 		tileset.register("SPR_GOLD", [
 			[6, 1], 
 		]);
+		
+		tileset.register("SPR_BLOCKADE_ROBOTER_AKTIV", [
+			[15, 8],
+		]);
+		
+		tileset.register("SPR_BLOCKADE_ROBOTER_INAKTIV", [
+			[14, 8],
+		]);
+		
+		tileset.register("SPR_TUER", [
+			[0, 3],
+			[1, 3],
+			[2, 3],
+			[3, 3],
+			[4, 3],
+			[5, 3],
+			[6, 3],
+			[7, 3],
+			[8, 3],
+			[9, 3],
+			[10, 3],
+			[11, 3],
+			[12, 3],
+			[13, 3],
+			[14, 3],
+		]);
+		
+		tileset.register("SPR_SCHLUESSEL", [
+			[0, 4],
+			[1, 4],
+			[2, 4],
+			[3, 4],
+			[4, 4],
+			[5, 4],
+			[6, 4],
+			[7, 4],
+			[8, 4],
+			[9, 4],
+			[10, 4],
+			[11, 4],
+			[12, 4],
+			[13, 4],
+			[14, 4],
+		]);
+		
+		tileset.register("SPR_TUER_MONO", [
+			[0, 16],
+			[1, 16],
+			[2, 16],
+			[3, 16],
+			[4, 16],
+			[5, 16],
+			[6, 16],
+			[7, 16],
+			[8, 16],
+			[9, 16],
+			[10, 16],
+			[11, 16],
+			[12, 16],
+			[13, 16],
+			[14, 16],
+		]);
+		
+		tileset.register("SPR_SCHLUESSEL_MONO", [
+			[0, 17],
+			[1, 17],
+			[2, 17],
+			[3, 17],
+			[4, 17],
+			[5, 17],
+			[6, 17],
+			[7, 17],
+			[8, 17],
+			[9, 17],
+			[10, 17],
+			[11, 17],
+			[12, 17],
+			[13, 17],
+			[14, 17],
+		]);
 	}
-	
-	/*
-	public static var tableEntities:Array<EntityTemplate> = [];
-		{
-			key:"OBJ_CHARLIE",
-			subType:0,
-			editorSprite:"SPR_CHARLIE",
-			classPath:CORE + "Charlie",
-		},
-		{
-			key:"OBJ_MAUER",
-			subType:0,
-			editorSprite:"SPR_MAUER",
-			classPath:CORE + "Mauer",
-		},
-		{
-			key:"OBJ_MAUER",
-			editorSprite:"SPR_MAUER_1",
-			classPath:CORE + "Mauer",
-			subType:1,
-		},
-		{	key:"OBJ_MAUER",
-			editorSprite:"SPR_MAUER_2",
-			classPath:CORE + "Mauer",
-			subType:2,
-		},
-		{
-			key:"OBJ_MAUER",
-			editorSprite:"SPR_MAUER_3",
-			classPath:CORE + "Mauer",
-			subType:3,
-		},
-		{
-			key:"OBJ_MAUER",
-			editorSprite:"SPR_MAUER_4",
-			classPath:CORE + "Mauer",
-			subType:4,
-		},
-		{
-			key:"OBJ_MAUER",
-			editorSprite:"SPR_MAUER_5",
-			classPath:CORE + "Mauer",
-			subType:5,
-		},
-		
-		{
-			key:"OBJ_ISOLATOR",
-			subType:0,
-			editorSprite:"SPR_ISOLATOR",
-			classPath:CORE + "Isolator",
-		},
-		{
-			key:"OBJ_ELEKTROZAUN",
-			subType:0,
-			editorSprite:"SPR_ELEKTROZAUN",
-			classPath:CORE + "Elektrozaun",
-		},
-		
-		{
-			key:"OBJ_MAUER_AUFLOESEN",
-			subType:0,
-			editorSprite:"SPR_MAUER_AUFLOESEN_1",
-			classPath:CORE + "MauerZersetzen",
-		},
-		{
-			key:"OBJ_GOLD",
-			subType:0,
-			editorSprite:"SPR_GOLD",
-			classPath:CORE + "Gold",
-		},
-	];
-	*/
 }

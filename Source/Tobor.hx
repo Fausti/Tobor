@@ -19,6 +19,7 @@ import lime.ui.Window;
 import lime.utils.Float32Array;
 import lime.math.Matrix4;
 import lime.Assets;
+import screens.ScreenMainMenu;
 import world.WorldData;
 import world.EntityFactory;
 import world.entities.Entity;
@@ -37,6 +38,8 @@ class Tobor {
 	public static var Frame16:Frame;
 	public static var Tileset:Tilesheet;
 	
+	public static var MONO_MODE:Bool = true;
+	
 	var currentScreen:Screen;
 	var batchUI:Batch;
 	
@@ -45,6 +48,7 @@ class Tobor {
 	var texture:Texture;
 	var shader:Shader;
 	var camMatrix:Matrix4;
+	var ready:Bool = false;
 	var running:Bool = false;
 	
 	var frameBuffer:Framebuffer;
@@ -102,18 +106,21 @@ class Tobor {
 			// Mauszeiger verstecken
 			lime.ui.Mouse.hide();
 		}
-		
-		currentScreen = new ScreenIntro(this);
 	
 		batchUI = new Batch(true);
 	
 		world = new world.World();
 		world.load("tobor.ep");
 		
+		currentScreen = new ScreenMainMenu(this);
+		
 		running = true;
+		ready = true;
 	}
 	
 	public function update(deltaTime:Float) {
+		if (!ready) return;
+		
 		Input.update(deltaTime);
 		
 		if (!running) return;
@@ -124,6 +131,7 @@ class Tobor {
 	public static inline var USE_FRAMEBUFFER:Bool = true;
 	
 	public function render() {
+		if (!ready) return;
 		if (!running) return;
 		
 		if (USE_FRAMEBUFFER) frameBuffer.bind();

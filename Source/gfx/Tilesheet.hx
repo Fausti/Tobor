@@ -61,6 +61,10 @@ class Tilesheet {
 			r = registry.get(key.toUpperCase() + "_0");
 		}
 		
+		if (r == null) {
+			trace("TILESET ERROR: Konnte Grafik '" + key + "' nicht finden!");
+		}
+		
 		return r;
 	}
 }

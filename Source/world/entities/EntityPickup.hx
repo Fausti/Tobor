@@ -1,4 +1,6 @@
 package world.entities;
+import world.entities.Entity;
+import world.entities.core.Charlie;
 
 /**
  * ...
@@ -10,4 +12,11 @@ class EntityPickup extends Entity {
 		super(type);
 	}
 	
+	override public function onEnter(e:Entity) {
+		if (e == room.world.player) {
+			destroy();
+		}
+		
+		super.onEnter(e);
+	}
 }

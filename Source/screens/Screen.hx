@@ -4,7 +4,7 @@ import world.Room;
 import world.entities.core.Charlie;
 import world.entities.Entity;
 import world.entities.EntityPushable;
-import world.entities.core.Mauer;
+import world.entities.core.Wall;
 import lime.Assets;
 import lime.graphics.GLRenderContext;
 import lime.graphics.Image;
@@ -17,6 +17,7 @@ import lime.utils.Float32Array;
 import gfx.Batch;
 import gfx.Color;
 import gfx.Gfx;
+import dialog.Dialog;
 
 import gfx.Gfx.gl;
 
@@ -33,8 +34,11 @@ class Screen {
 	var backgroundColor = Color.WHITE;
 	var color:Color = Color.WHITE;
 	
+	var dialog:Dialog;
+	
 	public function new(game:Tobor) {
 		this.game = game;
+		game.world.room.redraw = true;
 		
 		batchStatic = new Batch(true);
 		batchSprites = new Batch(true);

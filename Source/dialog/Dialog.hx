@@ -1,7 +1,8 @@
-package screens.dialog;
+package dialog;
 
 import gfx.Gfx;
 import gfx.Color;
+import screens.Screen;
 import world.WorldData;
 import world.entities.Entity;
 /**
@@ -14,7 +15,15 @@ class Dialog {
 	var w:Int = 0;
 	var h:Int = 0;
 	
-	public function new(x:Int, y:Int) {
+	var screen:Screen;
+	var child:Dialog;
+	
+	public var onOK:Dynamic = null;
+	public var onEXIT:Dynamic = null;
+	
+	public function new(screen:Screen, x:Int, y:Int) {
+		this.screen = screen;
+		
 		this.x = x;
 		this.y = y;
 	}
@@ -25,6 +34,22 @@ class Dialog {
 	
 	public function render() {
 		
+	}
+	
+	public function show() {
+		
+	}
+	
+	public function hide() {
+		
+	}
+	
+	public function exit() {
+		if (onEXIT != null) onEXIT();
+	}
+	
+	public function ok() {
+		if (onOK != null) onOK();
 	}
 	
 	// Static

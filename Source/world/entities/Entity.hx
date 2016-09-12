@@ -86,10 +86,16 @@ class Entity {
 		return v * HEIGHT;
 	}
 	
-	// Kollisionen
+	public function onCreate() {
+		
+	}
 	
-	public function isSolid(e:Entity):Bool {
-		return false;
+	public function canEnter(e:Entity):Bool {
+		return true;
+	}
+	
+	public function onEnter(e:Entity) {
+		// trace(e);
 	}
 	
 	// ---
@@ -106,14 +112,12 @@ class Entity {
 		changed = false;
 	}
 	
-	public function destroy() {
-		room.remove(this);
+	public function die() {
+		
 	}
 	
-	// STATIC
-	
-	public function getClassPath():String {
-		return classPath;
+	public function destroy() {
+		room.remove(this);
 	}
 	
 	public function save():Map<String, Dynamic> {
@@ -122,20 +126,24 @@ class Entity {
 		var id:Int = EntityFactory.findIDFromObject(this);
 		var def:EntityTemplate = EntityFactory.table[id];
 		
-		data.set("id", def.name);
-		data.set("type", type);
-		data.set("x", gridX);
-		data.set("y", gridY);
+		if (def != null) {
+			data.set("id", def.name);
+			data.set("type", type);
+			data.set("x", gridX);
+			data.set("y", gridY);
+		} else {
+			return null;
+		}
 		
 		return data;
 	}
 	
 	public function toString():String {
 		var id:Int = EntityFactory.findIDFromObject(this);
-		trace(id);
+		// trace(id);
 		
 		var temp:EntityTemplate = EntityFactory.table[id];
-		trace(temp);
+		// trace(temp);
 		
 		var s = new StringBuf();
 		s.add("[ ");
@@ -149,5 +157,13 @@ class Entity {
 		s.add(" ]");
 		
 		return s.toString();
+	}
+	
+	public function getClassPath():String {
+		return classPath;
+	}
+	
+	public function canSave():Bool {
+		return true;
 	}
 }

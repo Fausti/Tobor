@@ -5,7 +5,7 @@ package world.entities.core;
  * ...
  * @author Matthias Faust
  */
-class Mauer extends Entity {
+class Wall extends Entity {
 	public function new(?type:Int = 0) {
 		super(type);
 		
@@ -22,12 +22,22 @@ class Mauer extends Entity {
 				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_NW"));
 			case 5:
 				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_SE"));
+			case 6:
+				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_BLACK"));
+			case 7:
+				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_BLACK_SW"));
+			case 8:
+				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_BLACK_NE"));
+			case 9:
+				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_BLACK_NW"));
+			case 10:
+				gfx = new Sprite(Tobor.Tileset.find("SPR_MAUER_BLACK_SE"));
 			default:
 		}
 	}
 	
 	override
-	public function isSolid(e:Entity):Bool {
-		return true;
+	public function canEnter(e:Entity):Bool {
+		return false;
 	}
 }

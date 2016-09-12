@@ -70,6 +70,8 @@ class Room {
 			e.room = this;
 			entities.push(e);
 			
+			e.onCreate();
+			
 			if (e.isStatic) {
 				redraw = true;
 			}
@@ -126,7 +128,9 @@ class Room {
 		for (e in entities) {
 			if (e != null) {
 				if (!Std.is(e, Charlie)) {
-					data.push(e.save());
+					if (e.canSave()) {
+						data.push(e.save());
+					}
 				}
 			}
 		}
