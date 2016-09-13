@@ -3,7 +3,7 @@ package screens;
 import gfx.Gfx;
 import gfx.Color;
 import world.Room;
-import world.entities.Entity;
+import world.entities.Object;
 
 /**
  * ...
@@ -60,12 +60,12 @@ class ScreenPlay extends Screen {
 	
 	function renderStatusLine() {
 		for (x in 0 ... 8) {
-			Gfx.drawRect(x * Entity.WIDTH, 0, Tobor.Tileset.tile(15, 0));
-			Gfx.drawRect((39 - x) * Entity.WIDTH, 0, Tobor.Tileset.tile(15, 0));
+			Gfx.drawRect(x * Tobor.OBJECT_WIDTH, 0, Tobor.Tileset.tile(15, 0));
+			Gfx.drawRect((39 - x) * Tobor.OBJECT_WIDTH, 0, Tobor.Tileset.tile(15, 0));
 		}
 		
 		// TODO: Blaumann! Oder Charlieobjekt fragen?
-		Gfx.drawRect(8 * Entity.WIDTH + Entity.WIDTH / 2, 0, Tobor.Tileset.tile(2, 0));
+		Gfx.drawRect(8 * Tobor.OBJECT_WIDTH + Tobor.OBJECT_WIDTH / 2, 0, Tobor.Tileset.tile(2, 0));
 		
 		var punkte = game.world.player.points;
 		var leben = game.world.player.lives;

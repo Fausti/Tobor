@@ -1,13 +1,13 @@
 package world.entities.core;
 
-import world.entities.Entity;
-import world.entities.EntityPushable;
+import world.entities.Object;
+import world.entities.ObjectPushable;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Elektrozaun extends EntityPushable {
+class Elektrozaun extends ObjectPushable {
 
 	public function new() {
 		super();
@@ -16,18 +16,18 @@ class Elektrozaun extends EntityPushable {
 	}
 	
 	
-	override public function canEnter(e:Entity):Bool {
+	override public function canEnter(e:Object):Bool {
 		if (Std.is(e, Charlie)) {
 			return true;
-		} else if (Std.is(e, EntityAI)) {
+		} else if (Std.is(e, ObjectAI)) {
 			return true;
 		}
 		
 		return super.canEnter(e);
 	}
 	
-	override public function onEnter(e:Entity) {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+	override public function onEnter(e:Object) {
+		if (Std.is(e, Charlie) || Std.is(e, ObjectAI)) {
 			destroy();
 			e.die();
 		}

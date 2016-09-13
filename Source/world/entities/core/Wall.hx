@@ -5,7 +5,7 @@ package world.entities.core;
  * ...
  * @author Matthias Faust
  */
-class Wall extends Entity {
+class Wall extends Object {
 	public function new(?type:Int = 0) {
 		super(type);
 		
@@ -37,7 +37,7 @@ class Wall extends Entity {
 	}
 	
 	override
-	public function canEnter(e:Entity):Bool {
+	public function canEnter(e:Object):Bool {
 		return false;
 	}
 }

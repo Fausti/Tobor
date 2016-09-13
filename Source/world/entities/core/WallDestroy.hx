@@ -1,12 +1,12 @@
 package world.entities.core;
 
-import world.entities.Entity;
+import world.entities.Object;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class WallDestroy extends Entity {
+class WallDestroy extends Object {
 	var speed:Float = 20.0;
 	var timeLeft:Float;
 	
@@ -45,7 +45,7 @@ class WallDestroy extends Entity {
 	}
 	
 	override
-	public function canEnter(e:Entity):Bool {
+	public function canEnter(e:Object):Bool {
 		return false;
 	}
 }

@@ -11,9 +11,13 @@ class MenuItem {
 	public var strGap:String = "";
 	public var strKey:String = "";
 	
-	public function new(name:String, key:String) {
+	public var cb:Dynamic;
+	
+	public function new(name:String, key:String, ?cb:Dynamic) {
 		strName = name + " ";
 		strKey = key;
+		
+		this.cb = cb;
 		
 		this.text = strName + strKey;
 	}
@@ -24,5 +28,15 @@ class MenuItem {
 		strName = StringTools.rpad(strName, " ", w - l);
 		
 		text = strName + strKey;
+	}
+	
+	public function hasCallBack():Bool {
+		return (cb != null);
+	}
+	
+	public function call() {
+		if (hasCallBack()) {
+			cb();
+		}
 	}
 }

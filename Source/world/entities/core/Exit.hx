@@ -1,13 +1,13 @@
 package world.entities.core;
 
-import world.entities.Entity;
+import world.entities.Object;
 import gfx.Sprite;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Exit extends Entity {
+class Exit extends Object {
 	var SPRITES:Array<Sprite>;
 	
 	public function new(?type:Int=0) {
@@ -34,8 +34,8 @@ class Exit extends Entity {
 		gfx = SPRITES[type];
 	}
 	
-	override public function canEnter(e:Entity):Bool {
-		if (Std.is(e, EntityAI) || e == room.world.player) {
+	override public function canEnter(e:Object):Bool {
+		if (Std.is(e, ObjectAI) || e == room.world.player) {
 			if (type > 0) {
 				return true;
 			}
@@ -48,7 +48,7 @@ class Exit extends Entity {
 		updateSprite();
 	}
 	
-	override public function save():Map<String, Dynamic> {
+	override public function saveData():Map<String, Dynamic> {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		var id:Int = EntityFactory.findID("OBJ_AUSGANG", 0);

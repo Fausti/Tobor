@@ -1,42 +1,31 @@
 package world.entities;
-import gfx.Gfx;
-import screens.Screen;
+
 import lime.math.Vector2;
-import world.EntityTemplate;
-import world.Room;
 
 /**
  * ...
  * @author Matthias Faust
+ * 
+ * Basisklasse aller Spielobjekte.
+ * 
  */
+
 class Entity {
-	public static inline var WIDTH:Int = 16;
-	public static inline var HEIGHT:Int = 12;
+	public function new() {
+		classPath = Type.getClassName(Type.getClass(this));
+	}
+	
+	// interner Klassenpath z.B. "world.entities.Object"
 	
 	private var classPath:String;
 	
-	public var isAlive:Bool = true;
-	
-	public var isStatic:Bool = true;
-	public var changed:Bool = true;
-	
-	var position:Vector2;
-	
-	public var room:Room;
-	
-	var gfx:gfx.IDrawable;
-	
-	public var type:Int;
-	
-	public function new(?type:Int = 0) {
-		classPath = Type.getClassName(Type.getClass(this));
-		
-		this.type = type;
-		
-		position = new Vector2();
+	public function getClassPath():String {
+		return classPath;
 	}
 	
 	// Bildschirmposition
+	
+	private var position:Vector2 = new Vector2();
 	
 	public var x(get, set):Float;
 	public var y(get, set):Float;
@@ -71,99 +60,18 @@ class Entity {
 	}
 	
 	function set_gridX(v:Int):Int {
-		position.x = v * WIDTH;
+		position.x = v * Tobor.OBJECT_WIDTH;
 		
-		return v * WIDTH;
+		return v * Tobor.OBJECT_WIDTH;
 	}
 	
 	inline function get_gridY():Int {
-		return Math.round(position.y / HEIGHT);
+		return Math.round(position.y / Tobor.OBJECT_HEIGHT);
 	}
 	
 	function set_gridY(v:Int):Int {
-		position.y = v * HEIGHT;
+		position.y = v * Tobor.OBJECT_HEIGHT;
 		
-		return v * HEIGHT;
-	}
-	
-	public function onCreate() {
-		
-	}
-	
-	public function canEnter(e:Entity):Bool {
-		return true;
-	}
-	
-	public function onEnter(e:Entity) {
-		// trace(e);
-	}
-	
-	// ---
-	
-	public function draw() {
-		if (gfx == null) return;
-		
-		Gfx.drawTexture(x, y, 16, 12, gfx.getUV());
-	}
-	
-	public function update(deltaTime:Float) {
-		if (gfx != null) gfx.update(deltaTime);
-		
-		changed = false;
-	}
-	
-	public function die() {
-		
-	}
-	
-	public function destroy() {
-		room.remove(this);
-	}
-	
-	public function save():Map<String, Dynamic> {
-		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
-		
-		var id:Int = EntityFactory.findIDFromObject(this);
-		var def:EntityTemplate = EntityFactory.table[id];
-		
-		if (def != null) {
-			data.set("id", def.name);
-			data.set("type", type);
-			data.set("x", gridX);
-			data.set("y", gridY);
-		} else {
-			return null;
-		}
-		
-		return data;
-	}
-	
-	public function toString():String {
-		var id:Int = EntityFactory.findIDFromObject(this);
-		// trace(id);
-		
-		var temp:EntityTemplate = EntityFactory.table[id];
-		// trace(temp);
-		
-		var s = new StringBuf();
-		s.add("[ ");
-		s.add(id + ", ");
-		s.add(getClassPath() + ", ");
-		s.add(temp.classPath + ", ");
-		s.add(temp.name + ", ");
-		s.add(type + ", ");
-		s.add(gridX + ", ");
-		s.add(gridY);
-		s.add(" ]");
-		
-		return s.toString();
-	}
-	
-	public function getClassPath():String {
-		return classPath;
-	}
-	
-	public function canSave():Bool {
-		return true;
+		return v * Tobor.OBJECT_HEIGHT;
 	}
 }

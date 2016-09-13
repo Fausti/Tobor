@@ -4,7 +4,7 @@ package world.entities;
  * ...
  * @author Matthias Faust
  */
-class EntityAI extends EntityMoveable {
+class ObjectAI extends ObjectMoveable {
 
 	public function new(?type:Int = 0) {
 		super(type);

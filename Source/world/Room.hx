@@ -1,6 +1,6 @@
 package world;
 
-import world.entities.Entity;
+import world.entities.Object;
 import world.entities.core.Charlie;
 
 /**
@@ -16,10 +16,10 @@ class Room {
 	public var worldY:Int;
 	public var worldZ:Int;
 	
-	public var entities:Array<Entity>;
+	public var entities:Array<Object>;
 	public var redraw:Bool = true;
 	
-	public var collisions:Array<Entity> = [];
+	public var collisions:Array<Object> = [];
 	
 	public function new(world:World, x:Int, y:Int, level:Int) {
 		this.world = world;
@@ -59,9 +59,9 @@ class Room {
 		return (x < 0 || y < 0 || x >= 40 || y >= 28);
 	}
 	
-	public function add(e:Entity, ?checkCollision:Bool = false) {
+	public function add(e:Object, ?checkCollision:Bool = false) {
 		if (entities.indexOf(e) >= 0) {
-			trace(entities.indexOf(e));
+			// trace(entities.indexOf(e));
 		} else {
 			if (checkCollision) {
 				if (getEntitiesAt(e.gridX, e.gridY).length > 0) return;
@@ -78,13 +78,13 @@ class Room {
 		}
 	}
 	
-	public function remove(e:Entity) {
+	public function remove(e:Object) {
 		entities.remove(e);
 		
 		if (e.isStatic) redraw = true;
 	}
 	
-	public function getEntitiesAt(x:Int, y:Int, ?enteringEntity:Entity = null):Array<Entity> {
+	public function getEntitiesAt(x:Int, y:Int, ?enteringEntity:Object = null):Array<Object> {
 		collisions = [];
 		
 		for (e in entities) {
@@ -107,14 +107,15 @@ class Room {
 		clear();
 		
 		for (o in data) {
-			trace(o);
+			// Debug.log(this, o);
 			
-			var entity:Entity = EntityFactory.createFromID(o.get("id"), o.get("type"));
+			var entity:Object = EntityFactory.createFromID(o.get("id"), o.get("type"));
+			
+			for (key in Reflect.fields(o)) {
+				entity.parseData(key, Reflect.field(o, key));
+			}
 			
 			if (!Std.is(entity, Charlie)) {
-				entity.gridX = o.get("x");
-				entity.gridY = o.get("y");
-			
 				add(entity);
 			}
 		}
@@ -129,7 +130,7 @@ class Room {
 			if (e != null) {
 				if (!Std.is(e, Charlie)) {
 					if (e.canSave()) {
-						data.push(e.save());
+						data.push(e.saveData());
 					}
 				}
 			}

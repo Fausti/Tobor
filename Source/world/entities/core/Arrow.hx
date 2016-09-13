@@ -2,13 +2,13 @@ package world.entities.core;
 
 import gfx.Sprite;
 import lime.math.Rectangle;
-import world.entities.Entity;
+import world.entities.Object;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Arrow extends Entity {
+class Arrow extends Object {
 	var SPRITES:Array<Sprite>;
 	
 	public function new(?type:Int=0) {
@@ -28,8 +28,8 @@ class Arrow extends Entity {
 		gfx = SPRITES[type];
 	}
 	
-	override public function canEnter(e:Entity):Bool {
-		if (e == room.world.player) {
+	override public function canEnter(e:Object):Bool {
+		if (isPlayer(e)) {
 			if (e.gridX < gridX && type == 0) {
 				return true;
 			} else if (e.gridX > gridX && type == 2) {

@@ -17,6 +17,11 @@ class Menu {
 	private var _w:Int = 0;
 	private var _h:Int = 0;
 	
+	public var currentItem(get, null):MenuItem;
+	function get_currentItem():MenuItem {
+		return items[selected];
+	}
+	
 	public function new() {
 		
 	}
@@ -39,8 +44,8 @@ class Menu {
 		return items.length;
 	}
 	
-	public function add(name:String, key:String) {
-		items.push(new MenuItem(name, key));
+	public function add(name:String, key:String, ?cb:Dynamic) {
+		items.push(new MenuItem(name, key, cb));
 	}
 	
 	public function get(index:Int):String {

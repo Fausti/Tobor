@@ -22,7 +22,7 @@ import lime.Assets;
 import screens.ScreenMainMenu;
 import world.WorldData;
 import world.EntityFactory;
-import world.entities.Entity;
+import world.entities.Object;
 
 import gfx.Gfx.gl;
 /**
@@ -30,6 +30,9 @@ import gfx.Gfx.gl;
  * @author Matthias Faust
  */
 class Tobor {
+	public static inline var OBJECT_WIDTH:Int = 16;
+	public static inline var OBJECT_HEIGHT:Int = 12;
+	
 	public var world:world.World;
 	
 	public static var Font8:Font;
@@ -38,7 +41,7 @@ class Tobor {
 	public static var Frame16:Frame;
 	public static var Tileset:Tilesheet;
 	
-	public static var MONO_MODE:Bool = true;
+	public static var MONO_MODE:Bool = false;
 	
 	var currentScreen:Screen;
 	var batchUI:Batch;
@@ -92,7 +95,9 @@ class Tobor {
 		Tobor.Font8 = new Font(8, 10, 322);
 		
 		Tobor.Frame16 = new Frame(128, 324, 16, 12);
-		Tobor.Frame8 = new Frame(128, 360, 8, 10);
+		
+		Tobor.Frame8 = new Frame(128, 360, 8, 10); // original
+		// Tobor.Frame8 = new Frame(152, 360, 8, 10); // neu
 		
 		// Shader
 		

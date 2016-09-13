@@ -2,8 +2,8 @@ package screens;
 
 import world.Room;
 import world.entities.core.Charlie;
-import world.entities.Entity;
-import world.entities.EntityPushable;
+import world.entities.Object;
+import world.entities.ObjectPushable;
 import world.entities.core.Wall;
 import lime.Assets;
 import lime.graphics.GLRenderContext;
@@ -58,5 +58,23 @@ class Screen {
 	
 	public function onMouseMove(x:Float, y:Float) {
 		
+	}
+	
+	public function showDialog(dialog:Dialog) {
+		if (this.dialog != null) {
+			if (this.dialog != dialog) {
+				dialog.hide();
+			}
+		}
+		
+		this.dialog = dialog;
+		dialog.show();
+	}
+	
+	public function hideDialog() {
+		if (dialog != null) {
+			dialog.hide();
+			dialog = null;
+		}
 	}
 }

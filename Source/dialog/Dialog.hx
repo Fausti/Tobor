@@ -4,7 +4,7 @@ import gfx.Gfx;
 import gfx.Color;
 import screens.Screen;
 import world.WorldData;
-import world.entities.Entity;
+import world.entities.Object;
 /**
  * ...
  * @author Matthias Faust

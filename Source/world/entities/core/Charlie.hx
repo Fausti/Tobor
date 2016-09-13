@@ -4,11 +4,12 @@ import gfx.Animation;
 import gfx.Gfx;
 import lime.math.Rectangle;
 import lime.math.Vector2;
+import world.Room;
 /**
  * ...
  * @author Matthias Faust
  */
-class Charlie extends EntityMoveable {
+class Charlie extends ObjectMoveable {
 	
 	public var lives:Int = 3;
 	public var points:Int = 0;
@@ -77,6 +78,54 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override
+	public function move(dirX:Int, dirY:Int) {
+		if (!isAlive) return;
+		if (isMoving) return;
+		if (dirX == 0 && dirY == 0) return;
+		
+		var canMove:Bool = true;
+		
+		if (room.outOfRoom(gridX + dirX, gridY + dirY)) {
+			var rX:Int = room.worldX;
+			var rY:Int = room.worldY;
+			var rZ:Int = room.worldZ;
+			
+			if (dirX > 0) {
+				rX++;
+			} else if (dirX < 0) {
+				rX--;
+			} else if (dirY > 0) {
+				rY++;
+			} else if (dirY < 0) {
+				rY--;
+			}
+			
+			if (rX < 0 || rX > 9 || rY < 0 || rY > 9) {
+				canMove = false;
+			}
+			
+			var nextRoom:Room = room.world.findRoom(rX, rY, rZ);
+			
+			if (nextRoom == null) {
+				canMove = false;
+			}
+		} else {
+			for (e in room.getEntitiesAt(gridX + dirX, gridY + dirY, this)) {
+				if (!e.canEnter(this)) canMove = false;
+			}
+		}
+		
+		if (canMove) {
+			direction.x = dirX;
+			direction.y = dirY;
+			
+			timeLeft = speed;
+			
+			onStartMoving();
+		}
+	}
+	
+	override
 	function onStartMoving() {
 		animWalking.start();
 	}
@@ -84,6 +133,44 @@ class Charlie extends EntityMoveable {
 	override
 	function onStopMoving() {
 		animWalking.stop();
+		
+		if (room.outOfRoom(gridX, gridY)) {
+			var rX:Int = room.worldX;
+			var rY:Int = room.worldY;
+			var rZ:Int = room.worldZ;
+			
+			if (gridX > 39) {
+				rX++;
+			} else if (gridX < 0) {
+				rX--;
+			} else if (gridY > 27) {
+				rY++;
+			} else if (gridY < 0) {
+				rY--;
+			}
+			
+			/*
+			if (rX < 0 || rX > 9 || rY < 0 || rY > 9) {
+				canMove = false;
+			}
+			*/
+			
+			var nextRoom:Room = room.world.findRoom(rX, rY, rZ);
+		
+			if (gridX < 0) {
+				gridX = 39;
+			} else if (gridX > 39) {
+				gridX = 0;
+			} else if (gridY < 0) {
+				gridY = 27;
+			} else if (gridY > 27) {
+				gridY = 0;
+			}
+			
+			if (nextRoom != null) {
+				room.world.switchRoom(nextRoom);
+			}
+		}
 	}
 	
 	/*
@@ -93,13 +180,33 @@ class Charlie extends EntityMoveable {
 	}
 	*/
 	
-	override public function save():Map<String, Dynamic> {
-		var out = super.save();
+	
+	// Savegame
+	
+	override 
+	public function saveData():Map<String, Dynamic> {
+		var out = super.saveData();
 		
 		out.set("lives", lives);
 		out.set("gold", gold);
 		out.set("points", points);
 		
 		return out;
+	}
+	
+	override
+	public function parseData(key:String, value:Dynamic) {
+		if (value == null) return;
+		
+		switch(key) {
+			case "gold":
+				gold = value;
+			case "lives":
+				lives = value;
+			case "points":
+				points = value;
+			default:
+				super.parseData(key, value);
+		}
 	}
 }

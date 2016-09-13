@@ -2,7 +2,7 @@ package gfx;
 
 import lime.graphics.GLRenderContext;
 import lime.math.Rectangle;
-import world.entities.Entity;
+import world.entities.Object;
 
 /**
  * ...
@@ -94,7 +94,7 @@ class Gfx {
 	}
 	
 	public static inline function drawRect(x:Float, y:Float, rect:Rectangle, ?color:Color = null) {
-		drawTexture(x, y, Entity.WIDTH, Entity.HEIGHT, rect, color);
+		drawTexture(x, y, Tobor.OBJECT_WIDTH, Tobor.OBJECT_HEIGHT, rect, color);
 	}
 	
 	// Tileset

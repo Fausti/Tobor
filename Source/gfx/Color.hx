@@ -33,6 +33,8 @@ class Color {
 		this.a = a;
 	}
 	
+	public static var NONE = new Color(0, 0, 0, 0);
+	
 	public static var BLACK = Color.from(0x000000);
 	
 	public static var YELLOW = Color.from(0xffff00);

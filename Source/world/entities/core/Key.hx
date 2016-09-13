@@ -1,17 +1,44 @@
 package world.entities.core;
 
-import world.entities.EntityPickup;
+import gfx.Sprite;
+import gfx.Color;
+import world.entities.ObjectPickup;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Key extends EntityPickup {
+class Key extends ObjectPickup {
 	var SPRITES:Array<Sprite>;
 	var SPRITES_MONO:Array<Sprite>;
 	
+	var SPRITE_0:Sprite;
+	var SPRITE_1:Sprite;
+	var COLORS:Array<Color>;
+	
 	public function new(?type:Int=0) {
 		super(type);
+		
+		SPRITE_0 = new Sprite(Tobor.Tileset.find("SPR_SCHLUESSEL_MASK_0"));
+		SPRITE_1 = new Sprite(Tobor.Tileset.find("SPR_SCHLUESSEL_MASK_1"));
+		
+		COLORS = [
+			Color.YELLOW,
+			Color.DARK_GREEN,
+			Color.GRAY,
+			Color.PURPLE,
+			Color.DARK_RED,
+			Color.RED,
+			Color.ORANGE,
+			Color.GREEN,
+			Color.LIGHT_GREEN,
+			Color.LIGHT_BLUE,
+			Color.BLUE,
+			Color.BLUE2,
+			Color.DARK_BLUE,
+			Color.BROWN,
+			Color.BLACK
+		];
 		
 		SPRITES = [
 			new Sprite(Tobor.Tileset.find("SPR_SCHLUESSEL_0")),
@@ -50,6 +77,18 @@ class Key extends EntityPickup {
 		];
 		
 		updateSprite();
+	}
+	
+	override
+	public function draw() {
+		if (gfx == null) return;
+		
+		if (Tobor.MONO_MODE) {
+			Gfx.drawTexture(x, y, 16, 12, gfx.getUV());
+		} else {
+			Gfx.drawTexture(x, y, 16, 12, SPRITE_0.getUV());
+			Gfx.drawTexture(x, y, 16, 12, SPRITE_1.getUV(), COLORS[type]);
+		}
 	}
 	
 	function updateSprite() {

@@ -1,6 +1,6 @@
 package world;
 
-import world.entities.Entity;
+import world.entities.Object;
 import gfx.Tilesheet;
 import tjson.TJSON;
 import world.entity.*;
@@ -14,6 +14,17 @@ class WorldData {
 	public static function initTilesheet(tileset:Tilesheet) {
 		tileset.register("SPR_NONE", [
 			[0, 0], 
+		]);
+		
+		tileset.register("UI_SELECTOR", [
+			[10, 20], 
+		]);
+		
+		tileset.register("UI_SELECTOR_ROOM", [
+			[8, 18], 
+			[9, 18], 
+			[8, 19], 
+			[9, 19], 
 		]);
 		
 		tileset.register("SPR_CHARLIE", [
@@ -131,6 +142,40 @@ class WorldData {
 			[6, 1], 
 		]);
 		
+		tileset.register("SPR_LEBEN", [
+			[14, 2], 
+		]);
+		
+		tileset.register("SPR_SAEURE_FLASCHE", [
+			[13, 2], 
+		]);
+		
+		tileset.register("SPR_UHR", [
+			[11, 1], 
+		]);
+		
+		tileset.register("SPR_TOTENKOPF", [
+			[5, 1], 
+		]);
+		
+		tileset.register("SPR_BANK", [
+			[3, 1], 
+		]);
+		
+		tileset.register("SPR_KNOBLAUCH", [
+			[12, 2], 
+		]);
+		
+		tileset.register("SPR_DIAMANT", [
+			[11, 2],
+			[10, 2]
+		]);
+		
+		tileset.register("SPR_MAGNET", [
+			[14, 1],
+			[15, 1]
+		]);
+		
 		tileset.register("SPR_BLOCKADE_ROBOTER_AKTIV", [
 			[15, 8],
 		]);
@@ -157,6 +202,12 @@ class WorldData {
 			[14, 3],
 		]);
 		
+		tileset.register("SPR_TUER_MASK", [
+			[2, 15],
+			[3, 15],
+			[4, 15],
+		]);
+		
 		tileset.register("SPR_SCHLUESSEL", [
 			[0, 4],
 			[1, 4],
@@ -173,6 +224,11 @@ class WorldData {
 			[12, 4],
 			[13, 4],
 			[14, 4],
+		]);
+		
+		tileset.register("SPR_SCHLUESSEL_MASK", [
+			[15, 16],
+			[15, 17]
 		]);
 		
 		tileset.register("SPR_TUER_MONO", [
@@ -209,6 +265,20 @@ class WorldData {
 			[12, 17],
 			[13, 17],
 			[14, 17],
+		]);
+		
+		tileset.register("SPR_PLATIN", [
+			[8, 1], 
+		]);
+		
+		tileset.register("SPR_AUSRUFEZEICHEN", [
+			[12, 1], 
+		]);
+		
+		tileset.register("SPR_NEST", [
+			[5, 5], 
+			[6, 5],
+			[7, 5]
 		]);
 	}
 }

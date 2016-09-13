@@ -6,7 +6,7 @@ import gfx.Sprite;
  * ...
  * @author Matthias Faust
  */
-class Isolator extends EntityPushable {
+class Isolator extends ObjectPushable {
 
 	public function new() {
 		super();

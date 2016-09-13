@@ -2,19 +2,19 @@ package world.entities;
 
 import gfx.Gfx;
 import gfx.Sprite;
-import world.entities.Entity;
+import world.entities.Object;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class EntityPushable extends EntityMoveable {
+class ObjectPushable extends ObjectMoveable {
 	
 	public function new(?type:Int = 0) {
 		super(type);
 	}
 	
-	override public function canEnter(e:Entity):Bool {
+	override public function canEnter(e:Object):Bool {
 		var blocked:Bool = false;
 		
 		var dx:Int = gridX - e.gridX;

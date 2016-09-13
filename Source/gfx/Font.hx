@@ -32,7 +32,7 @@ class Font {
 	
 	inline function drawChar(x:Float, y:Float, charIndex:Int, fg:Color = null, bg:Color = null) {
 		// Hintergrund zeichnen
-		Gfx.drawTexture(x, y, glyphW, glyphH, tileBG, bg);
+		if (bg != Color.NONE) Gfx.drawTexture(x, y, glyphW, glyphH, tileBG, bg);
 		
 		// Char zeichnen
 		Gfx.drawTexture(x, y, glyphW, glyphH, chars[charIndex], fg);

@@ -1,19 +1,19 @@
 package world.entities;
-import world.entities.Entity;
+import world.entities.Object;
 import world.entities.core.Charlie;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class EntityPickup extends Entity {
+class ObjectPickup extends Object {
 
 	public function new(?type:Int = 0) {
 		super(type);
 	}
 	
-	override public function onEnter(e:Entity) {
-		if (e == room.world.player) {
+	override public function onEnter(e:Object) {
+		if (isPlayer(e)) {
 			destroy();
 		}
 		

@@ -1,13 +1,13 @@
 package world.entities.core;
 
-import world.entities.Entity;
-import world.entities.EntityPickup;
+import world.entities.Object;
+import world.entities.ObjectPickup;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Gold extends EntityPickup {
+class Gold extends ObjectPickup {
 
 	public function new() {
 		super();
@@ -16,13 +16,13 @@ class Gold extends EntityPickup {
 	}
 	
 	override
-	public function canEnter(e:Entity):Bool {
-		if (Std.is(e, EntityPushable)) return false;
+	public function canEnter(e:Object):Bool {
+		if (Std.is(e, ObjectPushable)) return false;
 		
 		return true;
 	}
 	
-	override public function onEnter(e:Entity) {
+	override public function onEnter(e:Object) {
 		if (e == room.world.player) {
 			room.world.player.gold++;
 		}

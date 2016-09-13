@@ -13,7 +13,7 @@ class World {
 	public var player:Charlie;
 	
 	var currentRoom:Room;
-	var rooms:Array<Room> = [];
+	public var rooms:Array<Room> = [];
 	
 	public function new() {
 		player = new Charlie();
@@ -53,6 +53,8 @@ class World {
 		currentRoom = nextRoom;
 		currentRoom.add(player);
 		
+		currentRoom.redraw = true;
+		
 		// init room
 	}
 	
@@ -88,7 +90,7 @@ class World {
 				if (StringTools.startsWith(key, "ROOM_")) {
 					parseRoom(Reflect.field(data, key));
 				} else {
-					trace("Unknown key '" + key + "' in WorldData!");
+					Debug.error(this, "Unknown key '" + key + "' in WorldData!");
 				}
 			}
 		}
@@ -129,13 +131,7 @@ class World {
 	
 	function parsePlayer(data) {
 		for (key in Reflect.fields(data)) {
-			switch (key) {
-			case "x":
-				player.gridX = Reflect.field(data, "x");
-			case "y":
-				player.gridY = Reflect.field(data, "y");
-			default:
-			}
+			player.parseData(key, Reflect.field(data, key));
 		}
 	}
 	
@@ -143,7 +139,7 @@ class World {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		data.set("name", "Tobor I");
-		data.set("player", player.save());
+		data.set("player", player.saveData());
 		
 		for (r in rooms) {
 			var rData:Map<String, Dynamic> = new Map();
@@ -154,10 +150,8 @@ class World {
 			
 			rData.set("data", r.save());
 			
-			data.set("ROOM_" + r.worldX + "" + r.worldY + "" + r.worldZ, rData);
+			data.set("ROOM_" + r.worldZ + "" + r.worldX + "" + r.worldY, rData);
 		}
-		
-		trace(data);
 		
 		var fout = File.write(fileName, false);
 		fout.writeString(TJSON.encode(data, 'fancy'));

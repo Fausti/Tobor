@@ -4,7 +4,7 @@ import dialog.DialogMenu;
 import gfx.Gfx;
 import gfx.Color;
 import lime.math.Rectangle;
-import world.entities.Entity;
+import world.entities.Object;
 
 /**
  * ...
@@ -25,8 +25,6 @@ class ScreenMainMenu extends Screen {
 		if (dialog == null) {
 			if (Input.keyDown(Input.ENTER)) {
 				Input.wait(2);
-				
-				// game.switchScreen(new ScreenEditor(game));
 				showMainMenu();
 			}	
 		
@@ -34,7 +32,6 @@ class ScreenMainMenu extends Screen {
 				Input.wait(2);
 				
 				game.exit(Tobor.EXIT_OK);
-				// game.switchScreen(new ScreenIntro(game));
 			}
 		} else {
 			dialog.update(deltaTime);
@@ -50,7 +47,7 @@ class ScreenMainMenu extends Screen {
 		if (batchStatic.length == 0) {
 			for (x in 0 ... 40) {
 				for (y in 0 ... 29) {
-					Gfx.drawRect(x * Entity.WIDTH, y * Entity.HEIGHT, SPR_WALL, Color.WHITE);
+					Gfx.drawRect(x * Tobor.OBJECT_WIDTH, y * Tobor.OBJECT_HEIGHT, SPR_WALL, Color.WHITE);
 				}
 			}
 		}
@@ -68,14 +65,16 @@ class ScreenMainMenu extends Screen {
 	
 	function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			["Hilfe", "F1"],		// 0
-			["Story", "F2"],		// 1
-			["Spielstart", "F4"],	// 2
-			["Laden", "F7"],		// 3
-			["Editor", "F8"],		// 4
-			["Ende", "F9"],			// 5
-			// ["Musik", "@M"],
-			// ["Vollbild", "@Ret"]
+			["Hilfe", "F1"],
+			["Story", "F2"],
+			["Spielstart", "F4", function() {
+				game.switchScreen(new ScreenPlay(game));
+			}],
+			["Editor", "F8", function() {
+				game.switchScreen(new ScreenEditor(game));
+			}],
+			["Laden", "F7"],
+			["Ende", "F9"],	
 		]);
 		
 		menu.select(2);
@@ -87,14 +86,6 @@ class ScreenMainMenu extends Screen {
 		};
 			
 		dialog.onOK = function () {
-			switch(menu.getSelected()) {
-				case 2:
-					game.switchScreen(new ScreenPlay(game));
-				case 4:
-					game.switchScreen(new ScreenEditor(game));
-				default:
-			}
-
 			dialog = null;
 		};
 	}

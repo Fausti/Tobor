@@ -6,7 +6,7 @@ import lime.math.Vector2;
  * ...
  * @author Matthias Faust
  */
-class EntityMoveable extends Entity {
+class ObjectMoveable extends Object {
 
 	// Bewegung
 	var direction:Vector2 = new Vector2();
@@ -31,16 +31,16 @@ class EntityMoveable extends Entity {
 			
 			var perc:Float = Utils.clamp((speed - timeLeft) / speed, 0.0, 1.0);
 			
-			movement.x = perc * Entity.WIDTH * direction.x;
-			movement.y = perc * Entity.HEIGHT * direction.y;
+			movement.x = perc * Tobor.OBJECT_WIDTH * direction.x;
+			movement.y = perc * Tobor.OBJECT_HEIGHT * direction.y;
 			
 			if (timeLeft <= 0.0) {
 				timeLeft = 0.0;
 				
 				movement.setTo(0, 0);
 				
-				position.x = Std.int((gridX + direction.x) * Entity.WIDTH);
-				position.y = Std.int((gridY + direction.y) * Entity.HEIGHT);
+				position.x = Std.int((gridX + direction.x) * Tobor.OBJECT_WIDTH);
+				position.y = Std.int((gridY + direction.y) * Tobor.OBJECT_HEIGHT);
 				
 				direction.setTo(0.0, 0.0);
 				
@@ -75,8 +75,12 @@ class EntityMoveable extends Entity {
 		
 		var canMove:Bool = true;
 		
-		for (e in room.getEntitiesAt(gridX + dirX, gridY + dirY, this)) {
-			if (!e.canEnter(this)) canMove = false;
+		if (room.outOfRoom(gridX + dirX, gridY + dirY)) {
+			canMove = false;
+		} else {
+			for (e in room.getEntitiesAt(gridX + dirX, gridY + dirY, this)) {
+				if (!e.canEnter(this)) canMove = false;
+			}
 		}
 		
 		if (canMove) {
