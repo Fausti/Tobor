@@ -20,6 +20,14 @@ class WorldData {
 			[10, 20], 
 		]);
 		
+		tileset.register("UI_PLAY", [
+			[11, 20], 
+		]);
+		
+		tileset.register("UI_PAUSE", [
+			[12, 20], 
+		]);
+		
 		tileset.register("UI_SELECTOR_ROOM", [
 			[8, 18], 
 			[9, 18], 
@@ -279,6 +287,112 @@ class WorldData {
 			[5, 5], 
 			[6, 5],
 			[7, 5]
+		]);
+		
+		tileset.register("SPR_ROBOT_EDITOR", [
+			[0, 10], 
+		]);
+		
+		// Roboter 0
+		
+		tileset.register("SPR_ROBOT_0_PART_0", [
+			[0, 7], 
+			[1, 7], 
+		]);
+		
+		tileset.register("SPR_ROBOT_0_PART_1", [
+			[0, 8], 
+			[1, 8], 
+		]);
+		
+		tileset.register("SPR_ROBOT_0_PART_2", [
+			[0, 9], 
+			[1, 9], 
+		]);
+		
+		// Roboter 1
+		
+		tileset.register("SPR_ROBOT_1_PART_0", [
+			[2, 7], 
+			[3, 7], 
+		]);
+		
+		tileset.register("SPR_ROBOT_1_PART_1", [
+			[2, 8], 
+			[3, 8], 
+		]);
+		
+		tileset.register("SPR_ROBOT_1_PART_2", [
+			[2, 9], 
+			[3, 9], 
+		]);
+		
+		// Roboter 2
+		
+		tileset.register("SPR_ROBOT_2_PART_0", [
+			[4, 7], 
+			[5, 7], 
+		]);
+		
+		tileset.register("SPR_ROBOT_2_PART_1", [
+			[4, 8], 
+			[5, 8], 
+		]);
+		
+		tileset.register("SPR_ROBOT_2_PART_2", [
+			[4, 9], 
+			[5, 9], 
+		]);
+		
+		// Roboter 3
+		
+		tileset.register("SPR_ROBOT_3_PART_0", [
+			[6, 7], 
+			[7, 7], 
+		]);
+		
+		tileset.register("SPR_ROBOT_3_PART_1", [
+			[6, 8], 
+			[7, 8], 
+		]);
+		
+		tileset.register("SPR_ROBOT_3_PART_2", [
+			[6, 9], 
+			[7, 9], 
+		]);
+		
+		// Roboter 4
+		
+		tileset.register("SPR_ROBOT_4_PART_0", [
+			[8, 7], 
+			[9, 7], 
+		]);
+		
+		tileset.register("SPR_ROBOT_4_PART_1", [
+			[8, 8], 
+			[9, 8], 
+		]);
+		
+		tileset.register("SPR_ROBOT_4_PART_2", [
+			[8, 9], 
+			[9, 9], 
+		]);
+		
+		// Roboter 5
+		
+		tileset.register("SPR_ROBOT_5_PART_0", [
+			[10, 7], 
+			[11, 7], 
+		]);
+		
+		tileset.register("SPR_ROBOT_5_PART_1", [
+			[10, 8], 
+			[11, 8], 
+		]);
+		
+		tileset.register("SPR_ROBOT_5_PART_2", [
+			[10, 9], 
+			[11, 9], 
 		]);
 	}
 }

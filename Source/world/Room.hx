@@ -31,13 +31,25 @@ class Room {
 		entities = [];
 	}
 	
-	public function update(deltaTime:Float):Bool {
+	/*
+	public function copy():Room {
+		var newRoom:Room = new Room(world, worldX, worldY, worldZ);
+		
 		for (e in entities) {
-			e.update(deltaTime);
-			
-			if (e.isStatic && e.changed) redraw = true;
+			newRoom.entities.push(e);
 		}
-
+	}
+	*/
+	
+	public function update(deltaTime:Float):Bool {
+		if (Tobor.GAME_MODE == GameMode.Play) {
+			for (e in entities) {
+				e.update(deltaTime);
+			
+				if (e.isStatic && e.changed) redraw = true;
+			}
+		}
+		
 		return redraw;
 	}
 	
@@ -45,7 +57,13 @@ class Room {
 		for (e in entities) {
 			switch(layer) {
 				case Room.LAYER_BACKGROUND:
-					if (e.isStatic) e.draw();
+					if (e.isStatic) {
+						if (Tobor.GAME_MODE == GameMode.Edit) {
+							e.editor_draw();
+						} else {
+							e.draw();
+						}
+					}
 				case Room.LAYER_SPRITE:
 					if (!e.isStatic) e.draw();
 				default:

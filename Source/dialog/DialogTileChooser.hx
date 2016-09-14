@@ -35,12 +35,47 @@ class DialogTileChooser extends Dialog {
 	
 	override
 	public function update(deltaTime:Float) {
+		var tile:Int = editor.currentTile;
+		
 		if (Input.mouseInside) {
+			var oldX = cursorX;
+			var oldY = cursorY;
+			
 			cursorX = Math.floor((Input.mouseX * Gfx.scaleX) / Tobor.OBJECT_WIDTH);
 			cursorY = Math.floor((Input.mouseY * Gfx.scaleY) / Tobor.OBJECT_HEIGHT);
+			
+			var tiles:Int = EntityFactory.table.length; // 256
+		
+			var boxH:Int;
+			var boxW:Int;
+		
+			if (tiles <= MAX_ITEMS) {
+				boxW = MAX_ITEMS;
+				boxH = 1;
+			} else {
+				boxW = MAX_ITEMS;
+				boxH = Math.ceil(tiles / boxW);
+			}
+				
+			if (oldX != cursorX || oldY != cursorY) {
+				// trace(cursorX, cursorY);
+				
+				if (cursorY < boxH && cursorX >= 4 && cursorX < 36) {
+					// trace(cursorX, cursorY);
+					tile = cursorY * MAX_ITEMS + (cursorX - 4);
+				}
+			}
+			
+			if (Input.mouseBtnLeft) {
+				if (cursorY < boxH && cursorX >= 4 && cursorX < 36) {
+					Input.mouseReset();
+					editor.currentTile = tile;
+					exit();
+				}
+			}
 		}
 		
-		var tile:Int = editor.currentTile;
+		
 		
 		if (Input.keyDown(Input.RIGHT)) {
 			tile++;

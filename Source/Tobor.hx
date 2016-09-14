@@ -29,9 +29,12 @@ import gfx.Gfx.gl;
  * ...
  * @author Matthias Faust
  */
+
 class Tobor {
 	public static inline var OBJECT_WIDTH:Int = 16;
 	public static inline var OBJECT_HEIGHT:Int = 12;
+	
+	public static var GAME_MODE:GameMode = GameMode.Pause;
 	
 	public var world:world.World;
 	
@@ -117,7 +120,8 @@ class Tobor {
 		world = new world.World();
 		world.load("tobor.ep");
 		
-		currentScreen = new ScreenMainMenu(this);
+		// currentScreen = new ScreenMainMenu(this);
+		switchScreen(new ScreenEditor(this));
 		
 		running = true;
 		ready = true;
@@ -209,7 +213,12 @@ class Tobor {
 	}
 	
 	public function switchScreen(newScreen:Screen) {
+		if (currentScreen != null) {
+			currentScreen.hide();
+		}
+		
 		currentScreen = newScreen;
+		currentScreen.show();
 	}
 	
 	public static var Config = {

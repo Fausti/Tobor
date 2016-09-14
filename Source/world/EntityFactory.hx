@@ -482,6 +482,13 @@ class EntityFactory {
 				classPath:CORE + "Nest",
 			}),
 			
+			new EntityTemplate ({
+				name:"OBJ_ROBOT",
+				subType:0,
+				editorSprite:"SPR_ROBOT_EDITOR",
+				classPath:CORE + "Robot",
+			}),
+			
 		];
 		
 		var isOK:Bool = true;

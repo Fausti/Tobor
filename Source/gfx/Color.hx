@@ -57,6 +57,11 @@ class Color {
 	public static var BROWN = Color.from(0x4f5000);
 	public static var WHITE = Color.from(0xffffff);
 	
+	public static var palette:Array<Color> = [
+		BLACK, YELLOW, DARK_GREEN, GRAY, PURPLE, DARK_RED, RED, ORANGE,
+		GREEN, LIGHT_GREEN, LIGHT_BLUE, BLUE, BLUE2, DARK_BLUE, BROWN, WHITE
+	];
+	
 	public static inline function from(col:Int) : Color {
 		var r:Float = Math.min(((col >> 16) & 0xFF) / 255.0, 1.0);
 		var g:Float = Math.min(((col >> 8) & 0xFF)  / 255.0, 1.0);

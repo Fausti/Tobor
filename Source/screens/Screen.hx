@@ -44,6 +44,14 @@ class Screen {
 		batchSprites = new Batch(true);
 	}
 	
+	public function show() {
+		
+	}
+	
+	public function hide() {
+		
+	}
+	
 	public function update(deltaTime:Float) {
 
 	}

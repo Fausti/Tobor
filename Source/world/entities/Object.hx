@@ -58,6 +58,10 @@ class Object extends Entity {
 		Gfx.drawTexture(x, y, 16, 12, gfx.getUV());
 	}
 	
+	public function editor_draw() {
+		draw();
+	}
+	
 	public function update(deltaTime:Float) {
 		if (gfx != null) gfx.update(deltaTime);
 		
