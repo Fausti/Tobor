@@ -53,7 +53,10 @@ class Screen {
 	}
 	
 	public function update(deltaTime:Float) {
-
+		if (dialog != null) {
+			dialog.update(deltaTime);
+			return;
+		}
 	}
 	
 	public function render() {
@@ -61,7 +64,7 @@ class Screen {
 	}
 	
 	public function renderUI() {
-		
+		if (dialog != null) dialog.render();
 	}
 	
 	public function onMouseMove(x:Float, y:Float) {
@@ -71,12 +74,12 @@ class Screen {
 	public function showDialog(dialog:Dialog) {
 		if (this.dialog != null) {
 			if (this.dialog != dialog) {
-				dialog.hide();
+				if (dialog != null) dialog.hide();
 			}
 		}
 		
 		this.dialog = dialog;
-		dialog.show();
+		if (dialog != null) dialog.show();
 	}
 	
 	public function hideDialog() {

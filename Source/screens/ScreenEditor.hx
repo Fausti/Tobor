@@ -22,7 +22,7 @@ import sys.io.File;
  * ...
  * @author Matthias Faust
  */
-class ScreenEditor extends Screen {
+class ScreenEditor extends ScreenPlay {
 	var cursorX:Int = 0;
 	var cursorY:Int = 0;
 	
@@ -35,6 +35,7 @@ class ScreenEditor extends Screen {
 	var UI_PLAY:Rectangle;
 	var UI_PAUSE:Rectangle;
 	
+	var dialogMenuEditor:DialogMenu;
 	var dialogTileset:DialogTileChooser;
 	var dialogRooms:DialogRoomChooser;
 	
@@ -70,6 +71,35 @@ class ScreenEditor extends Screen {
 			
 			dialog = null;
 		}
+		
+		// ESC - Menü
+		
+		dialogMenuEditor = new DialogMenu(this, 320, 166, [
+			["Neu", "", function() {
+				game.world.room.clear();
+			}],	
+			
+			["Laden", "", function() {
+				game.world.load("tobor.ep");
+			}],	
+			
+			["Speichern", "", function() {
+				game.world.save("tobor.ep");
+			}], 
+			
+			["Ende", "", function() {
+				game.exit(Tobor.EXIT_OK);
+				// game.switchScreen(new ScreenMainMenu(game));
+			}],
+		]);
+		
+		dialogMenuEditor.onEXIT = function () {
+			hideDialog();
+		};
+			
+		dialogMenuEditor.onOK = function () {
+			hideDialog();
+		};
 	}
 	
 	override public function show() {
@@ -86,42 +116,37 @@ class ScreenEditor extends Screen {
 		}
 		
 		if (dialog == null) {
-			if (Input.keyDown(Input.ESC)) {
-				Input.wait(2);
-				showMainMenu();
-			}
-			
 			if (Input.keyDown(Input.F5)) {
 				if (Tobor.GAME_MODE == GameMode.Edit) {
 					Input.wait(10);
 					game.world.save("editor.ep");
 					Tobor.GAME_MODE = GameMode.Play;
+					
+					return;
 				} else if (Tobor.GAME_MODE == GameMode.Play) {
 					Input.wait(10);
 					game.world.load("editor.ep");
 					Tobor.GAME_MODE = GameMode.Edit;
+					
+					return;
 				} else {
+					// Warum auch immer...
 					Tobor.GAME_MODE = GameMode.Edit;
+					
+					return;
 				}
 			}
 			
 			if (Tobor.GAME_MODE == GameMode.Play) {
-				// Spielerbewegung
-		
-				var mx:Int = 0;
-				var my:Int = 0;
-		
-				if (Input.keyDown(Input.RIGHT)) mx = 1;		
-				if (Input.keyDown(Input.LEFT)) mx = -1;
-				if (Input.keyDown(Input.UP)) my = -1;
-				if (Input.keyDown(Input.DOWN)) my = 1;
-		
-				game.world.player.move(mx, my);
-		
-				// Raumupdate
-		
-				game.world.room.update(deltaTime);
+				super.update(deltaTime);
 			} else {
+				if (Input.keyDown(Input.ESC)) {
+					Input.wait(2);
+				
+					showDialog(dialogMenuEditor);
+				
+					return;
+				}
 			
 				if (Input.keyDown(Input.TAB)) {
 					showDialog(dialogTileset);
@@ -216,15 +241,18 @@ class ScreenEditor extends Screen {
 		}
 	}
 	
+	override
 	function renderStatusLine() {
-		for (x in 0 ... 8) {
-			Gfx.drawRect(x * Tobor.OBJECT_WIDTH, 0, UI_NONE, Color.GREEN);
-			Gfx.drawRect((39 - x) * Tobor.OBJECT_WIDTH, 0, UI_NONE, Color.GREEN);
-		}
-		
 		if (Tobor.GAME_MODE == GameMode.Play) {
+			super.renderStatusLine();
+			
 			Gfx.drawRect(8, 0, UI_PLAY);
 		} else {
+			for (x in 0 ... 8) {
+				Gfx.drawRect(x * Tobor.OBJECT_WIDTH, 0, UI_NONE, Color.GREEN);
+				Gfx.drawRect((39 - x) * Tobor.OBJECT_WIDTH, 0, UI_NONE, Color.GREEN);
+			}
+			
 			Gfx.drawRect(8, 0, UI_PAUSE);
 			
 			// aktives Objekt
@@ -239,6 +267,7 @@ class ScreenEditor extends Screen {
 		}
 	}
 	
+	override
 	function renderStatic() {
 		var room:Room;
 		if (dialog != dialogRooms) {
@@ -263,6 +292,7 @@ class ScreenEditor extends Screen {
 		batchStatic.draw();
 	}
 	
+	override
 	function renderSprites() {
 		var room:Room;
 		if (dialog != dialogRooms) {
@@ -283,47 +313,5 @@ class ScreenEditor extends Screen {
 				
 		batchSprites.bind();
 		batchSprites.draw();
-	}
-	
-	function showMainMenu() {
-		var menu:DialogMenu;
-		
-		if (Tobor.GAME_MODE == GameMode.Edit) {
-			menu = new DialogMenu(this, 320, 166, [
-				["Neu", "", function() {
-					game.world.room.clear();
-				}],	
-			
-				["Laden", "", function() {
-					game.world.load("tobor.ep");
-				}],	
-			
-				["Speichern", "", function() {
-					game.world.save("tobor.ep");
-				}], 
-			
-				["Ende", "", function() {
-					game.exit(Tobor.EXIT_OK);
-					// game.switchScreen(new ScreenMainMenu(game));
-				}],
-			]);
-		} else {
-			menu = new DialogMenu(this, 320, 166, [
-				["Ende", "", function() {
-					game.exit(Tobor.EXIT_OK);
-					// game.switchScreen(new ScreenMainMenu(game));
-				}],
-			]);
-		}
-		
-		dialog = menu;
-		
-		dialog.onEXIT = function () {
-			dialog = null;
-		};
-			
-		dialog.onOK = function () {
-			dialog = null;
-		};
-	}
+	}	
 }

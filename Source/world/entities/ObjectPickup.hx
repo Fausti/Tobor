@@ -14,9 +14,18 @@ class ObjectPickup extends Object {
 	
 	override public function onEnter(e:Object) {
 		if (isPlayer(e)) {
-			destroy();
+			if (room.world.player.inventory.add(this)) {
+				onPickup(e);
+				destroy();
+			} else {
+				trace("Inventar ist voll!");
+			}
 		}
 		
 		super.onEnter(e);
+	}
+	
+	public function onPickup(e:Object) {
+		
 	}
 }

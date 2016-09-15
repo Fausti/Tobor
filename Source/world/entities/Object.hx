@@ -38,6 +38,10 @@ class Object extends Entity {
 		this.type = type;
 	}
 	
+	public function reset() {
+		
+	}
+	
 	public function onCreate() {
 		
 	}

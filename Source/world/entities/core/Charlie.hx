@@ -5,6 +5,7 @@ import gfx.Gfx;
 import lime.math.Rectangle;
 import lime.math.Vector2;
 import world.Room;
+import world.entities.Inventory;
 /**
  * ...
  * @author Matthias Faust
@@ -14,6 +15,8 @@ class Charlie extends ObjectMoveable {
 	public var lives:Int = 3;
 	public var points:Int = 0;
 	public var gold:Int = 0;
+	
+	public var inventory:Inventory;
 	
 	// Animation
 	var animWalking:Animation;
@@ -48,6 +51,8 @@ class Charlie extends ObjectMoveable {
 		// aktuelle Animation setzen
 		
 		gfx = animWalking;
+		
+		inventory = new Inventory();
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -191,6 +196,8 @@ class Charlie extends ObjectMoveable {
 		out.set("gold", gold);
 		out.set("points", points);
 		
+		out.set("inventory", inventory.save());
+		
 		return out;
 	}
 	
@@ -205,6 +212,8 @@ class Charlie extends ObjectMoveable {
 				lives = value;
 			case "points":
 				points = value;
+			case "inventory":
+				inventory.load(value);
 			default:
 				super.parseData(key, value);
 		}

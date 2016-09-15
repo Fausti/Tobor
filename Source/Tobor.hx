@@ -20,6 +20,7 @@ import lime.utils.Float32Array;
 import lime.math.Matrix4;
 import lime.Assets;
 import screens.ScreenMainMenu;
+import screens.ScreenPlay;
 import world.WorldData;
 import world.EntityFactory;
 import world.entities.Object;
@@ -122,6 +123,7 @@ class Tobor {
 		
 		// currentScreen = new ScreenMainMenu(this);
 		switchScreen(new ScreenEditor(this));
+		// switchScreen(new ScreenPlay(this));
 		
 		running = true;
 		ready = true;

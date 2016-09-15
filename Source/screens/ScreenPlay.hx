@@ -1,5 +1,6 @@
 package screens;
 
+import dialog.DialogMenu;
 import gfx.Gfx;
 import gfx.Color;
 import world.Room;
@@ -10,13 +11,62 @@ import world.entities.Object;
  * @author Matthias Faust
  */
 class ScreenPlay extends Screen {
-
+	var dialogMenu:DialogMenu;
+	
 	public function new(game:Tobor) {
 		super(game);
+		
+		// ESC - Menü
+		
+		dialogMenu = new DialogMenu(this, 320, 166, [
+			["Ende", "", function() {
+				game.exit(Tobor.EXIT_OK);
+				// game.switchScreen(new ScreenMainMenu(game));
+			}],
+		]);
+		
+		dialogMenu.onEXIT = function () {
+			hideDialog();
+		};
+			
+		dialogMenu.onOK = function () {
+			hideDialog();
+		};
+		
+		
+	}
+	
+	override public function show() {
+		Tobor.GAME_MODE = GameMode.Play;
 	}
 	
 	override
 	public function update(deltaTime:Float) {
+		if (dialog != null) {
+			super.update(deltaTime);
+		} else {
+			if (Input.keyDown(Input.ENTER)) {
+				Input.wait(2);
+				trace(game.world.player.inventory.length);
+				trace(game.world.player.inventory);
+				
+				return;
+			}
+			
+			if (Input.keyDown(Input.ESC)) {
+				Input.wait(2);
+				showDialog(dialogMenu);
+				
+				return;
+			}
+			
+			checkForMovement();
+		
+			game.world.room.update(deltaTime);
+		}
+	}
+	
+	function checkForMovement() {
 		var mx:Int = 0;
 		var my:Int = 0;
 		
@@ -26,14 +76,6 @@ class ScreenPlay extends Screen {
 		if (Input.keyDown(Input.DOWN)) my = 1;
 		
 		game.world.player.move(mx, my);
-		
-		if (Input.keyDown(Input.ESC)) {
-			Input.wait(2);
-				
-			game.switchScreen(new ScreenMainMenu(game));
-		}
-		
-		game.world.room.update(deltaTime);
 	}
 	
 	override
@@ -56,6 +98,8 @@ class ScreenPlay extends Screen {
 	override
 	public function renderUI() {
 		renderStatusLine();
+		
+		super.renderUI();
 	}
 	
 	function renderStatusLine() {
@@ -79,7 +123,7 @@ class ScreenPlay extends Screen {
 			Tobor.Font8.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
-		var weight = 32;
+		var weight = game.world.player.inventory.length;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawRect(471, 0, Tobor.Tileset.tile(7, 1));
 		Tobor.Font8.drawString(488, 0, strWeight, Color.BLACK);

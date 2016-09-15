@@ -7,7 +7,7 @@ import world.entities.ObjectPickup;
  * ...
  * @author Matthias Faust
  */
-class Gold extends ObjectPickup {
+class Gold extends Object {
 
 	public function new() {
 		super();
@@ -23,7 +23,8 @@ class Gold extends ObjectPickup {
 	}
 	
 	override public function onEnter(e:Object) {
-		if (e == room.world.player) {
+		if (isPlayer(e)) {
+			destroy();
 			room.world.player.gold++;
 		}
 		
