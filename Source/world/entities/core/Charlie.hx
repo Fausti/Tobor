@@ -55,6 +55,12 @@ class Charlie extends ObjectMoveable {
 		inventory = new Inventory();
 	}
 	
+	override public function reset() {
+		super.reset();
+		
+		inventory.clear();
+	}
+	
 	override public function update(deltaTime:Float) {
 		super.update(deltaTime);
 		

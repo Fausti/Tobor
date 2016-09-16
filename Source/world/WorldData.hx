@@ -35,6 +35,15 @@ class WorldData {
 			[9, 19], 
 		]);
 		
+		tileset.register("SPR_MUNITION", [
+			[9, 5],
+			[10, 5],
+			[11, 5],
+			[12, 5],
+			[13, 5],
+			[14, 5],
+		]);
+		
 		tileset.register("SPR_CHARLIE", [
 			// stehend
 			[1, 0], 

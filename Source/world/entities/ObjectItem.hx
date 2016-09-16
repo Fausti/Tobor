@@ -1,4 +1,5 @@
 package world.entities;
+
 import world.entities.Object;
 import world.entities.core.Charlie;
 
@@ -6,8 +7,7 @@ import world.entities.core.Charlie;
  * ...
  * @author Matthias Faust
  */
-class ObjectPickup extends Object {
-
+class ObjectItem extends Object {
 	public function new(?type:Int = 0) {
 		super(type);
 	}
@@ -27,5 +27,13 @@ class ObjectPickup extends Object {
 	
 	public function onPickup(e:Object) {
 		
+	}
+	
+	public function getCategory():String {
+		return null;
+	}
+	
+	public function getType():Int {
+		return -1;
 	}
 }

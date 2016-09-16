@@ -128,13 +128,14 @@ class Room {
 			// Debug.log(this, o);
 			
 			var entity:Object = EntityFactory.createFromID(o.get("id"), o.get("type"));
+			if (entity != null) {
+				for (key in Reflect.fields(o)) {
+					entity.parseData(key, Reflect.field(o, key));
+				}
 			
-			for (key in Reflect.fields(o)) {
-				entity.parseData(key, Reflect.field(o, key));
-			}
-			
-			if (!Std.is(entity, Charlie)) {
-				add(entity);
+				if (!Std.is(entity, Charlie)) {
+					add(entity);
+				}
 			}
 		}
 		

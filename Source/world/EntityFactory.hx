@@ -28,7 +28,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_STABIL",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_STABIL",
 				
@@ -36,7 +36,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_SW",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_SW",
 				
@@ -44,7 +44,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_NE",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_NE",
 				
@@ -52,7 +52,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_NW",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_NW",
 				
@@ -60,7 +60,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_SE",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_SE",
 				
@@ -70,7 +70,7 @@ class EntityFactory {
 			// Schwarze Mauer
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_BLACK",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_BLACK",
 				
@@ -78,7 +78,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_BLACK_SW",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_BLACK_SW",
 				
@@ -86,7 +86,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_BLACK_NE",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_BLACK_NE",
 				
@@ -94,7 +94,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_BLACK_NW",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_BLACK_NW",
 				
@@ -102,7 +102,7 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_MAUER_BLACK_SE",
+				name:"OBJ_MAUER",
 				classPath:CORE + "Wall",
 				editorSprite:"SPR_MAUER_BLACK_SE",
 				
@@ -207,28 +207,28 @@ class EntityFactory {
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_PFEIL_E",
+				name:"OBJ_PFEIL",
 				subType:0,
 				editorSprite:"SPR_PFEIL_E",
 				classPath:CORE + "Arrow",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_PFEIL_N",
+				name:"OBJ_PFEIL",
 				subType:1,
 				editorSprite:"SPR_PFEIL_N",
 				classPath:CORE + "Arrow",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_PFEIL_W",
+				name:"OBJ_PFEIL",
 				subType:2,
 				editorSprite:"SPR_PFEIL_W",
 				classPath:CORE + "Arrow",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_PFEIL_S",
+				name:"OBJ_PFEIL",
 				subType:3,
 				editorSprite:"SPR_PFEIL_S",
 				classPath:CORE + "Arrow",
@@ -250,105 +250,105 @@ class EntityFactory {
 		
 			// Türen
 			new EntityTemplate({
-				name:"OBJ_TUER_0",
+				name:"OBJ_TUER",
 				subType:0,
 				editorSprite:"SPR_TUER_MONO_0",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_1",
+				name:"OBJ_TUER",
 				subType:1,
 				editorSprite:"SPR_TUER_MONO_1",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_2",
+				name:"OBJ_TUER",
 				subType:2,
 				editorSprite:"SPR_TUER_MONO_2",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_3",
+				name:"OBJ_TUER",
 				subType:3,
 				editorSprite:"SPR_TUER_MONO_3",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_4",
+				name:"OBJ_TUER",
 				subType:4,
 				editorSprite:"SPR_TUER_MONO_4",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_5",
+				name:"OBJ_TUER",
 				subType:5,
 				editorSprite:"SPR_TUER_MONO_5",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_6",
+				name:"OBJ_TUER",
 				subType:6,
 				editorSprite:"SPR_TUER_MONO_6",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_7",
+				name:"OBJ_TUER",
 				subType:7,
 				editorSprite:"SPR_TUER_MONO_7",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_8",
+				name:"OBJ_TUER",
 				subType:8,
 				editorSprite:"SPR_TUER_MONO_8",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_9",
+				name:"OBJ_TUER",
 				subType:9,
 				editorSprite:"SPR_TUER_MONO_9",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_10",
+				name:"OBJ_TUER",
 				subType:10,
 				editorSprite:"SPR_TUER_MONO_10",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_11",
+				name:"OBJ_TUER",
 				subType:11,
 				editorSprite:"SPR_TUER_MONO_11",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_12",
+				name:"OBJ_TUER",
 				subType:12,
 				editorSprite:"SPR_TUER_MONO_12",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_13",
+				name:"OBJ_TUER",
 				subType:13,
 				editorSprite:"SPR_TUER_MONO_13",
 				classPath:CORE + "Door",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_TUER_14",
+				name:"OBJ_TUER",
 				subType:14,
 				editorSprite:"SPR_TUER_MONO_14",
 				classPath:CORE + "Door",
@@ -357,105 +357,105 @@ class EntityFactory {
 			// Schlüssel
 
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_0",
+				name:"OBJ_SCHLUESSEL",
 				subType:0,
 				editorSprite:"SPR_SCHLUESSEL_MONO_0",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_1",
+				name:"OBJ_SCHLUESSEL",
 				subType:1,
 				editorSprite:"SPR_SCHLUESSEL_MONO_1",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_2",
+				name:"OBJ_SCHLUESSEL",
 				subType:2,
 				editorSprite:"SPR_SCHLUESSEL_MONO_2",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_3",
+				name:"OBJ_SCHLUESSEL",
 				subType:3,
 				editorSprite:"SPR_SCHLUESSEL_MONO_3",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_4",
+				name:"OBJ_SCHLUESSEL",
 				subType:4,
 				editorSprite:"SPR_SCHLUESSEL_MONO_4",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_5",
+				name:"OBJ_SCHLUESSEL",
 				subType:5,
 				editorSprite:"SPR_SCHLUESSEL_MONO_5",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_6",
+				name:"OBJ_SCHLUESSEL",
 				subType:6,
 				editorSprite:"SPR_SCHLUESSEL_MONO_6",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_7",
+				name:"OBJ_SCHLUESSEL",
 				subType:7,
 				editorSprite:"SPR_SCHLUESSEL_MONO_7",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_8",
+				name:"OBJ_SCHLUESSEL",
 				subType:8,
 				editorSprite:"SPR_SCHLUESSEL_MONO_8",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_9",
+				name:"OBJ_SCHLUESSEL",
 				subType:9,
 				editorSprite:"SPR_SCHLUESSEL_MONO_9",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_10",
+				name:"OBJ_SCHLUESSEL",
 				subType:10,
 				editorSprite:"SPR_SCHLUESSEL_MONO_10",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_11",
+				name:"OBJ_SCHLUESSEL",
 				subType:11,
 				editorSprite:"SPR_SCHLUESSEL_MONO_11",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_12",
+				name:"OBJ_SCHLUESSEL",
 				subType:12,
 				editorSprite:"SPR_SCHLUESSEL_MONO_12",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_13",
+				name:"OBJ_SCHLUESSEL",
 				subType:13,
 				editorSprite:"SPR_SCHLUESSEL_MONO_13",
 				classPath:CORE + "Key",
 			}),
 			
 			new EntityTemplate({
-				name:"OBJ_SCHLUESSEL_14",
+				name:"OBJ_SCHLUESSEL",
 				subType:14,
 				editorSprite:"SPR_SCHLUESSEL_MONO_14",
 				classPath:CORE + "Key",
@@ -489,6 +489,50 @@ class EntityFactory {
 				classPath:CORE + "Robot",
 			}),
 			
+			// Munition
+			
+			new EntityTemplate({
+				name:"OBJ_MUNITION",
+				subType:0,
+				editorSprite:"SPR_MUNITION_0",
+				classPath:CORE + "Bullet",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_MUNITION",
+				subType:1,
+				editorSprite:"SPR_MUNITION_1",
+				classPath:CORE + "Bullet",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_MUNITION",
+				subType:2,
+				editorSprite:"SPR_MUNITION_2",
+				classPath:CORE + "Bullet",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_MUNITION",
+				subType:3,
+				editorSprite:"SPR_MUNITION_3",
+				classPath:CORE + "Bullet",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_MUNITION",
+				subType:4,
+				editorSprite:"SPR_MUNITION_4",
+				classPath:CORE + "Bullet",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_MUNITION",
+				subType:5,
+				editorSprite:"SPR_MUNITION_5",
+				classPath:CORE + "Bullet",
+			}),
+			
 		];
 		
 		var isOK:Bool = true;
@@ -514,7 +558,9 @@ class EntityFactory {
 	public static function create(index:Int):Object {
 		if (index == -1) {
 			trace("ENTITY FACTORY ERROR: Id is -1!");
-			System.exit(1);
+			// System.exit(1);
+			
+			return null;
 		}
 		
 		var entity:Object = null;
@@ -530,6 +576,37 @@ class EntityFactory {
 		}
 		
 		return entity;
+	}
+
+	public static function getfromKey(key:String):EntityTemplate {
+		var id:Int = findKey(key);
+		
+		if (id < 0) {
+			return null;
+		}
+		
+		return table[id];
+	}
+	
+	public static function getfromKeyID(key:String, type:Int):EntityTemplate {
+		var id:Int = findID(key, type);
+		
+		if (id < 0) {
+			return null;
+		}
+		
+		return table[id];
+	}
+	
+	public static function findKey(key:String):Int {
+		var id:Int = 0;
+		
+		for (t in table) {
+			if (t.name == key && t.subType == 0) return id;
+			id++;
+		}
+		
+		return -1;
 	}
 	
 	public static function findID(key:String, ?type):Int {

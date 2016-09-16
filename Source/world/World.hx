@@ -76,6 +76,8 @@ class World {
 		currentRoom = null;
 		rooms = [];
 		
+		player.reset();
+		
 		var fin = File.read(fileName, false);
 		var fileData = fin.readAll().toString();
 		fin.close();

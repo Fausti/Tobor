@@ -25,6 +25,8 @@ class Input {
 	public static var PAGE_UP = [KeyCode.PAGE_UP];
 	public static var PAGE_DOWN = [KeyCode.PAGE_DOWN];
 	
+	public static var NUM_1 = [KeyCode.NUMBER_1, KeyCode.NUMPAD_1];
+	
 	public static var F1 = [KeyCode.F1];
 	public static var F2 = [KeyCode.F2];
 	public static var F3 = [KeyCode.F3];

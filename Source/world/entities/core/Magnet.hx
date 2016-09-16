@@ -1,12 +1,12 @@
 package world.entities.core;
 
-import world.entities.ObjectPickup;
+import world.entities.ObjectItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Magnet extends ObjectPickup {
+class Magnet extends ObjectItem {
 	var SPRITES:Array<Sprite>;
 	
 	public function new(?type:Int=0) {

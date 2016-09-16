@@ -2,13 +2,13 @@ package world.entities.core;
 
 import gfx.Sprite;
 import gfx.Color;
-import world.entities.ObjectPickup;
+import world.entities.ObjectItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Key extends ObjectPickup {
+class Key extends ObjectItem {
 	var SPRITES:Array<Sprite>;
 	var SPRITES_MONO:Array<Sprite>;
 	

@@ -1,12 +1,12 @@
 package world.entities.core;
 
-import world.entities.ObjectPickup;
+import world.entities.ObjectItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Diamond extends ObjectPickup {
+class Diamond extends ObjectItem {
 
 	var SPRITES:Array<Sprite>;
 	

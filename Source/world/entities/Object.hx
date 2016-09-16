@@ -140,4 +140,13 @@ class Object extends Entity {
 				Debug.error(this, "Couldn't parse key '" + key + "' with value '" + value + "'!");
 		}
 	}
+	
+	override public function get_ID():String {
+		var id:Int = EntityFactory.findIDFromObject(this);
+		var temp:EntityTemplate = EntityFactory.table[id];
+		
+		if (temp == null) return null;
+		
+		return temp.name;
+	}
 }

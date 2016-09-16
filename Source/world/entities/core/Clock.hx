@@ -1,12 +1,12 @@
 package world.entities.core;
 
-import world.entities.ObjectPickup;
+import world.entities.ObjectItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Clock extends ObjectPickup {
+class Clock extends ObjectItem {
 
 	public function new(?type:Int=0) {
 		super(type);

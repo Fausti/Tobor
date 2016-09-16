@@ -1,7 +1,7 @@
 package world.entities.core;
 
 import world.entities.Object;
-import world.entities.ObjectPickup;
+import world.entities.ObjectItem;
 
 /**
  * ...

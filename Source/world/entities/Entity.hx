@@ -11,13 +11,13 @@ import lime.math.Vector2;
  */
 
 class Entity {
+	private var classPath:String;
+	
 	public function new() {
 		classPath = Type.getClassName(Type.getClass(this));
 	}
 	
 	// interner Klassenpath z.B. "world.entities.Object"
-	
-	private var classPath:String;
 	
 	public function getClassPath():String {
 		return classPath;
@@ -73,5 +73,9 @@ class Entity {
 		position.y = v * Tobor.OBJECT_HEIGHT;
 		
 		return v * Tobor.OBJECT_HEIGHT;
+	}
+
+	public function get_ID():String {
+		return null;
 	}
 }

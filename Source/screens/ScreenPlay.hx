@@ -1,10 +1,12 @@
 package screens;
 
+import dialog.DialogInventory;
 import dialog.DialogMenu;
 import gfx.Gfx;
 import gfx.Color;
 import world.Room;
 import world.entities.Object;
+import world.entities.ObjectItem;
 
 /**
  * ...
@@ -12,6 +14,7 @@ import world.entities.Object;
  */
 class ScreenPlay extends Screen {
 	var dialogMenu:DialogMenu;
+	var dialogInventory:DialogInventory;
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -33,7 +36,17 @@ class ScreenPlay extends Screen {
 			hideDialog();
 		};
 		
+		// Inventar
 		
+		dialogInventory = new DialogInventory(this, 0, 0, game.world.player.inventory);
+		
+		dialogInventory.onEXIT = function () {
+			hideDialog();
+		};
+			
+		dialogInventory.onOK = function () {
+			hideDialog();
+		};
 	}
 	
 	override public function show() {
@@ -45,12 +58,25 @@ class ScreenPlay extends Screen {
 		if (dialog != null) {
 			super.update(deltaTime);
 		} else {
-			if (Input.keyDown(Input.ENTER)) {
+			if (Input.keyDown(Input.NUM_1)) {
 				Input.wait(2);
-				trace(game.world.player.inventory.length);
-				trace(game.world.player.inventory);
 				
-				return;
+				var inv = game.world.player.inventory;
+				
+				var obj:ObjectItem = inv.spawnObject(inv.find("OBJ_UHR", 0));
+				
+				if (obj != null) {
+					game.world.room.add(obj);
+				}
+			}
+			
+			if (Input.keyDown(Input.ENTER)) {
+				if (game.world.player.inventory.length > 0) {
+					Input.wait(2);
+					showDialog(dialogInventory);
+				
+					return;
+				}
 			}
 			
 			if (Input.keyDown(Input.ESC)) {
