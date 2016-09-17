@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="Tobor" package="com.sample.tobor" version="1.0.0" company="Company Name" />
+	<meta title="The Game of Tobor" package="de.netzweh.tobor" version="1.0.0" company="Netzweh" />
 	<app main="Main" path="Export" file="Tobor" />
+	
+	<window width="1280" height="696" orientation="landscape" resizable="false" fps="60" vsync="false" background="0xFFFFFF" if="web"/>
+	<window width="640" height="348" orientation="landscape" resizable="false" fps="60" vsync="false" background="0xFFFFFF" unless="web"/>
 	
 	<source path="Source" />
 	
 	<haxelib name="lime" />
+	<haxelib name="hscript" />
+	<haxelib name="compiletime" />
+	<haxelib name="tjson" />
 	
 	<assets path="Assets" rename="assets" />
 	
+	<icon path="Assets/icons/icon-1024.png" size="1024" />
+	<icon path="Assets/icons/icon-16.png" size="16" />
+	
+	<template path="Assets/web/index.html" rename="index.html" />
+	<template path="Assets/web/favicon-180.png" rename="favicon-180.png" if="web" />
+	<template path="Assets/web/favicon-144.png" rename="favicon-144.png" if="web" />
+	<template path="Assets/web/favicon-32.png" rename="favicon-32.png" if="web" />
 </project>

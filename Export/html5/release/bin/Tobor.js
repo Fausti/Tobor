@@ -10,7 +10,7 @@ function $extend(from, fields) {
 }
 var ApplicationMain = function() { };
 $hxClasses["ApplicationMain"] = ApplicationMain;
-ApplicationMain.__name__ = true;
+ApplicationMain.__name__ = ["ApplicationMain"];
 ApplicationMain.create = function() {
 	ApplicationMain.preloader = new lime_app_Preloader();
 	ApplicationMain.app = new Main();
@@ -49,18 +49,22 @@ ApplicationMain.create = function() {
 	ApplicationMain.preloader.load(urls,types);
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "725", company : "Netzweh", file : "Tobor", fps : 60, name : "The Game of Tobor", orientation : "landscape", packageName : "de.netzweh.tobor", version : "1.0.0", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 696, hidden : null, maximized : null, minimized : null, parameters : "{}", resizable : false, stencilBuffer : false, title : "The Game of Tobor", vsync : false, width : 1280, x : null, y : null}]};
+	ApplicationMain.config = { build : "1283", company : "Netzweh", file : "Tobor", fps : 60, name : "The Game of Tobor", orientation : "landscape", packageName : "de.netzweh.tobor", version : "1.0.0", windows : [{ antialiasing : 0, background : 16777215, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 696, hidden : null, maximized : null, minimized : null, parameters : "{}", resizable : false, stencilBuffer : false, title : "The Game of Tobor", vsync : false, width : 1280, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	ApplicationMain.app.exec();
 };
+var CompileTime = function() { };
+$hxClasses["CompileTime"] = CompileTime;
+CompileTime.__name__ = ["CompileTime"];
 var lime_AssetLibrary = function() {
 	this.onChange = new lime_app_Event_$Void_$Void();
 };
 $hxClasses["lime.AssetLibrary"] = lime_AssetLibrary;
-lime_AssetLibrary.__name__ = true;
+lime_AssetLibrary.__name__ = ["lime","AssetLibrary"];
 lime_AssetLibrary.prototype = {
-	exists: function(id,type) {
+	onChange: null
+	,exists: function(id,type) {
 		return false;
 	}
 	,getAudioBuffer: function(id) {
@@ -267,10 +271,16 @@ var DefaultAssetLibrary = function() {
 	}
 };
 $hxClasses["DefaultAssetLibrary"] = DefaultAssetLibrary;
-DefaultAssetLibrary.__name__ = true;
+DefaultAssetLibrary.__name__ = ["DefaultAssetLibrary"];
 DefaultAssetLibrary.__super__ = lime_AssetLibrary;
 DefaultAssetLibrary.prototype = $extend(lime_AssetLibrary.prototype,{
-	exists: function(id,type) {
+	className: null
+	,path: null
+	,type: null
+	,lastModified: null
+	,timer: null
+	,rootPath: null
+	,exists: function(id,type) {
 		var requestedType = type != null?js_Boot.__cast(type , String):null;
 		var _this = this.type;
 		var assetType = __map_reserved[id] != null?_this.getReserved(id):_this.h[id];
@@ -412,9 +422,10 @@ var EReg = function(r,opt) {
 	this.r = new RegExp(r,opt.split("u").join(""));
 };
 $hxClasses["EReg"] = EReg;
-EReg.__name__ = true;
+EReg.__name__ = ["EReg"];
 EReg.prototype = {
-	match: function(s) {
+	r: null
+	,match: function(s) {
 		if(this.r.global) {
 			this.r.lastIndex = 0;
 		}
@@ -433,7 +444,7 @@ EReg.prototype = {
 };
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
-HxOverrides.__name__ = true;
+HxOverrides.__name__ = ["HxOverrides"];
 HxOverrides.cca = function(s,index) {
 	var x = s.charCodeAt(index);
 	if(x != x) {
@@ -470,8 +481,31 @@ HxOverrides.iter = function(a) {
 };
 var Input = function() { };
 $hxClasses["Input"] = Input;
-Input.__name__ = true;
+Input.__name__ = ["Input"];
+Input.wait = function(time) {
+	Input.waitTime = time;
+};
+Input.update = function(deltaTime) {
+	if(Input.waitTime > 0.0) {
+		if(deltaTime > Input.waitTime) {
+			deltaTime = Input.waitTime;
+		}
+		Input.waitTime -= deltaTime;
+		if(Input.waitTime < 0) {
+			Input.waitTime = 0.0;
+		}
+	}
+};
+Input.setKey = function(keyCode,value) {
+	Input.key.h[keyCode] = value;
+	if(value == false) {
+		Input.waitTime = 0.0;
+	}
+};
 Input.keyDown = function(k) {
+	if(Input.waitTime > 0.0) {
+		return false;
+	}
 	var down = false;
 	var _g = 0;
 	while(_g < k.length) {
@@ -488,9 +522,11 @@ var IntIterator = function(min,max) {
 	this.max = max;
 };
 $hxClasses["IntIterator"] = IntIterator;
-IntIterator.__name__ = true;
+IntIterator.__name__ = ["IntIterator"];
 IntIterator.prototype = {
-	hasNext: function() {
+	min: null
+	,max: null
+	,hasNext: function() {
 		return this.min < this.max;
 	}
 	,next: function() {
@@ -502,9 +538,12 @@ var List = function() {
 	this.length = 0;
 };
 $hxClasses["List"] = List;
-List.__name__ = true;
+List.__name__ = ["List"];
 List.prototype = {
-	add: function(item) {
+	h: null
+	,q: null
+	,length: null
+	,add: function(item) {
 		var x = new _$List_ListNode(item,null);
 		if(this.h == null) {
 			this.h = x;
@@ -526,6 +565,9 @@ List.prototype = {
 		this.length--;
 		return x;
 	}
+	,iterator: function() {
+		return new _$List_ListIterator(this.h);
+	}
 	,__class__: List
 };
 var _$List_ListNode = function(item,next) {
@@ -533,15 +575,41 @@ var _$List_ListNode = function(item,next) {
 	this.next = next;
 };
 $hxClasses["_List.ListNode"] = _$List_ListNode;
-_$List_ListNode.__name__ = true;
+_$List_ListNode.__name__ = ["_List","ListNode"];
 _$List_ListNode.prototype = {
-	__class__: _$List_ListNode
+	item: null
+	,next: null
+	,__class__: _$List_ListNode
+};
+var _$List_ListIterator = function(head) {
+	this.head = head;
+};
+$hxClasses["_List.ListIterator"] = _$List_ListIterator;
+_$List_ListIterator.__name__ = ["_List","ListIterator"];
+_$List_ListIterator.prototype = {
+	head: null
+	,hasNext: function() {
+		return this.head != null;
+	}
+	,next: function() {
+		var val = this.head.item;
+		this.head = this.head.next;
+		return val;
+	}
+	,__class__: _$List_ListIterator
 };
 var lime_app_IModule = function() { };
 $hxClasses["lime.app.IModule"] = lime_app_IModule;
-lime_app_IModule.__name__ = true;
+lime_app_IModule.__name__ = ["lime","app","IModule"];
 lime_app_IModule.prototype = {
-	__class__: lime_app_IModule
+	addRenderer: null
+	,addWindow: null
+	,registerModule: null
+	,removeRenderer: null
+	,removeWindow: null
+	,setPreloader: null
+	,unregisterModule: null
+	,__class__: lime_app_IModule
 };
 var lime_app_Module = function() {
 	this.onExit = new lime_app_Event_$Int_$Void();
@@ -549,10 +617,15 @@ var lime_app_Module = function() {
 	this.__windows = [];
 };
 $hxClasses["lime.app.Module"] = lime_app_Module;
-lime_app_Module.__name__ = true;
+lime_app_Module.__name__ = ["lime","app","Module"];
 lime_app_Module.__interfaces__ = [lime_app_IModule];
 lime_app_Module.prototype = {
-	addRenderer: function(renderer) {
+	onExit: null
+	,__application: null
+	,__preloader: null
+	,__renderers: null
+	,__windows: null
+	,addRenderer: function(renderer) {
 		var f = $bind(this,this.render);
 		var a1 = renderer;
 		renderer.onRender.add(function() {
@@ -900,10 +973,20 @@ var lime_app_Application = function() {
 	this.registerModule(this);
 };
 $hxClasses["lime.app.Application"] = lime_app_Application;
-lime_app_Application.__name__ = true;
+lime_app_Application.__name__ = ["lime","app","Application"];
 lime_app_Application.__super__ = lime_app_Module;
 lime_app_Application.prototype = $extend(lime_app_Module.prototype,{
-	addModule: function(module) {
+	config: null
+	,modules: null
+	,preloader: null
+	,onUpdate: null
+	,renderer: null
+	,renderers: null
+	,window: null
+	,windows: null
+	,backend: null
+	,windowByID: null
+	,addModule: function(module) {
 		module.registerModule(this);
 		this.modules.push(module);
 		if(this.__renderers.length > 0) {
@@ -1035,15 +1118,17 @@ lime_app_Application.prototype = $extend(lime_app_Module.prototype,{
 		return this.__windows;
 	}
 	,__class__: lime_app_Application
+	,__properties__: {get_windows:"get_windows",get_window:"get_window",get_renderers:"get_renderers",get_renderer:"get_renderer",get_preloader:"get_preloader",set_frameRate:"set_frameRate",get_frameRate:"get_frameRate"}
 });
 var Main = function() {
 	lime_app_Application.call(this);
 };
 $hxClasses["Main"] = Main;
-Main.__name__ = true;
+Main.__name__ = ["Main"];
 Main.__super__ = lime_app_Application;
 Main.prototype = $extend(lime_app_Application.prototype,{
-	onWindowCreate: function(window) {
+	game: null
+	,onWindowCreate: function(window) {
 		haxe_Log.trace("onWindowCreate",{ fileName : "Main.hx", lineNumber : 20, className : "Main", methodName : "onWindowCreate"});
 		var _g = window.renderer.context;
 		if(_g[1] == 0) {
@@ -1068,10 +1153,53 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		}
 		this.game.render();
 	}
-	,onMouseMove: function(window,x,y) {
-		lime_app_Application.prototype.onMouseMove.call(this,window,x,y);
+	,onWindowResize: function(window,width,height) {
+		lime_app_Application.prototype.onWindowResize.call(this,window,width,height);
+		haxe_Log.trace("RESIZE: ",{ fileName : "Main.hx", lineNumber : 76, className : "Main", methodName : "onWindowResize", customParams : [width,height]});
+		this.game.onResize(width,height);
+	}
+	,updateMouse: function(x,y) {
 		Input.mouseX = x | 0;
 		Input.mouseY = y | 0;
+	}
+	,onMouseMove: function(window,x,y) {
+		lime_app_Application.prototype.onMouseMove.call(this,window,x,y);
+		this.updateMouse(x,y);
+		this.game.onMouseMove(x,y);
+	}
+	,onMouseDown: function(window,x,y,button) {
+		lime_app_Application.prototype.onMouseDown.call(this,window,x,y,button);
+		this.updateMouse(x,y);
+		switch(button) {
+		case 0:
+			Input.mouseBtnLeft = true;
+			break;
+		case 1:
+			Input.mouseBtnMiddle = true;
+			break;
+		case 2:
+			Input.mouseBtnRight = true;
+			break;
+		default:
+			haxe_Log.trace("Mousebutton: " + button,{ fileName : "Main.hx", lineNumber : 109, className : "Main", methodName : "onMouseDown"});
+		}
+	}
+	,onMouseUp: function(window,x,y,button) {
+		lime_app_Application.prototype.onMouseUp.call(this,window,x,y,button);
+		this.updateMouse(x,y);
+		switch(button) {
+		case 0:
+			Input.mouseBtnLeft = false;
+			break;
+		case 1:
+			Input.mouseBtnMiddle = false;
+			break;
+		case 2:
+			Input.mouseBtnRight = false;
+			break;
+		default:
+			haxe_Log.trace("Mousebutton: " + button,{ fileName : "Main.hx", lineNumber : 126, className : "Main", methodName : "onMouseUp"});
+		}
 	}
 	,onWindowEnter: function(window) {
 		lime_app_Application.prototype.onWindowEnter.call(this,window);
@@ -1083,18 +1211,38 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 	}
 	,onKeyDown: function(window,keyCode,modifier) {
 		lime_app_Application.prototype.onKeyDown.call(this,window,keyCode,modifier);
-		Input.key.h[keyCode] = true;
+		Input.setKey(keyCode,true);
 	}
 	,onKeyUp: function(window,keyCode,modifier) {
 		lime_app_Application.prototype.onKeyUp.call(this,window,keyCode,modifier);
-		Input.key.h[keyCode] = false;
+		Input.setKey(keyCode,false);
 	}
 	,__class__: Main
 });
-Math.__name__ = true;
+Math.__name__ = ["Math"];
 var Reflect = function() { };
 $hxClasses["Reflect"] = Reflect;
-Reflect.__name__ = true;
+Reflect.__name__ = ["Reflect"];
+Reflect.field = function(o,field) {
+	try {
+		return o[field];
+	} catch( e ) {
+		haxe_CallStack.lastException = e;
+		return null;
+	}
+};
+Reflect.fields = function(o) {
+	var a = [];
+	if(o != null) {
+		var hasOwnProperty = Object.prototype.hasOwnProperty;
+		for( var f in o ) {
+		if(f != "__id__" && f != "hx__closures__" && hasOwnProperty.call(o,f)) {
+			a.push(f);
+		}
+		}
+	}
+	return a;
+};
 Reflect.isFunction = function(f) {
 	if(typeof(f) == "function") {
 		return !(f.__name__ || f.__ename__);
@@ -1115,6 +1263,21 @@ Reflect.compareMethods = function(f1,f2) {
 		return false;
 	}
 };
+Reflect.isObject = function(v) {
+	if(v == null) {
+		return false;
+	}
+	var t = typeof(v);
+	if(!(t == "string" || t == "object" && v.__enum__ == null)) {
+		if(t == "function") {
+			return (v.__name__ || v.__ename__) != null;
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}
+};
 Reflect.makeVarArgs = function(f) {
 	return function() {
 		var a = Array.prototype.slice.call(arguments);
@@ -1123,7 +1286,7 @@ Reflect.makeVarArgs = function(f) {
 };
 var Std = function() { };
 $hxClasses["Std"] = Std;
-Std.__name__ = true;
+Std.__name__ = ["Std"];
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
 };
@@ -1137,24 +1300,18 @@ Std.parseInt = function(x) {
 	}
 	return v;
 };
-Std.random = function(x) {
-	if(x <= 0) {
-		return 0;
-	} else {
-		return Math.floor(Math.random() * x);
-	}
-};
 var StringBuf = function() {
 	this.b = "";
 };
 $hxClasses["StringBuf"] = StringBuf;
-StringBuf.__name__ = true;
+StringBuf.__name__ = ["StringBuf"];
 StringBuf.prototype = {
-	__class__: StringBuf
+	b: null
+	,__class__: StringBuf
 };
 var StringTools = function() { };
 $hxClasses["StringTools"] = StringTools;
-StringTools.__name__ = true;
+StringTools.__name__ = ["StringTools"];
 StringTools.startsWith = function(s,start) {
 	if(s.length >= start.length) {
 		return HxOverrides.substr(s,0,start.length) == start;
@@ -1193,31 +1350,58 @@ StringTools.rtrim = function(s) {
 StringTools.trim = function(s) {
 	return StringTools.ltrim(StringTools.rtrim(s));
 };
+StringTools.lpad = function(s,c,l) {
+	if(c.length <= 0) {
+		return s;
+	}
+	while(s.length < l) s = c + s;
+	return s;
+};
 StringTools.replace = function(s,sub,by) {
 	return s.split(sub).join(by);
 };
 var Tobor = function(window) {
 	this.running = false;
 	Tobor.window = window;
+	window.move(320,240);
+	window.resize(Tobor.Config.gfx.width * 2,Tobor.Config.gfx.height * 2);
 };
 $hxClasses["Tobor"] = Tobor;
-Tobor.__name__ = true;
+Tobor.__name__ = ["Tobor"];
 Tobor.prototype = {
-	init: function() {
+	world: null
+	,screen: null
+	,batchUI: null
+	,texture: null
+	,shader: null
+	,camMatrix: null
+	,running: null
+	,frameBuffer: null
+	,init: function() {
 		this.frameBuffer = new gfx_Framebuffer(640,348);
+		gfx_Gfx.scaleX = this.frameBuffer.width / Tobor.window.__width;
+		gfx_Gfx.scaleY = this.frameBuffer.height / Tobor.window.__height;
 		this.texture = new gfx_Texture();
 		this.texture.createFromImage(lime_Assets.getImage("assets/tileset.png"));
 		Tobor.Tileset = new gfx_Tilesheet(this.texture);
+		world_WorldData.initTilesheet(Tobor.Tileset);
+		world_EntityFactory.init();
 		Tobor.Font16 = new gfx_Font(16,10,252);
 		Tobor.Font8 = new gfx_Font(8,10,322);
+		Tobor.Frame16 = new gfx_Frame(128,324,16,12);
+		Tobor.Frame8 = new gfx_Frame(128,360,8,10);
 		this.shader = new gfx_Shader("precision mediump float;" + "attribute vec4 a_Position;" + "attribute vec2 a_TexCoord0;" + "attribute vec4 a_Color;" + "uniform mat4 u_camMatrix;" + "varying vec2 v_TexCoord0;" + "varying vec4 v_Color;" + "void main(void) {" + "    v_TexCoord0 = a_TexCoord0;" + "    v_Color = a_Color;" + "    gl_Position = u_camMatrix * a_Position;" + "}","precision mediump float;" + "uniform sampler2D u_Texture0;" + "varying vec2 v_TexCoord0;" + "varying vec4 v_Color;" + "void main(void) {" + "    vec4 texColor = texture2D(u_Texture0, v_TexCoord0);" + "    if (texColor.a == 0.0) discard;" + "    gl_FragColor = texColor * v_Color;" + "}");
 		this.camMatrix = lime_math__$Matrix4_Matrix4_$Impl_$.createOrtho(0,640,348,0,-1000,1000);
-		lime_ui_Mouse.hide();
-		this.screen = new gfx_Screen(Tobor.Config.gfx);
+		if(Tobor.Config.gfx.customMousePointer) {
+			lime_ui_Mouse.hide();
+		}
+		this.screen = new screens_EditorScreen(this);
 		this.batchUI = new gfx_Batch(true);
+		this.world = new world_World();
 		this.running = true;
 	}
 	,update: function(deltaTime) {
+		Input.update(deltaTime);
 		if(!this.running) {
 			return;
 		}
@@ -1245,355 +1429,171 @@ Tobor.prototype = {
 		gfx_Gfx.gl.clear(gfx_Gfx.gl.COLOR_BUFFER_BIT | gfx_Gfx.gl.DEPTH_BUFFER_BIT);
 		this.frameBuffer.draw(Tobor.window.__width,Tobor.window.__height);
 	}
+	,onResize: function(w,h) {
+		gfx_Gfx.scaleX = this.frameBuffer.width / Tobor.window.__width;
+		gfx_Gfx.scaleY = this.frameBuffer.height / Tobor.window.__height;
+	}
+	,onMouseMove: function(x,y) {
+		if(this.screen != null) {
+			this.screen.onMouseMove(x,y);
+		}
+	}
 	,renderUI: function() {
 		gfx_Gfx.setOffset(0,0);
 		gfx_Gfx.batchCurrent = this.batchUI;
 		this.batchUI.clear();
-		var _this = Tobor.Font8;
-		var fg = gfx_Color.WHITE;
-		var bg = gfx_Color.BLACK;
-		var posX = 0;
-		var posY = 0;
-		var _g1 = 0;
-		var _g = "Hallo Welt!".length;
-		while(_g1 < _g) {
-			var charIndex = gfx_Font.GLYPHS.indexOf("Hallo Welt!".charAt(_g1++));
-			var w = _this.glyphW;
-			var h = _this.glyphH;
-			var rect = _this.tileBG;
-			var color = bg;
-			if(bg == null) {
-				color = gfx_Gfx.colorCurrent;
+		this.screen.renderUI();
+		if(Tobor.Config.gfx.customMousePointer) {
+			if(Input.mouseInside) {
+				var x = Input.mouseX * (this.frameBuffer.width / Tobor.window.__width);
+				var y = Input.mouseY * (this.frameBuffer.height / Tobor.window.__height);
+				var rect = Tobor.Tileset.tileset[334];
+				var color = null;
+				if(color == null) {
+					color = gfx_Gfx.colorCurrent;
+				}
+				var _this = gfx_Gfx.batchCurrent;
+				var x1 = gfx_Gfx.offsetX + x;
+				var y1 = gfx_Gfx.offsetY + y;
+				var u = rect.get_left();
+				var v = rect.get_top();
+				var r = color.r;
+				var g = color.g;
+				var b = color.b;
+				var a = color.a;
+				_this.vertices[_this.posVertices] = x1;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = y1;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = u;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = v;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = r;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = g;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = b;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = a;
+				_this.posVertices++;
+				var _this1 = gfx_Gfx.batchCurrent;
+				var x2 = gfx_Gfx.offsetX + x;
+				var y2 = gfx_Gfx.offsetY + y + 12;
+				var u1 = rect.get_left();
+				var v1 = rect.get_bottom();
+				var r1 = color.r;
+				var g1 = color.g;
+				var b1 = color.b;
+				var a1 = color.a;
+				_this1.vertices[_this1.posVertices] = x2;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = y2;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = u1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = v1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = r1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = g1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = b1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = a1;
+				_this1.posVertices++;
+				var _this2 = gfx_Gfx.batchCurrent;
+				var x3 = gfx_Gfx.offsetX + x + 16;
+				var y3 = gfx_Gfx.offsetY + y + 12;
+				var u2 = rect.get_right();
+				var v2 = rect.get_bottom();
+				var r2 = color.r;
+				var g2 = color.g;
+				var b2 = color.b;
+				var a2 = color.a;
+				_this2.vertices[_this2.posVertices] = x3;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = y3;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = u2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = v2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = r2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = g2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = b2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = a2;
+				_this2.posVertices++;
+				var _this3 = gfx_Gfx.batchCurrent;
+				var x4 = gfx_Gfx.offsetX + x + 16;
+				var y4 = gfx_Gfx.offsetY + y;
+				var u3 = rect.get_right();
+				var v3 = rect.get_top();
+				var r3 = color.r;
+				var g3 = color.g;
+				var b3 = color.b;
+				var a3 = color.a;
+				_this3.vertices[_this3.posVertices] = x4;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = y4;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = u3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = v3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = r3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = g3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = b3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = a3;
+				_this3.posVertices++;
+				gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
 			}
-			var _this1 = gfx_Gfx.batchCurrent;
-			var x = gfx_Gfx.offsetX + posX;
-			var y = gfx_Gfx.offsetY + posY;
-			var u = rect.get_left();
-			var v = rect.get_top();
-			var r = color.r;
-			var g = color.g;
-			var b = color.b;
-			var a = color.a;
-			_this1.vertices[_this1.posVertices] = x;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = y;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = u;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = v;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = r;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = g;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = b;
-			_this1.posVertices++;
-			_this1.vertices[_this1.posVertices] = a;
-			_this1.posVertices++;
-			var _this2 = gfx_Gfx.batchCurrent;
-			var x1 = gfx_Gfx.offsetX + posX;
-			var y1 = gfx_Gfx.offsetY + posY + h;
-			var u1 = rect.get_left();
-			var v1 = rect.get_bottom();
-			var r1 = color.r;
-			var g1 = color.g;
-			var b1 = color.b;
-			var a1 = color.a;
-			_this2.vertices[_this2.posVertices] = x1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = y1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = u1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = v1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = r1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = g1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = b1;
-			_this2.posVertices++;
-			_this2.vertices[_this2.posVertices] = a1;
-			_this2.posVertices++;
-			var _this3 = gfx_Gfx.batchCurrent;
-			var x2 = gfx_Gfx.offsetX + posX + w;
-			var y2 = gfx_Gfx.offsetY + posY + h;
-			var u2 = rect.get_right();
-			var v2 = rect.get_bottom();
-			var r2 = color.r;
-			var g2 = color.g;
-			var b2 = color.b;
-			var a2 = color.a;
-			_this3.vertices[_this3.posVertices] = x2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = y2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = u2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = v2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = r2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = g2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = b2;
-			_this3.posVertices++;
-			_this3.vertices[_this3.posVertices] = a2;
-			_this3.posVertices++;
-			var _this4 = gfx_Gfx.batchCurrent;
-			var x3 = gfx_Gfx.offsetX + posX + w;
-			var y3 = gfx_Gfx.offsetY + posY;
-			var u3 = rect.get_right();
-			var v3 = rect.get_top();
-			var r3 = color.r;
-			var g3 = color.g;
-			var b3 = color.b;
-			var a3 = color.a;
-			_this4.vertices[_this4.posVertices] = x3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = y3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = u3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = v3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = r3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = g3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = b3;
-			_this4.posVertices++;
-			_this4.vertices[_this4.posVertices] = a3;
-			_this4.posVertices++;
-			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
-			var w1 = _this.glyphW;
-			var h1 = _this.glyphH;
-			var rect1 = _this.chars[charIndex];
-			var color1 = fg;
-			if(fg == null) {
-				color1 = gfx_Gfx.colorCurrent;
-			}
-			var _this5 = gfx_Gfx.batchCurrent;
-			var x4 = gfx_Gfx.offsetX + posX;
-			var y4 = gfx_Gfx.offsetY + posY;
-			var u4 = rect1.get_left();
-			var v4 = rect1.get_top();
-			var r4 = color1.r;
-			var g4 = color1.g;
-			var b4 = color1.b;
-			var a4 = color1.a;
-			_this5.vertices[_this5.posVertices] = x4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = y4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = u4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = v4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = r4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = g4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = b4;
-			_this5.posVertices++;
-			_this5.vertices[_this5.posVertices] = a4;
-			_this5.posVertices++;
-			var _this6 = gfx_Gfx.batchCurrent;
-			var x5 = gfx_Gfx.offsetX + posX;
-			var y5 = gfx_Gfx.offsetY + posY + h1;
-			var u5 = rect1.get_left();
-			var v5 = rect1.get_bottom();
-			var r5 = color1.r;
-			var g5 = color1.g;
-			var b5 = color1.b;
-			var a5 = color1.a;
-			_this6.vertices[_this6.posVertices] = x5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = y5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = u5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = v5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = r5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = g5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = b5;
-			_this6.posVertices++;
-			_this6.vertices[_this6.posVertices] = a5;
-			_this6.posVertices++;
-			var _this7 = gfx_Gfx.batchCurrent;
-			var x6 = gfx_Gfx.offsetX + posX + w1;
-			var y6 = gfx_Gfx.offsetY + posY + h1;
-			var u6 = rect1.get_right();
-			var v6 = rect1.get_bottom();
-			var r6 = color1.r;
-			var g6 = color1.g;
-			var b6 = color1.b;
-			var a6 = color1.a;
-			_this7.vertices[_this7.posVertices] = x6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = y6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = u6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = v6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = r6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = g6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = b6;
-			_this7.posVertices++;
-			_this7.vertices[_this7.posVertices] = a6;
-			_this7.posVertices++;
-			var _this8 = gfx_Gfx.batchCurrent;
-			var x7 = gfx_Gfx.offsetX + posX + w1;
-			var y7 = gfx_Gfx.offsetY + posY;
-			var u7 = rect1.get_right();
-			var v7 = rect1.get_top();
-			var r7 = color1.r;
-			var g7 = color1.g;
-			var b7 = color1.b;
-			var a7 = color1.a;
-			_this8.vertices[_this8.posVertices] = x7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = y7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = u7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = v7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = r7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = g7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = b7;
-			_this8.posVertices++;
-			_this8.vertices[_this8.posVertices] = a7;
-			_this8.posVertices++;
-			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
-			posX += _this.glyphW;
-		}
-		if(Input.mouseInside) {
-			var x8 = Input.mouseX * (this.frameBuffer.width / Tobor.window.__width);
-			var y8 = Input.mouseY * (this.frameBuffer.height / Tobor.window.__height);
-			var rect2 = Tobor.Tileset.tileset[334];
-			var color2 = null;
-			if(color2 == null) {
-				color2 = gfx_Gfx.colorCurrent;
-			}
-			var _this9 = gfx_Gfx.batchCurrent;
-			var x9 = gfx_Gfx.offsetX + x8;
-			var y9 = gfx_Gfx.offsetY + y8;
-			var u8 = rect2.get_left();
-			var v8 = rect2.get_top();
-			var r8 = color2.r;
-			var g8 = color2.g;
-			var b8 = color2.b;
-			var a8 = color2.a;
-			_this9.vertices[_this9.posVertices] = x9;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = y9;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = u8;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = v8;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = r8;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = g8;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = b8;
-			_this9.posVertices++;
-			_this9.vertices[_this9.posVertices] = a8;
-			_this9.posVertices++;
-			var _this10 = gfx_Gfx.batchCurrent;
-			var x10 = gfx_Gfx.offsetX + x8;
-			var y10 = gfx_Gfx.offsetY + y8 + 12;
-			var u9 = rect2.get_left();
-			var v9 = rect2.get_bottom();
-			var r9 = color2.r;
-			var g9 = color2.g;
-			var b9 = color2.b;
-			var a9 = color2.a;
-			_this10.vertices[_this10.posVertices] = x10;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = y10;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = u9;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = v9;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = r9;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = g9;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = b9;
-			_this10.posVertices++;
-			_this10.vertices[_this10.posVertices] = a9;
-			_this10.posVertices++;
-			var _this11 = gfx_Gfx.batchCurrent;
-			var x11 = gfx_Gfx.offsetX + x8 + 16;
-			var y11 = gfx_Gfx.offsetY + y8 + 12;
-			var u10 = rect2.get_right();
-			var v10 = rect2.get_bottom();
-			var r10 = color2.r;
-			var g10 = color2.g;
-			var b10 = color2.b;
-			var a10 = color2.a;
-			_this11.vertices[_this11.posVertices] = x11;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = y11;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = u10;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = v10;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = r10;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = g10;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = b10;
-			_this11.posVertices++;
-			_this11.vertices[_this11.posVertices] = a10;
-			_this11.posVertices++;
-			var _this12 = gfx_Gfx.batchCurrent;
-			var x12 = gfx_Gfx.offsetX + x8 + 16;
-			var y12 = gfx_Gfx.offsetY + y8;
-			var u11 = rect2.get_right();
-			var v11 = rect2.get_top();
-			var r11 = color2.r;
-			var g11 = color2.g;
-			var b11 = color2.b;
-			var a11 = color2.a;
-			_this12.vertices[_this12.posVertices] = x12;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = y12;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = u11;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = v11;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = r11;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = g11;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = b11;
-			_this12.posVertices++;
-			_this12.vertices[_this12.posVertices] = a11;
-			_this12.posVertices++;
-			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
 		}
 		this.batchUI.bind();
 		this.batchUI.draw();
 	}
 	,__class__: Tobor
 };
+var ValueType = { __ename__ : true, __constructs__ : ["TNull","TInt","TFloat","TBool","TObject","TFunction","TClass","TEnum","TUnknown"] };
+ValueType.TNull = ["TNull",0];
+ValueType.TNull.toString = $estr;
+ValueType.TNull.__enum__ = ValueType;
+ValueType.TInt = ["TInt",1];
+ValueType.TInt.toString = $estr;
+ValueType.TInt.__enum__ = ValueType;
+ValueType.TFloat = ["TFloat",2];
+ValueType.TFloat.toString = $estr;
+ValueType.TFloat.__enum__ = ValueType;
+ValueType.TBool = ["TBool",3];
+ValueType.TBool.toString = $estr;
+ValueType.TBool.__enum__ = ValueType;
+ValueType.TObject = ["TObject",4];
+ValueType.TObject.toString = $estr;
+ValueType.TObject.__enum__ = ValueType;
+ValueType.TFunction = ["TFunction",5];
+ValueType.TFunction.toString = $estr;
+ValueType.TFunction.__enum__ = ValueType;
+ValueType.TClass = function(c) { var $x = ["TClass",6,c]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
+ValueType.TEnum = function(e) { var $x = ["TEnum",7,e]; $x.__enum__ = ValueType; $x.toString = $estr; return $x; };
+ValueType.TUnknown = ["TUnknown",8];
+ValueType.TUnknown.toString = $estr;
+ValueType.TUnknown.__enum__ = ValueType;
 var Type = function() { };
 $hxClasses["Type"] = Type;
-Type.__name__ = true;
+Type.__name__ = ["Type"];
+Type.getClassName = function(c) {
+	var a = c.__name__;
+	if(a == null) {
+		return null;
+	}
+	return a.join(".");
+};
 Type.resolveClass = function(name) {
 	var cl = $hxClasses[name];
 	if(cl == null || !cl.__name__) {
@@ -1638,9 +1638,56 @@ Type.createInstance = function(cl,args) {
 		throw new js__$Boot_HaxeError("Too many arguments");
 	}
 };
+Type.createEmptyInstance = function(cl) {
+	function empty() {}; empty.prototype = cl.prototype;
+	return new empty();
+};
+Type.getInstanceFields = function(c) {
+	var a = [];
+	for(var i in c.prototype) a.push(i);
+	HxOverrides.remove(a,"__class__");
+	HxOverrides.remove(a,"__properties__");
+	return a;
+};
+Type["typeof"] = function(v) {
+	var _g = typeof(v);
+	switch(_g) {
+	case "boolean":
+		return ValueType.TBool;
+	case "function":
+		if(v.__name__ || v.__ename__) {
+			return ValueType.TObject;
+		}
+		return ValueType.TFunction;
+	case "number":
+		if(Math.ceil(v) == v % 2147483648.0) {
+			return ValueType.TInt;
+		}
+		return ValueType.TFloat;
+	case "object":
+		if(v == null) {
+			return ValueType.TNull;
+		}
+		var e = v.__enum__;
+		if(e != null) {
+			return ValueType.TEnum(e);
+		}
+		var c = js_Boot.getClass(v);
+		if(c != null) {
+			return ValueType.TClass(c);
+		}
+		return ValueType.TObject;
+	case "string":
+		return ValueType.TClass(String);
+	case "undefined":
+		return ValueType.TNull;
+	default:
+		return ValueType.TUnknown;
+	}
+};
 var _$UInt_UInt_$Impl_$ = {};
 $hxClasses["_UInt.UInt_Impl_"] = _$UInt_UInt_$Impl_$;
-_$UInt_UInt_$Impl_$.__name__ = true;
+_$UInt_UInt_$Impl_$.__name__ = ["_UInt","UInt_Impl_"];
 _$UInt_UInt_$Impl_$.toFloat = function(this1) {
 	if(this1 < 0) {
 		return 4294967296.0 + this1;
@@ -1648,35 +1695,55 @@ _$UInt_UInt_$Impl_$.toFloat = function(this1) {
 		return this1 + 0.0;
 	}
 };
+var Utils = function() { };
+$hxClasses["Utils"] = Utils;
+Utils.__name__ = ["Utils"];
+Utils.clamp = function(value,min,max) {
+	if(value < min) {
+		return min;
+	} else if(value > max) {
+		return max;
+	}
+	return value;
+};
 var gfx_IDrawable = function() { };
 $hxClasses["gfx.IDrawable"] = gfx_IDrawable;
-gfx_IDrawable.__name__ = true;
+gfx_IDrawable.__name__ = ["gfx","IDrawable"];
 gfx_IDrawable.prototype = {
-	__class__: gfx_IDrawable
+	update: null
+	,getUV: null
+	,__class__: gfx_IDrawable
 };
 var gfx_Animation = function() {
 	this.active = false;
-	this.frameTime = 0;
-	this.frameSpeed = 1;
+	this.timeLeft = 0;
+	this.speed = 1;
 	this.index = 0;
 	this.sequence = [];
 	this.frames = [];
 };
 $hxClasses["gfx.Animation"] = gfx_Animation;
-gfx_Animation.__name__ = true;
+gfx_Animation.__name__ = ["gfx","Animation"];
 gfx_Animation.__interfaces__ = [gfx_IDrawable];
 gfx_Animation.prototype = {
-	update: function(deltaTime) {
+	frames: null
+	,sequence: null
+	,index: null
+	,speed: null
+	,timeLeft: null
+	,active: null
+	,update: function(deltaTime) {
 		if(!this.active) {
 			return;
 		}
-		this.frameTime -= deltaTime;
-		while(this.frameTime <= 0) {
-			this.index++;
-			if(this.index >= this.sequence.length) {
-				this.index = 0;
-			}
-			this.frameTime += this.frameSpeed;
+		if(this.timeLeft < deltaTime) {
+			this.timeLeft = deltaTime;
+		}
+		this.timeLeft -= deltaTime;
+		this.index = Math.floor(Utils.clamp((this.speed - this.timeLeft) / this.speed,0.0,1.0) * this.sequence.length);
+		if(this.timeLeft <= 0) {
+			this.timeLeft = 0;
+			this.active = false;
 		}
 	}
 	,start: function() {
@@ -1684,18 +1751,17 @@ gfx_Animation.prototype = {
 			return;
 		}
 		this.active = true;
-		this.frameTime = this.frameSpeed;
-		this.index = 0;
+		this.reset();
 	}
 	,stop: function() {
 		this.active = false;
 	}
 	,reset: function() {
 		this.index = 0;
-		this.frameTime = this.frameSpeed;
+		this.timeLeft = this.speed;
 	}
 	,setSpeed: function(spd) {
-		this.frameSpeed = spd / this.sequence.length;
+		this.speed = spd;
 	}
 	,addFrame: function(r) {
 		var index = this.frames.indexOf(r);
@@ -1705,11 +1771,12 @@ gfx_Animation.prototype = {
 		} else {
 			this.sequence.push(index);
 		}
-		haxe_Log.trace(this.frames.toString(),{ fileName : "Animation.hx", lineNumber : 67, className : "gfx.Animation", methodName : "addFrame"});
-		haxe_Log.trace(this.sequence.toString(),{ fileName : "Animation.hx", lineNumber : 68, className : "gfx.Animation", methodName : "addFrame"});
 	}
 	,getUV: function() {
 		if(this.active) {
+			if(this.index >= this.sequence.length) {
+				this.index = this.sequence.length - 1;
+			}
 			return this.frames[this.sequence[this.index]];
 		}
 		return this.frames[this.sequence[0]];
@@ -1733,9 +1800,19 @@ var gfx_Batch = function(isIndexed) {
 	this.indexBuffer = gfx_Gfx.gl.createBuffer();
 };
 $hxClasses["gfx.Batch"] = gfx_Batch;
-gfx_Batch.__name__ = true;
+gfx_Batch.__name__ = ["gfx","Batch"];
 gfx_Batch.prototype = {
-	bind: function() {
+	isIndexed: null
+	,vertices: null
+	,indices: null
+	,posVertices: null
+	,posIndices: null
+	,index: null
+	,needRedraw: null
+	,vertexBuffer: null
+	,indexBuffer: null
+	,length: null
+	,bind: function() {
 		gfx_Gfx.gl.bindBuffer(gfx_Gfx.gl.ARRAY_BUFFER,this.vertexBuffer);
 		if(this.needRedraw) {
 			var tmp = gfx_Gfx.gl.ARRAY_BUFFER;
@@ -1835,6 +1912,7 @@ gfx_Batch.prototype = {
 		}
 	}
 	,__class__: gfx_Batch
+	,__properties__: {get_length:"get_length"}
 };
 var gfx_Color = function(r,g,b,a) {
 	if(a == null) {
@@ -1855,12 +1933,19 @@ var gfx_Color = function(r,g,b,a) {
 	this.a = a;
 };
 $hxClasses["gfx.Color"] = gfx_Color;
-gfx_Color.__name__ = true;
+gfx_Color.__name__ = ["gfx","Color"];
 gfx_Color.from = function(col) {
 	return new gfx_Color(Math.min((col >> 16 & 255) / 255.0,1.0),Math.min((col >> 8 & 255) / 255.0,1.0),Math.min((col & 255) / 255.0,1.0));
 };
 gfx_Color.prototype = {
-	get_intR: function() {
+	r: null
+	,g: null
+	,b: null
+	,a: null
+	,intR: null
+	,intG: null
+	,intB: null
+	,get_intR: function() {
 		return this.r * 255 | 0;
 	}
 	,get_intG: function() {
@@ -1870,6 +1955,7 @@ gfx_Color.prototype = {
 		return this.b * 255 | 0;
 	}
 	,__class__: gfx_Color
+	,__properties__: {get_intB:"get_intB",get_intG:"get_intG",get_intR:"get_intR"}
 };
 var gfx_Font = function(w,h,offsetY) {
 	this.chars = [];
@@ -1889,9 +1975,14 @@ var gfx_Font = function(w,h,offsetY) {
 	}
 };
 $hxClasses["gfx.Font"] = gfx_Font;
-gfx_Font.__name__ = true;
+gfx_Font.__name__ = ["gfx","Font"];
 gfx_Font.prototype = {
-	drawChar: function(x,y,charIndex,fg,bg) {
+	offsetY: null
+	,glyphW: null
+	,glyphH: null
+	,tileBG: null
+	,chars: null
+	,drawChar: function(x,y,charIndex,fg,bg) {
 		var w = this.glyphW;
 		var h = this.glyphH;
 		var rect = this.tileBG;
@@ -2336,6 +2427,614 @@ gfx_Font.prototype = {
 	}
 	,__class__: gfx_Font
 };
+var gfx_Frame = function(x,y,w,h) {
+	this.sizeX = w;
+	this.sizeY = h;
+	var _this = Tobor.Tileset;
+	this.rTopLeft = new lime_math_Rectangle(x / _this.width,y / _this.height,w / _this.width,h / _this.height);
+	var _this1 = Tobor.Tileset;
+	this.rTop = new lime_math_Rectangle((x + w) / _this1.width,y / _this1.height,w / _this1.width,h / _this1.height);
+	var _this2 = Tobor.Tileset;
+	this.rTopRight = new lime_math_Rectangle((x + w * 2) / _this2.width,y / _this2.height,w / _this2.width,h / _this2.height);
+	var _this3 = Tobor.Tileset;
+	this.rLeft = new lime_math_Rectangle(x / _this3.width,(y + h) / _this3.height,w / _this3.width,h / _this3.height);
+	var _this4 = Tobor.Tileset;
+	this.rBackground = new lime_math_Rectangle(0 / _this4.width,0 / _this4.height,w / _this4.width,h / _this4.height);
+	var _this5 = Tobor.Tileset;
+	this.rRight = new lime_math_Rectangle((x + w * 2) / _this5.width,(y + h) / _this5.height,w / _this5.width,h / _this5.height);
+	var _this6 = Tobor.Tileset;
+	this.rBottomLeft = new lime_math_Rectangle(x / _this6.width,(y + h * 2) / _this6.height,w / _this6.width,h / _this6.height);
+	var _this7 = Tobor.Tileset;
+	this.rBottom = new lime_math_Rectangle((x + w) / _this7.width,(y + h * 2) / _this7.height,w / _this7.width,h / _this7.height);
+	var _this8 = Tobor.Tileset;
+	this.rBottomRight = new lime_math_Rectangle((x + w * 2) / _this8.width,(y + h * 2) / _this8.height,w / _this8.width,h / _this8.height);
+};
+$hxClasses["gfx.Frame"] = gfx_Frame;
+gfx_Frame.__name__ = ["gfx","Frame"];
+gfx_Frame.prototype = {
+	sizeX: null
+	,sizeY: null
+	,rTopLeft: null
+	,rTop: null
+	,rTopRight: null
+	,rLeft: null
+	,rBackground: null
+	,rRight: null
+	,rBottomLeft: null
+	,rBottom: null
+	,rBottomRight: null
+	,drawBox: function(x,y,w,h) {
+		var r;
+		var w1 = w * this.sizeX;
+		var h1 = h * this.sizeY;
+		var rect = this.rBackground;
+		var color = gfx_Color.WHITE;
+		if(color == null) {
+			color = gfx_Gfx.colorCurrent;
+		}
+		var _this = gfx_Gfx.batchCurrent;
+		var x1 = gfx_Gfx.offsetX + x;
+		var y1 = gfx_Gfx.offsetY + y;
+		var u = rect.get_left();
+		var v = rect.get_top();
+		var r1 = color.r;
+		var g = color.g;
+		var b = color.b;
+		var a = color.a;
+		_this.vertices[_this.posVertices] = x1;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = y1;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = u;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = v;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = r1;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = g;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = b;
+		_this.posVertices++;
+		_this.vertices[_this.posVertices] = a;
+		_this.posVertices++;
+		var _this1 = gfx_Gfx.batchCurrent;
+		var x2 = gfx_Gfx.offsetX + x;
+		var y2 = gfx_Gfx.offsetY + y + h1;
+		var u1 = rect.get_left();
+		var v1 = rect.get_bottom();
+		var r2 = color.r;
+		var g1 = color.g;
+		var b1 = color.b;
+		var a1 = color.a;
+		_this1.vertices[_this1.posVertices] = x2;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = y2;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = u1;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = v1;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = r2;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = g1;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = b1;
+		_this1.posVertices++;
+		_this1.vertices[_this1.posVertices] = a1;
+		_this1.posVertices++;
+		var _this2 = gfx_Gfx.batchCurrent;
+		var x3 = gfx_Gfx.offsetX + x + w1;
+		var y3 = gfx_Gfx.offsetY + y + h1;
+		var u2 = rect.get_right();
+		var v2 = rect.get_bottom();
+		var r3 = color.r;
+		var g2 = color.g;
+		var b2 = color.b;
+		var a2 = color.a;
+		_this2.vertices[_this2.posVertices] = x3;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = y3;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = u2;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = v2;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = r3;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = g2;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = b2;
+		_this2.posVertices++;
+		_this2.vertices[_this2.posVertices] = a2;
+		_this2.posVertices++;
+		var _this3 = gfx_Gfx.batchCurrent;
+		var x4 = gfx_Gfx.offsetX + x + w1;
+		var y4 = gfx_Gfx.offsetY + y;
+		var u3 = rect.get_right();
+		var v3 = rect.get_top();
+		var r4 = color.r;
+		var g3 = color.g;
+		var b3 = color.b;
+		var a3 = color.a;
+		_this3.vertices[_this3.posVertices] = x4;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = y4;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = u3;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = v3;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = r4;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = g3;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = b3;
+		_this3.posVertices++;
+		_this3.vertices[_this3.posVertices] = a3;
+		_this3.posVertices++;
+		gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+		var _g1 = 0;
+		while(_g1 < w) {
+			var i = _g1++;
+			if(i == 0) {
+				r = this.rTopLeft;
+			} else if(i == w - 1) {
+				r = this.rTopRight;
+			} else {
+				r = this.rTop;
+			}
+			var x5 = x + i * this.sizeX;
+			var w2 = this.sizeX;
+			var h2 = this.sizeY;
+			var color1 = null;
+			if(color1 == null) {
+				color1 = gfx_Gfx.colorCurrent;
+			}
+			var _this4 = gfx_Gfx.batchCurrent;
+			var x6 = gfx_Gfx.offsetX + x5;
+			var y5 = gfx_Gfx.offsetY + y;
+			var u4 = r.get_left();
+			var v4 = r.get_top();
+			var r5 = color1.r;
+			var g4 = color1.g;
+			var b4 = color1.b;
+			var a4 = color1.a;
+			_this4.vertices[_this4.posVertices] = x6;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = y5;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = u4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = v4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = r5;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = g4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = b4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = a4;
+			_this4.posVertices++;
+			var _this5 = gfx_Gfx.batchCurrent;
+			var x7 = gfx_Gfx.offsetX + x5;
+			var y6 = gfx_Gfx.offsetY + y + h2;
+			var u5 = r.get_left();
+			var v5 = r.get_bottom();
+			var r6 = color1.r;
+			var g5 = color1.g;
+			var b5 = color1.b;
+			var a5 = color1.a;
+			_this5.vertices[_this5.posVertices] = x7;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = y6;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = u5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = v5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = r6;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = g5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = b5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = a5;
+			_this5.posVertices++;
+			var _this6 = gfx_Gfx.batchCurrent;
+			var x8 = gfx_Gfx.offsetX + x5 + w2;
+			var y7 = gfx_Gfx.offsetY + y + h2;
+			var u6 = r.get_right();
+			var v6 = r.get_bottom();
+			var r7 = color1.r;
+			var g6 = color1.g;
+			var b6 = color1.b;
+			var a6 = color1.a;
+			_this6.vertices[_this6.posVertices] = x8;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = y7;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = u6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = v6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = r7;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = g6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = b6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = a6;
+			_this6.posVertices++;
+			var _this7 = gfx_Gfx.batchCurrent;
+			var x9 = gfx_Gfx.offsetX + x5 + w2;
+			var y8 = gfx_Gfx.offsetY + y;
+			var u7 = r.get_right();
+			var v7 = r.get_top();
+			var r8 = color1.r;
+			var g7 = color1.g;
+			var b7 = color1.b;
+			var a7 = color1.a;
+			_this7.vertices[_this7.posVertices] = x9;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = y8;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = u7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = v7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = r8;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = g7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = b7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = a7;
+			_this7.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			if(i == 0) {
+				r = this.rBottomLeft;
+			} else if(i == w - 1) {
+				r = this.rBottomRight;
+			} else {
+				r = this.rBottom;
+			}
+			var x10 = x + i * this.sizeX;
+			var y9 = y + (h - 1) * this.sizeY;
+			var w3 = this.sizeX;
+			var h3 = this.sizeY;
+			var color2 = null;
+			if(color2 == null) {
+				color2 = gfx_Gfx.colorCurrent;
+			}
+			var _this8 = gfx_Gfx.batchCurrent;
+			var x11 = gfx_Gfx.offsetX + x10;
+			var y10 = gfx_Gfx.offsetY + y9;
+			var u8 = r.get_left();
+			var v8 = r.get_top();
+			var r9 = color2.r;
+			var g8 = color2.g;
+			var b8 = color2.b;
+			var a8 = color2.a;
+			_this8.vertices[_this8.posVertices] = x11;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = y10;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = u8;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = v8;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = r9;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = g8;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = b8;
+			_this8.posVertices++;
+			_this8.vertices[_this8.posVertices] = a8;
+			_this8.posVertices++;
+			var _this9 = gfx_Gfx.batchCurrent;
+			var x12 = gfx_Gfx.offsetX + x10;
+			var y11 = gfx_Gfx.offsetY + y9 + h3;
+			var u9 = r.get_left();
+			var v9 = r.get_bottom();
+			var r10 = color2.r;
+			var g9 = color2.g;
+			var b9 = color2.b;
+			var a9 = color2.a;
+			_this9.vertices[_this9.posVertices] = x12;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = y11;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = u9;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = v9;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = r10;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = g9;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = b9;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = a9;
+			_this9.posVertices++;
+			var _this10 = gfx_Gfx.batchCurrent;
+			var x13 = gfx_Gfx.offsetX + x10 + w3;
+			var y12 = gfx_Gfx.offsetY + y9 + h3;
+			var u10 = r.get_right();
+			var v10 = r.get_bottom();
+			var r11 = color2.r;
+			var g10 = color2.g;
+			var b10 = color2.b;
+			var a10 = color2.a;
+			_this10.vertices[_this10.posVertices] = x13;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = y12;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = u10;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = v10;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = r11;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = g10;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = b10;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = a10;
+			_this10.posVertices++;
+			var _this11 = gfx_Gfx.batchCurrent;
+			var x14 = gfx_Gfx.offsetX + x10 + w3;
+			var y13 = gfx_Gfx.offsetY + y9;
+			var u11 = r.get_right();
+			var v11 = r.get_top();
+			var r12 = color2.r;
+			var g11 = color2.g;
+			var b11 = color2.b;
+			var a11 = color2.a;
+			_this11.vertices[_this11.posVertices] = x14;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = y13;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = u11;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = v11;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = r12;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = g11;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = b11;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = a11;
+			_this11.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+		}
+		var _g11 = 1;
+		var _g = h - 1;
+		while(_g11 < _g) {
+			var i1 = _g11++;
+			var y14 = y + i1 * this.sizeY;
+			var w4 = this.sizeX;
+			var h4 = this.sizeY;
+			var rect1 = this.rLeft;
+			var color3 = null;
+			if(color3 == null) {
+				color3 = gfx_Gfx.colorCurrent;
+			}
+			var _this12 = gfx_Gfx.batchCurrent;
+			var x15 = gfx_Gfx.offsetX + x;
+			var y15 = gfx_Gfx.offsetY + y14;
+			var u12 = rect1.get_left();
+			var v12 = rect1.get_top();
+			var r13 = color3.r;
+			var g12 = color3.g;
+			var b12 = color3.b;
+			var a12 = color3.a;
+			_this12.vertices[_this12.posVertices] = x15;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = y15;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = u12;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = v12;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = r13;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = g12;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = b12;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = a12;
+			_this12.posVertices++;
+			var _this13 = gfx_Gfx.batchCurrent;
+			var x16 = gfx_Gfx.offsetX + x;
+			var y16 = gfx_Gfx.offsetY + y14 + h4;
+			var u13 = rect1.get_left();
+			var v13 = rect1.get_bottom();
+			var r14 = color3.r;
+			var g13 = color3.g;
+			var b13 = color3.b;
+			var a13 = color3.a;
+			_this13.vertices[_this13.posVertices] = x16;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = y16;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = u13;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = v13;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = r14;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = g13;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = b13;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = a13;
+			_this13.posVertices++;
+			var _this14 = gfx_Gfx.batchCurrent;
+			var x17 = gfx_Gfx.offsetX + x + w4;
+			var y17 = gfx_Gfx.offsetY + y14 + h4;
+			var u14 = rect1.get_right();
+			var v14 = rect1.get_bottom();
+			var r15 = color3.r;
+			var g14 = color3.g;
+			var b14 = color3.b;
+			var a14 = color3.a;
+			_this14.vertices[_this14.posVertices] = x17;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = y17;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = u14;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = v14;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = r15;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = g14;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = b14;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = a14;
+			_this14.posVertices++;
+			var _this15 = gfx_Gfx.batchCurrent;
+			var x18 = gfx_Gfx.offsetX + x + w4;
+			var y18 = gfx_Gfx.offsetY + y14;
+			var u15 = rect1.get_right();
+			var v15 = rect1.get_top();
+			var r16 = color3.r;
+			var g15 = color3.g;
+			var b15 = color3.b;
+			var a15 = color3.a;
+			_this15.vertices[_this15.posVertices] = x18;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = y18;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = u15;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = v15;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = r16;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = g15;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = b15;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = a15;
+			_this15.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			var x19 = x + (w - 1) * this.sizeX;
+			var y19 = y + i1 * this.sizeY;
+			var w5 = this.sizeX;
+			var h5 = this.sizeY;
+			var rect2 = this.rRight;
+			var color4 = null;
+			if(color4 == null) {
+				color4 = gfx_Gfx.colorCurrent;
+			}
+			var _this16 = gfx_Gfx.batchCurrent;
+			var x20 = gfx_Gfx.offsetX + x19;
+			var y20 = gfx_Gfx.offsetY + y19;
+			var u16 = rect2.get_left();
+			var v16 = rect2.get_top();
+			var r17 = color4.r;
+			var g16 = color4.g;
+			var b16 = color4.b;
+			var a16 = color4.a;
+			_this16.vertices[_this16.posVertices] = x20;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = y20;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = u16;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = v16;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = r17;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = g16;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = b16;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = a16;
+			_this16.posVertices++;
+			var _this17 = gfx_Gfx.batchCurrent;
+			var x21 = gfx_Gfx.offsetX + x19;
+			var y21 = gfx_Gfx.offsetY + y19 + h5;
+			var u17 = rect2.get_left();
+			var v17 = rect2.get_bottom();
+			var r18 = color4.r;
+			var g17 = color4.g;
+			var b17 = color4.b;
+			var a17 = color4.a;
+			_this17.vertices[_this17.posVertices] = x21;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = y21;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = u17;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = v17;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = r18;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = g17;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = b17;
+			_this17.posVertices++;
+			_this17.vertices[_this17.posVertices] = a17;
+			_this17.posVertices++;
+			var _this18 = gfx_Gfx.batchCurrent;
+			var x22 = gfx_Gfx.offsetX + x19 + w5;
+			var y22 = gfx_Gfx.offsetY + y19 + h5;
+			var u18 = rect2.get_right();
+			var v18 = rect2.get_bottom();
+			var r19 = color4.r;
+			var g18 = color4.g;
+			var b18 = color4.b;
+			var a18 = color4.a;
+			_this18.vertices[_this18.posVertices] = x22;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = y22;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = u18;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = v18;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = r19;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = g18;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = b18;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = a18;
+			_this18.posVertices++;
+			var _this19 = gfx_Gfx.batchCurrent;
+			var x23 = gfx_Gfx.offsetX + x19 + w5;
+			var y23 = gfx_Gfx.offsetY + y19;
+			var u19 = rect2.get_right();
+			var v19 = rect2.get_top();
+			var r20 = color4.r;
+			var g19 = color4.g;
+			var b19 = color4.b;
+			var a19 = color4.a;
+			_this19.vertices[_this19.posVertices] = x23;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = y23;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = u19;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = v19;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = r20;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = g19;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = b19;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = a19;
+			_this19.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+		}
+	}
+	,__class__: gfx_Frame
+};
 var gfx_Framebuffer = function(width,height) {
 	this.ready = false;
 	this.width = width;
@@ -2388,9 +3087,18 @@ var gfx_Framebuffer = function(width,height) {
 	this.matrix = lime_math__$Matrix4_Matrix4_$Impl_$.createOrtho(0,1,0,1,-1000,1000);
 };
 $hxClasses["gfx.Framebuffer"] = gfx_Framebuffer;
-gfx_Framebuffer.__name__ = true;
+gfx_Framebuffer.__name__ = ["gfx","Framebuffer"];
 gfx_Framebuffer.prototype = {
-	bind: function() {
+	width: null
+	,height: null
+	,scaleW: null
+	,scaleH: null
+	,matrix: null
+	,texture: null
+	,handle: null
+	,buffer: null
+	,ready: null
+	,bind: function() {
 		if(!this.ready) {
 			return;
 		}
@@ -2426,7 +3134,8 @@ gfx_Framebuffer.prototype = {
 };
 var gfx_Gfx = function() { };
 $hxClasses["gfx.Gfx"] = gfx_Gfx;
-gfx_Gfx.__name__ = true;
+gfx_Gfx.__name__ = ["gfx","Gfx"];
+gfx_Gfx.__properties__ = {set_shader:"set_shader",get_shader:"get_shader"}
 gfx_Gfx.setOffset = function(x,y) {
 	gfx_Gfx.offsetX = x;
 	gfx_Gfx.offsetY = y;
@@ -2557,121 +3266,112 @@ gfx_Gfx.drawTexture = function(x,y,w,h,rect,color) {
 	_this3.posVertices++;
 	gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
 };
-var gfx_Screen = function(cfg) {
-	this.color = gfx_Color.WHITE;
-	this.backgroundColor = gfx_Color.WHITE;
-	this.width = cfg.width;
-	this.height = cfg.height;
-	this.batchStatic = new gfx_Batch(true);
-	this.batchSprites = new gfx_Batch(true);
-	this.player = new world_entity_Charlie();
-	this.player.set_gridX(0);
-	this.player.set_gridY(0);
-	this.room = new world_Room();
-	this.room.add(this.player);
-	var _g = 0;
-	while(_g < 200) {
-		++_g;
-		var wall = new world_entity_Wall();
-		wall.set_gridX(Std.random(40));
-		wall.set_gridY(Std.random(28));
-		this.room.add(wall,true);
+gfx_Gfx.drawRect = function(x,y,rect,color) {
+	var color1 = color;
+	if(color == null) {
+		color1 = gfx_Gfx.colorCurrent;
 	}
-	var _g1 = 0;
-	while(_g1 < 500) {
-		++_g1;
-		var wall1 = new world_entity_EntityPushable();
-		wall1.set_gridX(Std.random(40));
-		wall1.set_gridY(Std.random(28));
-		this.room.add(wall1,true);
-	}
-};
-$hxClasses["gfx.Screen"] = gfx_Screen;
-gfx_Screen.__name__ = true;
-gfx_Screen.prototype = {
-	update: function(deltaTime) {
-		var mx = 0;
-		var my = 0;
-		var k = Input.RIGHT;
-		var down = false;
-		var _g = 0;
-		while(_g < k.length) {
-			var i = k[_g];
-			++_g;
-			if(Input.key.h[i]) {
-				down = true;
-			}
-		}
-		if(down) {
-			mx = 1;
-		}
-		var k1 = Input.LEFT;
-		var down1 = false;
-		var _g1 = 0;
-		while(_g1 < k1.length) {
-			var i1 = k1[_g1];
-			++_g1;
-			if(Input.key.h[i1]) {
-				down1 = true;
-			}
-		}
-		if(down1) {
-			mx = -1;
-		}
-		var k2 = Input.UP;
-		var down2 = false;
-		var _g2 = 0;
-		while(_g2 < k2.length) {
-			var i2 = k2[_g2];
-			++_g2;
-			if(Input.key.h[i2]) {
-				down2 = true;
-			}
-		}
-		if(down2) {
-			my = -1;
-		}
-		var k3 = Input.DOWN;
-		var down3 = false;
-		var _g3 = 0;
-		while(_g3 < k3.length) {
-			var i3 = k3[_g3];
-			++_g3;
-			if(Input.key.h[i3]) {
-				down3 = true;
-			}
-		}
-		if(down3) {
-			my = 1;
-		}
-		this.player.move(mx,my);
-		this.room.update(deltaTime);
-	}
-	,render: function() {
-		var color = this.backgroundColor;
-		gfx_Gfx.gl.clearColor(color.r,color.g,color.b,1.0);
-		gfx_Gfx.gl.clear(gfx_Gfx.gl.COLOR_BUFFER_BIT | gfx_Gfx.gl.DEPTH_BUFFER_BIT);
-		gfx_Gfx.setOffset(0,12);
-		this.renderStatic();
-		this.renderSprites();
-	}
-	,renderStatic: function() {
-		gfx_Gfx.batchCurrent = this.batchStatic;
-		if(this.room.redraw) {
-			this.batchStatic.clear();
-			this.room.draw(0);
-		}
-		this.batchStatic.bind();
-		this.batchStatic.draw();
-	}
-	,renderSprites: function() {
-		gfx_Gfx.batchCurrent = this.batchSprites;
-		this.batchSprites.clear();
-		this.room.draw(1);
-		this.batchSprites.bind();
-		this.batchSprites.draw();
-	}
-	,__class__: gfx_Screen
+	var _this = gfx_Gfx.batchCurrent;
+	var x1 = gfx_Gfx.offsetX + x;
+	var y1 = gfx_Gfx.offsetY + y;
+	var u = rect.get_left();
+	var v = rect.get_top();
+	var r = color1.r;
+	var g = color1.g;
+	var b = color1.b;
+	var a = color1.a;
+	_this.vertices[_this.posVertices] = x1;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = y1;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = u;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = v;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = r;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = g;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = b;
+	_this.posVertices++;
+	_this.vertices[_this.posVertices] = a;
+	_this.posVertices++;
+	var _this1 = gfx_Gfx.batchCurrent;
+	var x2 = gfx_Gfx.offsetX + x;
+	var y2 = gfx_Gfx.offsetY + y + 12;
+	var u1 = rect.get_left();
+	var v1 = rect.get_bottom();
+	var r1 = color1.r;
+	var g1 = color1.g;
+	var b1 = color1.b;
+	var a1 = color1.a;
+	_this1.vertices[_this1.posVertices] = x2;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = y2;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = u1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = v1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = r1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = g1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = b1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = a1;
+	_this1.posVertices++;
+	var _this2 = gfx_Gfx.batchCurrent;
+	var x3 = gfx_Gfx.offsetX + x + 16;
+	var y3 = gfx_Gfx.offsetY + y + 12;
+	var u2 = rect.get_right();
+	var v2 = rect.get_bottom();
+	var r2 = color1.r;
+	var g2 = color1.g;
+	var b2 = color1.b;
+	var a2 = color1.a;
+	_this2.vertices[_this2.posVertices] = x3;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = y3;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = u2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = v2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = r2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = g2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = b2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = a2;
+	_this2.posVertices++;
+	var _this3 = gfx_Gfx.batchCurrent;
+	var x4 = gfx_Gfx.offsetX + x + 16;
+	var y4 = gfx_Gfx.offsetY + y;
+	var u3 = rect.get_right();
+	var v3 = rect.get_top();
+	var r3 = color1.r;
+	var g3 = color1.g;
+	var b3 = color1.b;
+	var a3 = color1.a;
+	_this3.vertices[_this3.posVertices] = x4;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = y4;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = u3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = v3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = r3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = g3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = b3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = a3;
+	_this3.posVertices++;
+	gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
 };
 var gfx_Shader = function(sourceVertex,sourceFragment) {
 	if(sourceVertex == null) {
@@ -2688,9 +3388,15 @@ var gfx_Shader = function(sourceVertex,sourceFragment) {
 	this.u_Texture0 = gfx_Gfx.gl.getUniformLocation(this.program,"u_Texture0");
 };
 $hxClasses["gfx.Shader"] = gfx_Shader;
-gfx_Shader.__name__ = true;
+gfx_Shader.__name__ = ["gfx","Shader"];
 gfx_Shader.prototype = {
-	loadShader: function(type,source) {
+	program: null
+	,u_camMatrix: null
+	,u_Texture0: null
+	,a_Position: null
+	,a_Color: null
+	,a_TexCoord0: null
+	,loadShader: function(type,source) {
 		var shader = gfx_Gfx.gl.createShader(type);
 		gfx_Gfx.gl.shaderSource(shader,source);
 		gfx_Gfx.gl.compileShader(shader);
@@ -2728,10 +3434,11 @@ var gfx_Sprite = function(r) {
 	this.rect = r;
 };
 $hxClasses["gfx.Sprite"] = gfx_Sprite;
-gfx_Sprite.__name__ = true;
+gfx_Sprite.__name__ = ["gfx","Sprite"];
 gfx_Sprite.__interfaces__ = [gfx_IDrawable];
 gfx_Sprite.prototype = {
-	setRectangle: function(r) {
+	rect: null
+	,setRectangle: function(r) {
 		this.rect = r;
 	}
 	,update: function(deltaTime) {
@@ -2746,14 +3453,20 @@ var gfx_Texture = function() {
 	this.handle = gfx_Gfx.gl.createTexture();
 };
 $hxClasses["gfx.Texture"] = gfx_Texture;
-gfx_Texture.__name__ = true;
+gfx_Texture.__name__ = ["gfx","Texture"];
 gfx_Texture.prototype = {
-	get_width: function() {
+	handle: null
+	,_width: null
+	,_height: null
+	,width: null
+	,get_width: function() {
 		return this._width;
 	}
+	,height: null
 	,get_height: function() {
 		return this._height;
 	}
+	,data: null
 	,bind: function() {
 		gfx_Gfx.gl.activeTexture(gfx_Gfx.gl.TEXTURE0);
 		gfx_Gfx.gl.bindTexture(gfx_Gfx.gl.TEXTURE_2D,this.handle);
@@ -2802,17 +3515,23 @@ gfx_Texture.prototype = {
 		this.data[offset + 3] = 255;
 	}
 	,__class__: gfx_Texture
+	,__properties__: {get_height:"get_height",get_width:"get_width"}
 };
 var gfx_Tilesheet = function(sourceTexture) {
 	this.tileset = [];
 	this.width = sourceTexture.get_width();
 	this.height = sourceTexture.get_height();
 	this.generateRects();
+	this.registry = new haxe_ds_StringMap();
 };
 $hxClasses["gfx.Tilesheet"] = gfx_Tilesheet;
-gfx_Tilesheet.__name__ = true;
+gfx_Tilesheet.__name__ = ["gfx","Tilesheet"];
 gfx_Tilesheet.prototype = {
-	generateRects: function() {
+	width: null
+	,height: null
+	,tileset: null
+	,registry: null
+	,generateRects: function() {
 		var sizeW = 16 / this.width;
 		var sizeH = 12 / this.height;
 		var _g1 = 0;
@@ -2830,6 +3549,38 @@ gfx_Tilesheet.prototype = {
 	,rect: function(x,y,w,h) {
 		return new lime_math_Rectangle(x / this.width,y / this.height,w / this.width,h / this.height);
 	}
+	,register: function(key,indexes) {
+		var count = 0;
+		var _g = 0;
+		while(_g < indexes.length) {
+			var index = indexes[_g];
+			++_g;
+			var key1 = key.toUpperCase() + "_" + count;
+			var _this = this.registry;
+			var value = this.tileset[index[1] * 16 + index[0]];
+			if(__map_reserved[key1] != null) {
+				_this.setReserved(key1,value);
+			} else {
+				_this.h[key1] = value;
+			}
+			++count;
+		}
+	}
+	,find: function(key) {
+		var key1 = key.toUpperCase();
+		var _this = this.registry;
+		var r = __map_reserved[key1] != null?_this.getReserved(key1):_this.h[key1];
+		if(r == null) {
+			var key2 = key.toUpperCase() + "_0";
+			var _this1 = this.registry;
+			if(__map_reserved[key2] != null) {
+				r = _this1.getReserved(key2);
+			} else {
+				r = _this1.h[key2];
+			}
+		}
+		return r;
+	}
 	,__class__: gfx_Tilesheet
 };
 var haxe_StackItem = { __ename__ : true, __constructs__ : ["CFunction","Module","FilePos","Method","LocalFunction"] };
@@ -2842,7 +3593,7 @@ haxe_StackItem.Method = function(classname,method) { var $x = ["Method",3,classn
 haxe_StackItem.LocalFunction = function(v) { var $x = ["LocalFunction",4,v]; $x.__enum__ = haxe_StackItem; $x.toString = $estr; return $x; };
 var haxe_CallStack = function() { };
 $hxClasses["haxe.CallStack"] = haxe_CallStack;
-haxe_CallStack.__name__ = true;
+haxe_CallStack.__name__ = ["haxe","CallStack"];
 haxe_CallStack.getStack = function(e) {
 	if(e == null) {
 		return [];
@@ -2970,19 +3721,26 @@ haxe_CallStack.makeStack = function(s) {
 };
 var haxe_IMap = function() { };
 $hxClasses["haxe.IMap"] = haxe_IMap;
-haxe_IMap.__name__ = true;
+haxe_IMap.__name__ = ["haxe","IMap"];
+haxe_IMap.prototype = {
+	get: null
+	,keys: null
+	,__class__: haxe_IMap
+};
 var haxe__$Int64__$_$_$Int64 = function(high,low) {
 	this.high = high;
 	this.low = low;
 };
 $hxClasses["haxe._Int64.___Int64"] = haxe__$Int64__$_$_$Int64;
-haxe__$Int64__$_$_$Int64.__name__ = true;
+haxe__$Int64__$_$_$Int64.__name__ = ["haxe","_Int64","___Int64"];
 haxe__$Int64__$_$_$Int64.prototype = {
-	__class__: haxe__$Int64__$_$_$Int64
+	high: null
+	,low: null
+	,__class__: haxe__$Int64__$_$_$Int64
 };
 var haxe_Log = function() { };
 $hxClasses["haxe.Log"] = haxe_Log;
-haxe_Log.__name__ = true;
+haxe_Log.__name__ = ["haxe","Log"];
 haxe_Log.trace = function(v,infos) {
 	js_Boot.__trace(v,infos);
 };
@@ -2993,7 +3751,7 @@ var haxe_Timer = function(time_ms) {
 	},time_ms);
 };
 $hxClasses["haxe.Timer"] = haxe_Timer;
-haxe_Timer.__name__ = true;
+haxe_Timer.__name__ = ["haxe","Timer"];
 haxe_Timer.delay = function(f,time_ms) {
 	var t = new haxe_Timer(time_ms);
 	t.run = function() {
@@ -3012,7 +3770,8 @@ haxe_Timer.stamp = function() {
 	return new Date().getTime() / 1000;
 };
 haxe_Timer.prototype = {
-	stop: function() {
+	id: null
+	,stop: function() {
 		if(this.id == null) {
 			return;
 		}
@@ -3022,6 +3781,15 @@ haxe_Timer.prototype = {
 	,run: function() {
 	}
 	,__class__: haxe_Timer
+};
+var haxe_Utf8 = function(size) {
+	this.__b = "";
+};
+$hxClasses["haxe.Utf8"] = haxe_Utf8;
+haxe_Utf8.__name__ = ["haxe","Utf8"];
+haxe_Utf8.prototype = {
+	__b: null
+	,__class__: haxe_Utf8
 };
 var haxe_crypto_BaseCode = function(base) {
 	var len = base.length;
@@ -3034,9 +3802,11 @@ var haxe_crypto_BaseCode = function(base) {
 	this.nbits = nbits;
 };
 $hxClasses["haxe.crypto.BaseCode"] = haxe_crypto_BaseCode;
-haxe_crypto_BaseCode.__name__ = true;
+haxe_crypto_BaseCode.__name__ = ["haxe","crypto","BaseCode"];
 haxe_crypto_BaseCode.prototype = {
-	encodeBytes: function(b) {
+	base: null
+	,nbits: null
+	,encodeBytes: function(b) {
 		var nbits = this.nbits;
 		var base = this.base;
 		var size = b.length * 8 / nbits | 0;
@@ -3066,10 +3836,14 @@ var haxe_ds_IntMap = function() {
 	this.h = { };
 };
 $hxClasses["haxe.ds.IntMap"] = haxe_ds_IntMap;
-haxe_ds_IntMap.__name__ = true;
+haxe_ds_IntMap.__name__ = ["haxe","ds","IntMap"];
 haxe_ds_IntMap.__interfaces__ = [haxe_IMap];
 haxe_ds_IntMap.prototype = {
-	remove: function(key) {
+	h: null
+	,get: function(key) {
+		return this.h[key];
+	}
+	,remove: function(key) {
 		if(!this.h.hasOwnProperty(key)) {
 			return false;
 		}
@@ -3100,9 +3874,13 @@ var haxe_ds__$StringMap_StringMapIterator = function(map,keys) {
 	this.count = keys.length;
 };
 $hxClasses["haxe.ds._StringMap.StringMapIterator"] = haxe_ds__$StringMap_StringMapIterator;
-haxe_ds__$StringMap_StringMapIterator.__name__ = true;
+haxe_ds__$StringMap_StringMapIterator.__name__ = ["haxe","ds","_StringMap","StringMapIterator"];
 haxe_ds__$StringMap_StringMapIterator.prototype = {
-	hasNext: function() {
+	map: null
+	,keys: null
+	,index: null
+	,count: null
+	,hasNext: function() {
 		return this.index < this.count;
 	}
 	,next: function() {
@@ -3120,10 +3898,18 @@ var haxe_ds_StringMap = function() {
 	this.h = { };
 };
 $hxClasses["haxe.ds.StringMap"] = haxe_ds_StringMap;
-haxe_ds_StringMap.__name__ = true;
+haxe_ds_StringMap.__name__ = ["haxe","ds","StringMap"];
 haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
 haxe_ds_StringMap.prototype = {
-	setReserved: function(key,value) {
+	h: null
+	,rh: null
+	,get: function(key) {
+		if(__map_reserved[key] != null) {
+			return this.getReserved(key);
+		}
+		return this.h[key];
+	}
+	,setReserved: function(key,value) {
 		if(this.rh == null) {
 			this.rh = { };
 		}
@@ -3187,7 +3973,7 @@ var haxe_io_Bytes = function(data) {
 	data.bytes = this.b;
 };
 $hxClasses["haxe.io.Bytes"] = haxe_io_Bytes;
-haxe_io_Bytes.__name__ = true;
+haxe_io_Bytes.__name__ = ["haxe","io","Bytes"];
 haxe_io_Bytes.ofString = function(s) {
 	var a = [];
 	var i = 0;
@@ -3222,7 +4008,10 @@ haxe_io_Bytes.ofData = function(b) {
 	return new haxe_io_Bytes(b);
 };
 haxe_io_Bytes.prototype = {
-	blit: function(pos,src,srcpos,len) {
+	length: null
+	,b: null
+	,data: null
+	,blit: function(pos,src,srcpos,len) {
 		if(pos < 0 || srcpos < 0 || len < 0 || pos + len > this.length || srcpos + len > src.length) {
 			throw new js__$Boot_HaxeError(haxe_io_Error.OutsideBounds);
 		}
@@ -3279,7 +4068,7 @@ haxe_io_Bytes.prototype = {
 };
 var haxe_io_Eof = function() { };
 $hxClasses["haxe.io.Eof"] = haxe_io_Eof;
-haxe_io_Eof.__name__ = true;
+haxe_io_Eof.__name__ = ["haxe","io","Eof"];
 haxe_io_Eof.prototype = {
 	toString: function() {
 		return "Eof";
@@ -3299,7 +4088,7 @@ haxe_io_Error.OutsideBounds.__enum__ = haxe_io_Error;
 haxe_io_Error.Custom = function(e) { var $x = ["Custom",3,e]; $x.__enum__ = haxe_io_Error; $x.toString = $estr; return $x; };
 var haxe_io_FPHelper = function() { };
 $hxClasses["haxe.io.FPHelper"] = haxe_io_FPHelper;
-haxe_io_FPHelper.__name__ = true;
+haxe_io_FPHelper.__name__ = ["haxe","io","FPHelper"];
 haxe_io_FPHelper.i32ToFloat = function(i) {
 	var sign = 1 - (i >>> 31 << 1);
 	var exp = i >>> 23 & 255;
@@ -3354,7 +4143,7 @@ var js__$Boot_HaxeError = function(val) {
 	}
 };
 $hxClasses["js._Boot.HaxeError"] = js__$Boot_HaxeError;
-js__$Boot_HaxeError.__name__ = true;
+js__$Boot_HaxeError.__name__ = ["js","_Boot","HaxeError"];
 js__$Boot_HaxeError.wrap = function(val) {
 	if((val instanceof Error)) {
 		return val;
@@ -3364,11 +4153,12 @@ js__$Boot_HaxeError.wrap = function(val) {
 };
 js__$Boot_HaxeError.__super__ = Error;
 js__$Boot_HaxeError.prototype = $extend(Error.prototype,{
-	__class__: js__$Boot_HaxeError
+	val: null
+	,__class__: js__$Boot_HaxeError
 });
 var js_Boot = function() { };
 $hxClasses["js.Boot"] = js_Boot;
-js_Boot.__name__ = true;
+js_Boot.__name__ = ["js","Boot"];
 js_Boot.__unhtml = function(s) {
 	return s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
 };
@@ -3593,13 +4383,13 @@ js_Boot.__resolveNativeClass = function(name) {
 };
 var js_Browser = function() { };
 $hxClasses["js.Browser"] = js_Browser;
-js_Browser.__name__ = true;
+js_Browser.__name__ = ["js","Browser"];
 js_Browser.alert = function(v) {
 	window.alert(js_Boot.__string_rec(v,""));
 };
 var js_html__$CanvasElement_CanvasUtil = function() { };
 $hxClasses["js.html._CanvasElement.CanvasUtil"] = js_html__$CanvasElement_CanvasUtil;
-js_html__$CanvasElement_CanvasUtil.__name__ = true;
+js_html__$CanvasElement_CanvasUtil.__name__ = ["js","html","_CanvasElement","CanvasUtil"];
 js_html__$CanvasElement_CanvasUtil.getContextWebGL = function(canvas,attribs) {
 	var _g = 0;
 	var _g1 = ["webgl","experimental-webgl"];
@@ -3627,7 +4417,7 @@ var js_html_compat_ArrayBuffer = function(a) {
 	}
 };
 $hxClasses["js.html.compat.ArrayBuffer"] = js_html_compat_ArrayBuffer;
-js_html_compat_ArrayBuffer.__name__ = true;
+js_html_compat_ArrayBuffer.__name__ = ["js","html","compat","ArrayBuffer"];
 js_html_compat_ArrayBuffer.sliceImpl = function(begin,end) {
 	var u = new Uint8Array(this,begin,end == null?null:end - begin);
 	var result = new ArrayBuffer(u.byteLength);
@@ -3635,7 +4425,9 @@ js_html_compat_ArrayBuffer.sliceImpl = function(begin,end) {
 	return result;
 };
 js_html_compat_ArrayBuffer.prototype = {
-	slice: function(begin,end) {
+	byteLength: null
+	,a: null
+	,slice: function(begin,end) {
 		return new js_html_compat_ArrayBuffer(this.a.slice(begin,end));
 	}
 	,__class__: js_html_compat_ArrayBuffer
@@ -3649,9 +4441,12 @@ var js_html_compat_DataView = function(buffer,byteOffset,byteLength) {
 	}
 };
 $hxClasses["js.html.compat.DataView"] = js_html_compat_DataView;
-js_html_compat_DataView.__name__ = true;
+js_html_compat_DataView.__name__ = ["js","html","compat","DataView"];
 js_html_compat_DataView.prototype = {
-	getInt8: function(byteOffset) {
+	buf: null
+	,offset: null
+	,length: null
+	,getInt8: function(byteOffset) {
 		var v = this.buf.a[this.offset + byteOffset];
 		if(v >= 128) {
 			return v - 256;
@@ -3758,7 +4553,7 @@ js_html_compat_DataView.prototype = {
 };
 var js_html_compat_Float32Array = function() { };
 $hxClasses["js.html.compat.Float32Array"] = js_html_compat_Float32Array;
-js_html_compat_Float32Array.__name__ = true;
+js_html_compat_Float32Array.__name__ = ["js","html","compat","Float32Array"];
 js_html_compat_Float32Array._new = function(arg1,offset,length) {
 	var arr;
 	if(typeof(arg1) == "number") {
@@ -3855,7 +4650,7 @@ js_html_compat_Float32Array._subarray = function(start,end) {
 };
 var js_html_compat_Uint8Array = function() { };
 $hxClasses["js.html.compat.Uint8Array"] = js_html_compat_Uint8Array;
-js_html_compat_Uint8Array.__name__ = true;
+js_html_compat_Uint8Array.__name__ = ["js","html","compat","Uint8Array"];
 js_html_compat_Uint8Array._new = function(arg1,offset,length) {
 	var arr;
 	if(typeof(arg1) == "number") {
@@ -3934,12 +4729,17 @@ var lime_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 786987;
+	this.version = 611375;
 };
 $hxClasses["lime.AssetCache"] = lime_AssetCache;
-lime_AssetCache.__name__ = true;
+lime_AssetCache.__name__ = ["lime","AssetCache"];
 lime_AssetCache.prototype = {
-	clear: function(prefix) {
+	audio: null
+	,enabled: null
+	,image: null
+	,font: null
+	,version: null
+	,clear: function(prefix) {
 		if(prefix == null) {
 			this.audio = new haxe_ds_StringMap();
 			this.font = new haxe_ds_StringMap();
@@ -3977,9 +4777,12 @@ var lime_app_Event_$Void_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Void_Void"] = lime_app_Event_$Void_$Void;
-lime_app_Event_$Void_$Void.__name__ = true;
+lime_app_Event_$Void_$Void.__name__ = ["lime","app","Event_Void_Void"];
 lime_app_Event_$Void_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -4024,6 +4827,7 @@ lime_app_Event_$Void_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function() {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -4045,7 +4849,7 @@ lime_app_Event_$Void_$Void.prototype = {
 };
 var lime_Assets = function() { };
 $hxClasses["lime.Assets"] = lime_Assets;
-lime_Assets.__name__ = true;
+lime_Assets.__name__ = ["lime","Assets"];
 lime_Assets.exists = function(id,type) {
 	lime_Assets.initialize();
 	if(type == null) {
@@ -4546,9 +5350,16 @@ var lime__$backend_html5_HTML5Application = function(parent) {
 	lime_audio_AudioManager.init();
 };
 $hxClasses["lime._backend.html5.HTML5Application"] = lime__$backend_html5_HTML5Application;
-lime__$backend_html5_HTML5Application.__name__ = true;
+lime__$backend_html5_HTML5Application.__name__ = ["lime","_backend","html5","HTML5Application"];
 lime__$backend_html5_HTML5Application.prototype = {
-	convertKeyCode: function(keyCode) {
+	gameDeviceCache: null
+	,currentUpdate: null
+	,deltaTime: null
+	,framePeriod: null
+	,lastUpdate: null
+	,nextUpdate: null
+	,parent: null
+	,convertKeyCode: function(keyCode) {
 		if(keyCode >= 65 && keyCode <= 90) {
 			return keyCode + 32;
 		}
@@ -4918,13 +5729,18 @@ var lime__$backend_html5_GameDeviceData = function() {
 	this.axes = [];
 };
 $hxClasses["lime._backend.html5.GameDeviceData"] = lime__$backend_html5_GameDeviceData;
-lime__$backend_html5_GameDeviceData.__name__ = true;
+lime__$backend_html5_GameDeviceData.__name__ = ["lime","_backend","html5","GameDeviceData"];
 lime__$backend_html5_GameDeviceData.prototype = {
-	__class__: lime__$backend_html5_GameDeviceData
+	connected: null
+	,id: null
+	,isGamepad: null
+	,buttons: null
+	,axes: null
+	,__class__: lime__$backend_html5_GameDeviceData
 };
 var lime__$backend_html5_HTML5Mouse = function() { };
 $hxClasses["lime._backend.html5.HTML5Mouse"] = lime__$backend_html5_HTML5Mouse;
-lime__$backend_html5_HTML5Mouse.__name__ = true;
+lime__$backend_html5_HTML5Mouse.__name__ = ["lime","_backend","html5","HTML5Mouse"];
 lime__$backend_html5_HTML5Mouse.hide = function() {
 	if(!lime__$backend_html5_HTML5Mouse.__hidden) {
 		lime__$backend_html5_HTML5Mouse.__hidden = true;
@@ -5016,9 +5832,10 @@ var lime__$backend_html5_HTML5Renderer = function(parent) {
 	this.parent = parent;
 };
 $hxClasses["lime._backend.html5.HTML5Renderer"] = lime__$backend_html5_HTML5Renderer;
-lime__$backend_html5_HTML5Renderer.__name__ = true;
+lime__$backend_html5_HTML5Renderer.__name__ = ["lime","_backend","html5","HTML5Renderer"];
 lime__$backend_html5_HTML5Renderer.prototype = {
-	create: function() {
+	parent: null
+	,create: function() {
 		this.createContext();
 		if(this.parent.context[1] == 0) {
 			this.parent.window.backend.canvas.addEventListener("webglcontextlost",$bind(this,this.handleEvent),false);
@@ -5091,9 +5908,21 @@ var lime__$backend_html5_HTML5Window = function(parent) {
 	}
 };
 $hxClasses["lime._backend.html5.HTML5Window"] = lime__$backend_html5_HTML5Window;
-lime__$backend_html5_HTML5Window.__name__ = true;
+lime__$backend_html5_HTML5Window.__name__ = ["lime","_backend","html5","HTML5Window"];
 lime__$backend_html5_HTML5Window.prototype = {
-	alert: function(message,title) {
+	canvas: null
+	,div: null
+	,element: null
+	,currentTouches: null
+	,enableTextEvents: null
+	,lastMouseX: null
+	,lastMouseY: null
+	,parent: null
+	,primaryTouch: null
+	,setHeight: null
+	,setWidth: null
+	,unusedTouchesPool: null
+	,alert: function(message,title) {
 		if(message != null) {
 			js_Browser.alert(message);
 		}
@@ -5474,9 +6303,13 @@ var lime_app_Event = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event"] = lime_app_Event;
-lime_app_Event.__name__ = true;
+lime_app_Event.__name__ = ["lime","app","Event"];
 lime_app_Event.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__listeners: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5501,6 +6334,7 @@ lime_app_Event.prototype = {
 	,cancel: function() {
 		this.canceled = true;
 	}
+	,dispatch: null
 	,has: function(listener) {
 		var _g = 0;
 		var _g1 = this.__listeners;
@@ -5530,9 +6364,12 @@ var lime_app_Event_$Dynamic_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Dynamic_Void"] = lime_app_Event_$Dynamic_$Void;
-lime_app_Event_$Dynamic_$Void.__name__ = true;
+lime_app_Event_$Dynamic_$Void.__name__ = ["lime","app","Event_Dynamic_Void"];
 lime_app_Event_$Dynamic_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5577,6 +6414,7 @@ lime_app_Event_$Dynamic_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -5603,9 +6441,12 @@ var lime_app_Event_$Float_$Float_$Int_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Float_Float_Int_Void"] = lime_app_Event_$Float_$Float_$Int_$Void;
-lime_app_Event_$Float_$Float_$Int_$Void.__name__ = true;
+lime_app_Event_$Float_$Float_$Int_$Void.__name__ = ["lime","app","Event_Float_Float_Int_Void"];
 lime_app_Event_$Float_$Float_$Int_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5650,6 +6491,7 @@ lime_app_Event_$Float_$Float_$Int_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1,a2) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -5676,9 +6518,12 @@ var lime_app_Event_$Float_$Float_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Float_Float_Void"] = lime_app_Event_$Float_$Float_$Void;
-lime_app_Event_$Float_$Float_$Void.__name__ = true;
+lime_app_Event_$Float_$Float_$Void.__name__ = ["lime","app","Event_Float_Float_Void"];
 lime_app_Event_$Float_$Float_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5723,6 +6568,7 @@ lime_app_Event_$Float_$Float_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -5749,9 +6595,12 @@ var lime_app_Event_$Int_$Float_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Int_Float_Void"] = lime_app_Event_$Int_$Float_$Void;
-lime_app_Event_$Int_$Float_$Void.__name__ = true;
+lime_app_Event_$Int_$Float_$Void.__name__ = ["lime","app","Event_Int_Float_Void"];
 lime_app_Event_$Int_$Float_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5796,6 +6645,7 @@ lime_app_Event_$Int_$Float_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -5822,9 +6672,12 @@ var lime_app_Event_$Int_$Int_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Int_Int_Void"] = lime_app_Event_$Int_$Int_$Void;
-lime_app_Event_$Int_$Int_$Void.__name__ = true;
+lime_app_Event_$Int_$Int_$Void.__name__ = ["lime","app","Event_Int_Int_Void"];
 lime_app_Event_$Int_$Int_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5869,6 +6722,7 @@ lime_app_Event_$Int_$Int_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -5895,9 +6749,12 @@ var lime_app_Event_$Int_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Int_Void"] = lime_app_Event_$Int_$Void;
-lime_app_Event_$Int_$Void.__name__ = true;
+lime_app_Event_$Int_$Void.__name__ = ["lime","app","Event_Int_Void"];
 lime_app_Event_$Int_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -5942,6 +6799,7 @@ lime_app_Event_$Int_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -5968,9 +6826,12 @@ var lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_Int_lime_ui_JoystickHatPosition_Void"] = lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void;
-lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void.__name__ = true;
+lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void.__name__ = ["lime","app","Event_Int_lime_ui_JoystickHatPosition_Void"];
 lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6015,6 +6876,7 @@ lime_app_Event_$Int_$lime_$ui_$JoystickHatPosition_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6041,9 +6903,12 @@ var lime_app_Event_$String_$Int_$Int_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_String_Int_Int_Void"] = lime_app_Event_$String_$Int_$Int_$Void;
-lime_app_Event_$String_$Int_$Int_$Void.__name__ = true;
+lime_app_Event_$String_$Int_$Int_$Void.__name__ = ["lime","app","Event_String_Int_Int_Void"];
 lime_app_Event_$String_$Int_$Int_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6088,6 +6953,7 @@ lime_app_Event_$String_$Int_$Int_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1,a2) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6114,9 +6980,12 @@ var lime_app_Event_$String_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_String_Void"] = lime_app_Event_$String_$Void;
-lime_app_Event_$String_$Void.__name__ = true;
+lime_app_Event_$String_$Void.__name__ = ["lime","app","Event_String_Void"];
 lime_app_Event_$String_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6161,6 +7030,7 @@ lime_app_Event_$String_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6187,9 +7057,12 @@ var lime_app_Event_$lime_$graphics_$RenderContext_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_graphics_RenderContext_Void"] = lime_app_Event_$lime_$graphics_$RenderContext_$Void;
-lime_app_Event_$lime_$graphics_$RenderContext_$Void.__name__ = true;
+lime_app_Event_$lime_$graphics_$RenderContext_$Void.__name__ = ["lime","app","Event_lime_graphics_RenderContext_Void"];
 lime_app_Event_$lime_$graphics_$RenderContext_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6234,6 +7107,7 @@ lime_app_Event_$lime_$graphics_$RenderContext_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6260,9 +7134,12 @@ var lime_app_Event_$lime_$ui_$GamepadAxis_$Float_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_ui_GamepadAxis_Float_Void"] = lime_app_Event_$lime_$ui_$GamepadAxis_$Float_$Void;
-lime_app_Event_$lime_$ui_$GamepadAxis_$Float_$Void.__name__ = true;
+lime_app_Event_$lime_$ui_$GamepadAxis_$Float_$Void.__name__ = ["lime","app","Event_lime_ui_GamepadAxis_Float_Void"];
 lime_app_Event_$lime_$ui_$GamepadAxis_$Float_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6307,6 +7184,7 @@ lime_app_Event_$lime_$ui_$GamepadAxis_$Float_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6333,9 +7211,12 @@ var lime_app_Event_$lime_$ui_$GamepadButton_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_ui_GamepadButton_Void"] = lime_app_Event_$lime_$ui_$GamepadButton_$Void;
-lime_app_Event_$lime_$ui_$GamepadButton_$Void.__name__ = true;
+lime_app_Event_$lime_$ui_$GamepadButton_$Void.__name__ = ["lime","app","Event_lime_ui_GamepadButton_Void"];
 lime_app_Event_$lime_$ui_$GamepadButton_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6380,6 +7261,7 @@ lime_app_Event_$lime_$ui_$GamepadButton_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6406,9 +7288,12 @@ var lime_app_Event_$lime_$ui_$Gamepad_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_ui_Gamepad_Void"] = lime_app_Event_$lime_$ui_$Gamepad_$Void;
-lime_app_Event_$lime_$ui_$Gamepad_$Void.__name__ = true;
+lime_app_Event_$lime_$ui_$Gamepad_$Void.__name__ = ["lime","app","Event_lime_ui_Gamepad_Void"];
 lime_app_Event_$lime_$ui_$Gamepad_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6453,6 +7338,7 @@ lime_app_Event_$lime_$ui_$Gamepad_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6479,9 +7365,12 @@ var lime_app_Event_$lime_$ui_$Joystick_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_ui_Joystick_Void"] = lime_app_Event_$lime_$ui_$Joystick_$Void;
-lime_app_Event_$lime_$ui_$Joystick_$Void.__name__ = true;
+lime_app_Event_$lime_$ui_$Joystick_$Void.__name__ = ["lime","app","Event_lime_ui_Joystick_Void"];
 lime_app_Event_$lime_$ui_$Joystick_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6526,6 +7415,7 @@ lime_app_Event_$lime_$ui_$Joystick_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6552,9 +7442,12 @@ var lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void = function() 
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void"] = lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void;
-lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void.__name__ = true;
+lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void.__name__ = ["lime","app","Event_lime_ui_KeyCode_lime_ui_KeyModifier_Void"];
 lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6599,6 +7492,7 @@ lime_app_Event_$lime_$ui_$KeyCode_$lime_$ui_$KeyModifier_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a,a1) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6625,9 +7519,12 @@ var lime_app_Event_$lime_$ui_$Touch_$Void = function() {
 	this.__repeat = [];
 };
 $hxClasses["lime.app.Event_lime_ui_Touch_Void"] = lime_app_Event_$lime_$ui_$Touch_$Void;
-lime_app_Event_$lime_$ui_$Touch_$Void.__name__ = true;
+lime_app_Event_$lime_$ui_$Touch_$Void.__name__ = ["lime","app","Event_lime_ui_Touch_Void"];
 lime_app_Event_$lime_$ui_$Touch_$Void.prototype = {
-	add: function(listener,once,priority) {
+	canceled: null
+	,__repeat: null
+	,__priorities: null
+	,add: function(listener,once,priority) {
 		if(priority == null) {
 			priority = 0;
 		}
@@ -6672,6 +7569,7 @@ lime_app_Event_$lime_$ui_$Touch_$Void.prototype = {
 			this.__repeat.splice(i,1);
 		}
 	}
+	,__listeners: null
 	,dispatch: function(a) {
 		this.canceled = false;
 		var listeners = this.__listeners;
@@ -6705,7 +7603,7 @@ var lime_app_Future = function(work) {
 	}
 };
 $hxClasses["lime.app.Future"] = lime_app_Future;
-lime_app_Future.__name__ = true;
+lime_app_Future.__name__ = ["lime","app","Future"];
 lime_app_Future.threadPool_doWork = function(state) {
 	try {
 		var result = state.work();
@@ -6723,7 +7621,15 @@ lime_app_Future.threadPool_onError = function(state) {
 	state.promise.error(state.error);
 };
 lime_app_Future.prototype = {
-	onComplete: function(listener) {
+	isCompleted: null
+	,value: null
+	,__completed: null
+	,__completeListeners: null
+	,__errored: null
+	,__errorListeners: null
+	,__errorMessage: null
+	,__progressListeners: null
+	,onComplete: function(listener) {
 		if(listener != null) {
 			if(this.__completed) {
 				listener(this.value);
@@ -6785,6 +7691,7 @@ lime_app_Future.prototype = {
 		}
 	}
 	,__class__: lime_app_Future
+	,__properties__: {get_isCompleted:"get_isCompleted"}
 };
 var lime_app_Preloader = function() {
 	this.total = 0;
@@ -6794,9 +7701,14 @@ var lime_app_Preloader = function() {
 	this.onProgress.add($bind(this,this.update));
 };
 $hxClasses["lime.app.Preloader"] = lime_app_Preloader;
-lime_app_Preloader.__name__ = true;
+lime_app_Preloader.__name__ = ["lime","app","Preloader"];
 lime_app_Preloader.prototype = {
-	create: function(config) {
+	complete: null
+	,onComplete: null
+	,onProgress: null
+	,loaded: null
+	,total: null
+	,create: function(config) {
 	}
 	,load: function(urls,types) {
 		var url = null;
@@ -6944,9 +7856,11 @@ var lime_app_Promise = function() {
 	this.future = new lime_app_Future();
 };
 $hxClasses["lime.app.Promise"] = lime_app_Promise;
-lime_app_Promise.__name__ = true;
+lime_app_Promise.__name__ = ["lime","app","Promise"];
 lime_app_Promise.prototype = {
-	complete: function(data) {
+	future: null
+	,isCompleted: null
+	,complete: function(data) {
 		if(!this.future.__errored) {
 			this.future.__completed = true;
 			this.future.value = data;
@@ -7004,6 +7918,7 @@ lime_app_Promise.prototype = {
 		return this.future.get_isCompleted();
 	}
 	,__class__: lime_app_Promise
+	,__properties__: {get_isCompleted:"get_isCompleted"}
 };
 var lime_audio_ALAudioContext = function() {
 	this.EXPONENT_DISTANCE_CLAMPED = 53254;
@@ -7070,9 +7985,71 @@ var lime_audio_ALAudioContext = function() {
 	this.NONE = 0;
 };
 $hxClasses["lime.audio.ALAudioContext"] = lime_audio_ALAudioContext;
-lime_audio_ALAudioContext.__name__ = true;
+lime_audio_ALAudioContext.__name__ = ["lime","audio","ALAudioContext"];
 lime_audio_ALAudioContext.prototype = {
-	bufferData: function(buffer,format,data,size,freq) {
+	NONE: null
+	,FALSE: null
+	,TRUE: null
+	,SOURCE_RELATIVE: null
+	,CONE_INNER_ANGLE: null
+	,CONE_OUTER_ANGLE: null
+	,PITCH: null
+	,POSITION: null
+	,DIRECTION: null
+	,VELOCITY: null
+	,LOOPING: null
+	,BUFFER: null
+	,GAIN: null
+	,MIN_GAIN: null
+	,MAX_GAIN: null
+	,ORIENTATION: null
+	,SOURCE_STATE: null
+	,INITIAL: null
+	,PLAYING: null
+	,PAUSED: null
+	,STOPPED: null
+	,BUFFERS_QUEUED: null
+	,BUFFERS_PROCESSED: null
+	,REFERENCE_DISTANCE: null
+	,ROLLOFF_FACTOR: null
+	,CONE_OUTER_GAIN: null
+	,MAX_DISTANCE: null
+	,SEC_OFFSET: null
+	,SAMPLE_OFFSET: null
+	,BYTE_OFFSET: null
+	,SOURCE_TYPE: null
+	,STATIC: null
+	,STREAMING: null
+	,UNDETERMINED: null
+	,FORMAT_MONO8: null
+	,FORMAT_MONO16: null
+	,FORMAT_STEREO8: null
+	,FORMAT_STEREO16: null
+	,FREQUENCY: null
+	,BITS: null
+	,CHANNELS: null
+	,SIZE: null
+	,NO_ERROR: null
+	,INVALID_NAME: null
+	,INVALID_ENUM: null
+	,INVALID_VALUE: null
+	,INVALID_OPERATION: null
+	,OUT_OF_MEMORY: null
+	,VENDOR: null
+	,VERSION: null
+	,RENDERER: null
+	,EXTENSIONS: null
+	,DOPPLER_FACTOR: null
+	,SPEED_OF_SOUND: null
+	,DOPPLER_VELOCITY: null
+	,DISTANCE_MODEL: null
+	,INVERSE_DISTANCE: null
+	,INVERSE_DISTANCE_CLAMPED: null
+	,LINEAR_DISTANCE: null
+	,LINEAR_DISTANCE_CLAMPED: null
+	,EXPONENT_DISTANCE: null
+	,EXPONENT_DISTANCE_CLAMPED: null
+	,bufferData: function(buffer,format,data,size,freq) {
 		lime_audio_openal_AL.bufferData(buffer,format,data,size,freq);
 	}
 	,buffer3f: function(buffer,param,value1,value2,value3) {
@@ -7368,9 +8345,30 @@ var lime_audio_ALCAudioContext = function() {
 	this.FALSE = 0;
 };
 $hxClasses["lime.audio.ALCAudioContext"] = lime_audio_ALCAudioContext;
-lime_audio_ALCAudioContext.__name__ = true;
+lime_audio_ALCAudioContext.__name__ = ["lime","audio","ALCAudioContext"];
 lime_audio_ALCAudioContext.prototype = {
-	closeDevice: function(device) {
+	FALSE: null
+	,TRUE: null
+	,FREQUENCY: null
+	,REFRESH: null
+	,SYNC: null
+	,MONO_SOURCES: null
+	,STEREO_SOURCES: null
+	,NO_ERROR: null
+	,INVALID_DEVICE: null
+	,INVALID_CONTEXT: null
+	,INVALID_ENUM: null
+	,INVALID_VALUE: null
+	,OUT_OF_MEMORY: null
+	,ATTRIBUTES_SIZE: null
+	,ALL_ATTRIBUTES: null
+	,DEFAULT_DEVICE_SPECIFIER: null
+	,DEVICE_SPECIFIER: null
+	,EXTENSIONS: null
+	,ENUMERATE_ALL_EXT: null
+	,DEFAULT_ALL_DEVICES_SPECIFIER: null
+	,ALL_DEVICES_SPECIFIER: null
+	,closeDevice: function(device) {
 		return lime_audio_openal_ALC.closeDevice(device);
 	}
 	,createContext: function(device,attrlist) {
@@ -7418,7 +8416,7 @@ var lime_audio_AudioBuffer = function() {
 	this.id = 0;
 };
 $hxClasses["lime.audio.AudioBuffer"] = lime_audio_AudioBuffer;
-lime_audio_AudioBuffer.__name__ = true;
+lime_audio_AudioBuffer.__name__ = ["lime","audio","AudioBuffer"];
 lime_audio_AudioBuffer.fromBytes = function(bytes) {
 	if(bytes == null) {
 		return null;
@@ -7437,7 +8435,13 @@ lime_audio_AudioBuffer.fromURL = function(url,handler) {
 	}
 };
 lime_audio_AudioBuffer.prototype = {
-	dispose: function() {
+	bitsPerSample: null
+	,channels: null
+	,data: null
+	,id: null
+	,sampleRate: null
+	,src: null
+	,dispose: function() {
 	}
 	,__class__: lime_audio_AudioBuffer
 };
@@ -7449,7 +8453,7 @@ lime_audio_AudioContext.FLASH = function(context) { var $x = ["FLASH",3,context]
 lime_audio_AudioContext.CUSTOM = function(data) { var $x = ["CUSTOM",4,data]; $x.__enum__ = lime_audio_AudioContext; $x.toString = $estr; return $x; };
 var lime_audio_AudioManager = function() { };
 $hxClasses["lime.audio.AudioManager"] = lime_audio_AudioManager;
-lime_audio_AudioManager.__name__ = true;
+lime_audio_AudioManager.__name__ = ["lime","audio","AudioManager"];
 lime_audio_AudioManager.init = function(context) {
 	if(lime_audio_AudioManager.context == null) {
 		if(context == null) {
@@ -7519,9 +8523,18 @@ var lime_audio_AudioSource = function(buffer,offset,length,loops) {
 	}
 };
 $hxClasses["lime.audio.AudioSource"] = lime_audio_AudioSource;
-lime_audio_AudioSource.__name__ = true;
+lime_audio_AudioSource.__name__ = ["lime","audio","AudioSource"];
 lime_audio_AudioSource.prototype = {
-	dispose: function() {
+	onComplete: null
+	,buffer: null
+	,offset: null
+	,id: null
+	,playing: null
+	,pauseTime: null
+	,__length: null
+	,__loops: null
+	,__position: null
+	,dispose: function() {
 		var _g = lime_audio_AudioManager.context;
 		if(_g[1] == 0) {
 			var al = _g[3];
@@ -7602,11 +8615,12 @@ lime_audio_AudioSource.prototype = {
 		return this.__position;
 	}
 	,__class__: lime_audio_AudioSource
+	,__properties__: {set_position:"set_position",get_position:"get_position",set_loops:"set_loops",get_loops:"get_loops",set_length:"set_length",get_length:"get_length",set_gain:"set_gain",get_gain:"get_gain",set_currentTime:"set_currentTime",get_currentTime:"get_currentTime"}
 };
 var lime_audio_FlashAudioContext = function() {
 };
 $hxClasses["lime.audio.FlashAudioContext"] = lime_audio_FlashAudioContext;
-lime_audio_FlashAudioContext.__name__ = true;
+lime_audio_FlashAudioContext.__name__ = ["lime","audio","FlashAudioContext"];
 lime_audio_FlashAudioContext.prototype = {
 	createBuffer: function(stream,context) {
 		return null;
@@ -7675,9 +8689,18 @@ var lime_audio_HTML5AudioContext = function() {
 	this.HAVE_CURRENT_DATA = 2;
 };
 $hxClasses["lime.audio.HTML5AudioContext"] = lime_audio_HTML5AudioContext;
-lime_audio_HTML5AudioContext.__name__ = true;
+lime_audio_HTML5AudioContext.__name__ = ["lime","audio","HTML5AudioContext"];
 lime_audio_HTML5AudioContext.prototype = {
-	canPlayType: function(buffer,type) {
+	HAVE_CURRENT_DATA: null
+	,HAVE_ENOUGH_DATA: null
+	,HAVE_FUTURE_DATA: null
+	,HAVE_METADATA: null
+	,HAVE_NOTHING: null
+	,NETWORK_EMPTY: null
+	,NETWORK_IDLE: null
+	,NETWORK_LOADING: null
+	,NETWORK_NO_SOURCE: null
+	,canPlayType: function(buffer,type) {
 		if(buffer.src != null) {
 			return buffer.src.canPlayType(type);
 		}
@@ -7882,7 +8905,7 @@ lime_audio_HTML5AudioContext.prototype = {
 };
 var lime_audio_openal_AL = function() { };
 $hxClasses["lime.audio.openal.AL"] = lime_audio_openal_AL;
-lime_audio_openal_AL.__name__ = true;
+lime_audio_openal_AL.__name__ = ["lime","audio","openal","AL"];
 lime_audio_openal_AL.bufferData = function(buffer,format,data,size,freq) {
 };
 lime_audio_openal_AL.buffer3f = function(buffer,param,value1,value2,value3) {
@@ -8129,7 +9152,7 @@ lime_audio_openal_AL.speedOfSound = function(value) {
 };
 var lime_audio_openal_ALC = function() { };
 $hxClasses["lime.audio.openal.ALC"] = lime_audio_openal_ALC;
-lime_audio_openal_ALC.__name__ = true;
+lime_audio_openal_ALC.__name__ = ["lime","audio","openal","ALC"];
 lime_audio_openal_ALC.closeDevice = function(device) {
 	return false;
 };
@@ -8181,20 +9204,20 @@ lime_audio_openal_ALC.suspendContext = function(context) {
 };
 var lime_audio_openal__$ALContext_ALContext_$Impl_$ = {};
 $hxClasses["lime.audio.openal._ALContext.ALContext_Impl_"] = lime_audio_openal__$ALContext_ALContext_$Impl_$;
-lime_audio_openal__$ALContext_ALContext_$Impl_$.__name__ = true;
+lime_audio_openal__$ALContext_ALContext_$Impl_$.__name__ = ["lime","audio","openal","_ALContext","ALContext_Impl_"];
 lime_audio_openal__$ALContext_ALContext_$Impl_$._new = function(handle) {
 	return handle;
 };
 var lime_audio_openal__$ALDevice_ALDevice_$Impl_$ = {};
 $hxClasses["lime.audio.openal._ALDevice.ALDevice_Impl_"] = lime_audio_openal__$ALDevice_ALDevice_$Impl_$;
-lime_audio_openal__$ALDevice_ALDevice_$Impl_$.__name__ = true;
+lime_audio_openal__$ALDevice_ALDevice_$Impl_$.__name__ = ["lime","audio","openal","_ALDevice","ALDevice_Impl_"];
 lime_audio_openal__$ALDevice_ALDevice_$Impl_$._new = function(handle) {
 	return handle;
 };
 var lime_graphics_ConsoleRenderContext = function() {
 };
 $hxClasses["lime.graphics.ConsoleRenderContext"] = lime_graphics_ConsoleRenderContext;
-lime_graphics_ConsoleRenderContext.__name__ = true;
+lime_graphics_ConsoleRenderContext.__name__ = ["lime","graphics","ConsoleRenderContext"];
 lime_graphics_ConsoleRenderContext.prototype = {
 	createIndexBuffer: function(indices,count) {
 		return new lime_graphics_console_IndexBuffer();
@@ -8240,13 +9263,64 @@ lime_graphics_ConsoleRenderContext.prototype = {
 		return 0;
 	}
 	,__class__: lime_graphics_ConsoleRenderContext
+	,__properties__: {get_height:"get_height",get_width:"get_width"}
 };
 var lime_graphics_FlashRenderContext = function() {
 };
 $hxClasses["lime.graphics.FlashRenderContext"] = lime_graphics_FlashRenderContext;
-lime_graphics_FlashRenderContext.__name__ = true;
+lime_graphics_FlashRenderContext.__name__ = ["lime","graphics","FlashRenderContext"];
 lime_graphics_FlashRenderContext.prototype = {
-	addChild: function(child) {
+	accessibilityImplementation: null
+	,accessibilityProperties: null
+	,alpha: null
+	,blendMode: null
+	,blendShader: null
+	,buttonMode: null
+	,cacheAsBitmap: null
+	,contextMenu: null
+	,doubleClickEnabled: null
+	,dropTarget: null
+	,filters: null
+	,focusRect: null
+	,graphics: null
+	,height: null
+	,hitArea: null
+	,loaderInfo: null
+	,mask: null
+	,mouseChildren: null
+	,mouseEnabled: null
+	,mouseX: null
+	,mouseY: null
+	,name: null
+	,needsSoftKeyboard: null
+	,numChildren: null
+	,opaqueBackground: null
+	,parent: null
+	,root: null
+	,rotation: null
+	,rotationX: null
+	,rotationY: null
+	,rotationZ: null
+	,scale9Grid: null
+	,scaleX: null
+	,scaleY: null
+	,scaleZ: null
+	,scrollRect: null
+	,softKeyboardInputAreaOfInterest: null
+	,soundTransform: null
+	,stage: null
+	,tabChildren: null
+	,tabEnabled: null
+	,tabIndex: null
+	,textSnapshot: null
+	,transform: null
+	,useHandCursor: null
+	,visible: null
+	,width: null
+	,x: null
+	,y: null
+	,z: null
+	,addChild: function(child) {
 		return null;
 	}
 	,addChildAt: function(child,index) {
@@ -8432,7 +9506,7 @@ var lime_graphics_Image = function(buffer,offsetX,offsetY,width,height,color,typ
 	}
 };
 $hxClasses["lime.graphics.Image"] = lime_graphics_Image;
-lime_graphics_Image.__name__ = true;
+lime_graphics_Image.__name__ = ["lime","graphics","Image"];
 lime_graphics_Image.fromBase64 = function(base64,type,onload) {
 	if(base64 == null) {
 		return null;
@@ -8526,7 +9600,18 @@ lime_graphics_Image.__isGIF = function(bytes) {
 	return false;
 };
 lime_graphics_Image.prototype = {
-	clone: function() {
+	buffer: null
+	,dirty: null
+	,height: null
+	,offsetX: null
+	,offsetY: null
+	,rect: null
+	,type: null
+	,version: null
+	,width: null
+	,x: null
+	,y: null
+	,clone: function() {
 		if(this.buffer != null) {
 			if(this.type == lime_graphics_ImageType.CANVAS) {
 				lime_graphics_utils_ImageCanvasUtil.convertToCanvas(this);
@@ -9320,6 +10405,7 @@ lime_graphics_Image.prototype = {
 		return this.buffer.transparent = value;
 	}
 	,__class__: lime_graphics_Image
+	,__properties__: {set_transparent:"set_transparent",get_transparent:"get_transparent",set_src:"set_src",get_src:"get_src",get_rect:"get_rect",set_premultiplied:"set_premultiplied",get_premultiplied:"get_premultiplied",set_powerOfTwo:"set_powerOfTwo",get_powerOfTwo:"get_powerOfTwo",set_format:"set_format",get_format:"get_format",set_data:"set_data",get_data:"get_data"}
 };
 var lime_graphics_ImageBuffer = function(data,width,height,bitsPerPixel,format) {
 	if(bitsPerPixel == null) {
@@ -9340,9 +10426,22 @@ var lime_graphics_ImageBuffer = function(data,width,height,bitsPerPixel,format) 
 	this.transparent = true;
 };
 $hxClasses["lime.graphics.ImageBuffer"] = lime_graphics_ImageBuffer;
-lime_graphics_ImageBuffer.__name__ = true;
+lime_graphics_ImageBuffer.__name__ = ["lime","graphics","ImageBuffer"];
 lime_graphics_ImageBuffer.prototype = {
-	clone: function() {
+	bitsPerPixel: null
+	,data: null
+	,format: null
+	,height: null
+	,premultiplied: null
+	,transparent: null
+	,width: null
+	,__srcBitmapData: null
+	,__srcCanvas: null
+	,__srcContext: null
+	,__srcCustom: null
+	,__srcImage: null
+	,__srcImageData: null
+	,clone: function() {
 		var buffer = new lime_graphics_ImageBuffer(this.data,this.width,this.height,this.bitsPerPixel);
 		if(this.data != null) {
 			var elements = this.data.byteLength;
@@ -9390,6 +10489,7 @@ lime_graphics_ImageBuffer.prototype = {
 		return this.width * 4;
 	}
 	,__class__: lime_graphics_ImageBuffer
+	,__properties__: {get_stride:"get_stride",set_src:"set_src",get_src:"get_src"}
 };
 var lime_graphics_ImageChannel = { __ename__ : true, __constructs__ : ["RED","GREEN","BLUE","ALPHA"] };
 lime_graphics_ImageChannel.RED = ["RED",0];
@@ -9437,9 +10537,16 @@ var lime_graphics_Renderer = function(window) {
 	this.window.renderer = this;
 };
 $hxClasses["lime.graphics.Renderer"] = lime_graphics_Renderer;
-lime_graphics_Renderer.__name__ = true;
+lime_graphics_Renderer.__name__ = ["lime","graphics","Renderer"];
 lime_graphics_Renderer.prototype = {
-	create: function() {
+	context: null
+	,onContextLost: null
+	,onContextRestored: null
+	,onRender: null
+	,type: null
+	,window: null
+	,backend: null
+	,create: function() {
 		this.backend.create();
 	}
 	,flip: function() {
@@ -9478,7 +10585,8 @@ lime_graphics_RendererType.CUSTOM.__enum__ = lime_graphics_RendererType;
 var lime_graphics_cairo_Cairo = function(surface) {
 };
 $hxClasses["lime.graphics.cairo.Cairo"] = lime_graphics_cairo_Cairo;
-lime_graphics_cairo_Cairo.__name__ = true;
+lime_graphics_cairo_Cairo.__name__ = ["lime","graphics","cairo","Cairo"];
+lime_graphics_cairo_Cairo.__properties__ = {get_versionString:"get_versionString",get_version:"get_version"}
 lime_graphics_cairo_Cairo.get_version = function() {
 	return 0;
 };
@@ -9486,7 +10594,10 @@ lime_graphics_cairo_Cairo.get_versionString = function() {
 	return "";
 };
 lime_graphics_cairo_Cairo.prototype = {
-	arc: function(xc,yc,radius,angle1,angle2) {
+	target: null
+	,userData: null
+	,handle: null
+	,arc: function(xc,yc,radius,angle1,angle2) {
 	}
 	,arcNegative: function(xc,yc,radius,angle1,angle2) {
 	}
@@ -9683,10 +10794,11 @@ lime_graphics_cairo_Cairo.prototype = {
 		return value;
 	}
 	,__class__: lime_graphics_cairo_Cairo
+	,__properties__: {set_tolerance:"set_tolerance",get_tolerance:"get_tolerance",get_target:"get_target",set_source:"set_source",get_source:"get_source",set_operator:"set_operator",get_operator:"get_operator",set_miterLimit:"set_miterLimit",get_miterLimit:"get_miterLimit",set_matrix:"set_matrix",get_matrix:"get_matrix",set_lineWidth:"set_lineWidth",get_lineWidth:"get_lineWidth",set_lineJoin:"set_lineJoin",get_lineJoin:"get_lineJoin",set_lineCap:"set_lineCap",get_lineCap:"get_lineCap",get_hasCurrentPoint:"get_hasCurrentPoint",get_groupTarget:"get_groupTarget",set_fontOptions:"set_fontOptions",get_fontOptions:"get_fontOptions",set_fontFace:"set_fontFace",get_fontFace:"get_fontFace",set_fillRule:"set_fillRule",get_fillRule:"get_fillRule",get_dashCount:"get_dashCount",set_dash:"set_dash",get_dash:"get_dash",get_currentPoint:"get_currentPoint",set_antialias:"set_antialias",get_antialias:"get_antialias"}
 };
 var lime_graphics_cairo__$CairoFontFace_CairoFontFace_$Impl_$ = {};
 $hxClasses["lime.graphics.cairo._CairoFontFace.CairoFontFace_Impl_"] = lime_graphics_cairo__$CairoFontFace_CairoFontFace_$Impl_$;
-lime_graphics_cairo__$CairoFontFace_CairoFontFace_$Impl_$.__name__ = true;
+lime_graphics_cairo__$CairoFontFace_CairoFontFace_$Impl_$.__name__ = ["lime","graphics","cairo","_CairoFontFace","CairoFontFace_Impl_"];
 lime_graphics_cairo__$CairoFontFace_CairoFontFace_$Impl_$._new = function() {
 	return null;
 };
@@ -9695,7 +10807,8 @@ lime_graphics_cairo__$CairoFontFace_CairoFontFace_$Impl_$.status = function(this
 };
 var lime_graphics_cairo__$CairoFontOptions_CairoFontOptions_$Impl_$ = {};
 $hxClasses["lime.graphics.cairo._CairoFontOptions.CairoFontOptions_Impl_"] = lime_graphics_cairo__$CairoFontOptions_CairoFontOptions_$Impl_$;
-lime_graphics_cairo__$CairoFontOptions_CairoFontOptions_$Impl_$.__name__ = true;
+lime_graphics_cairo__$CairoFontOptions_CairoFontOptions_$Impl_$.__name__ = ["lime","graphics","cairo","_CairoFontOptions","CairoFontOptions_Impl_"];
+lime_graphics_cairo__$CairoFontOptions_CairoFontOptions_$Impl_$.__properties__ = {set_subpixelOrder:"set_subpixelOrder",get_subpixelOrder:"get_subpixelOrder",set_hintStyle:"set_hintStyle",get_hintStyle:"get_hintStyle",set_hintMetrics:"set_hintMetrics",get_hintMetrics:"get_hintMetrics",set_antialias:"set_antialias",get_antialias:"get_antialias"}
 lime_graphics_cairo__$CairoFontOptions_CairoFontOptions_$Impl_$._new = function() {
 	return null;
 };
@@ -9735,13 +10848,17 @@ var lime_graphics_cairo_CairoGlyph = function(index,x,y) {
 	this.y = y;
 };
 $hxClasses["lime.graphics.cairo.CairoGlyph"] = lime_graphics_cairo_CairoGlyph;
-lime_graphics_cairo_CairoGlyph.__name__ = true;
+lime_graphics_cairo_CairoGlyph.__name__ = ["lime","graphics","cairo","CairoGlyph"];
 lime_graphics_cairo_CairoGlyph.prototype = {
-	__class__: lime_graphics_cairo_CairoGlyph
+	index: null
+	,x: null
+	,y: null
+	,__class__: lime_graphics_cairo_CairoGlyph
 };
 var lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$ = {};
 $hxClasses["lime.graphics.cairo._CairoPattern.CairoPattern_Impl_"] = lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$;
-lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.__name__ = true;
+lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.__name__ = ["lime","graphics","cairo","_CairoPattern","CairoPattern_Impl_"];
+lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.__properties__ = {set_matrix:"set_matrix",get_matrix:"get_matrix",set_filter:"set_filter",get_filter:"get_filter",set_extend:"set_extend",get_extend:"get_extend",get_colorStopCount:"get_colorStopCount"}
 lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$._new = function(handle) {
 	return handle;
 };
@@ -9787,13 +10904,13 @@ lime_graphics_cairo__$CairoPattern_CairoPattern_$Impl_$.set_matrix = function(th
 };
 var lime_graphics_cairo__$CairoSurface_CairoSurface_$Impl_$ = {};
 $hxClasses["lime.graphics.cairo._CairoSurface.CairoSurface_Impl_"] = lime_graphics_cairo__$CairoSurface_CairoSurface_$Impl_$;
-lime_graphics_cairo__$CairoSurface_CairoSurface_$Impl_$.__name__ = true;
+lime_graphics_cairo__$CairoSurface_CairoSurface_$Impl_$.__name__ = ["lime","graphics","cairo","_CairoSurface","CairoSurface_Impl_"];
 lime_graphics_cairo__$CairoSurface_CairoSurface_$Impl_$.flush = function(this1) {
 };
 var lime_graphics_console_IndexBuffer = function() {
 };
 $hxClasses["lime.graphics.console.IndexBuffer"] = lime_graphics_console_IndexBuffer;
-lime_graphics_console_IndexBuffer.__name__ = true;
+lime_graphics_console_IndexBuffer.__name__ = ["lime","graphics","console","IndexBuffer"];
 lime_graphics_console_IndexBuffer.prototype = {
 	__class__: lime_graphics_console_IndexBuffer
 };
@@ -9816,14 +10933,14 @@ lime_graphics_console_Primitive.TriangleStrip.__enum__ = lime_graphics_console_P
 var lime_graphics_console_Shader = function() {
 };
 $hxClasses["lime.graphics.console.Shader"] = lime_graphics_console_Shader;
-lime_graphics_console_Shader.__name__ = true;
+lime_graphics_console_Shader.__name__ = ["lime","graphics","console","Shader"];
 lime_graphics_console_Shader.prototype = {
 	__class__: lime_graphics_console_Shader
 };
 var lime_graphics_console_VertexBuffer = function() {
 };
 $hxClasses["lime.graphics.console.VertexBuffer"] = lime_graphics_console_VertexBuffer;
-lime_graphics_console_VertexBuffer.__name__ = true;
+lime_graphics_console_VertexBuffer.__name__ = ["lime","graphics","console","VertexBuffer"];
 lime_graphics_console_VertexBuffer.prototype = {
 	lock: function() {
 		return new lime_graphics_console_VertexOutput();
@@ -9835,7 +10952,7 @@ lime_graphics_console_VertexBuffer.prototype = {
 var lime_graphics_console_VertexOutput = function() {
 };
 $hxClasses["lime.graphics.console.VertexOutput"] = lime_graphics_console_VertexOutput;
-lime_graphics_console_VertexOutput.__name__ = true;
+lime_graphics_console_VertexOutput.__name__ = ["lime","graphics","console","VertexOutput"];
 lime_graphics_console_VertexOutput.prototype = {
 	vec2: function(x,y) {
 	}
@@ -9847,7 +10964,7 @@ lime_graphics_console_VertexOutput.prototype = {
 };
 var lime_graphics_format_BMP = function() { };
 $hxClasses["lime.graphics.format.BMP"] = lime_graphics_format_BMP;
-lime_graphics_format_BMP.__name__ = true;
+lime_graphics_format_BMP.__name__ = ["lime","graphics","format","BMP"];
 lime_graphics_format_BMP.encode = function(image,type) {
 	if(image.get_premultiplied() || image.get_format() != 0) {
 		image = image.clone();
@@ -10024,7 +11141,7 @@ lime_graphics_format_BMPType.ICO.toString = $estr;
 lime_graphics_format_BMPType.ICO.__enum__ = lime_graphics_format_BMPType;
 var lime_graphics_format_JPEG = function() { };
 $hxClasses["lime.graphics.format.JPEG"] = lime_graphics_format_JPEG;
-lime_graphics_format_JPEG.__name__ = true;
+lime_graphics_format_JPEG.__name__ = ["lime","graphics","format","JPEG"];
 lime_graphics_format_JPEG.decodeBytes = function(bytes,decodeData) {
 	if(decodeData == null) {
 		decodeData = true;
@@ -10060,7 +11177,7 @@ lime_graphics_format_JPEG.encode = function(image,quality) {
 };
 var lime_graphics_format_PNG = function() { };
 $hxClasses["lime.graphics.format.PNG"] = lime_graphics_format_PNG;
-lime_graphics_format_PNG.__name__ = true;
+lime_graphics_format_PNG.__name__ = ["lime","graphics","format","PNG"];
 lime_graphics_format_PNG.decodeBytes = function(bytes,decodeData) {
 	if(decodeData == null) {
 		decodeData = true;
@@ -10096,7 +11213,8 @@ lime_graphics_format_PNG.encode = function(image) {
 };
 var lime_graphics_opengl_GL = function() { };
 $hxClasses["lime.graphics.opengl.GL"] = lime_graphics_opengl_GL;
-lime_graphics_opengl_GL.__name__ = true;
+lime_graphics_opengl_GL.__name__ = ["lime","graphics","opengl","GL"];
+lime_graphics_opengl_GL.__properties__ = {get_version:"get_version"}
 lime_graphics_opengl_GL.activeTexture = function(texture) {
 	lime_graphics_opengl_GL.context.activeTexture(texture);
 };
@@ -10510,7 +11628,7 @@ lime_graphics_opengl_GL.get_version = function() {
 };
 var lime_graphics_utils_ImageCanvasUtil = function() { };
 $hxClasses["lime.graphics.utils.ImageCanvasUtil"] = lime_graphics_utils_ImageCanvasUtil;
-lime_graphics_utils_ImageCanvasUtil.__name__ = true;
+lime_graphics_utils_ImageCanvasUtil.__name__ = ["lime","graphics","utils","ImageCanvasUtil"];
 lime_graphics_utils_ImageCanvasUtil.colorTransform = function(image,rect,colorMatrix) {
 	lime_graphics_utils_ImageCanvasUtil.convertToData(image);
 	lime_graphics_utils_ImageDataUtil.colorTransform(image,rect,colorMatrix);
@@ -10742,7 +11860,7 @@ lime_graphics_utils_ImageCanvasUtil.sync = function(image,clear) {
 };
 var lime_graphics_utils_ImageDataUtil = function() { };
 $hxClasses["lime.graphics.utils.ImageDataUtil"] = lime_graphics_utils_ImageDataUtil;
-lime_graphics_utils_ImageDataUtil.__name__ = true;
+lime_graphics_utils_ImageDataUtil.__name__ = ["lime","graphics","utils","ImageDataUtil"];
 lime_graphics_utils_ImageDataUtil.colorTransform = function(image,rect,colorMatrix) {
 	var data = image.buffer.data;
 	if(data == null) {
@@ -12708,9 +13826,17 @@ var lime_graphics_utils__$ImageDataUtil_ImageDataView = function(image,rect) {
 	this.offset = this.stride * (this.y + image.offsetY) + (this.x + image.offsetX) * 4;
 };
 $hxClasses["lime.graphics.utils._ImageDataUtil.ImageDataView"] = lime_graphics_utils__$ImageDataUtil_ImageDataView;
-lime_graphics_utils__$ImageDataUtil_ImageDataView.__name__ = true;
+lime_graphics_utils__$ImageDataUtil_ImageDataView.__name__ = ["lime","graphics","utils","_ImageDataUtil","ImageDataView"];
 lime_graphics_utils__$ImageDataUtil_ImageDataView.prototype = {
-	clip: function(x,y,width,height) {
+	x: null
+	,y: null
+	,height: null
+	,width: null
+	,image: null
+	,offset: null
+	,rect: null
+	,stride: null
+	,clip: function(x,y,width,height) {
 		this.rect.__contract(x,y,width,height);
 		this.x = Math.ceil(this.rect.x);
 		this.y = Math.ceil(this.rect.y);
@@ -12725,7 +13851,8 @@ lime_graphics_utils__$ImageDataUtil_ImageDataView.prototype = {
 };
 var lime_math__$ColorMatrix_ColorMatrix_$Impl_$ = {};
 $hxClasses["lime.math._ColorMatrix.ColorMatrix_Impl_"] = lime_math__$ColorMatrix_ColorMatrix_$Impl_$;
-lime_math__$ColorMatrix_ColorMatrix_$Impl_$.__name__ = true;
+lime_math__$ColorMatrix_ColorMatrix_$Impl_$.__name__ = ["lime","math","_ColorMatrix","ColorMatrix_Impl_"];
+lime_math__$ColorMatrix_ColorMatrix_$Impl_$.__properties__ = {set_redOffset:"set_redOffset",get_redOffset:"get_redOffset",set_redMultiplier:"set_redMultiplier",get_redMultiplier:"get_redMultiplier",set_greenOffset:"set_greenOffset",get_greenOffset:"get_greenOffset",set_greenMultiplier:"set_greenMultiplier",get_greenMultiplier:"get_greenMultiplier",set_color:"set_color",get_color:"get_color",set_blueOffset:"set_blueOffset",get_blueOffset:"get_blueOffset",set_blueMultiplier:"set_blueMultiplier",get_blueMultiplier:"get_blueMultiplier",set_alphaOffset:"set_alphaOffset",get_alphaOffset:"get_alphaOffset",set_alphaMultiplier:"set_alphaMultiplier",get_alphaMultiplier:"get_alphaMultiplier"}
 lime_math__$ColorMatrix_ColorMatrix_$Impl_$._new = function(data) {
 	var this1;
 	if(data != null && data.length == 20) {
@@ -12946,9 +14073,15 @@ var lime_math_Matrix3 = function(a,b,c,d,tx,ty) {
 	this.ty = ty;
 };
 $hxClasses["lime.math.Matrix3"] = lime_math_Matrix3;
-lime_math_Matrix3.__name__ = true;
+lime_math_Matrix3.__name__ = ["lime","math","Matrix3"];
 lime_math_Matrix3.prototype = {
-	clone: function() {
+	a: null
+	,b: null
+	,c: null
+	,d: null
+	,tx: null
+	,ty: null
+	,clone: function() {
 		return new lime_math_Matrix3(this.a,this.b,this.c,this.d,this.tx,this.ty);
 	}
 	,concat: function(m) {
@@ -13199,7 +14332,8 @@ lime_math_Matrix3.prototype = {
 };
 var lime_math__$Matrix4_Matrix4_$Impl_$ = {};
 $hxClasses["lime.math._Matrix4.Matrix4_Impl_"] = lime_math__$Matrix4_Matrix4_$Impl_$;
-lime_math__$Matrix4_Matrix4_$Impl_$.__name__ = true;
+lime_math__$Matrix4_Matrix4_$Impl_$.__name__ = ["lime","math","_Matrix4","Matrix4_Impl_"];
+lime_math__$Matrix4_Matrix4_$Impl_$.__properties__ = {set_position:"set_position",get_position:"get_position",get_determinant:"get_determinant"}
 lime_math__$Matrix4_Matrix4_$Impl_$._new = function(data) {
 	var this1;
 	if(data != null && data.length == 16) {
@@ -13776,9 +14910,13 @@ var lime_math_Rectangle = function(x,y,width,height) {
 	this.height = height;
 };
 $hxClasses["lime.math.Rectangle"] = lime_math_Rectangle;
-lime_math_Rectangle.__name__ = true;
+lime_math_Rectangle.__name__ = ["lime","math","Rectangle"];
 lime_math_Rectangle.prototype = {
-	clone: function() {
+	height: null
+	,width: null
+	,x: null
+	,y: null
+	,clone: function() {
 		return new lime_math_Rectangle(this.x,this.y,this.width,this.height);
 	}
 	,contains: function(x,y) {
@@ -14029,6 +15167,7 @@ lime_math_Rectangle.prototype = {
 		return p.clone();
 	}
 	,__class__: lime_math_Rectangle
+	,__properties__: {set_topLeft:"set_topLeft",get_topLeft:"get_topLeft",set_top:"set_top",get_top:"get_top",set_size:"set_size",get_size:"get_size",set_right:"set_right",get_right:"get_right",set_left:"set_left",get_left:"get_left",set_bottomRight:"set_bottomRight",get_bottomRight:"get_bottomRight",set_bottom:"set_bottom",get_bottom:"get_bottom"}
 };
 var lime_math_Vector2 = function(x,y) {
 	if(y == null) {
@@ -14041,7 +15180,7 @@ var lime_math_Vector2 = function(x,y) {
 	this.y = y;
 };
 $hxClasses["lime.math.Vector2"] = lime_math_Vector2;
-lime_math_Vector2.__name__ = true;
+lime_math_Vector2.__name__ = ["lime","math","Vector2"];
 lime_math_Vector2.distance = function(pt1,pt2) {
 	var dx = pt1.x - pt2.x;
 	var dy = pt1.y - pt2.y;
@@ -14054,7 +15193,10 @@ lime_math_Vector2.polar = function(len,angle) {
 	return new lime_math_Vector2(len * Math.cos(angle),len * Math.sin(angle));
 };
 lime_math_Vector2.prototype = {
-	add: function(v) {
+	length: null
+	,x: null
+	,y: null
+	,add: function(v) {
 		return new lime_math_Vector2(v.x + this.x,v.y + this.y);
 	}
 	,clone: function() {
@@ -14094,6 +15236,7 @@ lime_math_Vector2.prototype = {
 		return Math.sqrt(this.x * this.x + this.y * this.y);
 	}
 	,__class__: lime_math_Vector2
+	,__properties__: {get_length:"get_length"}
 };
 var lime_math_Vector4 = function(x,y,z,w) {
 	if(w == null) {
@@ -14114,7 +15257,8 @@ var lime_math_Vector4 = function(x,y,z,w) {
 	this.z = z;
 };
 $hxClasses["lime.math.Vector4"] = lime_math_Vector4;
-lime_math_Vector4.__name__ = true;
+lime_math_Vector4.__name__ = ["lime","math","Vector4"];
+lime_math_Vector4.__properties__ = {get_Z_AXIS:"get_Z_AXIS",get_Y_AXIS:"get_Y_AXIS",get_X_AXIS:"get_X_AXIS"}
 lime_math_Vector4.angleBetween = function(a,b) {
 	var a0 = new lime_math_Vector4(a.x,a.y,a.z,a.w);
 	var l = Math.sqrt(a0.x * a0.x + a0.y * a0.y + a0.z * a0.z);
@@ -14148,7 +15292,13 @@ lime_math_Vector4.get_Z_AXIS = function() {
 	return new lime_math_Vector4(0,0,1);
 };
 lime_math_Vector4.prototype = {
-	add: function(a) {
+	length: null
+	,lengthSquared: null
+	,w: null
+	,x: null
+	,y: null
+	,z: null
+	,add: function(a) {
 		return new lime_math_Vector4(this.x + a.x,this.y + a.y,this.z + a.z);
 	}
 	,clone: function() {
@@ -14245,10 +15395,12 @@ lime_math_Vector4.prototype = {
 		return this.x * this.x + this.y * this.y + this.z * this.z;
 	}
 	,__class__: lime_math_Vector4
+	,__properties__: {get_lengthSquared:"get_lengthSquared",get_length:"get_length"}
 };
 var lime_math_color__$ARGB_ARGB_$Impl_$ = {};
 $hxClasses["lime.math.color._ARGB.ARGB_Impl_"] = lime_math_color__$ARGB_ARGB_$Impl_$;
-lime_math_color__$ARGB_ARGB_$Impl_$.__name__ = true;
+lime_math_color__$ARGB_ARGB_$Impl_$.__name__ = ["lime","math","color","_ARGB","ARGB_Impl_"];
+lime_math_color__$ARGB_ARGB_$Impl_$.__properties__ = {set_r:"set_r",get_r:"get_r",set_g:"set_g",get_g:"get_g",set_b:"set_b",get_b:"get_b",set_a:"set_a",get_a:"get_a"}
 lime_math_color__$ARGB_ARGB_$Impl_$._new = function(argb) {
 	if(argb == null) {
 		argb = 0;
@@ -14378,7 +15530,8 @@ lime_math_color__$ARGB_ARGB_$Impl_$.set_r = function(this1,value) {
 };
 var lime_math_color__$BGRA_BGRA_$Impl_$ = {};
 $hxClasses["lime.math.color._BGRA.BGRA_Impl_"] = lime_math_color__$BGRA_BGRA_$Impl_$;
-lime_math_color__$BGRA_BGRA_$Impl_$.__name__ = true;
+lime_math_color__$BGRA_BGRA_$Impl_$.__name__ = ["lime","math","color","_BGRA","BGRA_Impl_"];
+lime_math_color__$BGRA_BGRA_$Impl_$.__properties__ = {set_r:"set_r",get_r:"get_r",set_g:"set_g",get_g:"get_g",set_b:"set_b",get_b:"get_b",set_a:"set_a",get_a:"get_a"}
 lime_math_color__$BGRA_BGRA_$Impl_$._new = function(bgra) {
 	if(bgra == null) {
 		bgra = 0;
@@ -14508,7 +15661,8 @@ lime_math_color__$BGRA_BGRA_$Impl_$.set_r = function(this1,value) {
 };
 var lime_math_color__$RGBA_RGBA_$Impl_$ = {};
 $hxClasses["lime.math.color._RGBA.RGBA_Impl_"] = lime_math_color__$RGBA_RGBA_$Impl_$;
-lime_math_color__$RGBA_RGBA_$Impl_$.__name__ = true;
+lime_math_color__$RGBA_RGBA_$Impl_$.__name__ = ["lime","math","color","_RGBA","RGBA_Impl_"];
+lime_math_color__$RGBA_RGBA_$Impl_$.__properties__ = {set_r:"set_r",get_r:"get_r",set_g:"set_g",get_g:"get_g",set_b:"set_b",get_b:"get_b",set_a:"set_a",get_a:"get_a"}
 lime_math_color__$RGBA_RGBA_$Impl_$._new = function(rgba) {
 	if(rgba == null) {
 		rgba = 0;
@@ -14644,9 +15798,13 @@ var lime_net_HTTPRequest = function() {
 	this.promise = new lime_app_Promise();
 };
 $hxClasses["lime.net.HTTPRequest"] = lime_net_HTTPRequest;
-lime_net_HTTPRequest.__name__ = true;
+lime_net_HTTPRequest.__name__ = ["lime","net","HTTPRequest"];
 lime_net_HTTPRequest.prototype = {
-	load: function(url) {
+	bytes: null
+	,bytesLoaded: null
+	,bytesTotal: null
+	,promise: null
+	,load: function(url) {
 		var _gthis = this;
 		this.bytesLoaded = 0;
 		this.bytesTotal = 0;
@@ -14700,7 +15858,7 @@ lime_net_HTTPRequest.prototype = {
 };
 var lime_net_curl__$CURL_CURL_$Impl_$ = {};
 $hxClasses["lime.net.curl._CURL.CURL_Impl_"] = lime_net_curl__$CURL_CURL_$Impl_$;
-lime_net_curl__$CURL_CURL_$Impl_$.__name__ = true;
+lime_net_curl__$CURL_CURL_$Impl_$.__name__ = ["lime","net","curl","_CURL","CURL_Impl_"];
 lime_net_curl__$CURL_CURL_$Impl_$.getDate = function(date,now) {
 	return 0;
 };
@@ -14720,7 +15878,7 @@ lime_net_curl__$CURL_CURL_$Impl_$.intGt = function(a,b) {
 };
 var lime_net_curl_CURLEasy = function() { };
 $hxClasses["lime.net.curl.CURLEasy"] = lime_net_curl_CURLEasy;
-lime_net_curl_CURLEasy.__name__ = true;
+lime_net_curl_CURLEasy.__name__ = ["lime","net","curl","CURLEasy"];
 lime_net_curl_CURLEasy.cleanup = function(handle) {
 };
 lime_net_curl_CURLEasy.duphandle = function(handle) {
@@ -14762,9 +15920,15 @@ var lime_system_BackgroundWorker = function() {
 	this.doWork = new lime_app_Event_$Dynamic_$Void();
 };
 $hxClasses["lime.system.BackgroundWorker"] = lime_system_BackgroundWorker;
-lime_system_BackgroundWorker.__name__ = true;
+lime_system_BackgroundWorker.__name__ = ["lime","system","BackgroundWorker"];
 lime_system_BackgroundWorker.prototype = {
-	cancel: function() {
+	canceled: null
+	,doWork: null
+	,onComplete: null
+	,onError: null
+	,onProgress: null
+	,__runMessage: null
+	,cancel: function() {
 		this.canceled = true;
 	}
 	,run: function(message) {
@@ -14798,7 +15962,7 @@ lime_system_BackgroundWorker.prototype = {
 };
 var lime_system_CFFI = function() { };
 $hxClasses["lime.system.CFFI"] = lime_system_CFFI;
-lime_system_CFFI.__name__ = true;
+lime_system_CFFI.__name__ = ["lime","system","CFFI"];
 lime_system_CFFI.load = function(library,method,args,lazy) {
 	if(lazy == null) {
 		lazy = false;
@@ -14826,7 +15990,7 @@ lime_system_CFFI.__tryLoad = function(name,library,func,args) {
 };
 var lime_system__$CFFIPointer_CFFIPointer_$Impl_$ = {};
 $hxClasses["lime.system._CFFIPointer.CFFIPointer_Impl_"] = lime_system__$CFFIPointer_CFFIPointer_$Impl_$;
-lime_system__$CFFIPointer_CFFIPointer_$Impl_$.__name__ = true;
+lime_system__$CFFIPointer_CFFIPointer_$Impl_$.__name__ = ["lime","system","_CFFIPointer","CFFIPointer_Impl_"];
 lime_system__$CFFIPointer_CFFIPointer_$Impl_$._new = function(handle) {
 	return handle;
 };
@@ -14872,9 +16036,15 @@ lime_system__$CFFIPointer_CFFIPointer_$Impl_$.notEqualsPointer = function(a,b) {
 var lime_system_Display = function() {
 };
 $hxClasses["lime.system.Display"] = lime_system_Display;
-lime_system_Display.__name__ = true;
+lime_system_Display.__name__ = ["lime","system","Display"];
 lime_system_Display.prototype = {
-	__class__: lime_system_Display
+	bounds: null
+	,currentMode: null
+	,id: null
+	,dpi: null
+	,name: null
+	,supportedModes: null
+	,__class__: lime_system_Display
 };
 var lime_system_DisplayMode = function(width,height,refreshRate,pixelFormat) {
 	this.width = width;
@@ -14883,9 +16053,13 @@ var lime_system_DisplayMode = function(width,height,refreshRate,pixelFormat) {
 	this.pixelFormat = pixelFormat;
 };
 $hxClasses["lime.system.DisplayMode"] = lime_system_DisplayMode;
-lime_system_DisplayMode.__name__ = true;
+lime_system_DisplayMode.__name__ = ["lime","system","DisplayMode"];
 lime_system_DisplayMode.prototype = {
-	__class__: lime_system_DisplayMode
+	height: null
+	,pixelFormat: null
+	,refreshRate: null
+	,width: null
+	,__class__: lime_system_DisplayMode
 };
 var lime_system_Endian = { __ename__ : true, __constructs__ : ["LITTLE_ENDIAN","BIG_ENDIAN"] };
 lime_system_Endian.LITTLE_ENDIAN = ["LITTLE_ENDIAN",0];
@@ -14896,7 +16070,8 @@ lime_system_Endian.BIG_ENDIAN.toString = $estr;
 lime_system_Endian.BIG_ENDIAN.__enum__ = lime_system_Endian;
 var lime_system_System = function() { };
 $hxClasses["lime.system.System"] = lime_system_System;
-lime_system_System.__name__ = true;
+lime_system_System.__name__ = ["lime","system","System"];
+lime_system_System.__properties__ = {get_userDirectory:"get_userDirectory",get_numDisplays:"get_numDisplays",get_fontsDirectory:"get_fontsDirectory",get_endianness:"get_endianness",get_documentsDirectory:"get_documentsDirectory",get_desktopDirectory:"get_desktopDirectory",get_applicationStorageDirectory:"get_applicationStorageDirectory",get_applicationDirectory:"get_applicationDirectory",set_allowScreenTimeout:"set_allowScreenTimeout",get_allowScreenTimeout:"get_allowScreenTimeout"}
 lime_system_System.embed = $hx_exports["lime"]["embed"] = function(element,width,height,background,assetsPrefix) {
 	var htmlElement = null;
 	if(typeof(element) == "string") {
@@ -15002,9 +16177,16 @@ var lime_system_ThreadPool = function(minThreads,maxThreads) {
 	this.currentThreads = 0;
 };
 $hxClasses["lime.system.ThreadPool"] = lime_system_ThreadPool;
-lime_system_ThreadPool.__name__ = true;
+lime_system_ThreadPool.__name__ = ["lime","system","ThreadPool"];
 lime_system_ThreadPool.prototype = {
-	queue: function(state) {
+	currentThreads: null
+	,doWork: null
+	,maxThreads: null
+	,minThreads: null
+	,onComplete: null
+	,onError: null
+	,onProgress: null
+	,queue: function(state) {
 		this.doWork.dispatch(state);
 	}
 	,sendComplete: function(state) {
@@ -15039,9 +16221,11 @@ var lime_system__$ThreadPool_ThreadPoolMessage = function(type,state) {
 	this.state = state;
 };
 $hxClasses["lime.system._ThreadPool.ThreadPoolMessage"] = lime_system__$ThreadPool_ThreadPoolMessage;
-lime_system__$ThreadPool_ThreadPoolMessage.__name__ = true;
+lime_system__$ThreadPool_ThreadPoolMessage.__name__ = ["lime","system","_ThreadPool","ThreadPoolMessage"];
 lime_system__$ThreadPool_ThreadPoolMessage.prototype = {
-	__class__: lime_system__$ThreadPool_ThreadPoolMessage
+	state: null
+	,type: null
+	,__class__: lime_system__$ThreadPool_ThreadPoolMessage
 };
 var lime_text_Font = function(name) {
 	if(name != null) {
@@ -15052,7 +16236,7 @@ var lime_text_Font = function(name) {
 	}
 };
 $hxClasses["lime.text.Font"] = lime_text_Font;
-lime_text_Font.__name__ = true;
+lime_text_Font.__name__ = ["lime","text","Font"];
 lime_text_Font.fromBytes = function(bytes) {
 	if(bytes == null) {
 		return null;
@@ -15070,7 +16254,17 @@ lime_text_Font.fromFile = function(path) {
 	return font;
 };
 lime_text_Font.prototype = {
-	decompose: function() {
+	ascender: null
+	,descender: null
+	,height: null
+	,name: null
+	,numGlyphs: null
+	,src: null
+	,underlinePosition: null
+	,underlineThickness: null
+	,unitsPerEM: null
+	,__fontPath: null
+	,decompose: function() {
 		return null;
 	}
 	,getGlyph: function(character) {
@@ -15121,19 +16315,24 @@ lime_text_Font.prototype = {
 		return 0;
 	}
 	,__class__: lime_text_Font
+	,__properties__: {get_unitsPerEM:"get_unitsPerEM",get_underlineThickness:"get_underlineThickness",get_underlinePosition:"get_underlinePosition",get_numGlyphs:"get_numGlyphs",get_height:"get_height",get_descender:"get_descender",get_ascender:"get_ascender"}
 };
 var lime_text__$Glyph_Glyph_$Impl_$ = {};
 $hxClasses["lime.text._Glyph.Glyph_Impl_"] = lime_text__$Glyph_Glyph_$Impl_$;
-lime_text__$Glyph_Glyph_$Impl_$.__name__ = true;
+lime_text__$Glyph_Glyph_$Impl_$.__name__ = ["lime","text","_Glyph","Glyph_Impl_"];
 lime_text__$Glyph_Glyph_$Impl_$._new = function(i) {
 	return i;
 };
 var lime_text_GlyphMetrics = function() {
 };
 $hxClasses["lime.text.GlyphMetrics"] = lime_text_GlyphMetrics;
-lime_text_GlyphMetrics.__name__ = true;
+lime_text_GlyphMetrics.__name__ = ["lime","text","GlyphMetrics"];
 lime_text_GlyphMetrics.prototype = {
-	__class__: lime_text_GlyphMetrics
+	advance: null
+	,height: null
+	,horizontalBearing: null
+	,verticalBearing: null
+	,__class__: lime_text_GlyphMetrics
 };
 var lime_ui_Gamepad = function(id) {
 	this.onDisconnect = new lime_app_Event_$Void_$Void();
@@ -15144,7 +16343,7 @@ var lime_ui_Gamepad = function(id) {
 	this.connected = true;
 };
 $hxClasses["lime.ui.Gamepad"] = lime_ui_Gamepad;
-lime_ui_Gamepad.__name__ = true;
+lime_ui_Gamepad.__name__ = ["lime","ui","Gamepad"];
 lime_ui_Gamepad.addMappings = function(mappings) {
 };
 lime_ui_Gamepad.__connect = function(id) {
@@ -15165,17 +16364,24 @@ lime_ui_Gamepad.__disconnect = function(id) {
 	}
 };
 lime_ui_Gamepad.prototype = {
-	get_guid: function() {
+	connected: null
+	,id: null
+	,onAxisMove: null
+	,onButtonDown: null
+	,onButtonUp: null
+	,onDisconnect: null
+	,get_guid: function() {
 		return lime_ui_Joystick.__getDeviceData()[this.id].id;
 	}
 	,get_name: function() {
 		return lime_ui_Joystick.__getDeviceData()[this.id].id;
 	}
 	,__class__: lime_ui_Gamepad
+	,__properties__: {get_name:"get_name",get_guid:"get_guid"}
 };
 var lime_ui__$GamepadAxis_GamepadAxis_$Impl_$ = {};
 $hxClasses["lime.ui._GamepadAxis.GamepadAxis_Impl_"] = lime_ui__$GamepadAxis_GamepadAxis_$Impl_$;
-lime_ui__$GamepadAxis_GamepadAxis_$Impl_$.__name__ = true;
+lime_ui__$GamepadAxis_GamepadAxis_$Impl_$.__name__ = ["lime","ui","_GamepadAxis","GamepadAxis_Impl_"];
 lime_ui__$GamepadAxis_GamepadAxis_$Impl_$.toString = function(this1) {
 	switch(this1) {
 	case 0:
@@ -15196,7 +16402,7 @@ lime_ui__$GamepadAxis_GamepadAxis_$Impl_$.toString = function(this1) {
 };
 var lime_ui__$GamepadButton_GamepadButton_$Impl_$ = {};
 $hxClasses["lime.ui._GamepadButton.GamepadButton_Impl_"] = lime_ui__$GamepadButton_GamepadButton_$Impl_$;
-lime_ui__$GamepadButton_GamepadButton_$Impl_$.__name__ = true;
+lime_ui__$GamepadButton_GamepadButton_$Impl_$.__name__ = ["lime","ui","_GamepadButton","GamepadButton_Impl_"];
 lime_ui__$GamepadButton_GamepadButton_$Impl_$.toString = function(this1) {
 	switch(this1) {
 	case 0:
@@ -15244,7 +16450,7 @@ var lime_ui_Joystick = function(id) {
 	this.connected = true;
 };
 $hxClasses["lime.ui.Joystick"] = lime_ui_Joystick;
-lime_ui_Joystick.__name__ = true;
+lime_ui_Joystick.__name__ = ["lime","ui","Joystick"];
 lime_ui_Joystick.__connect = function(id) {
 	if(!lime_ui_Joystick.devices.h.hasOwnProperty(id)) {
 		var joystick = new lime_ui_Joystick(id);
@@ -15272,7 +16478,15 @@ lime_ui_Joystick.__getDeviceData = function() {
 	}
 };
 lime_ui_Joystick.prototype = {
-	get_guid: function() {
+	connected: null
+	,id: null
+	,onAxisMove: null
+	,onButtonDown: null
+	,onButtonUp: null
+	,onDisconnect: null
+	,onHatMove: null
+	,onTrackballMove: null
+	,get_guid: function() {
 		return lime_ui_Joystick.__getDeviceData()[this.id].id;
 	}
 	,get_name: function() {
@@ -15291,10 +16505,12 @@ lime_ui_Joystick.prototype = {
 		return 0;
 	}
 	,__class__: lime_ui_Joystick
+	,__properties__: {get_numTrackballs:"get_numTrackballs",get_numHats:"get_numHats",get_numButtons:"get_numButtons",get_numAxes:"get_numAxes",get_name:"get_name",get_guid:"get_guid"}
 };
 var lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$ = {};
 $hxClasses["lime.ui._JoystickHatPosition.JoystickHatPosition_Impl_"] = lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$;
-lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.__name__ = true;
+lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.__name__ = ["lime","ui","_JoystickHatPosition","JoystickHatPosition_Impl_"];
+lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.__properties__ = {set_up:"set_up",get_up:"get_up",set_right:"set_right",get_right:"get_right",set_left:"set_left",get_left:"get_left",set_down:"set_down",get_down:"get_down",set_center:"set_center",get_center:"get_center"}
 lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$._new = function(value) {
 	return value;
 };
@@ -15353,7 +16569,7 @@ lime_ui__$JoystickHatPosition_JoystickHatPosition_$Impl_$.set_up = function(this
 };
 var lime_ui__$KeyCode_KeyCode_$Impl_$ = {};
 $hxClasses["lime.ui._KeyCode.KeyCode_Impl_"] = lime_ui__$KeyCode_KeyCode_$Impl_$;
-lime_ui__$KeyCode_KeyCode_$Impl_$.__name__ = true;
+lime_ui__$KeyCode_KeyCode_$Impl_$.__name__ = ["lime","ui","_KeyCode","KeyCode_Impl_"];
 lime_ui__$KeyCode_KeyCode_$Impl_$.gt = function(a,b) {
 	return a > b;
 };
@@ -15371,7 +16587,8 @@ lime_ui__$KeyCode_KeyCode_$Impl_$.plus = function(a,b) {
 };
 var lime_ui__$KeyModifier_KeyModifier_$Impl_$ = {};
 $hxClasses["lime.ui._KeyModifier.KeyModifier_Impl_"] = lime_ui__$KeyModifier_KeyModifier_$Impl_$;
-lime_ui__$KeyModifier_KeyModifier_$Impl_$.__name__ = true;
+lime_ui__$KeyModifier_KeyModifier_$Impl_$.__name__ = ["lime","ui","_KeyModifier","KeyModifier_Impl_"];
+lime_ui__$KeyModifier_KeyModifier_$Impl_$.__properties__ = {set_shiftKey:"set_shiftKey",get_shiftKey:"get_shiftKey",set_numLock:"set_numLock",get_numLock:"get_numLock",set_metaKey:"set_metaKey",get_metaKey:"get_metaKey",set_ctrlKey:"set_ctrlKey",get_ctrlKey:"get_ctrlKey",set_capsLock:"set_capsLock",get_capsLock:"get_capsLock",set_altKey:"set_altKey",get_altKey:"get_altKey"}
 lime_ui__$KeyModifier_KeyModifier_$Impl_$.get_altKey = function(this1) {
 	if((this1 & 256) <= 0) {
 		return (this1 & 512) > 0;
@@ -15464,7 +16681,8 @@ lime_ui__$KeyModifier_KeyModifier_$Impl_$.set_shiftKey = function(this1,value) {
 };
 var lime_ui_Mouse = function() { };
 $hxClasses["lime.ui.Mouse"] = lime_ui_Mouse;
-lime_ui_Mouse.__name__ = true;
+lime_ui_Mouse.__name__ = ["lime","ui","Mouse"];
+lime_ui_Mouse.__properties__ = {set_lock:"set_lock",get_lock:"get_lock",set_cursor:"set_cursor",get_cursor:"get_cursor"}
 lime_ui_Mouse.hide = function() {
 	lime__$backend_html5_HTML5Mouse.hide();
 };
@@ -15536,9 +16754,16 @@ var lime_ui_Touch = function(x,y,id,dx,dy,pressure,device) {
 	this.device = device;
 };
 $hxClasses["lime.ui.Touch"] = lime_ui_Touch;
-lime_ui_Touch.__name__ = true;
+lime_ui_Touch.__name__ = ["lime","ui","Touch"];
 lime_ui_Touch.prototype = {
-	__class__: lime_ui_Touch
+	device: null
+	,dx: null
+	,dy: null
+	,id: null
+	,pressure: null
+	,x: null
+	,y: null
+	,__class__: lime_ui_Touch
 };
 var lime_ui_Window = function(config) {
 	this.onTextInput = new lime_app_Event_$String_$Void();
@@ -15602,9 +16827,51 @@ var lime_ui_Window = function(config) {
 	this.backend = new lime__$backend_html5_HTML5Window(this);
 };
 $hxClasses["lime.ui.Window"] = lime_ui_Window;
-lime_ui_Window.__name__ = true;
+lime_ui_Window.__name__ = ["lime","ui","Window"];
 lime_ui_Window.prototype = {
-	alert: function(message,title) {
+	application: null
+	,config: null
+	,display: null
+	,id: null
+	,onActivate: null
+	,onClose: null
+	,onCreate: null
+	,onDeactivate: null
+	,onDropFile: null
+	,onEnter: null
+	,onFocusIn: null
+	,onFocusOut: null
+	,onFullscreen: null
+	,onKeyDown: null
+	,onKeyUp: null
+	,onLeave: null
+	,onMinimize: null
+	,onMouseDown: null
+	,onMouseMove: null
+	,onMouseMoveRelative: null
+	,onMouseUp: null
+	,onMouseWheel: null
+	,onMove: null
+	,onResize: null
+	,onRestore: null
+	,onTextEdit: null
+	,onTextInput: null
+	,renderer: null
+	,scale: null
+	,stage: null
+	,backend: null
+	,__borderless: null
+	,__fullscreen: null
+	,__height: null
+	,__maximized: null
+	,__minimized: null
+	,__resizable: null
+	,__scale: null
+	,__title: null
+	,__width: null
+	,__x: null
+	,__y: null
+	,alert: function(message,title) {
 		this.backend.alert(message,title);
 	}
 	,close: function() {
@@ -15719,6 +16986,7 @@ lime_ui_Window.prototype = {
 		return this.__y;
 	}
 	,__class__: lime_ui_Window
+	,__properties__: {set_y:"set_y",get_y:"get_y",set_x:"set_x",get_x:"get_x",set_width:"set_width",get_width:"get_width",set_title:"set_title",get_title:"get_title",get_scale:"get_scale",set_resizable:"set_resizable",get_resizable:"get_resizable",set_minimized:"set_minimized",get_minimized:"get_minimized",set_maximized:"set_maximized",get_maximized:"get_maximized",set_height:"set_height",get_height:"get_height",set_fullscreen:"set_fullscreen",get_fullscreen:"get_fullscreen",set_enableTextEvents:"set_enableTextEvents",get_enableTextEvents:"get_enableTextEvents",get_display:"get_display",set_borderless:"set_borderless",get_borderless:"get_borderless"}
 };
 var lime_utils_TAError = { __ename__ : true, __constructs__ : ["RangeError"] };
 lime_utils_TAError.RangeError = ["RangeError",0];
@@ -15728,7 +16996,7 @@ var lime_utils_Bytes = function(length,bytesData) {
 	haxe_io_Bytes.call(this,bytesData);
 };
 $hxClasses["lime.utils.Bytes"] = lime_utils_Bytes;
-lime_utils_Bytes.__name__ = true;
+lime_utils_Bytes.__name__ = ["lime","utils","Bytes"];
 lime_utils_Bytes.alloc = function(length) {
 	var bytes = new haxe_io_Bytes(new ArrayBuffer(length));
 	return new lime_utils_Bytes(bytes.length,bytes.b.bufferValue);
@@ -15762,7 +17030,7 @@ lime_utils_Bytes.prototype = $extend(haxe_io_Bytes.prototype,{
 });
 var lime_utils__$Float32Array_Float32Array_$Impl_$ = {};
 $hxClasses["lime.utils._Float32Array.Float32Array_Impl_"] = lime_utils__$Float32Array_Float32Array_$Impl_$;
-lime_utils__$Float32Array_Float32Array_$Impl_$.__name__ = true;
+lime_utils__$Float32Array_Float32Array_$Impl_$.__name__ = ["lime","utils","_Float32Array","Float32Array_Impl_"];
 lime_utils__$Float32Array_Float32Array_$Impl_$.fromBytes = function(bytes,byteOffset,len) {
 	if(byteOffset == null) {
 		byteOffset = 0;
@@ -15787,7 +17055,7 @@ lime_utils__$Float32Array_Float32Array_$Impl_$.toString = function(this1) {
 };
 var lime_utils__$Int16Array_Int16Array_$Impl_$ = {};
 $hxClasses["lime.utils._Int16Array.Int16Array_Impl_"] = lime_utils__$Int16Array_Int16Array_$Impl_$;
-lime_utils__$Int16Array_Int16Array_$Impl_$.__name__ = true;
+lime_utils__$Int16Array_Int16Array_$Impl_$.__name__ = ["lime","utils","_Int16Array","Int16Array_Impl_"];
 lime_utils__$Int16Array_Int16Array_$Impl_$.fromBytes = function(bytes,byteOffset,len) {
 	if(byteOffset == null) {
 		byteOffset = 0;
@@ -15812,7 +17080,7 @@ lime_utils__$Int16Array_Int16Array_$Impl_$.toString = function(this1) {
 };
 var lime_utils__$Int32Array_Int32Array_$Impl_$ = {};
 $hxClasses["lime.utils._Int32Array.Int32Array_Impl_"] = lime_utils__$Int32Array_Int32Array_$Impl_$;
-lime_utils__$Int32Array_Int32Array_$Impl_$.__name__ = true;
+lime_utils__$Int32Array_Int32Array_$Impl_$.__name__ = ["lime","utils","_Int32Array","Int32Array_Impl_"];
 lime_utils__$Int32Array_Int32Array_$Impl_$.fromBytes = function(bytes,byteOffset,len) {
 	if(byteOffset == null) {
 		byteOffset = 0;
@@ -15837,7 +17105,7 @@ lime_utils__$Int32Array_Int32Array_$Impl_$.toString = function(this1) {
 };
 var lime_utils__$UInt32Array_UInt32Array_$Impl_$ = {};
 $hxClasses["lime.utils._UInt32Array.UInt32Array_Impl_"] = lime_utils__$UInt32Array_UInt32Array_$Impl_$;
-lime_utils__$UInt32Array_UInt32Array_$Impl_$.__name__ = true;
+lime_utils__$UInt32Array_UInt32Array_$Impl_$.__name__ = ["lime","utils","_UInt32Array","UInt32Array_Impl_"];
 lime_utils__$UInt32Array_UInt32Array_$Impl_$.fromBytes = function(bytes,byteOffset,len) {
 	if(byteOffset == null) {
 		byteOffset = 0;
@@ -15862,7 +17130,7 @@ lime_utils__$UInt32Array_UInt32Array_$Impl_$.toString = function(this1) {
 };
 var lime_utils__$UInt8Array_UInt8Array_$Impl_$ = {};
 $hxClasses["lime.utils._UInt8Array.UInt8Array_Impl_"] = lime_utils__$UInt8Array_UInt8Array_$Impl_$;
-lime_utils__$UInt8Array_UInt8Array_$Impl_$.__name__ = true;
+lime_utils__$UInt8Array_UInt8Array_$Impl_$.__name__ = ["lime","utils","_UInt8Array","UInt8Array_Impl_"];
 lime_utils__$UInt8Array_UInt8Array_$Impl_$.fromBytes = function(bytes,byteOffset,len) {
 	if(byteOffset == null) {
 		return new Uint8Array(bytes.b.bufferValue);
@@ -15882,15 +17150,2702 @@ lime_utils__$UInt8Array_UInt8Array_$Impl_$.toString = function(this1) {
 		return null;
 	}
 };
-var world_Room = function() {
+var screens_Screen = function(game) {
+	this.color = gfx_Color.WHITE;
+	this.backgroundColor = gfx_Color.WHITE;
+	this.game = game;
+	this.batchStatic = new gfx_Batch(true);
+	this.batchSprites = new gfx_Batch(true);
+};
+$hxClasses["screens.Screen"] = screens_Screen;
+screens_Screen.__name__ = ["screens","Screen"];
+screens_Screen.prototype = {
+	game: null
+	,batchStatic: null
+	,batchSprites: null
+	,backgroundColor: null
+	,color: null
+	,update: function(deltaTime) {
+	}
+	,render: function() {
+	}
+	,renderUI: function() {
+	}
+	,onMouseMove: function(x,y) {
+	}
+	,__class__: screens_Screen
+};
+var screens_EditorScreen = function(game) {
+	this.currentTile = 0;
+	this.cursorY = 0;
+	this.cursorX = 0;
+	screens_Screen.call(this,game);
+	this.SPR_ISOLATOR = Tobor.Tileset.find("SPR_ISOLATOR");
+	this.SPR_ELEKTROZAUN = Tobor.Tileset.find("SPR_ELEKTROZAUN");
+	this.dialogCurrent = null;
+	this.dialogTileset = new screens_dialog_DialogTileChooser(this);
+};
+$hxClasses["screens.EditorScreen"] = screens_EditorScreen;
+screens_EditorScreen.__name__ = ["screens","EditorScreen"];
+screens_EditorScreen.__super__ = screens_Screen;
+screens_EditorScreen.prototype = $extend(screens_Screen.prototype,{
+	cursorX: null
+	,cursorY: null
+	,currentTile: null
+	,SPR_ISOLATOR: null
+	,SPR_ELEKTROZAUN: null
+	,dialogCurrent: null
+	,dialogTileset: null
+	,update: function(deltaTime) {
+		if(Input.mouseInside) {
+			this.cursorX = Math.floor(Input.mouseX * gfx_Gfx.scaleX / 16);
+			this.cursorY = Math.floor(Input.mouseY * gfx_Gfx.scaleY / 12);
+		}
+		var k = Input.F2;
+		var tmp;
+		if(Input.waitTime > 0.0) {
+			tmp = false;
+		} else {
+			var down = false;
+			var _g = 0;
+			while(_g < k.length) {
+				var i = k[_g];
+				++_g;
+				if(Input.key.h[i]) {
+					down = true;
+				}
+			}
+			tmp = down;
+		}
+		if(tmp) {
+			Input.wait(2);
+			var _g1 = 0;
+			var _g11 = this.game.world.currentRoom.entities;
+			while(_g1 < _g11.length) {
+				var e = _g11[_g1];
+				++_g1;
+				haxe_Log.trace(e.toString(),{ fileName : "EditorScreen.hx", lineNumber : 53, className : "screens.EditorScreen", methodName : "update"});
+			}
+		}
+		if(this.dialogCurrent == null) {
+			var mx = 0;
+			var my = 0;
+			var k1 = Input.RIGHT;
+			var tmp1;
+			if(Input.waitTime > 0.0) {
+				tmp1 = false;
+			} else {
+				var down1 = false;
+				var _g2 = 0;
+				while(_g2 < k1.length) {
+					var i1 = k1[_g2];
+					++_g2;
+					if(Input.key.h[i1]) {
+						down1 = true;
+					}
+				}
+				tmp1 = down1;
+			}
+			if(tmp1) {
+				mx = 1;
+			}
+			var k2 = Input.LEFT;
+			var tmp2;
+			if(Input.waitTime > 0.0) {
+				tmp2 = false;
+			} else {
+				var down2 = false;
+				var _g3 = 0;
+				while(_g3 < k2.length) {
+					var i2 = k2[_g3];
+					++_g3;
+					if(Input.key.h[i2]) {
+						down2 = true;
+					}
+				}
+				tmp2 = down2;
+			}
+			if(tmp2) {
+				mx = -1;
+			}
+			var k3 = Input.UP;
+			var tmp3;
+			if(Input.waitTime > 0.0) {
+				tmp3 = false;
+			} else {
+				var down3 = false;
+				var _g4 = 0;
+				while(_g4 < k3.length) {
+					var i3 = k3[_g4];
+					++_g4;
+					if(Input.key.h[i3]) {
+						down3 = true;
+					}
+				}
+				tmp3 = down3;
+			}
+			if(tmp3) {
+				my = -1;
+			}
+			var k4 = Input.DOWN;
+			var tmp4;
+			if(Input.waitTime > 0.0) {
+				tmp4 = false;
+			} else {
+				var down4 = false;
+				var _g5 = 0;
+				while(_g5 < k4.length) {
+					var i4 = k4[_g5];
+					++_g5;
+					if(Input.key.h[i4]) {
+						down4 = true;
+					}
+				}
+				tmp4 = down4;
+			}
+			if(tmp4) {
+				my = 1;
+			}
+			this.game.world.player.move(mx,my);
+			this.game.world.currentRoom.update(deltaTime);
+			var k5 = Input.TAB;
+			var tmp5;
+			if(Input.waitTime > 0.0) {
+				tmp5 = false;
+			} else {
+				var down5 = false;
+				var _g6 = 0;
+				while(_g6 < k5.length) {
+					var i5 = k5[_g6];
+					++_g6;
+					if(Input.key.h[i5]) {
+						down5 = true;
+					}
+				}
+				tmp5 = down5;
+			}
+			if(tmp5) {
+				if(this.dialogCurrent != this.dialogTileset) {
+					this.dialogCurrent = this.dialogTileset;
+					Input.wait(2);
+				}
+			}
+			if(this.cursorY > 0) {
+				if(Input.mouseBtnLeft) {
+					if(world_EntityFactory.table[this.currentTile].name == "OBJ_CHARLIE") {
+						this.game.world.player.set_gridX(this.cursorX);
+						this.game.world.player.set_gridY(this.cursorY - 1);
+					} else {
+						var entity = world_EntityFactory.create(this.currentTile);
+						if(entity != null) {
+							if(this.game.world.currentRoom.getEntitiesAt(this.cursorX,this.cursorY - 1).length == 0) {
+								entity.set_gridX(this.cursorX);
+								entity.set_gridY(this.cursorY - 1);
+								this.game.world.currentRoom.add(entity);
+							}
+						}
+					}
+				} else if(Input.mouseBtnRight) {
+					var e1 = this.game.world.currentRoom.getEntitiesAt(this.cursorX,this.cursorY - 1);
+					if(e1.length != 0) {
+						var _g7 = 0;
+						while(_g7 < e1.length) {
+							var o = e1[_g7];
+							++_g7;
+							if(o != this.game.world.player) {
+								this.game.world.currentRoom.remove(o);
+							}
+						}
+					}
+				}
+			}
+		} else {
+			if(this.dialogCurrent != null) {
+				this.dialogCurrent.update(deltaTime);
+			}
+			var tmp6;
+			var k6 = Input.ESC;
+			var tmp7;
+			if(Input.waitTime > 0.0) {
+				tmp7 = false;
+			} else {
+				var down6 = false;
+				var _g8 = 0;
+				while(_g8 < k6.length) {
+					var i6 = k6[_g8];
+					++_g8;
+					if(Input.key.h[i6]) {
+						down6 = true;
+					}
+				}
+				tmp7 = down6;
+			}
+			if(!tmp7) {
+				var k7 = Input.TAB;
+				if(Input.waitTime > 0.0) {
+					tmp6 = false;
+				} else {
+					var down7 = false;
+					var _g9 = 0;
+					while(_g9 < k7.length) {
+						var i7 = k7[_g9];
+						++_g9;
+						if(Input.key.h[i7]) {
+							down7 = true;
+						}
+					}
+					tmp6 = down7;
+				}
+			} else {
+				tmp6 = true;
+			}
+			if(tmp6) {
+				if(this.dialogCurrent != null) {
+					this.dialogCurrent = null;
+					Input.wait(2);
+				}
+			}
+		}
+	}
+	,render: function() {
+		var color = this.backgroundColor;
+		gfx_Gfx.gl.clearColor(color.r,color.g,color.b,1.0);
+		gfx_Gfx.gl.clear(gfx_Gfx.gl.COLOR_BUFFER_BIT | gfx_Gfx.gl.DEPTH_BUFFER_BIT);
+		gfx_Gfx.setOffset(0,12);
+		this.renderStatic();
+		this.renderSprites();
+	}
+	,renderUI: function() {
+		if(this.dialogCurrent != null) {
+			this.dialogCurrent.render();
+		} else {
+			this.renderStatusLine();
+			if(Input.mouseInside && this.cursorY > 0) {
+				var x = this.cursorX * 16;
+				var y = this.cursorY * 12;
+				var rect = Tobor.Tileset.tileset[333];
+				var color = null;
+				if(color == null) {
+					color = gfx_Gfx.colorCurrent;
+				}
+				var _this = gfx_Gfx.batchCurrent;
+				var x1 = gfx_Gfx.offsetX + x;
+				var y1 = gfx_Gfx.offsetY + y;
+				var u = rect.get_left();
+				var v = rect.get_top();
+				var r = color.r;
+				var g = color.g;
+				var b = color.b;
+				var a = color.a;
+				_this.vertices[_this.posVertices] = x1;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = y1;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = u;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = v;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = r;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = g;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = b;
+				_this.posVertices++;
+				_this.vertices[_this.posVertices] = a;
+				_this.posVertices++;
+				var _this1 = gfx_Gfx.batchCurrent;
+				var x2 = gfx_Gfx.offsetX + x;
+				var y2 = gfx_Gfx.offsetY + y + 12;
+				var u1 = rect.get_left();
+				var v1 = rect.get_bottom();
+				var r1 = color.r;
+				var g1 = color.g;
+				var b1 = color.b;
+				var a1 = color.a;
+				_this1.vertices[_this1.posVertices] = x2;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = y2;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = u1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = v1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = r1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = g1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = b1;
+				_this1.posVertices++;
+				_this1.vertices[_this1.posVertices] = a1;
+				_this1.posVertices++;
+				var _this2 = gfx_Gfx.batchCurrent;
+				var x3 = gfx_Gfx.offsetX + x + 16;
+				var y3 = gfx_Gfx.offsetY + y + 12;
+				var u2 = rect.get_right();
+				var v2 = rect.get_bottom();
+				var r2 = color.r;
+				var g2 = color.g;
+				var b2 = color.b;
+				var a2 = color.a;
+				_this2.vertices[_this2.posVertices] = x3;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = y3;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = u2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = v2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = r2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = g2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = b2;
+				_this2.posVertices++;
+				_this2.vertices[_this2.posVertices] = a2;
+				_this2.posVertices++;
+				var _this3 = gfx_Gfx.batchCurrent;
+				var x4 = gfx_Gfx.offsetX + x + 16;
+				var y4 = gfx_Gfx.offsetY + y;
+				var u3 = rect.get_right();
+				var v3 = rect.get_top();
+				var r3 = color.r;
+				var g3 = color.g;
+				var b3 = color.b;
+				var a3 = color.a;
+				_this3.vertices[_this3.posVertices] = x4;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = y4;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = u3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = v3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = r3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = g3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = b3;
+				_this3.posVertices++;
+				_this3.vertices[_this3.posVertices] = a3;
+				_this3.posVertices++;
+				gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			}
+		}
+	}
+	,renderStatusLine: function() {
+		var _g = 0;
+		while(_g < 8) {
+			var x = _g++;
+			var x1 = x * 16;
+			var rect = this.SPR_ELEKTROZAUN;
+			var color = null;
+			if(color == null) {
+				color = gfx_Gfx.colorCurrent;
+			}
+			var _this = gfx_Gfx.batchCurrent;
+			var x2 = gfx_Gfx.offsetX + x1;
+			var y = gfx_Gfx.offsetY;
+			var u = rect.get_left();
+			var v = rect.get_top();
+			var r = color.r;
+			var g = color.g;
+			var b = color.b;
+			var a = color.a;
+			_this.vertices[_this.posVertices] = x2;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = y;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = u;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = v;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = r;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = g;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = b;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = a;
+			_this.posVertices++;
+			var _this1 = gfx_Gfx.batchCurrent;
+			var x3 = gfx_Gfx.offsetX + x1;
+			var y1 = gfx_Gfx.offsetY + 12;
+			var u1 = rect.get_left();
+			var v1 = rect.get_bottom();
+			var r1 = color.r;
+			var g1 = color.g;
+			var b1 = color.b;
+			var a1 = color.a;
+			_this1.vertices[_this1.posVertices] = x3;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = y1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = u1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = v1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = r1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = g1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = b1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = a1;
+			_this1.posVertices++;
+			var _this2 = gfx_Gfx.batchCurrent;
+			var x4 = gfx_Gfx.offsetX + x1 + 16;
+			var y2 = gfx_Gfx.offsetY + 12;
+			var u2 = rect.get_right();
+			var v2 = rect.get_bottom();
+			var r2 = color.r;
+			var g2 = color.g;
+			var b2 = color.b;
+			var a2 = color.a;
+			_this2.vertices[_this2.posVertices] = x4;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = y2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = u2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = v2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = r2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = g2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = b2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = a2;
+			_this2.posVertices++;
+			var _this3 = gfx_Gfx.batchCurrent;
+			var x5 = gfx_Gfx.offsetX + x1 + 16;
+			var y3 = gfx_Gfx.offsetY;
+			var u3 = rect.get_right();
+			var v3 = rect.get_top();
+			var r3 = color.r;
+			var g3 = color.g;
+			var b3 = color.b;
+			var a3 = color.a;
+			_this3.vertices[_this3.posVertices] = x5;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = y3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = u3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = v3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = r3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = g3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = b3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = a3;
+			_this3.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			var x6 = (39 - x) * 16;
+			var rect1 = this.SPR_ELEKTROZAUN;
+			var color1 = null;
+			if(color1 == null) {
+				color1 = gfx_Gfx.colorCurrent;
+			}
+			var _this4 = gfx_Gfx.batchCurrent;
+			var x7 = gfx_Gfx.offsetX + x6;
+			var y4 = gfx_Gfx.offsetY;
+			var u4 = rect1.get_left();
+			var v4 = rect1.get_top();
+			var r4 = color1.r;
+			var g4 = color1.g;
+			var b4 = color1.b;
+			var a4 = color1.a;
+			_this4.vertices[_this4.posVertices] = x7;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = y4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = u4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = v4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = r4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = g4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = b4;
+			_this4.posVertices++;
+			_this4.vertices[_this4.posVertices] = a4;
+			_this4.posVertices++;
+			var _this5 = gfx_Gfx.batchCurrent;
+			var x8 = gfx_Gfx.offsetX + x6;
+			var y5 = gfx_Gfx.offsetY + 12;
+			var u5 = rect1.get_left();
+			var v5 = rect1.get_bottom();
+			var r5 = color1.r;
+			var g5 = color1.g;
+			var b5 = color1.b;
+			var a5 = color1.a;
+			_this5.vertices[_this5.posVertices] = x8;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = y5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = u5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = v5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = r5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = g5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = b5;
+			_this5.posVertices++;
+			_this5.vertices[_this5.posVertices] = a5;
+			_this5.posVertices++;
+			var _this6 = gfx_Gfx.batchCurrent;
+			var x9 = gfx_Gfx.offsetX + x6 + 16;
+			var y6 = gfx_Gfx.offsetY + 12;
+			var u6 = rect1.get_right();
+			var v6 = rect1.get_bottom();
+			var r6 = color1.r;
+			var g6 = color1.g;
+			var b6 = color1.b;
+			var a6 = color1.a;
+			_this6.vertices[_this6.posVertices] = x9;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = y6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = u6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = v6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = r6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = g6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = b6;
+			_this6.posVertices++;
+			_this6.vertices[_this6.posVertices] = a6;
+			_this6.posVertices++;
+			var _this7 = gfx_Gfx.batchCurrent;
+			var x10 = gfx_Gfx.offsetX + x6 + 16;
+			var y7 = gfx_Gfx.offsetY;
+			var u7 = rect1.get_right();
+			var v7 = rect1.get_top();
+			var r7 = color1.r;
+			var g7 = color1.g;
+			var b7 = color1.b;
+			var a7 = color1.a;
+			_this7.vertices[_this7.posVertices] = x10;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = y7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = u7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = v7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = r7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = g7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = b7;
+			_this7.posVertices++;
+			_this7.vertices[_this7.posVertices] = a7;
+			_this7.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+		}
+		var _this8 = Tobor.Font16;
+		var fg = gfx_Color.BLACK;
+		var posX = 152;
+		var posY = 0;
+		var _g1 = 0;
+		var _g2 = "[".length;
+		while(_g1 < _g2) {
+			var charIndex = gfx_Font.GLYPHS.indexOf("[".charAt(_g1++));
+			var w = _this8.glyphW;
+			var h = _this8.glyphH;
+			var rect2 = _this8.tileBG;
+			var color2 = null;
+			if(color2 == null) {
+				color2 = gfx_Gfx.colorCurrent;
+			}
+			var _this9 = gfx_Gfx.batchCurrent;
+			var x11 = gfx_Gfx.offsetX + posX;
+			var y8 = gfx_Gfx.offsetY + posY;
+			var u8 = rect2.get_left();
+			var v8 = rect2.get_top();
+			var r8 = color2.r;
+			var g8 = color2.g;
+			var b8 = color2.b;
+			var a8 = color2.a;
+			_this9.vertices[_this9.posVertices] = x11;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = y8;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = u8;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = v8;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = r8;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = g8;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = b8;
+			_this9.posVertices++;
+			_this9.vertices[_this9.posVertices] = a8;
+			_this9.posVertices++;
+			var _this10 = gfx_Gfx.batchCurrent;
+			var x12 = gfx_Gfx.offsetX + posX;
+			var y9 = gfx_Gfx.offsetY + posY + h;
+			var u9 = rect2.get_left();
+			var v9 = rect2.get_bottom();
+			var r9 = color2.r;
+			var g9 = color2.g;
+			var b9 = color2.b;
+			var a9 = color2.a;
+			_this10.vertices[_this10.posVertices] = x12;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = y9;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = u9;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = v9;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = r9;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = g9;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = b9;
+			_this10.posVertices++;
+			_this10.vertices[_this10.posVertices] = a9;
+			_this10.posVertices++;
+			var _this11 = gfx_Gfx.batchCurrent;
+			var x13 = gfx_Gfx.offsetX + posX + w;
+			var y10 = gfx_Gfx.offsetY + posY + h;
+			var u10 = rect2.get_right();
+			var v10 = rect2.get_bottom();
+			var r10 = color2.r;
+			var g10 = color2.g;
+			var b10 = color2.b;
+			var a10 = color2.a;
+			_this11.vertices[_this11.posVertices] = x13;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = y10;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = u10;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = v10;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = r10;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = g10;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = b10;
+			_this11.posVertices++;
+			_this11.vertices[_this11.posVertices] = a10;
+			_this11.posVertices++;
+			var _this12 = gfx_Gfx.batchCurrent;
+			var x14 = gfx_Gfx.offsetX + posX + w;
+			var y11 = gfx_Gfx.offsetY + posY;
+			var u11 = rect2.get_right();
+			var v11 = rect2.get_top();
+			var r11 = color2.r;
+			var g11 = color2.g;
+			var b11 = color2.b;
+			var a11 = color2.a;
+			_this12.vertices[_this12.posVertices] = x14;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = y11;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = u11;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = v11;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = r11;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = g11;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = b11;
+			_this12.posVertices++;
+			_this12.vertices[_this12.posVertices] = a11;
+			_this12.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			var w1 = _this8.glyphW;
+			var h1 = _this8.glyphH;
+			var rect3 = _this8.chars[charIndex];
+			var color3 = fg;
+			if(fg == null) {
+				color3 = gfx_Gfx.colorCurrent;
+			}
+			var _this13 = gfx_Gfx.batchCurrent;
+			var x15 = gfx_Gfx.offsetX + posX;
+			var y12 = gfx_Gfx.offsetY + posY;
+			var u12 = rect3.get_left();
+			var v12 = rect3.get_top();
+			var r12 = color3.r;
+			var g12 = color3.g;
+			var b12 = color3.b;
+			var a12 = color3.a;
+			_this13.vertices[_this13.posVertices] = x15;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = y12;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = u12;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = v12;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = r12;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = g12;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = b12;
+			_this13.posVertices++;
+			_this13.vertices[_this13.posVertices] = a12;
+			_this13.posVertices++;
+			var _this14 = gfx_Gfx.batchCurrent;
+			var x16 = gfx_Gfx.offsetX + posX;
+			var y13 = gfx_Gfx.offsetY + posY + h1;
+			var u13 = rect3.get_left();
+			var v13 = rect3.get_bottom();
+			var r13 = color3.r;
+			var g13 = color3.g;
+			var b13 = color3.b;
+			var a13 = color3.a;
+			_this14.vertices[_this14.posVertices] = x16;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = y13;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = u13;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = v13;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = r13;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = g13;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = b13;
+			_this14.posVertices++;
+			_this14.vertices[_this14.posVertices] = a13;
+			_this14.posVertices++;
+			var _this15 = gfx_Gfx.batchCurrent;
+			var x17 = gfx_Gfx.offsetX + posX + w1;
+			var y14 = gfx_Gfx.offsetY + posY + h1;
+			var u14 = rect3.get_right();
+			var v14 = rect3.get_bottom();
+			var r14 = color3.r;
+			var g14 = color3.g;
+			var b14 = color3.b;
+			var a14 = color3.a;
+			_this15.vertices[_this15.posVertices] = x17;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = y14;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = u14;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = v14;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = r14;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = g14;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = b14;
+			_this15.posVertices++;
+			_this15.vertices[_this15.posVertices] = a14;
+			_this15.posVertices++;
+			var _this16 = gfx_Gfx.batchCurrent;
+			var x18 = gfx_Gfx.offsetX + posX + w1;
+			var y15 = gfx_Gfx.offsetY + posY;
+			var u15 = rect3.get_right();
+			var v15 = rect3.get_top();
+			var r15 = color3.r;
+			var g15 = color3.g;
+			var b15 = color3.b;
+			var a15 = color3.a;
+			_this16.vertices[_this16.posVertices] = x18;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = y15;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = u15;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = v15;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = r15;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = g15;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = b15;
+			_this16.posVertices++;
+			_this16.vertices[_this16.posVertices] = a15;
+			_this16.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			posX += _this8.glyphW;
+		}
+		var _this17 = Tobor.Font16;
+		var fg1 = gfx_Color.BLACK;
+		var posX1 = 172;
+		var posY1 = 0;
+		var _g11 = 0;
+		var _g3 = "]".length;
+		while(_g11 < _g3) {
+			var charIndex1 = gfx_Font.GLYPHS.indexOf("]".charAt(_g11++));
+			var w2 = _this17.glyphW;
+			var h2 = _this17.glyphH;
+			var rect4 = _this17.tileBG;
+			var color4 = null;
+			if(color4 == null) {
+				color4 = gfx_Gfx.colorCurrent;
+			}
+			var _this18 = gfx_Gfx.batchCurrent;
+			var x19 = gfx_Gfx.offsetX + posX1;
+			var y16 = gfx_Gfx.offsetY + posY1;
+			var u16 = rect4.get_left();
+			var v16 = rect4.get_top();
+			var r16 = color4.r;
+			var g16 = color4.g;
+			var b16 = color4.b;
+			var a16 = color4.a;
+			_this18.vertices[_this18.posVertices] = x19;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = y16;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = u16;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = v16;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = r16;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = g16;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = b16;
+			_this18.posVertices++;
+			_this18.vertices[_this18.posVertices] = a16;
+			_this18.posVertices++;
+			var _this19 = gfx_Gfx.batchCurrent;
+			var x20 = gfx_Gfx.offsetX + posX1;
+			var y17 = gfx_Gfx.offsetY + posY1 + h2;
+			var u17 = rect4.get_left();
+			var v17 = rect4.get_bottom();
+			var r17 = color4.r;
+			var g17 = color4.g;
+			var b17 = color4.b;
+			var a17 = color4.a;
+			_this19.vertices[_this19.posVertices] = x20;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = y17;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = u17;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = v17;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = r17;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = g17;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = b17;
+			_this19.posVertices++;
+			_this19.vertices[_this19.posVertices] = a17;
+			_this19.posVertices++;
+			var _this20 = gfx_Gfx.batchCurrent;
+			var x21 = gfx_Gfx.offsetX + posX1 + w2;
+			var y18 = gfx_Gfx.offsetY + posY1 + h2;
+			var u18 = rect4.get_right();
+			var v18 = rect4.get_bottom();
+			var r18 = color4.r;
+			var g18 = color4.g;
+			var b18 = color4.b;
+			var a18 = color4.a;
+			_this20.vertices[_this20.posVertices] = x21;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = y18;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = u18;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = v18;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = r18;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = g18;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = b18;
+			_this20.posVertices++;
+			_this20.vertices[_this20.posVertices] = a18;
+			_this20.posVertices++;
+			var _this21 = gfx_Gfx.batchCurrent;
+			var x22 = gfx_Gfx.offsetX + posX1 + w2;
+			var y19 = gfx_Gfx.offsetY + posY1;
+			var u19 = rect4.get_right();
+			var v19 = rect4.get_top();
+			var r19 = color4.r;
+			var g19 = color4.g;
+			var b19 = color4.b;
+			var a19 = color4.a;
+			_this21.vertices[_this21.posVertices] = x22;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = y19;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = u19;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = v19;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = r19;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = g19;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = b19;
+			_this21.posVertices++;
+			_this21.vertices[_this21.posVertices] = a19;
+			_this21.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			var w3 = _this17.glyphW;
+			var h3 = _this17.glyphH;
+			var rect5 = _this17.chars[charIndex1];
+			var color5 = fg1;
+			if(fg1 == null) {
+				color5 = gfx_Gfx.colorCurrent;
+			}
+			var _this22 = gfx_Gfx.batchCurrent;
+			var x23 = gfx_Gfx.offsetX + posX1;
+			var y20 = gfx_Gfx.offsetY + posY1;
+			var u20 = rect5.get_left();
+			var v20 = rect5.get_top();
+			var r20 = color5.r;
+			var g20 = color5.g;
+			var b20 = color5.b;
+			var a20 = color5.a;
+			_this22.vertices[_this22.posVertices] = x23;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = y20;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = u20;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = v20;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = r20;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = g20;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = b20;
+			_this22.posVertices++;
+			_this22.vertices[_this22.posVertices] = a20;
+			_this22.posVertices++;
+			var _this23 = gfx_Gfx.batchCurrent;
+			var x24 = gfx_Gfx.offsetX + posX1;
+			var y21 = gfx_Gfx.offsetY + posY1 + h3;
+			var u21 = rect5.get_left();
+			var v21 = rect5.get_bottom();
+			var r21 = color5.r;
+			var g21 = color5.g;
+			var b21 = color5.b;
+			var a21 = color5.a;
+			_this23.vertices[_this23.posVertices] = x24;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = y21;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = u21;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = v21;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = r21;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = g21;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = b21;
+			_this23.posVertices++;
+			_this23.vertices[_this23.posVertices] = a21;
+			_this23.posVertices++;
+			var _this24 = gfx_Gfx.batchCurrent;
+			var x25 = gfx_Gfx.offsetX + posX1 + w3;
+			var y22 = gfx_Gfx.offsetY + posY1 + h3;
+			var u22 = rect5.get_right();
+			var v22 = rect5.get_bottom();
+			var r22 = color5.r;
+			var g22 = color5.g;
+			var b22 = color5.b;
+			var a22 = color5.a;
+			_this24.vertices[_this24.posVertices] = x25;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = y22;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = u22;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = v22;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = r22;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = g22;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = b22;
+			_this24.posVertices++;
+			_this24.vertices[_this24.posVertices] = a22;
+			_this24.posVertices++;
+			var _this25 = gfx_Gfx.batchCurrent;
+			var x26 = gfx_Gfx.offsetX + posX1 + w3;
+			var y23 = gfx_Gfx.offsetY + posY1;
+			var u23 = rect5.get_right();
+			var v23 = rect5.get_top();
+			var r23 = color5.r;
+			var g23 = color5.g;
+			var b23 = color5.b;
+			var a23 = color5.a;
+			_this25.vertices[_this25.posVertices] = x26;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = y23;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = u23;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = v23;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = r23;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = g23;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = b23;
+			_this25.posVertices++;
+			_this25.vertices[_this25.posVertices] = a23;
+			_this25.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			posX1 += _this17.glyphW;
+		}
+		var rect6 = Tobor.Tileset.find(world_EntityFactory.table[this.currentTile].editorSprite);
+		var color6 = null;
+		if(color6 == null) {
+			color6 = gfx_Gfx.colorCurrent;
+		}
+		var _this26 = gfx_Gfx.batchCurrent;
+		var x27 = gfx_Gfx.offsetX + 160;
+		var y24 = gfx_Gfx.offsetY;
+		var u24 = rect6.get_left();
+		var v24 = rect6.get_top();
+		var r24 = color6.r;
+		var g24 = color6.g;
+		var b24 = color6.b;
+		var a24 = color6.a;
+		_this26.vertices[_this26.posVertices] = x27;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = y24;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = u24;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = v24;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = r24;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = g24;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = b24;
+		_this26.posVertices++;
+		_this26.vertices[_this26.posVertices] = a24;
+		_this26.posVertices++;
+		var _this27 = gfx_Gfx.batchCurrent;
+		var x28 = gfx_Gfx.offsetX + 160;
+		var y25 = gfx_Gfx.offsetY + 12;
+		var u25 = rect6.get_left();
+		var v25 = rect6.get_bottom();
+		var r25 = color6.r;
+		var g25 = color6.g;
+		var b25 = color6.b;
+		var a25 = color6.a;
+		_this27.vertices[_this27.posVertices] = x28;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = y25;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = u25;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = v25;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = r25;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = g25;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = b25;
+		_this27.posVertices++;
+		_this27.vertices[_this27.posVertices] = a25;
+		_this27.posVertices++;
+		var _this28 = gfx_Gfx.batchCurrent;
+		var x29 = gfx_Gfx.offsetX + 160 + 16;
+		var y26 = gfx_Gfx.offsetY + 12;
+		var u26 = rect6.get_right();
+		var v26 = rect6.get_bottom();
+		var r26 = color6.r;
+		var g26 = color6.g;
+		var b26 = color6.b;
+		var a26 = color6.a;
+		_this28.vertices[_this28.posVertices] = x29;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = y26;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = u26;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = v26;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = r26;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = g26;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = b26;
+		_this28.posVertices++;
+		_this28.vertices[_this28.posVertices] = a26;
+		_this28.posVertices++;
+		var _this29 = gfx_Gfx.batchCurrent;
+		var x30 = gfx_Gfx.offsetX + 160 + 16;
+		var y27 = gfx_Gfx.offsetY;
+		var u27 = rect6.get_right();
+		var v27 = rect6.get_top();
+		var r27 = color6.r;
+		var g27 = color6.g;
+		var b27 = color6.b;
+		var a27 = color6.a;
+		_this29.vertices[_this29.posVertices] = x30;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = y27;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = u27;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = v27;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = r27;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = g27;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = b27;
+		_this29.posVertices++;
+		_this29.vertices[_this29.posVertices] = a27;
+		_this29.posVertices++;
+		gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+		var countEntities = this.game.world.currentRoom.entities.length;
+		var strStatus = "Entities: " + StringTools.lpad(countEntities == null?"null":"" + countEntities,"0",4);
+		var _this30 = Tobor.Font8;
+		var fg2 = gfx_Color.BLACK;
+		var posX2 = 224;
+		var posY2 = 0;
+		var _g12 = 0;
+		var _g4 = strStatus.length;
+		while(_g12 < _g4) {
+			var charIndex2 = gfx_Font.GLYPHS.indexOf(strStatus.charAt(_g12++));
+			var w4 = _this30.glyphW;
+			var h4 = _this30.glyphH;
+			var rect7 = _this30.tileBG;
+			var color7 = null;
+			if(color7 == null) {
+				color7 = gfx_Gfx.colorCurrent;
+			}
+			var _this31 = gfx_Gfx.batchCurrent;
+			var x31 = gfx_Gfx.offsetX + posX2;
+			var y28 = gfx_Gfx.offsetY + posY2;
+			var u28 = rect7.get_left();
+			var v28 = rect7.get_top();
+			var r28 = color7.r;
+			var g28 = color7.g;
+			var b28 = color7.b;
+			var a28 = color7.a;
+			_this31.vertices[_this31.posVertices] = x31;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = y28;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = u28;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = v28;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = r28;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = g28;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = b28;
+			_this31.posVertices++;
+			_this31.vertices[_this31.posVertices] = a28;
+			_this31.posVertices++;
+			var _this32 = gfx_Gfx.batchCurrent;
+			var x32 = gfx_Gfx.offsetX + posX2;
+			var y29 = gfx_Gfx.offsetY + posY2 + h4;
+			var u29 = rect7.get_left();
+			var v29 = rect7.get_bottom();
+			var r29 = color7.r;
+			var g29 = color7.g;
+			var b29 = color7.b;
+			var a29 = color7.a;
+			_this32.vertices[_this32.posVertices] = x32;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = y29;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = u29;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = v29;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = r29;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = g29;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = b29;
+			_this32.posVertices++;
+			_this32.vertices[_this32.posVertices] = a29;
+			_this32.posVertices++;
+			var _this33 = gfx_Gfx.batchCurrent;
+			var x33 = gfx_Gfx.offsetX + posX2 + w4;
+			var y30 = gfx_Gfx.offsetY + posY2 + h4;
+			var u30 = rect7.get_right();
+			var v30 = rect7.get_bottom();
+			var r30 = color7.r;
+			var g30 = color7.g;
+			var b30 = color7.b;
+			var a30 = color7.a;
+			_this33.vertices[_this33.posVertices] = x33;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = y30;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = u30;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = v30;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = r30;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = g30;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = b30;
+			_this33.posVertices++;
+			_this33.vertices[_this33.posVertices] = a30;
+			_this33.posVertices++;
+			var _this34 = gfx_Gfx.batchCurrent;
+			var x34 = gfx_Gfx.offsetX + posX2 + w4;
+			var y31 = gfx_Gfx.offsetY + posY2;
+			var u31 = rect7.get_right();
+			var v31 = rect7.get_top();
+			var r31 = color7.r;
+			var g31 = color7.g;
+			var b31 = color7.b;
+			var a31 = color7.a;
+			_this34.vertices[_this34.posVertices] = x34;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = y31;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = u31;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = v31;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = r31;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = g31;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = b31;
+			_this34.posVertices++;
+			_this34.vertices[_this34.posVertices] = a31;
+			_this34.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			var w5 = _this30.glyphW;
+			var h5 = _this30.glyphH;
+			var rect8 = _this30.chars[charIndex2];
+			var color8 = fg2;
+			if(fg2 == null) {
+				color8 = gfx_Gfx.colorCurrent;
+			}
+			var _this35 = gfx_Gfx.batchCurrent;
+			var x35 = gfx_Gfx.offsetX + posX2;
+			var y32 = gfx_Gfx.offsetY + posY2;
+			var u32 = rect8.get_left();
+			var v32 = rect8.get_top();
+			var r32 = color8.r;
+			var g32 = color8.g;
+			var b32 = color8.b;
+			var a32 = color8.a;
+			_this35.vertices[_this35.posVertices] = x35;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = y32;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = u32;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = v32;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = r32;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = g32;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = b32;
+			_this35.posVertices++;
+			_this35.vertices[_this35.posVertices] = a32;
+			_this35.posVertices++;
+			var _this36 = gfx_Gfx.batchCurrent;
+			var x36 = gfx_Gfx.offsetX + posX2;
+			var y33 = gfx_Gfx.offsetY + posY2 + h5;
+			var u33 = rect8.get_left();
+			var v33 = rect8.get_bottom();
+			var r33 = color8.r;
+			var g33 = color8.g;
+			var b33 = color8.b;
+			var a33 = color8.a;
+			_this36.vertices[_this36.posVertices] = x36;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = y33;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = u33;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = v33;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = r33;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = g33;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = b33;
+			_this36.posVertices++;
+			_this36.vertices[_this36.posVertices] = a33;
+			_this36.posVertices++;
+			var _this37 = gfx_Gfx.batchCurrent;
+			var x37 = gfx_Gfx.offsetX + posX2 + w5;
+			var y34 = gfx_Gfx.offsetY + posY2 + h5;
+			var u34 = rect8.get_right();
+			var v34 = rect8.get_bottom();
+			var r34 = color8.r;
+			var g34 = color8.g;
+			var b34 = color8.b;
+			var a34 = color8.a;
+			_this37.vertices[_this37.posVertices] = x37;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = y34;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = u34;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = v34;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = r34;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = g34;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = b34;
+			_this37.posVertices++;
+			_this37.vertices[_this37.posVertices] = a34;
+			_this37.posVertices++;
+			var _this38 = gfx_Gfx.batchCurrent;
+			var x38 = gfx_Gfx.offsetX + posX2 + w5;
+			var y35 = gfx_Gfx.offsetY + posY2;
+			var u35 = rect8.get_right();
+			var v35 = rect8.get_top();
+			var r35 = color8.r;
+			var g35 = color8.g;
+			var b35 = color8.b;
+			var a35 = color8.a;
+			_this38.vertices[_this38.posVertices] = x38;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = y35;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = u35;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = v35;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = r35;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = g35;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = b35;
+			_this38.posVertices++;
+			_this38.vertices[_this38.posVertices] = a35;
+			_this38.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			posX2 += _this30.glyphW;
+		}
+	}
+	,renderStatic: function() {
+		gfx_Gfx.batchCurrent = this.batchStatic;
+		if(this.game.world.currentRoom.redraw) {
+			this.batchStatic.clear();
+			this.game.world.currentRoom.draw(0);
+		}
+		this.batchStatic.bind();
+		this.batchStatic.draw();
+	}
+	,renderSprites: function() {
+		gfx_Gfx.batchCurrent = this.batchSprites;
+		this.batchSprites.clear();
+		this.game.world.currentRoom.draw(1);
+		this.batchSprites.bind();
+		this.batchSprites.draw();
+	}
+	,__class__: screens_EditorScreen
+});
+var screens_dialog_Dialog = function(x,y) {
+	this.h = 0;
+	this.w = 0;
+	this.y = 0;
+	this.x = 0;
+	this.x = x;
+	this.y = y;
+};
+$hxClasses["screens.dialog.Dialog"] = screens_dialog_Dialog;
+screens_dialog_Dialog.__name__ = ["screens","dialog","Dialog"];
+screens_dialog_Dialog.drawBackground = function(x,y,w,h,c) {
+	if(c == null) {
+		c = gfx_Color.GREEN;
+	}
+	var _this = Tobor.Tileset;
+	var rect = new lime_math_Rectangle(0 / _this.width,0 / _this.height,16 / _this.width,12 / _this.height);
+	var color = c;
+	if(color == null) {
+		color = gfx_Gfx.colorCurrent;
+	}
+	var _this1 = gfx_Gfx.batchCurrent;
+	var x1 = gfx_Gfx.offsetX + x;
+	var y1 = gfx_Gfx.offsetY + y;
+	var u = rect.get_left();
+	var v = rect.get_top();
+	var r = color.r;
+	var g = color.g;
+	var b = color.b;
+	var a = color.a;
+	_this1.vertices[_this1.posVertices] = x1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = y1;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = u;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = v;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = r;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = g;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = b;
+	_this1.posVertices++;
+	_this1.vertices[_this1.posVertices] = a;
+	_this1.posVertices++;
+	var _this2 = gfx_Gfx.batchCurrent;
+	var x2 = gfx_Gfx.offsetX + x;
+	var y2 = gfx_Gfx.offsetY + y + h;
+	var u1 = rect.get_left();
+	var v1 = rect.get_bottom();
+	var r1 = color.r;
+	var g1 = color.g;
+	var b1 = color.b;
+	var a1 = color.a;
+	_this2.vertices[_this2.posVertices] = x2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = y2;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = u1;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = v1;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = r1;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = g1;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = b1;
+	_this2.posVertices++;
+	_this2.vertices[_this2.posVertices] = a1;
+	_this2.posVertices++;
+	var _this3 = gfx_Gfx.batchCurrent;
+	var x3 = gfx_Gfx.offsetX + x + w;
+	var y3 = gfx_Gfx.offsetY + y + h;
+	var u2 = rect.get_right();
+	var v2 = rect.get_bottom();
+	var r2 = color.r;
+	var g2 = color.g;
+	var b2 = color.b;
+	var a2 = color.a;
+	_this3.vertices[_this3.posVertices] = x3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = y3;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = u2;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = v2;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = r2;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = g2;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = b2;
+	_this3.posVertices++;
+	_this3.vertices[_this3.posVertices] = a2;
+	_this3.posVertices++;
+	var _this4 = gfx_Gfx.batchCurrent;
+	var x4 = gfx_Gfx.offsetX + x + w;
+	var y4 = gfx_Gfx.offsetY + y;
+	var u3 = rect.get_right();
+	var v3 = rect.get_top();
+	var r3 = color.r;
+	var g3 = color.g;
+	var b3 = color.b;
+	var a3 = color.a;
+	_this4.vertices[_this4.posVertices] = x4;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = y4;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = u3;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = v3;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = r3;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = g3;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = b3;
+	_this4.posVertices++;
+	_this4.vertices[_this4.posVertices] = a3;
+	_this4.posVertices++;
+	gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+};
+screens_dialog_Dialog.prototype = {
+	x: null
+	,y: null
+	,w: null
+	,h: null
+	,update: function(deltaTime) {
+	}
+	,render: function() {
+	}
+	,__class__: screens_dialog_Dialog
+};
+var screens_dialog_DialogTileChooser = function(screen) {
+	this.cursorY = 0;
+	this.cursorX = 0;
+	screens_dialog_Dialog.call(this,0,0);
+	this.owner = screen;
+};
+$hxClasses["screens.dialog.DialogTileChooser"] = screens_dialog_DialogTileChooser;
+screens_dialog_DialogTileChooser.__name__ = ["screens","dialog","DialogTileChooser"];
+screens_dialog_DialogTileChooser.__super__ = screens_dialog_Dialog;
+screens_dialog_DialogTileChooser.prototype = $extend(screens_dialog_Dialog.prototype,{
+	owner: null
+	,cursorX: null
+	,cursorY: null
+	,update: function(deltaTime) {
+		if(Input.mouseInside) {
+			this.cursorX = Math.floor(Input.mouseX * gfx_Gfx.scaleX / 16);
+			this.cursorY = Math.floor(Input.mouseY * gfx_Gfx.scaleY / 12);
+		}
+		var tile = this.owner.currentTile;
+		var k = Input.RIGHT;
+		var tmp;
+		if(Input.waitTime > 0.0) {
+			tmp = false;
+		} else {
+			var down = false;
+			var _g = 0;
+			while(_g < k.length) {
+				var i = k[_g];
+				++_g;
+				if(Input.key.h[i]) {
+					down = true;
+				}
+			}
+			tmp = down;
+		}
+		if(tmp) {
+			++tile;
+			Input.wait(0.2);
+		} else {
+			var k1 = Input.LEFT;
+			var tmp1;
+			if(Input.waitTime > 0.0) {
+				tmp1 = false;
+			} else {
+				var down1 = false;
+				var _g1 = 0;
+				while(_g1 < k1.length) {
+					var i1 = k1[_g1];
+					++_g1;
+					if(Input.key.h[i1]) {
+						down1 = true;
+					}
+				}
+				tmp1 = down1;
+			}
+			if(tmp1) {
+				--tile;
+				Input.wait(0.2);
+			} else {
+				var k2 = Input.UP;
+				var tmp2;
+				if(Input.waitTime > 0.0) {
+					tmp2 = false;
+				} else {
+					var down2 = false;
+					var _g2 = 0;
+					while(_g2 < k2.length) {
+						var i2 = k2[_g2];
+						++_g2;
+						if(Input.key.h[i2]) {
+							down2 = true;
+						}
+					}
+					tmp2 = down2;
+				}
+				if(tmp2) {
+					tile -= 32;
+					Input.wait(0.2);
+				} else {
+					var k3 = Input.DOWN;
+					var tmp3;
+					if(Input.waitTime > 0.0) {
+						tmp3 = false;
+					} else {
+						var down3 = false;
+						var _g3 = 0;
+						while(_g3 < k3.length) {
+							var i3 = k3[_g3];
+							++_g3;
+							if(Input.key.h[i3]) {
+								down3 = true;
+							}
+						}
+						tmp3 = down3;
+					}
+					if(tmp3) {
+						tile += 32;
+						Input.wait(0.2);
+					}
+				}
+			}
+		}
+		if(tile < 0) {
+			tile = 0;
+		} else if(tile >= world_EntityFactory.table.length) {
+			tile = world_EntityFactory.table.length - 1;
+		}
+		this.owner.currentTile = tile;
+	}
+	,render: function() {
+		var tiles = world_EntityFactory.table.length;
+		var boxH = tiles <= 32?1:Math.ceil(tiles / 32);
+		screens_dialog_Dialog.drawBackground(this.x,this.y,640,boxH * 12);
+		var tX = 0;
+		var tY = 0;
+		var _g1 = 0;
+		while(_g1 < tiles) {
+			var i = _g1++;
+			var t = world_EntityFactory.table[i];
+			var x = 64 + tX * 16;
+			var y = tY * 12;
+			var rect = Tobor.Tileset.find("SPR_NONE");
+			var color = null;
+			if(color == null) {
+				color = gfx_Gfx.colorCurrent;
+			}
+			var _this = gfx_Gfx.batchCurrent;
+			var x1 = gfx_Gfx.offsetX + x;
+			var y1 = gfx_Gfx.offsetY + y;
+			var u = rect.get_left();
+			var v = rect.get_top();
+			var r = color.r;
+			var g = color.g;
+			var b = color.b;
+			var a = color.a;
+			_this.vertices[_this.posVertices] = x1;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = y1;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = u;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = v;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = r;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = g;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = b;
+			_this.posVertices++;
+			_this.vertices[_this.posVertices] = a;
+			_this.posVertices++;
+			var _this1 = gfx_Gfx.batchCurrent;
+			var x2 = gfx_Gfx.offsetX + x;
+			var y2 = gfx_Gfx.offsetY + y + 12;
+			var u1 = rect.get_left();
+			var v1 = rect.get_bottom();
+			var r1 = color.r;
+			var g1 = color.g;
+			var b1 = color.b;
+			var a1 = color.a;
+			_this1.vertices[_this1.posVertices] = x2;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = y2;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = u1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = v1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = r1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = g1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = b1;
+			_this1.posVertices++;
+			_this1.vertices[_this1.posVertices] = a1;
+			_this1.posVertices++;
+			var _this2 = gfx_Gfx.batchCurrent;
+			var x3 = gfx_Gfx.offsetX + x + 16;
+			var y3 = gfx_Gfx.offsetY + y + 12;
+			var u2 = rect.get_right();
+			var v2 = rect.get_bottom();
+			var r2 = color.r;
+			var g2 = color.g;
+			var b2 = color.b;
+			var a2 = color.a;
+			_this2.vertices[_this2.posVertices] = x3;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = y3;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = u2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = v2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = r2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = g2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = b2;
+			_this2.posVertices++;
+			_this2.vertices[_this2.posVertices] = a2;
+			_this2.posVertices++;
+			var _this3 = gfx_Gfx.batchCurrent;
+			var x4 = gfx_Gfx.offsetX + x + 16;
+			var y4 = gfx_Gfx.offsetY + y;
+			var u3 = rect.get_right();
+			var v3 = rect.get_top();
+			var r3 = color.r;
+			var g3 = color.g;
+			var b3 = color.b;
+			var a3 = color.a;
+			_this3.vertices[_this3.posVertices] = x4;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = y4;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = u3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = v3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = r3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = g3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = b3;
+			_this3.posVertices++;
+			_this3.vertices[_this3.posVertices] = a3;
+			_this3.posVertices++;
+			gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			if(this.owner.currentTile == i) {
+				var x5 = 64 + tX * 16;
+				var y5 = tY * 12;
+				var rect1 = Tobor.Tileset.find(t.editorSprite);
+				var color1 = null;
+				if(color1 == null) {
+					color1 = gfx_Gfx.colorCurrent;
+				}
+				var _this4 = gfx_Gfx.batchCurrent;
+				var x6 = gfx_Gfx.offsetX + x5;
+				var y6 = gfx_Gfx.offsetY + y5;
+				var u4 = rect1.get_left();
+				var v4 = rect1.get_top();
+				var r4 = color1.r;
+				var g4 = color1.g;
+				var b4 = color1.b;
+				var a4 = color1.a;
+				_this4.vertices[_this4.posVertices] = x6;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = y6;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = u4;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = v4;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = r4;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = g4;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = b4;
+				_this4.posVertices++;
+				_this4.vertices[_this4.posVertices] = a4;
+				_this4.posVertices++;
+				var _this5 = gfx_Gfx.batchCurrent;
+				var x7 = gfx_Gfx.offsetX + x5;
+				var y7 = gfx_Gfx.offsetY + y5 + 12;
+				var u5 = rect1.get_left();
+				var v5 = rect1.get_bottom();
+				var r5 = color1.r;
+				var g5 = color1.g;
+				var b5 = color1.b;
+				var a5 = color1.a;
+				_this5.vertices[_this5.posVertices] = x7;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = y7;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = u5;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = v5;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = r5;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = g5;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = b5;
+				_this5.posVertices++;
+				_this5.vertices[_this5.posVertices] = a5;
+				_this5.posVertices++;
+				var _this6 = gfx_Gfx.batchCurrent;
+				var x8 = gfx_Gfx.offsetX + x5 + 16;
+				var y8 = gfx_Gfx.offsetY + y5 + 12;
+				var u6 = rect1.get_right();
+				var v6 = rect1.get_bottom();
+				var r6 = color1.r;
+				var g6 = color1.g;
+				var b6 = color1.b;
+				var a6 = color1.a;
+				_this6.vertices[_this6.posVertices] = x8;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = y8;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = u6;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = v6;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = r6;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = g6;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = b6;
+				_this6.posVertices++;
+				_this6.vertices[_this6.posVertices] = a6;
+				_this6.posVertices++;
+				var _this7 = gfx_Gfx.batchCurrent;
+				var x9 = gfx_Gfx.offsetX + x5 + 16;
+				var y9 = gfx_Gfx.offsetY + y5;
+				var u7 = rect1.get_right();
+				var v7 = rect1.get_top();
+				var r7 = color1.r;
+				var g7 = color1.g;
+				var b7 = color1.b;
+				var a7 = color1.a;
+				_this7.vertices[_this7.posVertices] = x9;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = y9;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = u7;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = v7;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = r7;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = g7;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = b7;
+				_this7.posVertices++;
+				_this7.vertices[_this7.posVertices] = a7;
+				_this7.posVertices++;
+				gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			} else {
+				var x10 = 64 + tX * 16;
+				var y10 = tY * 12;
+				var rect2 = Tobor.Tileset.find(t.editorSprite);
+				var color2 = gfx_Color.GRAY;
+				if(color2 == null) {
+					color2 = gfx_Gfx.colorCurrent;
+				}
+				var _this8 = gfx_Gfx.batchCurrent;
+				var x11 = gfx_Gfx.offsetX + x10;
+				var y11 = gfx_Gfx.offsetY + y10;
+				var u8 = rect2.get_left();
+				var v8 = rect2.get_top();
+				var r8 = color2.r;
+				var g8 = color2.g;
+				var b8 = color2.b;
+				var a8 = color2.a;
+				_this8.vertices[_this8.posVertices] = x11;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = y11;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = u8;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = v8;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = r8;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = g8;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = b8;
+				_this8.posVertices++;
+				_this8.vertices[_this8.posVertices] = a8;
+				_this8.posVertices++;
+				var _this9 = gfx_Gfx.batchCurrent;
+				var x12 = gfx_Gfx.offsetX + x10;
+				var y12 = gfx_Gfx.offsetY + y10 + 12;
+				var u9 = rect2.get_left();
+				var v9 = rect2.get_bottom();
+				var r9 = color2.r;
+				var g9 = color2.g;
+				var b9 = color2.b;
+				var a9 = color2.a;
+				_this9.vertices[_this9.posVertices] = x12;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = y12;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = u9;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = v9;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = r9;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = g9;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = b9;
+				_this9.posVertices++;
+				_this9.vertices[_this9.posVertices] = a9;
+				_this9.posVertices++;
+				var _this10 = gfx_Gfx.batchCurrent;
+				var x13 = gfx_Gfx.offsetX + x10 + 16;
+				var y13 = gfx_Gfx.offsetY + y10 + 12;
+				var u10 = rect2.get_right();
+				var v10 = rect2.get_bottom();
+				var r10 = color2.r;
+				var g10 = color2.g;
+				var b10 = color2.b;
+				var a10 = color2.a;
+				_this10.vertices[_this10.posVertices] = x13;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = y13;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = u10;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = v10;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = r10;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = g10;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = b10;
+				_this10.posVertices++;
+				_this10.vertices[_this10.posVertices] = a10;
+				_this10.posVertices++;
+				var _this11 = gfx_Gfx.batchCurrent;
+				var x14 = gfx_Gfx.offsetX + x10 + 16;
+				var y14 = gfx_Gfx.offsetY + y10;
+				var u11 = rect2.get_right();
+				var v11 = rect2.get_top();
+				var r11 = color2.r;
+				var g11 = color2.g;
+				var b11 = color2.b;
+				var a11 = color2.a;
+				_this11.vertices[_this11.posVertices] = x14;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = y14;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = u11;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = v11;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = r11;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = g11;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = b11;
+				_this11.posVertices++;
+				_this11.vertices[_this11.posVertices] = a11;
+				_this11.posVertices++;
+				gfx_Gfx.batchCurrent.addIndices([0,1,2,2,3,0]);
+			}
+			++tX;
+			if(tX >= 32) {
+				tX = 0;
+				++tY;
+			}
+		}
+	}
+	,__class__: screens_dialog_DialogTileChooser
+});
+var tjson_TJSON = function() { };
+$hxClasses["tjson.TJSON"] = tjson_TJSON;
+tjson_TJSON.__name__ = ["tjson","TJSON"];
+tjson_TJSON.parse = function(json,fileName,stringProcessor) {
+	if(fileName == null) {
+		fileName = "JSON Data";
+	}
+	return new tjson_TJSONParser(json,fileName,stringProcessor).doParse();
+};
+tjson_TJSON.encode = function(obj,style,useCache) {
+	if(useCache == null) {
+		useCache = true;
+	}
+	return new tjson_TJSONEncoder(useCache).doEncode(obj,style);
+};
+var tjson_TJSONParser = function(vjson,vfileName,stringProcessor) {
+	if(vfileName == null) {
+		vfileName = "JSON Data";
+	}
+	this.json = vjson;
+	this.fileName = vfileName;
+	this.currentLine = 1;
+	this.lastSymbolQuoted = false;
+	this.pos = 0;
+	this.floatRegex = new EReg("^-?[0-9]*\\.[0-9]+$","");
+	this.intRegex = new EReg("^-?[0-9]+$","");
+	this.strProcessor = stringProcessor == null?$bind(this,this.defaultStringProcessor):stringProcessor;
+	this.cache = [];
+};
+$hxClasses["tjson.TJSONParser"] = tjson_TJSONParser;
+tjson_TJSONParser.__name__ = ["tjson","TJSONParser"];
+tjson_TJSONParser.prototype = {
+	pos: null
+	,json: null
+	,lastSymbolQuoted: null
+	,fileName: null
+	,currentLine: null
+	,cache: null
+	,floatRegex: null
+	,intRegex: null
+	,strProcessor: null
+	,doParse: function() {
+		try {
+			var _g = this.getNextSymbol();
+			switch(_g) {
+			case "[":
+				return this.doArray();
+			case "{":
+				return this.doObject();
+			default:
+				return this.convertSymbolToProperType(_g);
+			}
+		} catch( e ) {
+			haxe_CallStack.lastException = e;
+			if (e instanceof js__$Boot_HaxeError) e = e.val;
+			if( js_Boot.__instanceof(e,String) ) {
+				throw new js__$Boot_HaxeError(this.fileName + " on line " + this.currentLine + ": " + e);
+			} else throw(e);
+		}
+	}
+	,doObject: function() {
+		var o = { };
+		var val = "";
+		var key;
+		var isClassOb = false;
+		this.cache.push(o);
+		while(this.pos < this.json.length) {
+			key = this.getNextSymbol();
+			if(key == "," && !this.lastSymbolQuoted) {
+				continue;
+			}
+			if(key == "}" && !this.lastSymbolQuoted) {
+				if(isClassOb && o.TJ_unserialize != null) {
+					o.TJ_unserialize();
+				}
+				return o;
+			}
+			var seperator = this.getNextSymbol();
+			if(seperator != ":") {
+				throw new js__$Boot_HaxeError("Expected ':' but got '" + seperator + "' instead.");
+			}
+			var v = this.getNextSymbol();
+			if(key == "_hxcls") {
+				var cls = Type.resolveClass(v);
+				if(cls == null) {
+					throw new js__$Boot_HaxeError("Invalid class name - " + v);
+				}
+				o = Type.createEmptyInstance(cls);
+				this.cache.pop();
+				this.cache.push(o);
+				isClassOb = true;
+				continue;
+			}
+			if(v == "{" && !this.lastSymbolQuoted) {
+				val = this.doObject();
+			} else if(v == "[" && !this.lastSymbolQuoted) {
+				val = this.doArray();
+			} else {
+				val = this.convertSymbolToProperType(v);
+			}
+			o[key] = val;
+		}
+		throw new js__$Boot_HaxeError("Unexpected end of file. Expected '}'");
+	}
+	,doArray: function() {
+		var a = [];
+		var val;
+		while(this.pos < this.json.length) {
+			val = this.getNextSymbol();
+			if(val == "," && !this.lastSymbolQuoted) {
+				continue;
+			} else if(val == "]" && !this.lastSymbolQuoted) {
+				return a;
+			} else if(val == "{" && !this.lastSymbolQuoted) {
+				val = this.doObject();
+			} else if(val == "[" && !this.lastSymbolQuoted) {
+				val = this.doArray();
+			} else {
+				val = this.convertSymbolToProperType(val);
+			}
+			a.push(val);
+		}
+		throw new js__$Boot_HaxeError("Unexpected end of file. Expected ']'");
+	}
+	,convertSymbolToProperType: function(symbol) {
+		if(this.lastSymbolQuoted) {
+			if(StringTools.startsWith(symbol,tjson_TJSON.OBJECT_REFERENCE_PREFIX)) {
+				return this.cache[Std.parseInt(HxOverrides.substr(symbol,tjson_TJSON.OBJECT_REFERENCE_PREFIX.length,null))];
+			}
+			return symbol;
+		}
+		if(this.looksLikeFloat(symbol)) {
+			return parseFloat(symbol);
+		}
+		if(this.looksLikeInt(symbol)) {
+			return Std.parseInt(symbol);
+		}
+		if(symbol.toLowerCase() == "true") {
+			return true;
+		}
+		if(symbol.toLowerCase() == "false") {
+			return false;
+		}
+		if(symbol.toLowerCase() == "null") {
+			return null;
+		}
+		return symbol;
+	}
+	,looksLikeFloat: function(s) {
+		if(!this.floatRegex.match(s)) {
+			if(this.intRegex.match(s)) {
+				var intStr = this.intRegex.matched(0);
+				if(HxOverrides.cca(intStr,0) == 45) {
+					return intStr > "-2147483648";
+				} else {
+					return intStr > "2147483647";
+				}
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+	,looksLikeInt: function(s) {
+		return this.intRegex.match(s);
+	}
+	,getNextSymbol: function() {
+		this.lastSymbolQuoted = false;
+		var c = "";
+		var inQuote = false;
+		var quoteType = "";
+		var symbol = "";
+		var inEscape = false;
+		var inSymbol = false;
+		var inLineComment = false;
+		var inBlockComment = false;
+		while(this.pos < this.json.length) {
+			c = this.json.charAt(this.pos++);
+			if(c == "\n" && !inSymbol) {
+				this.currentLine++;
+			}
+			if(inLineComment) {
+				if(c == "\n" || c == "\r") {
+					inLineComment = false;
+					this.pos++;
+				}
+				continue;
+			}
+			if(inBlockComment) {
+				if(c == "*" && this.json.charAt(this.pos) == "/") {
+					inBlockComment = false;
+					this.pos++;
+				}
+				continue;
+			}
+			if(inQuote) {
+				if(inEscape) {
+					inEscape = false;
+					if(c == "'" || c == "\"") {
+						symbol += c;
+						continue;
+					}
+					if(c == "t") {
+						symbol += "\t";
+						continue;
+					}
+					if(c == "n") {
+						symbol += "\n";
+						continue;
+					}
+					if(c == "\\") {
+						symbol += "\\";
+						continue;
+					}
+					if(c == "r") {
+						symbol += "\r";
+						continue;
+					}
+					if(c == "/") {
+						symbol += "/";
+						continue;
+					}
+					if(c == "u") {
+						var hexValue = 0;
+						var _g = 0;
+						while(_g < 4) {
+							++_g;
+							if(this.pos >= this.json.length) {
+								throw new js__$Boot_HaxeError("Unfinished UTF8 character");
+							}
+							var nc = HxOverrides.cca(this.json,this.pos++);
+							hexValue <<= 4;
+							if(nc >= 48 && nc <= 57) {
+								hexValue += nc - 48;
+							} else if(nc >= 65 && nc <= 70) {
+								hexValue += 10 + nc - 65;
+							} else if(nc >= 97 && nc <= 102) {
+								hexValue += 10 + nc - 95;
+							} else {
+								throw new js__$Boot_HaxeError("Not a hex digit");
+							}
+						}
+						var utf = new haxe_Utf8();
+						utf.__b += String.fromCharCode(hexValue);
+						symbol += utf.__b;
+						continue;
+					}
+					throw new js__$Boot_HaxeError("Invalid escape sequence '\\" + c + "'");
+				} else {
+					if(c == "\\") {
+						inEscape = true;
+						continue;
+					}
+					if(c == quoteType) {
+						return symbol;
+					}
+					symbol += c;
+					continue;
+				}
+			} else if(c == "/") {
+				var c2 = this.json.charAt(this.pos);
+				if(c2 == "/") {
+					inLineComment = true;
+					this.pos++;
+					continue;
+				} else if(c2 == "*") {
+					inBlockComment = true;
+					this.pos++;
+					continue;
+				}
+			}
+			if(inSymbol) {
+				if(c == " " || c == "\n" || c == "\r" || c == "\t" || c == "," || c == ":" || c == "}" || c == "]") {
+					this.pos--;
+					return symbol;
+				} else {
+					symbol += c;
+					continue;
+				}
+			} else {
+				if(c == " " || c == "\t" || c == "\n" || c == "\r") {
+					continue;
+				}
+				if(c == "{" || c == "}" || c == "[" || c == "]" || c == "," || c == ":") {
+					return c;
+				}
+				if(c == "'" || c == "\"") {
+					inQuote = true;
+					quoteType = c;
+					this.lastSymbolQuoted = true;
+					continue;
+				} else {
+					inSymbol = true;
+					symbol = c;
+					continue;
+				}
+			}
+		}
+		if(inQuote) {
+			throw new js__$Boot_HaxeError("Unexpected end of data. Expected ( " + quoteType + " )");
+		}
+		return symbol;
+	}
+	,defaultStringProcessor: function(str) {
+		return str;
+	}
+	,__class__: tjson_TJSONParser
+};
+var tjson_TJSONEncoder = function(useCache) {
+	if(useCache == null) {
+		useCache = true;
+	}
+	this.uCache = useCache;
+	if(this.uCache) {
+		this.cache = [];
+	}
+};
+$hxClasses["tjson.TJSONEncoder"] = tjson_TJSONEncoder;
+tjson_TJSONEncoder.__name__ = ["tjson","TJSONEncoder"];
+tjson_TJSONEncoder.prototype = {
+	cache: null
+	,uCache: null
+	,doEncode: function(obj,style) {
+		if(!Reflect.isObject(obj)) {
+			throw new js__$Boot_HaxeError("Provided object is not an object.");
+		}
+		var st = js_Boot.__instanceof(style,tjson_EncodeStyle)?style:style == "fancy"?new tjson_FancyStyle():new tjson_SimpleStyle();
+		var buffer_b = "";
+		if((obj instanceof Array) && obj.__enum__ == null || js_Boot.__instanceof(obj,List)) {
+			buffer_b += Std.string(this.encodeIterable(obj,st,0));
+		} else if(js_Boot.__instanceof(obj,haxe_ds_StringMap)) {
+			buffer_b += Std.string(this.encodeMap(obj,st,0));
+		} else {
+			this.cacheEncode(obj);
+			buffer_b += Std.string(this.encodeObject(obj,st,0));
+		}
+		return buffer_b;
+	}
+	,encodeObject: function(obj,style,depth) {
+		var buffer_b = "";
+		buffer_b = "" + Std.string(style.beginObject(depth));
+		var fieldCount = 0;
+		var fields;
+		var dontEncodeFields = null;
+		var cls = obj == null?null:js_Boot.getClass(obj);
+		if(cls != null) {
+			fields = Type.getInstanceFields(cls);
+		} else {
+			fields = Reflect.fields(obj);
+		}
+		var _g = Type["typeof"](obj);
+		if(_g[1] == 6) {
+			fieldCount = 1;
+			buffer_b += Std.string(style.firstEntry(depth));
+			buffer_b += Std.string("\"_hxcls\"" + style.keyValueSeperator(depth));
+			buffer_b += Std.string(this.encodeValue(Type.getClassName(_g[2]),style,depth));
+			if(obj.TJ_noEncode != null) {
+				dontEncodeFields = obj.TJ_noEncode();
+			}
+		}
+		var _g1 = 0;
+		while(_g1 < fields.length) {
+			var field = fields[_g1];
+			++_g1;
+			if(dontEncodeFields != null && dontEncodeFields.indexOf(field) >= 0) {
+				continue;
+			}
+			var vStr = this.encodeValue(Reflect.field(obj,field),style,depth);
+			if(vStr != null) {
+				if(fieldCount++ > 0) {
+					buffer_b += Std.string(style.entrySeperator(depth));
+				} else {
+					buffer_b += Std.string(style.firstEntry(depth));
+				}
+				buffer_b += Std.string("\"" + field + "\"" + style.keyValueSeperator(depth) + vStr);
+			}
+		}
+		buffer_b += Std.string(style.endObject(depth));
+		return buffer_b;
+	}
+	,encodeMap: function(obj,style,depth) {
+		var buffer_b = "";
+		buffer_b = "" + Std.string(style.beginObject(depth));
+		var fieldCount = 0;
+		var tmp = obj.keys();
+		while(tmp.hasNext()) {
+			var field = tmp.next();
+			if(fieldCount++ > 0) {
+				buffer_b += Std.string(style.entrySeperator(depth));
+			} else {
+				buffer_b += Std.string(style.firstEntry(depth));
+			}
+			var value = obj.get(field);
+			buffer_b += Std.string("\"" + field + "\"" + style.keyValueSeperator(depth));
+			buffer_b += Std.string(this.encodeValue(value,style,depth));
+		}
+		buffer_b += Std.string(style.endObject(depth));
+		return buffer_b;
+	}
+	,encodeIterable: function(obj,style,depth) {
+		var buffer_b = "";
+		buffer_b = "" + Std.string(style.beginArray(depth));
+		var fieldCount = 0;
+		var tmp = $iterator(obj)();
+		while(tmp.hasNext()) {
+			var value = tmp.next();
+			if(fieldCount++ > 0) {
+				buffer_b += Std.string(style.entrySeperator(depth));
+			} else {
+				buffer_b += Std.string(style.firstEntry(depth));
+			}
+			buffer_b += Std.string(this.encodeValue(value,style,depth));
+		}
+		buffer_b += Std.string(style.endArray(depth));
+		return buffer_b;
+	}
+	,cacheEncode: function(value) {
+		if(!this.uCache) {
+			return null;
+		}
+		var _g1 = 0;
+		var _g = this.cache.length;
+		while(_g1 < _g) {
+			var c = _g1++;
+			if(this.cache[c] == value) {
+				return "\"" + tjson_TJSON.OBJECT_REFERENCE_PREFIX + c + "\"";
+			}
+		}
+		this.cache.push(value);
+		return null;
+	}
+	,encodeValue: function(value,style,depth) {
+		if(typeof(value) == "number" && ((value | 0) === value) || typeof(value) == "number") {
+			return value;
+		} else if((value instanceof Array) && value.__enum__ == null || js_Boot.__instanceof(value,List)) {
+			var v = value;
+			return this.encodeIterable(v,style,depth + 1);
+		} else if(js_Boot.__instanceof(value,List)) {
+			var v1 = value;
+			return this.encodeIterable(v1,style,depth + 1);
+		} else if(js_Boot.__instanceof(value,haxe_ds_StringMap)) {
+			return this.encodeMap(value,style,depth + 1);
+		} else if(typeof(value) == "string") {
+			return "\"" + StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(Std.string(value),"\\","\\\\"),"\n","\\n"),"\r","\\r"),"\"","\\\"") + "\"";
+		} else if(typeof(value) == "boolean") {
+			return value;
+		} else if(Reflect.isObject(value)) {
+			var ret = this.cacheEncode(value);
+			if(ret != null) {
+				return ret;
+			}
+			return this.encodeObject(value,style,depth + 1);
+		} else if(value == null) {
+			return "null";
+		} else {
+			return null;
+		}
+	}
+	,__class__: tjson_TJSONEncoder
+};
+var tjson_EncodeStyle = function() { };
+$hxClasses["tjson.EncodeStyle"] = tjson_EncodeStyle;
+tjson_EncodeStyle.__name__ = ["tjson","EncodeStyle"];
+tjson_EncodeStyle.prototype = {
+	beginObject: null
+	,endObject: null
+	,beginArray: null
+	,endArray: null
+	,firstEntry: null
+	,entrySeperator: null
+	,keyValueSeperator: null
+	,__class__: tjson_EncodeStyle
+};
+var tjson_SimpleStyle = function() {
+};
+$hxClasses["tjson.SimpleStyle"] = tjson_SimpleStyle;
+tjson_SimpleStyle.__name__ = ["tjson","SimpleStyle"];
+tjson_SimpleStyle.__interfaces__ = [tjson_EncodeStyle];
+tjson_SimpleStyle.prototype = {
+	beginObject: function(depth) {
+		return "{";
+	}
+	,endObject: function(depth) {
+		return "}";
+	}
+	,beginArray: function(depth) {
+		return "[";
+	}
+	,endArray: function(depth) {
+		return "]";
+	}
+	,firstEntry: function(depth) {
+		return "";
+	}
+	,entrySeperator: function(depth) {
+		return ",";
+	}
+	,keyValueSeperator: function(depth) {
+		return ":";
+	}
+	,__class__: tjson_SimpleStyle
+};
+var tjson_FancyStyle = function(tab) {
+	if(tab == null) {
+		tab = "    ";
+	}
+	this.tab = tab;
+	this.charTimesNCache = [""];
+};
+$hxClasses["tjson.FancyStyle"] = tjson_FancyStyle;
+tjson_FancyStyle.__name__ = ["tjson","FancyStyle"];
+tjson_FancyStyle.__interfaces__ = [tjson_EncodeStyle];
+tjson_FancyStyle.prototype = {
+	tab: null
+	,beginObject: function(depth) {
+		return "{\n";
+	}
+	,endObject: function(depth) {
+		return "\n" + this.charTimesN(depth) + "}";
+	}
+	,beginArray: function(depth) {
+		return "[\n";
+	}
+	,endArray: function(depth) {
+		return "\n" + this.charTimesN(depth) + "]";
+	}
+	,firstEntry: function(depth) {
+		return this.charTimesN(depth + 1) + " ";
+	}
+	,entrySeperator: function(depth) {
+		return "\n" + this.charTimesN(depth + 1) + ",";
+	}
+	,keyValueSeperator: function(depth) {
+		return " : ";
+	}
+	,charTimesNCache: null
+	,charTimesN: function(n) {
+		if(n < this.charTimesNCache.length) {
+			return this.charTimesNCache[n];
+		} else {
+			return this.charTimesNCache[n] = this.charTimesN(n - 1) + this.tab;
+		}
+	}
+	,__class__: tjson_FancyStyle
+};
+var world_EntityFactory = function() { };
+$hxClasses["world.EntityFactory"] = world_EntityFactory;
+world_EntityFactory.__name__ = ["world","EntityFactory"];
+world_EntityFactory.init = function() {
+	world_EntityFactory.table = [new world_EntityTemplate({ name : "OBJ_CHARLIE", classPath : "CORE + Charlie", editorSprite : "SPR_CHARLIE"}),new world_EntityTemplate({ name : "OBJ_MAUER", classPath : "world.entities.core." + "Mauer", editorSprite : "SPR_MAUER"}),new world_EntityTemplate({ name : "OBJ_MAUER_STABIL", classPath : "world.entities.core." + "Mauer", editorSprite : "SPR_MAUER_STABIL", subType : 1}),new world_EntityTemplate({ name : "OBJ_MAUER_SW", classPath : "world.entities.core." + "Mauer", editorSprite : "SPR_MAUER_SW", subType : 2}),new world_EntityTemplate({ name : "OBJ_MAUER_NE", classPath : "world.entities.core." + "Mauer", editorSprite : "SPR_MAUER_NE", subType : 3}),new world_EntityTemplate({ name : "OBJ_MAUER_NW", classPath : "world.entities.core." + "Mauer", editorSprite : "SPR_MAUER_NW", subType : 4}),new world_EntityTemplate({ name : "OBJ_MAUER_SE", classPath : "world.entities.core." + "Mauer", editorSprite : "SPR_MAUER_SE", subType : 5})];
+};
+world_EntityFactory.create = function(index) {
+	var entity = null;
+	var _className = world_EntityFactory.table[index].classPath;
+	if(_className != null) {
+		var _class = Type.resolveClass(_className);
+		if(_class != null) {
+			entity = Type.createInstance(_class,[world_EntityFactory.table[index].subType]);
+		} else {
+			haxe_Log.trace("Couldn't create instance of " + _className,{ fileName : "EntityFactory.hx", lineNumber : 80, className : "world.EntityFactory", methodName : "create"});
+		}
+	}
+	return entity;
+};
+world_EntityFactory.findID = function(key,type) {
+	var id = 0;
+	var _g = 0;
+	var _g1 = world_EntityFactory.table;
+	while(_g < _g1.length) {
+		var t = _g1[_g];
+		++_g;
+		if(t.name == key && t.subType == type) {
+			return id;
+		}
+		++id;
+	}
+	return -1;
+};
+world_EntityFactory.findIDFromObject = function(o) {
+	var id = 0;
+	var path = Type.getClassName(o == null?null:js_Boot.getClass(o));
+	var _g = 0;
+	var _g1 = world_EntityFactory.table;
+	while(_g < _g1.length) {
+		var t = _g1[_g];
+		++_g;
+		if(t.classPath == path && t.subType == o.type) {
+			return id;
+		}
+		++id;
+	}
+	return -1;
+};
+var world_EntityTemplate = function(entry) {
+	var tmp;
+	var tmp1;
+	if(entry == null) {
+		tmp1 = null;
+	} else {
+		var tmp2;
+		if(entry.__properties__) {
+			tmp = entry.__properties__["get_" + "name"];
+			tmp2 = tmp;
+		} else {
+			tmp2 = false;
+		}
+		if(tmp2) {
+			tmp1 = entry[tmp]();
+		} else {
+			tmp1 = entry.name;
+		}
+	}
+	this.name = tmp1;
+	var tmp3;
+	var tmp4;
+	if(entry == null) {
+		tmp4 = null;
+	} else {
+		var tmp5;
+		if(entry.__properties__) {
+			tmp3 = entry.__properties__["get_" + "classPath"];
+			tmp5 = tmp3;
+		} else {
+			tmp5 = false;
+		}
+		if(tmp5) {
+			tmp4 = entry[tmp3]();
+		} else {
+			tmp4 = entry.classPath;
+		}
+	}
+	this.classPath = tmp4;
+	var tmp6;
+	var tmp7;
+	if(entry == null) {
+		tmp7 = null;
+	} else {
+		var tmp8;
+		if(entry.__properties__) {
+			tmp6 = entry.__properties__["get_" + "editorSprite"];
+			tmp8 = tmp6;
+		} else {
+			tmp8 = false;
+		}
+		if(tmp8) {
+			tmp7 = entry[tmp6]();
+		} else {
+			tmp7 = entry.editorSprite;
+		}
+	}
+	this.editorSprite = tmp7;
+	this.subType = 0;
+	if(Object.prototype.hasOwnProperty.call(entry,"subType")) {
+		var tmp9;
+		var tmp10;
+		if(entry == null) {
+			tmp10 = null;
+		} else {
+			var tmp11;
+			if(entry.__properties__) {
+				tmp9 = entry.__properties__["get_" + "subType"];
+				tmp11 = tmp9;
+			} else {
+				tmp11 = false;
+			}
+			if(tmp11) {
+				tmp10 = entry[tmp9]();
+			} else {
+				tmp10 = entry.subType;
+			}
+		}
+		this.subType = tmp10;
+	}
+};
+$hxClasses["world.EntityTemplate"] = world_EntityTemplate;
+world_EntityTemplate.__name__ = ["world","EntityTemplate"];
+world_EntityTemplate.prototype = {
+	name: null
+	,subType: null
+	,classPath: null
+	,editorSprite: null
+	,__class__: world_EntityTemplate
+};
+var world_Room = function(x,y,level) {
 	this.collisions = [];
 	this.redraw = true;
+	this.worldX = x;
+	this.worldY = y;
+	this.worldZ = level;
 	this.entities = [];
 };
 $hxClasses["world.Room"] = world_Room;
-world_Room.__name__ = true;
+world_Room.__name__ = ["world","Room"];
 world_Room.prototype = {
-	update: function(deltaTime) {
+	worldX: null
+	,worldY: null
+	,worldZ: null
+	,entities: null
+	,redraw: null
+	,collisions: null
+	,update: function(deltaTime) {
 		var _g = 0;
 		var _g1 = this.entities;
 		while(_g < _g1.length) {
@@ -15937,7 +19892,7 @@ world_Room.prototype = {
 			checkCollision = false;
 		}
 		if(this.entities.indexOf(e) >= 0) {
-			haxe_Log.trace(this.entities.indexOf(e),{ fileName : "Room.hx", lineNumber : 51, className : "world.Room", methodName : "add"});
+			haxe_Log.trace(this.entities.indexOf(e),{ fileName : "Room.hx", lineNumber : 59, className : "world.Room", methodName : "add"});
 		} else {
 			if(checkCollision) {
 				if(this.getEntitiesAt(Math.round(e.position.x / 16),Math.round(e.position.y / 12)).length > 0) {
@@ -15946,6 +19901,9 @@ world_Room.prototype = {
 			}
 			e.room = this;
 			this.entities.push(e);
+			if(e.isStatic) {
+				this.redraw = true;
+			}
 		}
 	}
 	,remove: function(e) {
@@ -15973,15 +19931,98 @@ world_Room.prototype = {
 	}
 	,__class__: world_Room
 };
-var world_entity_Entity = function() {
+var world_World = function() {
+	this.rooms = [];
+	this.player = new world_entities_core_Charlie();
+	this.player.set_gridX(0);
+	this.player.set_gridY(0);
+	var room = new world_Room(0,0,0);
+	this.addRoom(room);
+	this.switchRoom(room);
+};
+$hxClasses["world.World"] = world_World;
+world_World.__name__ = ["world","World"];
+world_World.prototype = {
+	player: null
+	,currentRoom: null
+	,rooms: null
+	,addRoom: function(newRoom) {
+		if(this.findRoom(newRoom.worldX,newRoom.worldY,newRoom.worldZ) == null) {
+			this.rooms.push(newRoom);
+		} else {
+			haxe_Log.trace("Tried to add existing room to room list!",{ fileName : "World.hx", lineNumber : 32, className : "world.World", methodName : "addRoom"});
+		}
+	}
+	,findRoom: function(x,y,level) {
+		var _g = 0;
+		var _g1 = this.rooms;
+		while(_g < _g1.length) {
+			var room = _g1[_g];
+			++_g;
+			if(room.worldX == x && room.worldY == y && room.worldZ == level) {
+				return room;
+			}
+		}
+		return null;
+	}
+	,switchRoom: function(nextRoom) {
+		if(this.currentRoom != null) {
+			this.currentRoom.remove(this.player);
+		}
+		this.currentRoom = nextRoom;
+		this.currentRoom.add(this.player);
+	}
+	,get_room: function() {
+		return this.currentRoom;
+	}
+	,set_room: function(nextRoom) {
+		this.switchRoom(nextRoom);
+		return this.currentRoom;
+	}
+	,__class__: world_World
+	,__properties__: {set_room:"set_room",get_room:"get_room"}
+};
+var world_WorldData = function() { };
+$hxClasses["world.WorldData"] = world_WorldData;
+world_WorldData.__name__ = ["world","WorldData"];
+world_WorldData.initTilesheet = function(tileset) {
+	tileset.register("SPR_NONE",[[0,0]]);
+	tileset.register("SPR_CHARLIE",[[1,0],[2,0],[3,0]]);
+	tileset.register("SPR_EXPLOSION",[[5,0],[6,0],[7,0],[8,0],[9,0]]);
+	tileset.register("SPR_ISOLATOR",[[15,0]]);
+	tileset.register("SPR_ELEKTROZAUN",[[4,1]]);
+	tileset.register("SPR_MAUER",[[10,0]]);
+	tileset.register("SPR_MAUER_STABIL",[[10,1]]);
+	tileset.register("SPR_MAUER_SW",[[11,0]]);
+	tileset.register("SPR_MAUER_NE",[[12,0]]);
+	tileset.register("SPR_MAUER_NW",[[13,0]]);
+	tileset.register("SPR_MAUER_SE",[[14,0]]);
+	tileset.register("SPR_MAUER_AUFLOESEN",[[0,5],[1,5],[2,5],[3,5],[4,5]]);
+	tileset.register("SPR_GOLD",[[6,1]]);
+};
+var world_entities_Entity = function(type) {
+	if(type == null) {
+		type = 0;
+	}
 	this.changed = true;
 	this.isStatic = true;
+	this.isAlive = true;
+	this.classPath = Type.getClassName(js_Boot.getClass(this));
+	this.type = type;
 	this.position = new lime_math_Vector2();
 };
-$hxClasses["world.entity.Entity"] = world_entity_Entity;
-world_entity_Entity.__name__ = true;
-world_entity_Entity.prototype = {
-	get_x: function() {
+$hxClasses["world.entities.Entity"] = world_entities_Entity;
+world_entities_Entity.__name__ = ["world","entities","Entity"];
+world_entities_Entity.prototype = {
+	classPath: null
+	,isAlive: null
+	,isStatic: null
+	,changed: null
+	,position: null
+	,room: null
+	,gfx: null
+	,type: null
+	,get_x: function() {
 		return this.position.x;
 	}
 	,set_x: function(v) {
@@ -16131,28 +20172,59 @@ world_entity_Entity.prototype = {
 		}
 		this.changed = false;
 	}
-	,__class__: world_entity_Entity
+	,destroy: function() {
+		this.room.remove(this);
+	}
+	,getClassPath: function() {
+		return this.classPath;
+	}
+	,toString: function() {
+		var id = world_EntityFactory.findIDFromObject(this);
+		haxe_Log.trace(id,{ fileName : "Entity.hx", lineNumber : 121, className : "world.entities.Entity", methodName : "toString"});
+		var temp = world_EntityFactory.table[id];
+		haxe_Log.trace(temp,{ fileName : "Entity.hx", lineNumber : 124, className : "world.entities.Entity", methodName : "toString"});
+		var s_b = "";
+		s_b = "[ ";
+		s_b = "[ " + Std.string(id + ", ");
+		s_b += Std.string(this.getClassPath() + ", ");
+		s_b += Std.string(temp.classPath + ", ");
+		s_b += Std.string(temp.name + ", ");
+		s_b += Std.string(this.type + ", ");
+		s_b += Std.string(Math.round(this.position.x / 16) + ", ");
+		s_b += Std.string(Math.round(this.position.y / 12));
+		s_b += " ]";
+		return s_b;
+	}
+	,__class__: world_entities_Entity
+	,__properties__: {set_gridY:"set_gridY",get_gridY:"get_gridY",set_gridX:"set_gridX",get_gridX:"get_gridX",set_y:"set_y",get_y:"get_y",set_x:"set_x",get_x:"get_x"}
 };
-var world_entity_EntityMoveable = function() {
+var world_entities_EntityMoveable = function(type) {
+	if(type == null) {
+		type = 0;
+	}
 	this.timeLeft = 0.0;
 	this.speed = 0.25;
 	this.movement = new lime_math_Vector2();
 	this.direction = new lime_math_Vector2();
-	world_entity_Entity.call(this);
+	world_entities_Entity.call(this,type);
 	this.isStatic = false;
 };
-$hxClasses["world.entity.EntityMoveable"] = world_entity_EntityMoveable;
-world_entity_EntityMoveable.__name__ = true;
-world_entity_EntityMoveable.__super__ = world_entity_Entity;
-world_entity_EntityMoveable.prototype = $extend(world_entity_Entity.prototype,{
-	update: function(deltaTime) {
-		world_entity_Entity.prototype.update.call(this,deltaTime);
+$hxClasses["world.entities.EntityMoveable"] = world_entities_EntityMoveable;
+world_entities_EntityMoveable.__name__ = ["world","entities","EntityMoveable"];
+world_entities_EntityMoveable.__super__ = world_entities_Entity;
+world_entities_EntityMoveable.prototype = $extend(world_entities_Entity.prototype,{
+	direction: null
+	,movement: null
+	,speed: null
+	,timeLeft: null
+	,update: function(deltaTime) {
+		world_entities_Entity.prototype.update.call(this,deltaTime);
 		if(this.get_isMoving()) {
 			if(this.timeLeft < deltaTime) {
 				this.timeLeft = deltaTime;
 			}
 			this.timeLeft -= deltaTime;
-			var perc = this.clamp((this.speed - this.timeLeft) / this.speed,0.0,1.0);
+			var perc = Utils.clamp((this.speed - this.timeLeft) / this.speed,0.0,1.0);
 			this.movement.x = perc * 16 * this.direction.x;
 			this.movement.y = perc * 12 * this.direction.y;
 			if(this.timeLeft <= 0.0) {
@@ -16174,14 +20246,7 @@ world_entity_EntityMoveable.prototype = $extend(world_entity_Entity.prototype,{
 	}
 	,onStopMoving: function() {
 	}
-	,clamp: function(value,min,max) {
-		if(value < min) {
-			return min;
-		} else if(value > max) {
-			return max;
-		}
-		return value;
-	}
+	,isMoving: null
 	,get_isMoving: function() {
 		if(this.direction.x == 0.0) {
 			return this.direction.y != 0.0;
@@ -16190,6 +20255,9 @@ world_entity_EntityMoveable.prototype = $extend(world_entity_Entity.prototype,{
 		}
 	}
 	,move: function(dirX,dirY) {
+		if(!this.isAlive) {
+			return;
+		}
 		if(this.get_isMoving()) {
 			return;
 		}
@@ -16235,47 +20303,49 @@ world_entity_EntityMoveable.prototype = $extend(world_entity_Entity.prototype,{
 	}
 	,set_gridX: function(v) {
 		this.changed = true;
-		return world_entity_Entity.prototype.set_gridX.call(this,v);
+		return world_entities_Entity.prototype.set_gridX.call(this,v);
 	}
 	,set_gridY: function(v) {
 		this.changed = true;
-		return world_entity_Entity.prototype.set_gridY.call(this,v);
+		return world_entities_Entity.prototype.set_gridY.call(this,v);
 	}
-	,__class__: world_entity_EntityMoveable
+	,__class__: world_entities_EntityMoveable
+	,__properties__: $extend(world_entities_Entity.prototype.__properties__,{get_isMoving:"get_isMoving"})
 });
-var world_entity_Charlie = function() {
-	world_entity_EntityMoveable.call(this);
-	this.anim = new gfx_Animation();
-	this.anim.addFrame(Tobor.Tileset.tileset[1]);
-	this.anim.addFrame(Tobor.Tileset.tileset[2]);
-	this.anim.addFrame(Tobor.Tileset.tileset[3]);
-	this.anim.setSpeed(this.speed);
-	this.gfx = this.anim;
+var world_entities_EntityAI = function(type) {
+	if(type == null) {
+		type = 0;
+	}
+	world_entities_EntityMoveable.call(this,type);
 };
-$hxClasses["world.entity.Charlie"] = world_entity_Charlie;
-world_entity_Charlie.__name__ = true;
-world_entity_Charlie.__super__ = world_entity_EntityMoveable;
-world_entity_Charlie.prototype = $extend(world_entity_EntityMoveable.prototype,{
-	update: function(deltaTime) {
-		world_entity_EntityMoveable.prototype.update.call(this,deltaTime);
-		this.anim.update(deltaTime);
-	}
-	,onStartMoving: function() {
-		this.anim.start();
-	}
-	,onStopMoving: function() {
-		this.anim.stop();
-	}
-	,__class__: world_entity_Charlie
+$hxClasses["world.entities.EntityAI"] = world_entities_EntityAI;
+world_entities_EntityAI.__name__ = ["world","entities","EntityAI"];
+world_entities_EntityAI.__super__ = world_entities_EntityMoveable;
+world_entities_EntityAI.prototype = $extend(world_entities_EntityMoveable.prototype,{
+	__class__: world_entities_EntityAI
 });
-var world_entity_EntityPushable = function() {
-	world_entity_EntityMoveable.call(this);
-	this.gfx = new gfx_Sprite(Tobor.Tileset.tileset[15]);
+var world_entities_EntityPickup = function(type) {
+	if(type == null) {
+		type = 0;
+	}
+	world_entities_Entity.call(this,type);
 };
-$hxClasses["world.entity.EntityPushable"] = world_entity_EntityPushable;
-world_entity_EntityPushable.__name__ = true;
-world_entity_EntityPushable.__super__ = world_entity_EntityMoveable;
-world_entity_EntityPushable.prototype = $extend(world_entity_EntityMoveable.prototype,{
+$hxClasses["world.entities.EntityPickup"] = world_entities_EntityPickup;
+world_entities_EntityPickup.__name__ = ["world","entities","EntityPickup"];
+world_entities_EntityPickup.__super__ = world_entities_Entity;
+world_entities_EntityPickup.prototype = $extend(world_entities_Entity.prototype,{
+	__class__: world_entities_EntityPickup
+});
+var world_entities_EntityPushable = function(type) {
+	if(type == null) {
+		type = 0;
+	}
+	world_entities_EntityMoveable.call(this,type);
+};
+$hxClasses["world.entities.EntityPushable"] = world_entities_EntityPushable;
+world_entities_EntityPushable.__name__ = ["world","entities","EntityPushable"];
+world_entities_EntityPushable.__super__ = world_entities_EntityMoveable;
+world_entities_EntityPushable.prototype = $extend(world_entities_EntityMoveable.prototype,{
 	isSolid: function(e) {
 		var dx = Math.round(this.position.x / 16) - Math.round(e.position.x / 16);
 		var dy = Math.round(this.position.y / 12) - Math.round(e.position.y / 12);
@@ -16299,28 +20369,186 @@ world_entity_EntityPushable.prototype = $extend(world_entity_EntityMoveable.prot
 		}
 		return false;
 	}
-	,__class__: world_entity_EntityPushable
+	,__class__: world_entities_EntityPushable
 });
-var world_entity_Wall = function() {
-	world_entity_Entity.call(this);
-	this.gfx = new gfx_Sprite(Tobor.Tileset.tileset[10]);
+var world_entities_core_Charlie = function() {
+	this.gold = 0;
+	this.points = 0;
+	this.lives = 3;
+	world_entities_EntityMoveable.call(this);
+	this.speed = 0.25;
+	this.animWalking = new gfx_Animation();
+	this.animWalking.addFrame(Tobor.Tileset.find("SPR_CHARLIE_0"));
+	this.animWalking.addFrame(Tobor.Tileset.find("SPR_CHARLIE_1"));
+	this.animWalking.addFrame(Tobor.Tileset.find("SPR_CHARLIE_2"));
+	this.animWalking.setSpeed(this.speed);
+	this.animDeath = new gfx_Animation();
+	this.animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_0"));
+	this.animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_1"));
+	this.animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_2"));
+	this.animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_3"));
+	this.animDeath.addFrame(Tobor.Tileset.find("SPR_EXPLOSION_4"));
+	this.animDeath.setSpeed(5);
+	this.gfx = this.animWalking;
 };
-$hxClasses["world.entity.Wall"] = world_entity_Wall;
-world_entity_Wall.__name__ = true;
-world_entity_Wall.__super__ = world_entity_Entity;
-world_entity_Wall.prototype = $extend(world_entity_Entity.prototype,{
+$hxClasses["world.entities.core.Charlie"] = world_entities_core_Charlie;
+world_entities_core_Charlie.__name__ = ["world","entities","core","Charlie"];
+world_entities_core_Charlie.__super__ = world_entities_EntityMoveable;
+world_entities_core_Charlie.prototype = $extend(world_entities_EntityMoveable.prototype,{
+	lives: null
+	,points: null
+	,gold: null
+	,animWalking: null
+	,animDeath: null
+	,update: function(deltaTime) {
+		world_entities_EntityMoveable.prototype.update.call(this,deltaTime);
+		if(!this.isAlive) {
+			if(!this.animDeath.active) {
+				this.isAlive = true;
+				this.gfx = this.animWalking;
+			}
+		}
+	}
+	,die: function() {
+		this.lives--;
+		if(!this.get_isMoving()) {
+			this.isAlive = false;
+			this.gfx = this.animDeath;
+			this.animDeath.start();
+		}
+	}
+	,onStartMoving: function() {
+		this.animWalking.start();
+	}
+	,onStopMoving: function() {
+		this.animWalking.stop();
+	}
+	,__class__: world_entities_core_Charlie
+});
+var world_entities_core_Elektrozaun = function() {
+	world_entities_EntityPushable.call(this);
+	this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_ELEKTROZAUN"));
+};
+$hxClasses["world.entities.core.Elektrozaun"] = world_entities_core_Elektrozaun;
+world_entities_core_Elektrozaun.__name__ = ["world","entities","core","Elektrozaun"];
+world_entities_core_Elektrozaun.__super__ = world_entities_EntityPushable;
+world_entities_core_Elektrozaun.prototype = $extend(world_entities_EntityPushable.prototype,{
+	isSolid: function(e) {
+		if(js_Boot.__instanceof(e,world_entities_core_Charlie)) {
+			return false;
+		} else if(js_Boot.__instanceof(e,world_entities_EntityAI)) {
+			return false;
+		}
+		return world_entities_EntityPushable.prototype.isSolid.call(this,e);
+	}
+	,__class__: world_entities_core_Elektrozaun
+});
+var world_entities_core_Gold = function() {
+	world_entities_EntityPickup.call(this);
+	this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_GOLD"));
+};
+$hxClasses["world.entities.core.Gold"] = world_entities_core_Gold;
+world_entities_core_Gold.__name__ = ["world","entities","core","Gold"];
+world_entities_core_Gold.__super__ = world_entities_EntityPickup;
+world_entities_core_Gold.prototype = $extend(world_entities_EntityPickup.prototype,{
+	isSolid: function(e) {
+		if(js_Boot.__instanceof(e,world_entities_EntityPushable)) {
+			return true;
+		}
+		return false;
+	}
+	,__class__: world_entities_core_Gold
+});
+var world_entities_core_Isolator = function() {
+	world_entities_EntityPushable.call(this);
+	this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_ISOLATOR"));
+};
+$hxClasses["world.entities.core.Isolator"] = world_entities_core_Isolator;
+world_entities_core_Isolator.__name__ = ["world","entities","core","Isolator"];
+world_entities_core_Isolator.__super__ = world_entities_EntityPushable;
+world_entities_core_Isolator.prototype = $extend(world_entities_EntityPushable.prototype,{
+	__class__: world_entities_core_Isolator
+});
+var world_entities_core_Mauer = function(type) {
+	if(type == null) {
+		type = 0;
+	}
+	world_entities_Entity.call(this,type);
+	if(type != null) {
+		switch(type) {
+		case 0:
+			this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_MAUER"));
+			break;
+		case 1:
+			this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_MAUER_STABIL"));
+			break;
+		case 2:
+			this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_MAUER_SW"));
+			break;
+		case 3:
+			this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_MAUER_NE"));
+			break;
+		case 4:
+			this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_MAUER_NW"));
+			break;
+		case 5:
+			this.gfx = new gfx_Sprite(Tobor.Tileset.find("SPR_MAUER_SE"));
+			break;
+		default:
+		}
+	}
+};
+$hxClasses["world.entities.core.Mauer"] = world_entities_core_Mauer;
+world_entities_core_Mauer.__name__ = ["world","entities","core","Mauer"];
+world_entities_core_Mauer.__super__ = world_entities_Entity;
+world_entities_core_Mauer.prototype = $extend(world_entities_Entity.prototype,{
 	isSolid: function(e) {
 		return true;
 	}
-	,__class__: world_entity_Wall
+	,__class__: world_entities_core_Mauer
 });
+var world_entities_core_MauerZersetzen = function() {
+	this.speed = 20.0;
+	world_entities_Entity.call(this);
+	this.anim = new gfx_Animation();
+	this.anim.addFrame(Tobor.Tileset.find("SPR_MAUER_AUFLOESEN_0"));
+	this.anim.addFrame(Tobor.Tileset.find("SPR_MAUER_AUFLOESEN_1"));
+	this.anim.addFrame(Tobor.Tileset.find("SPR_MAUER_AUFLOESEN_2"));
+	this.anim.addFrame(Tobor.Tileset.find("SPR_MAUER_AUFLOESEN_3"));
+	this.anim.addFrame(Tobor.Tileset.find("SPR_MAUER_AUFLOESEN_4"));
+	this.anim.setSpeed(this.speed);
+	this.anim.start();
+	this.gfx = this.anim;
+	this.timeLeft = this.speed;
+	this.isStatic = false;
+};
+$hxClasses["world.entities.core.MauerZersetzen"] = world_entities_core_MauerZersetzen;
+world_entities_core_MauerZersetzen.__name__ = ["world","entities","core","MauerZersetzen"];
+world_entities_core_MauerZersetzen.__super__ = world_entities_Entity;
+world_entities_core_MauerZersetzen.prototype = $extend(world_entities_Entity.prototype,{
+	speed: null
+	,timeLeft: null
+	,anim: null
+	,update: function(deltaTime) {
+		world_entities_Entity.prototype.update.call(this,deltaTime);
+		this.timeLeft -= deltaTime;
+		if(this.timeLeft <= 0.0) {
+			this.destroy();
+		}
+	}
+	,isSolid: function(e) {
+		return true;
+	}
+	,__class__: world_entities_core_MauerZersetzen
+});
+function $iterator(o) { if( o instanceof Array ) return function() { return HxOverrides.iter(o); }; return typeof(o.iterator) == 'function' ? $bind(o,o.iterator) : o.iterator; }
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
 $hxClasses.Math = Math;
 String.prototype.__class__ = $hxClasses.String = String;
-String.__name__ = true;
+String.__name__ = ["String"];
 $hxClasses.Array = Array;
-Array.__name__ = true;
+Array.__name__ = ["Array"];
 Date.prototype.__class__ = $hxClasses.Date = Date;
 Date.__name__ = ["Date"];
 var Int = $hxClasses.Int = { __name__ : ["Int"]};
@@ -16361,14 +20589,25 @@ while(_g11 < _g2) {
 }
 lime_system_CFFI.available = false;
 lime_system_CFFI.enabled = false;
+Input.waitTime = 0.0;
 Input.mouseInside = true;
+Input.mouseBtnLeft = false;
+Input.mouseBtnMiddle = false;
+Input.mouseBtnRight = false;
 Input.key = new haxe_ds_IntMap();
+Input.F1 = [1073741882];
+Input.F2 = [1073741883];
+Input.F3 = [1073741884];
+Input.F4 = [1073741885];
+Input.F5 = [1073741886];
+Input.ESC = [27];
+Input.TAB = [9];
 Input.UP = [119,1073741906];
 Input.DOWN = [115,1073741905];
 Input.LEFT = [97,1073741904];
 Input.RIGHT = [100,1073741903];
 Tobor.USE_FRAMEBUFFER = true;
-Tobor.Config = { gfx : { width : 640, height : 348}};
+Tobor.Config = { gfx : { width : 640, height : 348, scale : 1, customMousePointer : false}};
 gfx_Batch.MAX_SIZE = 1024;
 gfx_Color.BLACK = new gfx_Color(Math.min(0.,1.0),Math.min(0.,1.0),Math.min(0.,1.0));
 gfx_Color.YELLOW = new gfx_Color(Math.min(1.,1.0),Math.min(1.,1.0),Math.min(0.,1.0));
@@ -16389,6 +20628,8 @@ gfx_Color.WHITE = new gfx_Color(Math.min(1.,1.0),Math.min(1.,1.0),Math.min(1.,1.
 gfx_Font.GLYPHS = "abcdefghijklmnop" + "qrstuvwxyzäöüß_ " + "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZÄÖÜ^° " + "0123456789.,!?'\"-+=/\\%()<>:;[]`´" + "$#&@*éúíóáýèùìòà";
 gfx_Gfx.offsetX = 0;
 gfx_Gfx.offsetY = 0;
+gfx_Gfx.scaleX = 0;
+gfx_Gfx.scaleY = 0;
 gfx_Gfx.VERT_SPRITE_RAW = "precision mediump float;" + "attribute vec4 a_Position;" + "attribute vec2 a_TexCoord0;" + "attribute vec4 a_Color;" + "uniform mat4 u_camMatrix;" + "varying vec2 v_TexCoord0;" + "varying vec4 v_Color;" + "void main(void) {" + "    v_TexCoord0 = a_TexCoord0;" + "    v_Color = a_Color;" + "    gl_Position = u_camMatrix * a_Position;" + "}";
 gfx_Gfx.FRAG_SPRITE_RAW = "precision mediump float;" + "uniform sampler2D u_Texture0;" + "varying vec2 v_TexCoord0;" + "varying vec4 v_Color;" + "void main(void) {" + "    vec4 texColor = texture2D(u_Texture0, v_TexCoord0);" + "    if (texColor.a == 0.0) discard;" + "    gl_FragColor = texColor * v_Color;" + "}";
 haxe_io_FPHelper.i64tmp = new haxe__$Int64__$_$_$Int64(0,0);
@@ -17092,11 +21333,13 @@ lime_utils__$Int16Array_Int16Array_$Impl_$.BYTES_PER_ELEMENT = 2;
 lime_utils__$Int32Array_Int32Array_$Impl_$.BYTES_PER_ELEMENT = 4;
 lime_utils__$UInt32Array_UInt32Array_$Impl_$.BYTES_PER_ELEMENT = 4;
 lime_utils__$UInt8Array_UInt8Array_$Impl_$.BYTES_PER_ELEMENT = 1;
+screens_dialog_DialogTileChooser.MAX_ITEMS = 32;
+tjson_TJSON.OBJECT_REFERENCE_PREFIX = "@~obRef#";
 world_Room.SIZE_X = 40;
 world_Room.SIZE_Y = 28;
 world_Room.LAYER_BACKGROUND = 0;
 world_Room.LAYER_SPRITE = 1;
-world_entity_Entity.WIDTH = 16;
-world_entity_Entity.HEIGHT = 12;
+world_entities_Entity.WIDTH = 16;
+world_entities_Entity.HEIGHT = 12;
 ApplicationMain.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

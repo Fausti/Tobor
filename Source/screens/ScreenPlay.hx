@@ -81,18 +81,14 @@ class ScreenPlay extends Screen {
 		if (dialog != null) {
 			super.update(deltaTime);
 		} else {
-			if (Input.keyDown(Input.NUM_1)) {
-				Input.wait(2);
+			if (!game.world.player.isMoving) {
+				if (Input.keyDown(Input.ENTER)) {
+					if (game.world.player.inventory.length > 0) {
+						Input.wait(2);
+						showDialog(dialogInventory);
 				
-				
-			}
-			
-			if (Input.keyDown(Input.ENTER)) {
-				if (game.world.player.inventory.length > 0) {
-					Input.wait(2);
-					showDialog(dialogInventory);
-				
-					return;
+						return;
+					}
 				}
 			}
 			
