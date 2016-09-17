@@ -35,6 +35,10 @@ class WorldData {
 			[9, 19], 
 		]);
 		
+		tileset.register("SPR_SCHLEUDER", [
+			[15, 5], 
+		]);
+		
 		tileset.register("SPR_MUNITION", [
 			[9, 5],
 			[10, 5],

@@ -2,6 +2,7 @@ package world.entities.core;
 
 import gfx.Sprite;
 import gfx.Color;
+import world.Room;
 import world.entities.Object;
 
 /**
@@ -125,5 +126,13 @@ class Door extends Object {
 			Gfx.drawTexture(x, y, 16, 12, SPRITE_1.getUV(), COLORS_0[type]);
 			Gfx.drawTexture(x, y, 16, 12, SPRITE_2.getUV(), COLORS_1[type]);
 		}
+	}
+	
+	override public function canEnter(e:Object):Bool {
+		if (isPlayer(e)) {
+			return player.inventory.hasItem("OBJ_SCHLUESSEL", type);
+		}
+		
+		return false;
 	}
 }

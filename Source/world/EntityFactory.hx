@@ -533,6 +533,13 @@ class EntityFactory {
 				classPath:CORE + "Bullet",
 			}),
 			
+			new EntityTemplate({
+				name:"OBJ_SCHLEUDER",
+				subType:0,
+				editorSprite:"SPR_SCHLEUDER",
+				classPath:CORE + "Sling",
+			}),
+			
 		];
 		
 		var isOK:Bool = true;

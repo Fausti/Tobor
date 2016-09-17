@@ -2,6 +2,7 @@ package world.entities.core;
 
 import gfx.Sprite;
 import lime.math.Rectangle;
+import world.entities.Message;
 import world.entities.Object;
 
 /**
@@ -22,10 +23,13 @@ class Arrow extends Object {
 		];
 		
 		updateSprite();
+		
+		isStatic = false;
 	}
 	
 	function updateSprite() {
 		gfx = SPRITES[type];
+		changed = true;
 	}
 	
 	override public function canEnter(e:Object):Bool {
@@ -42,5 +46,42 @@ class Arrow extends Object {
 		}
 		
 		return false;
+	}
+	
+	function rotate(value:Int) {
+		if (value < 4) {
+			type += value;
+			
+			while (type >= 4) {
+				type -= 4;
+			}
+			
+			while (type <= -1) {
+				type += 4;
+			}
+		}
+	}
+	
+	override public function onMessage(msg:Message) {
+		switch(msg.msg) {
+			case "MAGNET_DROP":
+				if (msg.sender.type == 0) {
+					rotate(2);
+				} else {
+					rotate( -2);
+				}
+				
+				updateSprite();
+			case "MAGNET_PICKUP":
+				if (msg.sender.type == 0) {
+					rotate( -2);
+				} else {
+					rotate (2);
+				}
+				
+				updateSprite();
+			default:
+				
+		}
 	}
 }

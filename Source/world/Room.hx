@@ -1,5 +1,6 @@
 package world;
 
+import world.entities.Message;
 import world.entities.Object;
 import world.entities.core.Charlie;
 
@@ -100,6 +101,32 @@ class Room {
 		entities.remove(e);
 		
 		if (e.isStatic) redraw = true;
+	}
+	
+	public function sendMessage(msg:Message, ?around:Bool = true) {
+		if (around) {
+			for (o in getEntitiesAround(msg.sender.gridX, msg.sender.gridY)) {
+				o.onMessage(msg);
+			}
+		} else {
+			for (o in entities) {
+				o.onMessage(msg);
+			}
+		}
+	}
+	
+	public function getEntitiesAround(x:Int, y:Int):Array<Object> {
+		collisions = [];
+		
+		for (e in entities) {
+			if (e.gridX >= x - 1 && e.gridX <= x + 1 && e.gridY >= y - 1 && e.gridY <= y + 1) {
+				if (!(e.gridX == x && e.gridY == y)) {
+					collisions.push(e);
+				}
+			}
+		}
+		
+		return collisions;
 	}
 	
 	public function getEntitiesAt(x:Int, y:Int, ?enteringEntity:Object = null):Array<Object> {

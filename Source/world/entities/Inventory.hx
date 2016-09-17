@@ -31,18 +31,28 @@ class Inventory {
 		if (combine) {
 			var item:InventoryItem = find(obj.get_ID(), obj.type);
 			if (item == null) {
-				list.push(new InventoryItem(obj.get_ID(), obj.type));
+				list.push(new InventoryItem(this, obj.get_ID(), obj.type));
 				return true;
 			} else {
 				item.count++;
 				return true;
 			}
 		} else {
-			list.push(new InventoryItem(obj.get_ID(), obj.type));
+			list.push(new InventoryItem(this, obj.get_ID(), obj.type));
 			return true;
 		}
 		
 		return true;
+	}
+	
+	public function hasItem(id, ?type = 0):Bool {
+		var item = find(id, type);
+		
+		if (item == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	public function find(id, type):InventoryItem {
@@ -53,6 +63,10 @@ class Inventory {
 		}
 		
 		return null;
+	}
+	
+	public function remove(item:InventoryItem) {
+		list.remove(item);
 	}
 	
 	public function spawnObject(item:InventoryItem):ObjectItem {
@@ -99,10 +113,26 @@ class InventoryItem {
 	public var type:Int;
 	public var count:Int;
 	
-	public function new(category:String, type:Int) {
+	private var inventory:Inventory;
+	
+	public function new(inv:Inventory, category:String, type:Int) {
+		this.inventory = inv;
+		
 		this.category = category;
 		this.type = type;
 		this.count = 1;
+	}
+	
+	public function add(?v:Int = 1) {
+		count += v;
+	}
+	
+	public function sub(?v:Int = 1) {
+		count -= v;
+		
+		if (count <= 0) {
+			inventory.remove(this);
+		}
 	}
 	
 	public function toString():String {

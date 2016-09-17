@@ -30,6 +30,9 @@ class DialogInventory extends Dialog {
 	private var actionsSize:Int = 0;
 	private var actionIndex:Int = 0;
 	
+	public var item:InventoryItem;
+	public var action:String;
+	
 	var UI_NONE:Rectangle;
 	
 	public function new(screen:Screen, x:Int, y:Int, inventory:Inventory) {
@@ -45,6 +48,9 @@ class DialogInventory extends Dialog {
 	
 	override public function show() {
 		super.show();
+		
+		item = null;
+		action = null;
 		
 		for (key in menus.keys()) {
 			menus.remove(key);
@@ -183,7 +189,7 @@ class DialogInventory extends Dialog {
 				if (menus.get(cats[mainIndex]).length == 1) {
 					var item = menus.get(cats[mainIndex])[0];
 					trace(actions[actionIndex], item);
-					exit();
+					exitWith(item, actions[actionIndex]);
 				} else {
 					subMenu = menus.get(cats[mainIndex]);
 					subIndex = 0;
@@ -193,6 +199,7 @@ class DialogInventory extends Dialog {
 			} else {
 				var item = menus.get(cats[mainIndex])[subIndex];
 				trace(actions[actionIndex], item);
+				exitWith(item, actions[actionIndex]);
 				exit();
 			}
 		} else if (Input.keyDown(Input.ESC)) {
@@ -273,5 +280,12 @@ class DialogInventory extends Dialog {
 			offsetY += 10;
 			index++;
 		}
+	}
+	
+	public function exitWith(item:InventoryItem, action:String) {
+		this.item = item;
+		this.action = action;
+		
+		super.exit();
 	}
 }

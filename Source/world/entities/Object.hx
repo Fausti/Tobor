@@ -101,6 +101,12 @@ class Object extends Entity {
 		return s.toString();
 	}
 	
+	// Messaging
+	
+	public function onMessage(msg:Message) {
+		trace(msg);
+	}
+	
 	// Savegame Zeugs
 	
 	public function canSave():Bool {

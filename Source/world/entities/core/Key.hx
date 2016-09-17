@@ -2,6 +2,8 @@ package world.entities.core;
 
 import gfx.Sprite;
 import gfx.Color;
+import world.Room;
+import world.entities.Inventory.InventoryItem;
 import world.entities.ObjectItem;
 
 /**
@@ -97,5 +99,9 @@ class Key extends ObjectItem {
 		} else {
 			gfx = SPRITES[type];
 		}
+	}
+	
+	override public function onUse(item:InventoryItem, inRoom:Room) {
+		onDrop(item, inRoom);
 	}
 }

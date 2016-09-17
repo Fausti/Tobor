@@ -1,5 +1,9 @@
 package world.entities.core;
 
+import world.Room;
+import world.entities.Inventory.InventoryItem;
+import world.entities.Message;
+import world.entities.Object;
 import world.entities.ObjectItem;
 
 /**
@@ -22,5 +26,16 @@ class Magnet extends ObjectItem {
 	
 	function updateSprite() {
 		gfx = SPRITES[type];
+	}
+	
+	override public function onPickup(e:Object) {
+		room.sendMessage(new Message(this, "MAGNET_PICKUP"));
+		
+		super.onPickup(e);
+	}
+	override public function onUse(item:InventoryItem, inRoom:Room) {
+		super.onDrop(item, inRoom);
+		
+		room.sendMessage(new Message(this, "MAGNET_DROP"));
 	}
 }

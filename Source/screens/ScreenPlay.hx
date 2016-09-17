@@ -42,6 +42,29 @@ class ScreenPlay extends Screen {
 		
 		dialogInventory.onEXIT = function () {
 			hideDialog();
+			
+			if (dialogInventory.item != null && dialogInventory.action != null) {
+				var inv = game.world.player.inventory;
+				var obj:ObjectItem = inv.spawnObject(inv.find(dialogInventory.item.category, dialogInventory.item.type));
+				
+				if (obj != null) {
+					switch (dialogInventory.action) {
+						case DialogInventory.ACTION_DROP:
+							obj.room = game.world.room;
+							obj.gridX = game.world.player.gridX;
+							obj.gridY = game.world.player.gridY;
+		
+							obj.onDrop(dialogInventory.item, game.world.room);
+						case DialogInventory.ACTION_USE:
+							obj.room = game.world.room;
+							obj.gridX = game.world.player.gridX;
+							obj.gridY = game.world.player.gridY;
+							
+							obj.onUse(dialogInventory.item, game.world.room);
+						default:
+					}
+				}
+			}
 		};
 			
 		dialogInventory.onOK = function () {
@@ -61,13 +84,7 @@ class ScreenPlay extends Screen {
 			if (Input.keyDown(Input.NUM_1)) {
 				Input.wait(2);
 				
-				var inv = game.world.player.inventory;
 				
-				var obj:ObjectItem = inv.spawnObject(inv.find("OBJ_UHR", 0));
-				
-				if (obj != null) {
-					game.world.room.add(obj);
-				}
 			}
 			
 			if (Input.keyDown(Input.ENTER)) {
@@ -97,9 +114,9 @@ class ScreenPlay extends Screen {
 		var my:Int = 0;
 		
 		if (Input.keyDown(Input.RIGHT)) mx = 1;		
-		if (Input.keyDown(Input.LEFT)) mx = -1;
-		if (Input.keyDown(Input.UP)) my = -1;
-		if (Input.keyDown(Input.DOWN)) my = 1;
+		else if (Input.keyDown(Input.LEFT)) mx = -1;
+		else if (Input.keyDown(Input.UP)) my = -1;
+		else if (Input.keyDown(Input.DOWN)) my = 1;
 		
 		game.world.player.move(mx, my);
 	}

@@ -1,5 +1,7 @@
 package world.entities;
 
+import world.Room;
+import world.entities.Inventory.InventoryItem;
 import world.entities.Object;
 import world.entities.core.Charlie;
 
@@ -35,5 +37,15 @@ class ObjectItem extends Object {
 	
 	public function getType():Int {
 		return -1;
+	}
+	
+	public function onDrop(item:InventoryItem, inRoom:Room) {
+		this.room.add(this);
+		
+		item.sub();
+	}
+	
+	public function onUse(item:InventoryItem, inRoom:Room) {
+		item.sub();
 	}
 }

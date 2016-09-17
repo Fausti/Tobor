@@ -7,7 +7,7 @@ import world.entities.Object;
  * @author Matthias Faust
  */
 class WallDestroy extends Object {
-	var speed:Float = 20.0;
+	var speed:Float = 10.0;
 	var timeLeft:Float;
 	
 	// Animation

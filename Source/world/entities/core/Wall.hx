@@ -40,4 +40,23 @@ class Wall extends Object {
 	public function canEnter(e:Object):Bool {
 		return false;
 	}
+	
+	override public function onMessage(msg:Message) {
+		if (type == 0) {
+			switch(msg.msg) {
+				case "ACID_USE":
+					var obj:WallDestroy = new WallDestroy();
+					obj.room = room;
+					obj.gridX = gridX;
+					obj.gridY = gridY;
+					
+					room.add(obj);
+					destroy();
+					
+					msg.done();
+				default:
+				
+			}
+		}
+	}
 }
