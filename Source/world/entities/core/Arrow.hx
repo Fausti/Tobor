@@ -16,10 +16,10 @@ class Arrow extends Object {
 		super(type);
 		
 		SPRITES = [
-			new Sprite(Tobor.Tileset.find("SPR_PFEIL_E")),
-			new Sprite(Tobor.Tileset.find("SPR_PFEIL_N")),
-			new Sprite(Tobor.Tileset.find("SPR_PFEIL_W")),
-			new Sprite(Tobor.Tileset.find("SPR_PFEIL_S"))
+			new Sprite(Tobor.Tileset.find("SPR_PFEIL_0")),
+			new Sprite(Tobor.Tileset.find("SPR_PFEIL_1")),
+			new Sprite(Tobor.Tileset.find("SPR_PFEIL_2")),
+			new Sprite(Tobor.Tileset.find("SPR_PFEIL_3"))
 		];
 		
 		updateSprite();
@@ -34,13 +34,13 @@ class Arrow extends Object {
 	
 	override public function canEnter(e:Object):Bool {
 		if (isPlayer(e)) {
-			if (e.gridX < gridX && type == 0) {
+			if (e.gridX < gridX && type == 1) {
 				return true;
-			} else if (e.gridX > gridX && type == 2) {
+			} else if (e.gridX > gridX && type == 3) {
 				return true;
-			} else if (e.gridY < gridY && type == 3) {
+			} else if (e.gridY < gridY && type == 2) {
 				return true;
-			} else if (e.gridY > gridY && type == 1) {
+			} else if (e.gridY > gridY && type == 0) {
 				return true;
 			}
 		}
@@ -65,21 +65,53 @@ class Arrow extends Object {
 	override public function onMessage(msg:Message) {
 		switch(msg.msg) {
 			case "MAGNET_DROP":
+				var dx:Int = gridX - msg.sender.gridX;
+				var dy:Int = gridY - msg.sender.gridY;
+				
 				if (msg.sender.type == 0) {
-					rotate(2);
+					if (dx != 0 && dy == 0) {
+						if (dx < 0) {
+							type = 3;
+						} else if (dx > 0) {
+							type = 1;
+						}
+					} else if (dx == 0 && dy != 0) {
+						if (dy < 0) {
+							type = 0;
+						} else if (dy > 0) {
+							type = 2;
+						}
+					}
 				} else {
-					rotate( -2);
+					if (dx != 0 && dy == 0) {
+						if (dx < 0) {
+							type = 1;
+						} else if (dx > 0) {
+							type = 3;
+						}
+					} else if (dx == 0 && dy != 0) {
+						if (dy < 0) {
+							type = 2;
+						} else if (dy > 0) {
+							type = 0;
+						}
+					}
 				}
 				
 				updateSprite();
 			case "MAGNET_PICKUP":
-				if (msg.sender.type == 0) {
-					rotate( -2);
-				} else {
-					rotate (2);
-				}
+				var dx:Int = gridX - msg.sender.gridX;
+				var dy:Int = gridY - msg.sender.gridY;
 				
-				updateSprite();
+				if ((dx != 0 && dy == 0) || (dx != 0 && dy == 0)) {
+					if (msg.sender.type == 0) {
+						rotate(1);
+					} else {
+						rotate(-1);
+					}
+				
+					updateSprite();
+				}
 			default:
 				
 		}

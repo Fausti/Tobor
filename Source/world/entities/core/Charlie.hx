@@ -96,6 +96,9 @@ class Charlie extends ObjectMoveable {
 		
 		var canMove:Bool = true;
 		
+		friction = 1.0;
+		
+		
 		if (room.outOfRoom(gridX + dirX, gridY + dirY)) {
 			var rX:Int = room.worldX;
 			var rY:Int = room.worldY;
@@ -121,8 +124,15 @@ class Charlie extends ObjectMoveable {
 				canMove = false;
 			}
 		} else {
+			/*
+			for (e in room.getEntitiesAt(gridX, gridY, this)) {
+				friction = Math.max(friction, e.getFriction());
+			}
+			*/
+			
 			for (e in room.getEntitiesAt(gridX + dirX, gridY + dirY, this)) {
 				if (!e.canEnter(this)) canMove = false;
+				friction = Math.max(friction, e.getFriction());
 			}
 		}
 		
@@ -130,7 +140,7 @@ class Charlie extends ObjectMoveable {
 			direction.x = dirX;
 			direction.y = dirY;
 			
-			timeLeft = speed;
+			timeLeft = getMovingSpeed();
 			
 			onStartMoving();
 		}
@@ -138,6 +148,7 @@ class Charlie extends ObjectMoveable {
 	
 	override
 	function onStartMoving() {
+		animWalking.setSpeed(getMovingSpeed());
 		animWalking.start();
 	}
 	

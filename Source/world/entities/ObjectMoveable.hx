@@ -13,6 +13,7 @@ class ObjectMoveable extends Object {
 	var movement:Vector2 = new Vector2();
 	var speed:Float = 1 / 4;
 	var timeLeft:Float = 0.0;
+	var friction:Float = 1.0;
 	
 	public function new(?type:Int = 0) {
 		super(type);
@@ -29,7 +30,7 @@ class ObjectMoveable extends Object {
 			
 			// trace("M: " + timeLeft, deltaTime);
 			
-			var perc:Float = Utils.clamp((speed - timeLeft) / speed, 0.0, 1.0);
+			var perc:Float = Utils.clamp((getMovingSpeed() - timeLeft) / getMovingSpeed(), 0.0, 1.0);
 			
 			movement.x = perc * Tobor.OBJECT_WIDTH * direction.x;
 			movement.y = perc * Tobor.OBJECT_HEIGHT * direction.y;
@@ -63,6 +64,10 @@ class ObjectMoveable extends Object {
 		
 	}
 	
+	function getMovingSpeed():Float {
+		return speed * friction;
+	}
+	
 	public var isMoving(get, null):Bool;
 	function get_isMoving():Bool {
 		return (direction.x != 0.0 || direction.y != 0.0);
@@ -74,11 +79,19 @@ class ObjectMoveable extends Object {
 		if (dirX == 0 && dirY == 0) return;
 		
 		var canMove:Bool = true;
+		friction = 1.0;
 		
 		if (room.outOfRoom(gridX + dirX, gridY + dirY)) {
 			canMove = false;
 		} else {
+			/*
+			for (e in room.getEntitiesAt(gridX, gridY, this)) {
+				friction = Math.max(friction, e.getFriction());
+			}
+			*/
+			
 			for (e in room.getEntitiesAt(gridX + dirX, gridY + dirY, this)) {
+				friction = Math.max(friction, e.getFriction());
 				if (!e.canEnter(this)) canMove = false;
 			}
 		}
@@ -87,7 +100,7 @@ class ObjectMoveable extends Object {
 			direction.x = dirX;
 			direction.y = dirY;
 			
-			timeLeft = speed;
+			timeLeft = getMovingSpeed();
 			
 			onStartMoving();
 		}

@@ -123,19 +123,10 @@ class WorldData {
 		
 		// Pfeile
 		
-		tileset.register("SPR_PFEIL_E", [
+		tileset.register("SPR_PFEIL", [
 			[6, 2], 
-		]);
-		
-		tileset.register("SPR_PFEIL_N", [
 			[7, 2], 
-		]);
-		
-		tileset.register("SPR_PFEIL_W", [
 			[8, 2], 
-		]);
-		
-		tileset.register("SPR_PFEIL_S", [
 			[9, 2], 
 		]);
 		
@@ -406,6 +397,18 @@ class WorldData {
 		tileset.register("SPR_ROBOT_5_PART_2", [
 			[10, 9], 
 			[11, 9], 
+		]);
+		
+		tileset.register("SPR_ISOLATOR_BODEN", [
+			[8, 11],
+		]);
+		
+		tileset.register("SPR_SAND", [
+			[0, 2],
+			[1, 2],
+			[2, 2],
+			[3, 2],
+			[4, 2],
 		]);
 	}
 }

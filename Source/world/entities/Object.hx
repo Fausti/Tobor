@@ -54,6 +54,10 @@ class Object extends Entity {
 		// trace(e);
 	}
 	
+	public function getFriction():Float {
+		return 1.0;
+	}
+	
 	// ---
 	
 	public function draw() {

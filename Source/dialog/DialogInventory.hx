@@ -99,7 +99,7 @@ class DialogInventory extends Dialog {
 		
 		if (subMenu == null) {
 			if (menus.get(cats[mainIndex]).length == 1) {
-				if (menus.get(cats[mainIndex])[subIndex].count > 1) actions.push(ACTION_COUNT);
+				if (menus.get(cats[mainIndex])[0].count > 1) actions.push(ACTION_COUNT);
 			
 				actions.push(ACTION_USE);
 				actions.push(ACTION_DROP);

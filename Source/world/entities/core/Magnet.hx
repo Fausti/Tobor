@@ -33,9 +33,14 @@ class Magnet extends ObjectItem {
 		
 		super.onPickup(e);
 	}
+	
 	override public function onUse(item:InventoryItem, inRoom:Room) {
 		super.onDrop(item, inRoom);
 		
 		room.sendMessage(new Message(this, "MAGNET_DROP"));
+	}
+	
+	override public function onDrop(item:InventoryItem, inRoom:Room) {
+		onUse(item, inRoom);
 	}
 }

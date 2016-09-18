@@ -209,28 +209,28 @@ class EntityFactory {
 			new EntityTemplate({
 				name:"OBJ_PFEIL",
 				subType:0,
-				editorSprite:"SPR_PFEIL_E",
+				editorSprite:"SPR_PFEIL_0",
 				classPath:CORE + "Arrow",
 			}),
 			
 			new EntityTemplate({
 				name:"OBJ_PFEIL",
 				subType:1,
-				editorSprite:"SPR_PFEIL_N",
+				editorSprite:"SPR_PFEIL_1",
 				classPath:CORE + "Arrow",
 			}),
 			
 			new EntityTemplate({
 				name:"OBJ_PFEIL",
 				subType:2,
-				editorSprite:"SPR_PFEIL_W",
+				editorSprite:"SPR_PFEIL_2",
 				classPath:CORE + "Arrow",
 			}),
 			
 			new EntityTemplate({
 				name:"OBJ_PFEIL",
 				subType:3,
-				editorSprite:"SPR_PFEIL_S",
+				editorSprite:"SPR_PFEIL_3",
 				classPath:CORE + "Arrow",
 			}),
 			
@@ -538,6 +538,48 @@ class EntityFactory {
 				subType:0,
 				editorSprite:"SPR_SCHLEUDER",
 				classPath:CORE + "Sling",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_ISOLATOR_BODEN",
+				subType:1,
+				editorSprite:"SPR_ISOLATOR_BODEN",
+				classPath:CORE + "Isolator",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_SAND",
+				subType:0,
+				editorSprite:"SPR_SAND_0",
+				classPath:CORE + "Sand",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_SAND",
+				subType:1,
+				editorSprite:"SPR_SAND_1",
+				classPath:CORE + "Sand",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_SAND",
+				subType:2,
+				editorSprite:"SPR_SAND_2",
+				classPath:CORE + "Sand",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_SAND",
+				subType:3,
+				editorSprite:"SPR_SAND_3",
+				classPath:CORE + "Sand",
+			}),
+			
+			new EntityTemplate({
+				name:"OBJ_SAND",
+				subType:4,
+				editorSprite:"SPR_SAND_4",
+				classPath:CORE + "Sand",
 			}),
 			
 		];
