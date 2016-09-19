@@ -148,4 +148,16 @@ class Main extends Application {
 		
 		Input.setKey(keyCode, false);
 	}
+	
+	override public function onTextInput(window:Window, text:String):Void {
+		super.onTextInput(window, text);
+		
+		if (game != null) game.onTextInput(text);
+	}
+	
+	override public function onTextEdit(window:Window, text:String, start:Int, length:Int):Void {
+		super.onTextEdit(window, text, start, length);
+		
+		// trace("onTextEdit: ", text, start, length);
+	}
 }

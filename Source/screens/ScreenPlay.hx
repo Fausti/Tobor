@@ -2,6 +2,7 @@ package screens;
 
 import dialog.DialogInventory;
 import dialog.DialogMenu;
+import dialog.DialogWithTextInput;
 import gfx.Gfx;
 import gfx.Color;
 import world.Room;
@@ -15,6 +16,7 @@ import world.entities.ObjectItem;
 class ScreenPlay extends Screen {
 	var dialogMenu:DialogMenu;
 	var dialogInventory:DialogInventory;
+	var dialogInput:DialogWithTextInput;
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -70,6 +72,25 @@ class ScreenPlay extends Screen {
 		dialogInventory.onOK = function () {
 			hideDialog();
 		};
+		
+		// Textbox Dialog
+		
+		dialogInput = new DialogWithTextInput(this, 0, 0, 
+			"Willkommen zu Tobor\n" +
+			"\n" +
+			"Du hast ein neues Abenteuer mit\n" +
+			"neuen Leben begonnen\n" +
+			"Bitte sag' mir deinen Namen:",
+			16
+		);
+		
+		dialogInput.onEXIT = function () {
+			hideDialog();
+		};
+			
+		dialogInput.onOK = function () {
+			hideDialog();
+		};
 	}
 	
 	override public function show() {
@@ -95,6 +116,13 @@ class ScreenPlay extends Screen {
 			if (Input.keyDown(Input.ESC)) {
 				Input.wait(2);
 				showDialog(dialogMenu);
+				
+				return;
+			}
+			
+			if (Input.keyDown(Input.F3)) {
+				Input.wait(2);
+				showDialog(dialogInput);
 				
 				return;
 			}

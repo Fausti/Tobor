@@ -79,8 +79,32 @@ class World {
 		player.reset();
 		
 		var fin = File.read(fileName, false);
-		var fileData = fin.readAll().toString();
+		
+		// erste Zeile lesen, falls Kommentar vorhanden
+		var fileHeader = fin.readLine();
+		if (fileHeader.indexOf("//") == 0) {
+			fileHeader = fileHeader.substr(2);
+			
+			var header = TJSON.parse(fileHeader);
+			
+			trace(header);
+			
+			fileHeader = "";
+		}
+		
+		// Rest der Datei lesen
+		var fileData = fileHeader + fin.readAll().toString();
 		fin.close();
+		
+		/*
+		// Kommentar am Anfang herausfiltern falls vorhanden!
+		if (fileData.indexOf("//") == 0) {
+			var firstNL = fileData.indexOf("{");
+			trace(firstNL);
+			trace(fileData.substr(2, firstNL - 2));
+			fileData = fileData.substr(firstNL);
+		}
+		*/
 		
 		var data = TJSON.parse(fileData);
 		

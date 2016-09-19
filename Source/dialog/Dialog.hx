@@ -52,6 +52,10 @@ class Dialog {
 		if (onOK != null) onOK();
 	}
 	
+	public function onTextInput(text:String) {
+		trace(text);
+	}
+	
 	// Static
 	
 	public static function drawBackground(x:Int, y:Int, w:Int, h:Int, ?c:Color = null) {

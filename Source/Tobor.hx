@@ -189,6 +189,12 @@ class Tobor {
 		}
 	}
 	
+	public function onTextInput(text:String) {
+		if (currentScreen != null) {
+			currentScreen.onTextInput(text);
+		}
+	}
+	
 	function renderUI() {
 		Gfx.setOffset(0, 0);
 		Gfx.setBatch(batchUI);

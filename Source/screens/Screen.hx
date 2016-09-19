@@ -71,6 +71,10 @@ class Screen {
 		
 	}
 	
+	public function onTextInput(text:String) {
+		if (dialog != null) dialog.onTextInput(text);
+	}
+	
 	public function showDialog(dialog:Dialog) {
 		if (this.dialog != null) {
 			if (this.dialog != dialog) {

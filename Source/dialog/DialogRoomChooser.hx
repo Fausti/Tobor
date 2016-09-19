@@ -44,8 +44,8 @@ class DialogRoomChooser extends Dialog {
 		UI_SELECTOR_ROOM_SW = Tobor.Tileset.find("UI_SELECTOR_ROOM_2");
 		UI_SELECTOR_ROOM_SE = Tobor.Tileset.find("UI_SELECTOR_ROOM_3");
 		
-		UI_SCROLLBAR_UP = Tobor.Tileset.find("SPR_PFEIL_N");
-		UI_SCROLLBAR_DOWN = Tobor.Tileset.find("SPR_PFEIL_S");
+		UI_SCROLLBAR_UP = Tobor.Tileset.find("SPR_PFEIL_0");
+		UI_SCROLLBAR_DOWN = Tobor.Tileset.find("SPR_PFEIL_2");
 		UI_SCROLLBAR_0 = Tobor.Tileset.find("SPR_ISOLATOR");
 		UI_SCROLLBAR_1 = Tobor.Tileset.find("SPR_ELEKTROZAUN");
 		

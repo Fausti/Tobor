@@ -25,6 +25,14 @@ class Input {
 	public static var PAGE_UP = [KeyCode.PAGE_UP];
 	public static var PAGE_DOWN = [KeyCode.PAGE_DOWN];
 	
+	public static var CURSOR_UP = [KeyCode.UP];
+	public static var CURSOR_DOWN = [KeyCode.DOWN];
+	public static var CURSOR_LEFT = [KeyCode.LEFT];
+	public static var CURSOR_RIGHT = [KeyCode.RIGHT];
+	
+	public static var BACKSPACE = [KeyCode.BACKSPACE, KeyCode.NUMPAD_BACKSPACE];
+	public static var DELETE = [KeyCode.DELETE];
+	
 	public static var NUM_1 = [KeyCode.NUMBER_1, KeyCode.NUMPAD_1];
 	
 	public static var F1 = [KeyCode.F1];
