@@ -31,7 +31,7 @@ class ScreenMainMenu extends Screen {
 			if (Input.keyDown(Input.ESC)) {
 				Input.wait(2);
 				
-				game.exit(Tobor.EXIT_OK);
+				game.switchScreen(game.screenIntro);
 			}
 		} else {
 			dialog.update(deltaTime);
@@ -68,10 +68,10 @@ class ScreenMainMenu extends Screen {
 			["Hilfe", "F1"],
 			["Story", "F2"],
 			["Spielstart", "F4", function() {
-				game.switchScreen(new ScreenPlay(game));
+				game.switchScreen(game.screenPlay);
 			}],
 			["Editor", "F8", function() {
-				game.switchScreen(new ScreenEditor(game));
+				game.switchScreen(game.screenEditor);
 			}],
 			["Laden", "F7"],
 			["Ende", "F9"],	

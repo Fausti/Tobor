@@ -43,6 +43,9 @@ class Tobor {
 	public static var Font16:Font;
 	public static var Frame8:Frame;
 	public static var Frame16:Frame;
+	public static var FrameIntro:Frame;
+	public static var FrameIntro2:Frame;
+	
 	public static var Tileset:Tilesheet;
 	
 	public static var MONO_MODE:Bool = false;
@@ -60,7 +63,10 @@ class Tobor {
 	
 	var frameBuffer:Framebuffer;
 	
-	// Frame
+	public var screenIntro:ScreenIntro;
+	public var screenMenu:ScreenMainMenu;
+	public var screenEditor:ScreenEditor;
+	public var screenPlay:ScreenPlay;
 	
 	public function new(window:Window) {
 		CompileTime.importPackage("world.entities.core");
@@ -71,11 +77,23 @@ class Tobor {
 		window.resize(Config.gfx.width * 2, Config.gfx.height * 2);
 	}
 	
+	public function setTitle(title:String) {
+		if (window != null) {
+			if (title != null && title != "") {
+				window.title = "The Game of Tobor: " + title;
+			} else {
+				window.title = "The Game of Tobor";
+			}
+		}
+	}
+	
 	public function exit(exitCode:Int) {
 		System.exit(exitCode);
 	}
 	
 	public function init() {
+		SaveGame.initDirectories();
+		
 		frameBuffer = new Framebuffer(640, 348);
 		Gfx.scaleX = frameBuffer.width / window.width;
 		Gfx.scaleY = frameBuffer.height / window.height;
@@ -98,8 +116,9 @@ class Tobor {
 		Tobor.Font16 = new Font(16, 10, 252);
 		Tobor.Font8 = new Font(8, 10, 322);
 		
+		Tobor.FrameIntro = new Frame(176, 324, 16, 12);
+		Tobor.FrameIntro2 = new Frame(176, 360, 16, 12);
 		Tobor.Frame16 = new Frame(128, 324, 16, 12);
-		
 		Tobor.Frame8 = new Frame(128, 360, 8, 10); // original
 		// Tobor.Frame8 = new Frame(152, 360, 8, 10); // neu
 		
@@ -119,11 +138,18 @@ class Tobor {
 		batchUI = new Batch(true);
 	
 		world = new world.World();
-		world.load("tobor.ep");
+		// world.load("tobor.ep");
 		
+		// Screens
+		
+		screenIntro = new ScreenIntro(this);
+		screenMenu = new ScreenMainMenu(this);
+		screenEditor = new ScreenEditor(this);
+		screenPlay = new ScreenPlay(this);
+	
 		// currentScreen = new ScreenMainMenu(this);
-		switchScreen(new ScreenEditor(this));
-		// switchScreen(new ScreenPlay(this));
+		// switchScreen(new ScreenEditor(this));
+		switchScreen(screenIntro);
 		
 		running = true;
 		ready = true;

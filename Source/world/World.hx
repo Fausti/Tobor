@@ -72,39 +72,11 @@ class World {
 	
 	// Save / Load
 	
-	public function load(fileName:String) {
+	public function load(fileData:String) {
 		currentRoom = null;
 		rooms = [];
 		
 		player.reset();
-		
-		var fin = File.read(fileName, false);
-		
-		// erste Zeile lesen, falls Kommentar vorhanden
-		var fileHeader = fin.readLine();
-		if (fileHeader.indexOf("//") == 0) {
-			fileHeader = fileHeader.substr(2);
-			
-			var header = TJSON.parse(fileHeader);
-			
-			trace(header);
-			
-			fileHeader = "";
-		}
-		
-		// Rest der Datei lesen
-		var fileData = fileHeader + fin.readAll().toString();
-		fin.close();
-		
-		/*
-		// Kommentar am Anfang herausfiltern falls vorhanden!
-		if (fileData.indexOf("//") == 0) {
-			var firstNL = fileData.indexOf("{");
-			trace(firstNL);
-			trace(fileData.substr(2, firstNL - 2));
-			fileData = fileData.substr(firstNL);
-		}
-		*/
 		
 		var data = TJSON.parse(fileData);
 		
@@ -161,10 +133,9 @@ class World {
 		}
 	}
 	
-	public function save(fileName:String) {
+	public function save():String {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
-		
-		data.set("name", "Tobor I");
+
 		data.set("player", player.saveData());
 		
 		for (r in rooms) {
@@ -179,8 +150,6 @@ class World {
 			data.set("ROOM_" + r.worldZ + "" + r.worldX + "" + r.worldY, rData);
 		}
 		
-		var fout = File.write(fileName, false);
-		fout.writeString(TJSON.encode(data, 'fancy'));
-		fout.close();
+		return TJSON.encode(data, 'fancy');
 	}
 }

@@ -140,6 +140,8 @@ class Main extends Application {
 	override public function onKeyDown(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
 		super.onKeyDown(window, keyCode, modifier);
 		
+		if (keyCode == KeyCode.RETURN && modifier == KeyModifier.ALT) return;
+		
 		Input.setKey(keyCode, true);
 	}
 	

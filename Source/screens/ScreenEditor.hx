@@ -39,7 +39,7 @@ class ScreenEditor extends ScreenPlay {
 	var dialogTileset:DialogTileChooser;
 	var dialogRooms:DialogRoomChooser;
 	
-	var saveGame:String;
+	var saveGame:String = "";
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -80,11 +80,11 @@ class ScreenEditor extends ScreenPlay {
 			}],	
 			
 			["Laden", "", function() {
-				game.world.load("tobor.ep");
+				game.world.load(SaveGame.loadFromFile(SaveGame.DIR_EPISODES + "/" + "tutorial.episode"));
 			}],	
 			
 			["Speichern", "", function() {
-				game.world.save("tobor.ep");
+				SaveGame.saveToFile(SaveGame.DIR_EPISODES + "/" + "tutorial.episode", game.world.save());
 			}], 
 			
 			["Ende", "", function() {
@@ -119,13 +119,13 @@ class ScreenEditor extends ScreenPlay {
 			if (Input.keyDown(Input.F5)) {
 				if (Tobor.GAME_MODE == GameMode.Edit) {
 					Input.wait(10);
-					game.world.save("editor.ep");
+					saveGame = game.world.save();
 					Tobor.GAME_MODE = GameMode.Play;
 					
 					return;
 				} else if (Tobor.GAME_MODE == GameMode.Play) {
 					Input.wait(10);
-					game.world.load("editor.ep");
+					game.world.load(saveGame);
 					Tobor.GAME_MODE = GameMode.Edit;
 					
 					return;
