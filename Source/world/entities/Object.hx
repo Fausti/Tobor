@@ -16,7 +16,12 @@ class Object extends Entity {
 	public var isStatic:Bool = true;
 	public var changed:Bool = true;
 	
-	public var room:Room;
+	private var room:Room;
+	
+	public function setRoom(room:Room) {
+		this.room = room;
+	}
+	
 	
 	// Shortcuts für das Spielerobjekt
 	var player(get, null):Charlie;

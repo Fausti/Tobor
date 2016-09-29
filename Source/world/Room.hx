@@ -17,7 +17,12 @@ class Room {
 	public var worldY:Int;
 	public var worldZ:Int;
 	
-	public var entities:Array<Object>;
+	// alle Objekte in der Szene
+	public var listAll:Array<Object>;
+	
+	// nur dynamische Objekte (für Update!)
+	public var listDynamic:Array<Object>;
+	
 	public var redraw:Bool = true;
 	
 	public var collisions:Array<Object> = [];
@@ -29,7 +34,8 @@ class Room {
 		this.worldY = y;
 		this.worldZ = level;
 		
-		entities = [];
+		listAll = [];
+		listDynamic = [];
 	}
 	
 	/*
@@ -44,10 +50,10 @@ class Room {
 	
 	public function update(deltaTime:Float):Bool {
 		if (Tobor.GAME_MODE == GameMode.Play) {
-			for (e in entities) {
+			for (e in listDynamic) {
 				e.update(deltaTime);
 			
-				if (e.isStatic && e.changed) redraw = true;
+				// if (e.isStatic && e.changed) redraw = true;
 			}
 		}
 		
@@ -55,7 +61,7 @@ class Room {
 	}
 	
 	public function draw(layer:Int) {
-		for (e in entities) {
+		for (e in listAll) {
 			switch(layer) {
 				case Room.LAYER_BACKGROUND:
 					if (e.isStatic) {
@@ -79,15 +85,15 @@ class Room {
 	}
 	
 	public function add(e:Object, ?checkCollision:Bool = false) {
-		if (entities.indexOf(e) >= 0) {
+		if (listAll.indexOf(e) >= 0) {
 			// trace(entities.indexOf(e));
 		} else {
 			if (checkCollision) {
 				if (getEntitiesAt(e.gridX, e.gridY).length > 0) return;
 			}
 			
-			e.room = this;
-			entities.push(e);
+			e.setRoom(this);
+			listAll.push(e);
 			
 			e.onCreate();
 			
@@ -98,9 +104,21 @@ class Room {
 	}
 	
 	public function remove(e:Object) {
-		entities.remove(e);
+		listAll.remove(e);
 		
 		if (e.isStatic) redraw = true;
+	}
+	
+	// Dynamic
+	
+	public function register(e:Object) {
+		if (listDynamic.indexOf(e) < 0) {
+			listDynamic.push(e);
+		}
+	}
+	
+	public function unregister(e:Object) {
+		listDynamic.remove(e);
 	}
 	
 	public function sendMessage(msg:Message, ?around:Bool = true) {
@@ -109,7 +127,7 @@ class Room {
 				o.onMessage(msg);
 			}
 		} else {
-			for (o in entities) {
+			for (o in listAll) {
 				o.onMessage(msg);
 			}
 		}
@@ -118,7 +136,7 @@ class Room {
 	public function getEntitiesAround(x:Int, y:Int):Array<Object> {
 		collisions = [];
 		
-		for (e in entities) {
+		for (e in listAll) {
 			if (e.gridX >= x - 1 && e.gridX <= x + 1 && e.gridY >= y - 1 && e.gridY <= y + 1) {
 				if (!(e.gridX == x && e.gridY == y)) {
 					collisions.push(e);
@@ -132,7 +150,7 @@ class Room {
 	public function getEntitiesAt(x:Int, y:Int, ?enteringEntity:Object = null):Array<Object> {
 		collisions = [];
 		
-		for (e in entities) {
+		for (e in listAll) {
 			if (e.gridX == x && e.gridY == y) {
 				if (enteringEntity == null) collisions.push(e);
 				else if (enteringEntity != e) collisions.push(e);
@@ -143,7 +161,8 @@ class Room {
 	}
 	
 	public function clear() {
-		entities = [];
+		listAll = [];
+		listDynamic = [];
 		
 		redraw = true;
 	}
@@ -172,7 +191,7 @@ class Room {
 	public function save():Array<Map<String, Dynamic>> {
 		var data:Array<Map<String, Dynamic>> = [];
 		
-		for (e in entities) {
+		for (e in listAll) {
 			if (e != null) {
 				if (!Std.is(e, Charlie)) {
 					if (e.canSave()) {

@@ -42,6 +42,7 @@ class Tobor {
 	public static var Font8:Font;
 	public static var Font16:Font;
 	public static var Frame8:Frame;
+	public static var Frame8_New:Frame;
 	public static var Frame16:Frame;
 	public static var FrameIntro:Frame;
 	public static var FrameIntro2:Frame;
@@ -118,9 +119,10 @@ class Tobor {
 		
 		Tobor.FrameIntro = new Frame(176, 324, 16, 12);
 		Tobor.FrameIntro2 = new Frame(176, 360, 16, 12);
+		
 		Tobor.Frame16 = new Frame(128, 324, 16, 12);
 		Tobor.Frame8 = new Frame(128, 360, 8, 10); // original
-		// Tobor.Frame8 = new Frame(152, 360, 8, 10); // neu
+		Tobor.Frame8_New = new Frame(152, 360, 8, 10); // neu
 		
 		// Shader
 		
@@ -146,10 +148,9 @@ class Tobor {
 		screenMenu = new ScreenMainMenu(this);
 		screenEditor = new ScreenEditor(this);
 		screenPlay = new ScreenPlay(this);
-	
-		// currentScreen = new ScreenMainMenu(this);
-		// switchScreen(new ScreenEditor(this));
-		switchScreen(screenIntro);
+
+		switchScreen(new ScreenEditor(this));
+		// switchScreen(screenIntro);
 		
 		running = true;
 		ready = true;

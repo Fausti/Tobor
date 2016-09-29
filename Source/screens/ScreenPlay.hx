@@ -52,13 +52,13 @@ class ScreenPlay extends Screen {
 				if (obj != null) {
 					switch (dialogInventory.action) {
 						case DialogInventory.ACTION_DROP:
-							obj.room = game.world.room;
+							obj.setRoom(game.world.room);
 							obj.gridX = game.world.player.gridX;
 							obj.gridY = game.world.player.gridY;
 		
 							obj.onDrop(dialogInventory.item, game.world.room);
 						case DialogInventory.ACTION_USE:
-							obj.room = game.world.room;
+							obj.setRoom(game.world.room);
 							obj.gridX = game.world.player.gridX;
 							obj.gridY = game.world.player.gridY;
 							
@@ -93,7 +93,8 @@ class ScreenPlay extends Screen {
 		};
 	}
 	
-	override public function show() {
+	override 
+	public function show() {
 		Tobor.GAME_MODE = GameMode.Play;
 	}
 	

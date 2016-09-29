@@ -9,7 +9,7 @@ import world.entities.core.Charlie;
  * ...
  * @author Matthias Faust
  */
-class ObjectItem extends Object {
+class ObjectItem extends ObjectDynamic {
 	public function new(?type:Int = 0) {
 		super(type);
 	}

@@ -98,4 +98,47 @@ class Frame {
 		}
 	}
 	
+	public function drawBoxColored(x:Int, y:Int, w:Int, h:Int, ?fg:Color, ?bg:Color) {
+		if (fg == null) fg = Color.BLACK;
+		if (bg == null) bg = Color.WHITE;
+		
+		var r:Rectangle;
+		
+		// Hintergrund
+		Gfx.drawTexture(x, y, w * sizeX, h * sizeY, rBackground, bg); // MIDDLE
+		
+		for (i in 0 ... w) {
+			// Obere Zeile
+			
+			if (i == 0) {
+				r  = rTopLeft;
+			} else if (i == (w - 1)) {
+				r = rTopRight;
+			} else {
+				r = rTop;
+			}
+			
+			Gfx.drawTexture(x + i * sizeX, y, sizeX, sizeY, r, fg);
+			
+			// Untere Zeile
+			
+			if (i == 0) {
+				r  = rBottomLeft;
+			} else if (i == (w - 1)) {
+				r = rBottomRight;
+			} else {
+				r = rBottom;
+			}
+			
+			Gfx.drawTexture(x + i * sizeX, y + (h - 1) * sizeY, sizeX, sizeY, r, fg);
+		}
+		
+		// Zwischenzeilen
+		
+		for (i in 1 ... (h - 1)) {
+			Gfx.drawTexture(x, y + i * sizeY, sizeX, sizeY, rLeft, fg); // L
+			Gfx.drawTexture(x + (w - 1) * sizeX, y + i * sizeY, sizeX, sizeY, rRight, fg); // R
+		}
+	}
+	
 }

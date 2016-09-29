@@ -52,12 +52,23 @@ class ScreenMainMenu extends Screen {
 			}
 		}
 		
+		game.screenIntro.renderTitle();
+		
 		batchStatic.bind();
 		batchStatic.draw();
 	}
 	
 	override
 	public function renderUI() {
+		var offsetX = 16;
+		var offsetY = (28 - 3) * 12;
+		
+		var button_0:Rectangle = game.screenIntro.renderButton(offsetX, offsetY, "Spielen");
+		var button_1:Rectangle = game.screenIntro.renderButton(button_0.right + 16, offsetY, "Laden");
+		var button_2:Rectangle = game.screenIntro.renderButton(button_1.right + 16, offsetY, "Editor");
+		
+		game.screenIntro.renderButtonRight("Zurück");
+		
 		if (dialog != null) {
 			dialog.render();
 		}

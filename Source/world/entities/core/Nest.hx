@@ -6,7 +6,7 @@ import world.entities.Object;
  * ...
  * @author Matthias Faust
  */
-class Nest extends Object {
+class Nest extends ObjectDynamic {
 	var SPRITES:Array<Sprite>;
 	
 	var playerSide:Int = 0;

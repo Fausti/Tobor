@@ -261,7 +261,7 @@ class ScreenEditor extends ScreenPlay {
 			Gfx.drawRect(10 * Tobor.OBJECT_WIDTH, 0, Tobor.Tileset.find(EntityFactory.table[currentTile].editorSprite));
 		
 		
-			var countEntities:Int = game.world.room.entities.length;
+			var countEntities:Int = game.world.room.listAll.length;
 			var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
 			Tobor.Font8.drawString(224, 0, strStatus, Color.BLACK);
 		}

@@ -6,7 +6,7 @@ import lime.math.Vector2;
  * ...
  * @author Matthias Faust
  */
-class ObjectMoveable extends Object {
+class ObjectMoveable extends ObjectDynamic {
 
 	// Bewegung
 	var direction:Vector2 = new Vector2();
