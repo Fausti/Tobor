@@ -1,6 +1,10 @@
 package core;
+import lime.math.Vector2;
+import lime.ui.GamepadAxis;
+import lime.ui.GamepadButton;
 
 import lime.app.Application;
+import lime.ui.Gamepad;
 
 import lime.graphics.Renderer;
 
@@ -76,5 +80,74 @@ class LimeApplication extends Application {
 		super.onKeyUp(window, keyCode, modifier);
 		
 		Input.onKeyUp(keyCode, modifier);
+	}
+	
+	// Gamepad!
+	
+	private var gamepadDirection:Vector2 = new Vector2(0, 0);
+	
+	override public function onGamepadAxisMove(gamepad:Gamepad, axis:GamepadAxis, value:Float):Void {
+		var minValue:Float = 0.25;
+		
+		switch(axis) {
+			case GamepadAxis.LEFT_X:
+				gamepadDirection.x = value;
+			case GamepadAxis.LEFT_Y:
+				gamepadDirection.y = value;
+			default:
+				return;
+		}
+		
+		if (gamepadDirection.x <= -minValue) {
+			Input.onKeyDown(KeyCode.LEFT, KeyModifier.NONE);
+			Input.onKeyUp(KeyCode.RIGHT, KeyModifier.NONE);
+		} else if (gamepadDirection.x >= minValue) {
+			Input.onKeyUp(KeyCode.LEFT, KeyModifier.NONE);
+			Input.onKeyDown(KeyCode.RIGHT, KeyModifier.NONE);
+		} else {
+			Input.onKeyUp(KeyCode.LEFT, KeyModifier.NONE);
+			Input.onKeyUp(KeyCode.RIGHT, KeyModifier.NONE);
+		}
+		
+		if (gamepadDirection.y <= -minValue) {
+			Input.onKeyDown(KeyCode.UP, KeyModifier.NONE);
+			Input.onKeyUp(KeyCode.DOWN, KeyModifier.NONE);
+		} else if (gamepadDirection.y >= minValue) {
+			Input.onKeyUp(KeyCode.UP, KeyModifier.NONE);
+			Input.onKeyDown(KeyCode.DOWN, KeyModifier.NONE);
+		} else {
+			Input.onKeyUp(KeyCode.UP, KeyModifier.NONE);
+			Input.onKeyUp(KeyCode.DOWN, KeyModifier.NONE);
+		}
+	}
+	
+	override public function onGamepadButtonDown(gamepad:Gamepad, button:GamepadButton):Void {
+		switch(button) {
+			case GamepadButton.DPAD_DOWN:
+				Input.onKeyDown(KeyCode.DOWN, KeyModifier.NONE);
+			case GamepadButton.DPAD_UP:
+				Input.onKeyDown(KeyCode.UP, KeyModifier.NONE);
+			case GamepadButton.DPAD_LEFT:
+				Input.onKeyDown(KeyCode.LEFT, KeyModifier.NONE);
+			case GamepadButton.DPAD_RIGHT:
+				Input.onKeyDown(KeyCode.RIGHT, KeyModifier.NONE);
+			default:
+				
+		}
+	}
+	
+	override public function onGamepadButtonUp(gamepad:Gamepad, button:GamepadButton):Void {
+		switch(button) {
+			case GamepadButton.DPAD_DOWN:
+				Input.onKeyUp(KeyCode.DOWN, KeyModifier.NONE);
+			case GamepadButton.DPAD_UP:
+				Input.onKeyUp(KeyCode.UP, KeyModifier.NONE);
+			case GamepadButton.DPAD_LEFT:
+				Input.onKeyUp(KeyCode.LEFT, KeyModifier.NONE);
+			case GamepadButton.DPAD_RIGHT:
+				Input.onKeyUp(KeyCode.RIGHT, KeyModifier.NONE);
+			default:
+				
+		}
 	}
 }
