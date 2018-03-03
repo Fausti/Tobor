@@ -1,10 +1,13 @@
 package gfx;
+
+import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLBuffer;
 import lime.graphics.opengl.GLFramebuffer;
 import lime.graphics.opengl.GLTexture;
-import gfx.Gfx.gl;
+
 import lime.math.Matrix4;
 import lime.utils.Float32Array;
+import lime.utils.UInt8Array;
 
 /**
  * ...
@@ -50,48 +53,48 @@ class Framebuffer {
 		scaleW = width / this.width;
 		scaleH = height / this.height;
 		
-		texture = gl.createTexture();
-		handle = gl.createFramebuffer();
+		texture = GL.createTexture();
+		handle = GL.createFramebuffer();
 		
 		// color texture
-		gl.activeTexture(gl.TEXTURE1);
-		gl.bindTexture(gl.TEXTURE_2D, texture);
+		GL.activeTexture(GL.TEXTURE1);
+		GL.bindTexture(GL.TEXTURE_2D, texture);
 		
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);	
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST);	
 		
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+		GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, width, height, 0, GL.RGBA, GL.UNSIGNED_BYTE, new UInt8Array(4 * width * height));
 		
 		// construct framebuffer
-		gl.bindFramebuffer(gl.FRAMEBUFFER, handle);
-		gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+		GL.bindFramebuffer(GL.FRAMEBUFFER, handle);
+		GL.framebufferTexture2D(GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, texture, 0);
 	
 		// unbind
-		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-		// gl.bindTexture(gl.TEXTURE_2D, null);
+		GL.bindFramebuffer(GL.FRAMEBUFFER, null);
+		// GL.bindTexture(GL.TEXTURE_2D, null);
 		
 		// check
-		var result:Int = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
-		if (result != gl.FRAMEBUFFER_COMPLETE) {
+		var result:Int = GL.checkFramebufferStatus(GL.FRAMEBUFFER);
+		if (result != GL.FRAMEBUFFER_COMPLETE) {
 
-			gl.deleteFramebuffer(handle);
+			GL.deleteFramebuffer(handle);
 
-			if (result == gl.FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
+			if (result == GL.FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
 				throw "frame buffer couldn't be constructed: incomplete attachment";
-			if (result == gl.FRAMEBUFFER_INCOMPLETE_DIMENSIONS)
+			if (result == GL.FRAMEBUFFER_INCOMPLETE_DIMENSIONS)
 				throw "frame buffer couldn't be constructed: incomplete dimensions";
-			if (result == gl.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
+			if (result == GL.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
 				throw "frame buffer couldn't be constructed: missing attachment";
-			if (result == gl.FRAMEBUFFER_UNSUPPORTED)
+			if (result == GL.FRAMEBUFFER_UNSUPPORTED)
 				throw "frame buffer couldn't be constructed: unsupported combination of formats";
 			throw "frame buffer couldn't be constructed: unknown error " + result;
 		}
 		
 		ready = true;
 		
-		buffer = gl.createBuffer();
+		buffer = GL.createBuffer();
 		
 		var x0 = 0;
 		var x1 = scaleW;
@@ -124,9 +127,9 @@ class Framebuffer {
 			1, 1, 1, 1,
 		];
 		
-		gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-		gl.bindBuffer(gl.ARRAY_BUFFER, null);
+		GL.bindBuffer(GL.ARRAY_BUFFER, buffer);
+		GL.bufferData(GL.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), GL.STATIC_DRAW);
+		GL.bindBuffer(GL.ARRAY_BUFFER, null);
 		
 		matrix = Matrix4.createOrtho(0, 1, 0, 1, -1000, 1000);
 		// matrix = Matrix4.createOrtho(0, this.width, 0, this.height, -1000, 1000);
@@ -135,31 +138,31 @@ class Framebuffer {
 	public function bind() {
 		if (!ready) return;
 		
-		gl.bindFramebuffer(gl.FRAMEBUFFER, handle);
+		GL.bindFramebuffer(GL.FRAMEBUFFER, handle);
 	}
 	
 	public function unbind() {
 		if (!ready) return;
 		
-		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+		GL.bindFramebuffer(GL.FRAMEBUFFER, null);
 	}
 	
 	public function draw(w:Int, h:Int) {
-		gl.activeTexture(gl.TEXTURE1);
-		// gl.bindTexture(gl.TEXTURE_2D, texture);
+		GL.activeTexture(GL.TEXTURE1);
+		// GL.bindTexture(GL.TEXTURE_2D, texture);
 		
-		gl.uniform1i(Gfx.shader.u_Texture0, 1);
-		gl.uniformMatrix4fv(Gfx.shader.u_camMatrix, false, matrix);
+		GL.uniform1i(Shader.current.u_Texture0, 1);
+		GL.uniformMatrix4fv(Shader.current.u_camMatrix, 1, false, matrix);
 		
-		gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+		GL.bindBuffer(GL.ARRAY_BUFFER, buffer);
 		
-		Gfx.shader.setAttribute(Gfx.shader.a_Position, 2, gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
-		Gfx.shader.setAttribute(Gfx.shader.a_TexCoord0, 2, gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
-		Gfx.shader.setAttribute(Gfx.shader.a_Color, 4, gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 4 * Float32Array.BYTES_PER_ELEMENT);
+		Shader.current.setAttribute(Shader.current.a_Position, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
+		Shader.current.setAttribute(Shader.current.a_TexCoord0, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+		Shader.current.setAttribute(Shader.current.a_Color, 4, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 4 * Float32Array.BYTES_PER_ELEMENT);
 		
-		gl.drawArrays(gl.TRIANGLES, 0, 6);
+		GL.drawArrays(GL.TRIANGLES, 0, 6);
 		
-		gl.bindBuffer(gl.ARRAY_BUFFER, null);
-		// gl.bindTexture(gl.TEXTURE_2D, null);
+		GL.bindBuffer(GL.ARRAY_BUFFER, null);
+		// GL.bindTexture(GL.TEXTURE_2D, null);
 	}
 }

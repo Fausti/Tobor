@@ -1,10 +1,11 @@
 package gfx;
+
+import lime.graphics.opengl.GL;
 import lime.graphics.Image;
 import lime.graphics.opengl.GLTexture;
 import lime.math.Rectangle;
 import lime.utils.UInt8Array;
 
-import gfx.Gfx.gl;
 
 /**
  * ...
@@ -29,19 +30,19 @@ class Texture {
 	private var data:UInt8Array = null;
 	
 	public function new() {
-		handle = gl.createTexture();
+		handle = GL.createTexture();
 	}
 	
 	public function bind() {
-		gl.activeTexture(gl.TEXTURE0);
-		gl.bindTexture(gl.TEXTURE_2D, handle);
+		GL.activeTexture(GL.TEXTURE0);
+		GL.bindTexture(GL.TEXTURE_2D, handle);
 	}
 	
 	public function prepare() {
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
+		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST);
 	}
 	
 	public function createFromImage(img:Image) {
@@ -52,9 +53,9 @@ class Texture {
 		prepare();
 		
 		#if js
-			gl.texImage2D (gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img.src);
+			GL.texImage2D (GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, GL.UNSIGNED_BYTE, img.src);
 		#else
-			gl.texImage2D (gl.TEXTURE_2D, 0, gl.RGBA, img.buffer.width, img.buffer.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, img.data);
+			GL.texImage2D (GL.TEXTURE_2D, 0, GL.RGBA, img.buffer.width, img.buffer.height, 0, GL.RGBA, GL.UNSIGNED_BYTE, img.data);
 		#end
 	}
 	
@@ -83,7 +84,7 @@ class Texture {
 	public function update() {
 		if (data == null) return;
 		
-		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, _width, _height, 0, gl.RGBA, gl.UNSIGNED_BYTE, data);
+		GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, _width, _height, 0, GL.RGBA, GL.UNSIGNED_BYTE, data);
 	}
 	
 	public function setPixel(x:Int, y:Int, c:Color) {

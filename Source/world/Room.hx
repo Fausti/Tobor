@@ -1,209 +1,98 @@
 package world;
 
-import world.entities.Message;
-import world.entities.Object;
-import world.entities.core.Charlie;
+import world.World;
+import world.entities.Entity;
+import world.entities.EntityDynamic;
+import world.entities.EntityStatic;
+import world.entities.std.Isolator;
+import world.entities.std.Wall;
+import world.entities.std.Charlie;
 
 /**
  * ...
  * @author Matthias Faust
  */
 class Room {
-	public static inline var SIZE_X:Int = 40;
-	public static inline var SIZE_Y:Int = 28;
+	public static inline var WIDTH:Int = 40;
+	public static inline var HEIGHT:Int = 28;
 	
-	public var world:world.World;
-	public var worldX:Int;
-	public var worldY:Int;
-	public var worldZ:Int;
+	public var world:World;
 	
-	// alle Objekte in der Szene
-	public var listAll:Array<Object>;
+	private var listAll:Array<Entity> = [];
 	
-	// nur dynamische Objekte (für Update!)
-	public var listDynamic:Array<Object>;
+	private var listDynamic:Array<Entity> = [];
+	private var listStatic:Array<Entity> = [];
 	
-	public var redraw:Bool = true;
+	private var listRemove:Array<Entity> = [];
 	
-	public var collisions:Array<Object> = [];
-	
-	public function new(world:World, x:Int, y:Int, level:Int) {
-		this.world = world;
+	public function new(w:World) {
+		this.world = w;
 		
-		this.worldX = x;
-		this.worldY = y;
-		this.worldZ = level;
+		var e:Entity;
 		
-		listAll = [];
-		listDynamic = [];
-	}
-	
-	/*
-	public function copy():Room {
-		var newRoom:Room = new Room(world, worldX, worldY, worldZ);
-		
-		for (e in entities) {
-			newRoom.entities.push(e);
-		}
-	}
-	*/
-	
-	public function update(deltaTime:Float):Bool {
-		if (Tobor.GAME_MODE == GameMode.Play) {
-			for (e in listDynamic) {
-				e.update(deltaTime);
+		for (i in 0 ... 500) {
+			e = new Wall();
+			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
 			
-				// if (e.isStatic && e.changed) redraw = true;
-			}
+			addEntity(e);
 		}
 		
-		return redraw;
+		for (i in 0 ... 500) {
+			e = new Isolator();
+			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
+			
+			addEntity(e);
+		}
 	}
 	
-	public function draw(layer:Int) {
+	public function update_begin(deltaTime:Float) {
+		for (e in listDynamic) {
+			e.update_begin(deltaTime);
+		}
+	}
+	
+	public function update_end(deltaTime:Float) {
+		for (e in listDynamic) {
+			e.update_end(deltaTime);
+		}
+	}
+	
+	public function render() {
 		for (e in listAll) {
-			switch(layer) {
-				case Room.LAYER_BACKGROUND:
-					if (e.isStatic) {
-						if (Tobor.GAME_MODE == GameMode.Edit) {
-							e.editor_draw();
-						} else {
-							e.draw();
-						}
-					}
-				case Room.LAYER_SPRITE:
-					if (!e.isStatic) e.draw();
-				default:
-			}
+			e.render();
+		}
+	}
+	
+	public function addEntity(e:Entity) {
+		if (Std.is(e, Charlie)) {
+			trace("Player shouldn't added to rooms!");
+			return;
 		}
 		
-		redraw = false;
-	}
-	
-	public function outOfRoom(x:Int, y:Int):Bool {
-		return (x < 0 || y < 0 || x >= 40 || y >= 28);
-	}
-	
-	public function add(e:Object, ?checkCollision:Bool = false) {
-		if (listAll.indexOf(e) >= 0) {
-			// trace(entities.indexOf(e));
-		} else {
-			if (checkCollision) {
-				if (getEntitiesAt(e.gridX, e.gridY).length > 0) return;
-			}
-			
-			e.setRoom(this);
+		if (listAll.indexOf(e) == -1) {
 			listAll.push(e);
-			
-			e.onCreate();
-			
-			if (e.isStatic) {
-				redraw = true;
+		}
+		
+		var list:Array<Entity> = null;
+		
+		if (Std.is(e, EntityDynamic)) {
+			list = listDynamic;
+		} else if (Std.is(e, EntityStatic)) {
+			list = listStatic;
+		}
+		
+		if (list != null) {
+			if (list.indexOf(e) == -1) {
+				list.push(e);
 			}
 		}
-	}
-	
-	public function remove(e:Object) {
-		listAll.remove(e);
 		
-		if (e.isStatic) redraw = true;
+		e.setRoom(this);
 	}
 	
-	// Dynamic
-	
-	public function register(e:Object) {
-		if (listDynamic.indexOf(e) < 0) {
-			listDynamic.push(e);
-		}
-	}
-	
-	public function unregister(e:Object) {
+	function removeEntity(e:Entity) {
+		listAll.remove(e);
+		listStatic.remove(e);
 		listDynamic.remove(e);
 	}
-	
-	public function sendMessage(msg:Message, ?around:Bool = true) {
-		if (around) {
-			for (o in getEntitiesAround(msg.sender.gridX, msg.sender.gridY)) {
-				o.onMessage(msg);
-			}
-		} else {
-			for (o in listAll) {
-				o.onMessage(msg);
-			}
-		}
-	}
-	
-	public function getEntitiesAround(x:Int, y:Int):Array<Object> {
-		collisions = [];
-		
-		for (e in listAll) {
-			if (e.gridX >= x - 1 && e.gridX <= x + 1 && e.gridY >= y - 1 && e.gridY <= y + 1) {
-				if (!(e.gridX == x && e.gridY == y)) {
-					collisions.push(e);
-				}
-			}
-		}
-		
-		return collisions;
-	}
-	
-	public function getEntitiesAt(x:Int, y:Int, ?enteringEntity:Object = null):Array<Object> {
-		collisions = [];
-		
-		for (e in listAll) {
-			if (e.gridX == x && e.gridY == y) {
-				if (enteringEntity == null) collisions.push(e);
-				else if (enteringEntity != e) collisions.push(e);
-			}
-		}
-		
-		return collisions;
-	}
-	
-	public function clear() {
-		listAll = [];
-		listDynamic = [];
-		
-		redraw = true;
-	}
-	
-	public function load(data:Array<Map<String, Dynamic>>) {
-		clear();
-		
-		for (o in data) {
-			// Debug.log(this, o);
-			
-			var entity:Object = EntityFactory.createFromID(o.get("id"), o.get("type"));
-			if (entity != null) {
-				for (key in Reflect.fields(o)) {
-					entity.parseData(key, Reflect.field(o, key));
-				}
-			
-				if (!Std.is(entity, Charlie)) {
-					add(entity);
-				}
-			}
-		}
-		
-		add(world.player);
-	}
-	
-	public function save():Array<Map<String, Dynamic>> {
-		var data:Array<Map<String, Dynamic>> = [];
-		
-		for (e in listAll) {
-			if (e != null) {
-				if (!Std.is(e, Charlie)) {
-					if (e.canSave()) {
-						data.push(e.saveData());
-					}
-				}
-			}
-		}
-		
-		return data;
-	}
-	
-	public static inline var LAYER_BACKGROUND:Int = 0;
-	public static inline var LAYER_SPRITE:Int = 1;
 }

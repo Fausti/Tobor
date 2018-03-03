@@ -16,21 +16,20 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\lime\3,1,0" />
-    <class path="C:\HaxeToolkit\haxe\lib\hscript\2,0,7" />
-    <class path="C:\HaxeToolkit\haxe\lib\compiletime\2,6,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\6,2,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\compiletime\2,7,0\src" />
     <class path="C:\HaxeToolkit\haxe\lib\tjson\1,4,0" />
     <class path="Source" />
-    <class path="Export\windows\cpp\debug\haxe" />
+    <class path="Export\windows\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="lime=3.1.0&#xA;hscript=2.0.7&#xA;compiletime=2.6.0&#xA;tjson=1.4.0&#xA;tools=3.1.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="lime=6.2.0&#xA;compiletime=2.7.0&#xA;tjson=1.4.0&#xA;tools=6.2.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="#--macro keep('IntIterator')&#xA;#--macro keep(&quot;Main&quot;)&#xA;-debug " />
+    <option additional="--macro lime.Lib.extraParams()" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

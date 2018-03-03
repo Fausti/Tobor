@@ -1,137 +1,157 @@
 package gfx;
 
-import lime.graphics.GLRenderContext;
+import lime.Assets;
+import lime.graphics.opengl.GL;
+import lime.math.Matrix4;
 import lime.math.Rectangle;
-import world.entities.Object;
+
+import gfx.Color;
 
 /**
  * ...
  * @author Matthias Faust
  */
 class Gfx {
-	public static var gl:GLRenderContext;
+	private static var _shader:Shader;
+	private static var _texture:Texture;
+	private static var _matrix:Matrix4;
+	private static var _batch:Batch;
+	private static var _color:Color = Color.WHITE;
 	
-	static var batchCurrent:Batch;
-	static var colorCurrent:Color;
-	static var shaderCurrent:Shader;
+	private static var _width:Int;
+	private static var _height:Int;
+	private static var _offsetX:Int = 0;
+	private static var _offsetY:Int = 0;
 	
-	static var offsetX:Int = 0;
-	static var offsetY:Int = 0;
-	
-	public static var scaleX:Float = 0;
-	public static var scaleY:Float = 0;
-	
-	public static function setOffset(x:Int, y:Int) {
-		offsetX = x;
-		offsetY = y;
+	public static inline function setup(w:Int, h:Int) {
+		_width = w;
+		_height = h;
+		
+		_matrix = Matrix4.createOrtho(0, w, h, 0, -1000, 1000);
 	}
 	
-	public static inline function setBatch(batch:Batch) {
-		Gfx.batchCurrent = batch;
+	public static inline function begin(batch:Batch) {
+		_batch = batch;
+		_batch.clear();
+	}
+	
+	public static inline function end() {
+		_batch.bind();
+		_batch.draw();
 	}
 	
 	public static inline function setColor(color:Color) {
-		Gfx.colorCurrent = color;
+		_color = color;
 	}
 	
-	public static var shader(get, set):Shader;
-	
-	static inline function get_shader():Shader {
-		return shaderCurrent;
-	}
-	
-	static inline function set_shader(shader:Shader):Shader {
-		Gfx.shaderCurrent = shader;
+	public static inline function loadTexture(fileName:String) {
+		var texture:Texture = new Texture();
+		texture.createFromImage(Assets.getImage(fileName));
 		
-		return shaderCurrent;
+		_texture = texture;
+		
+		return texture;
+	}
+	
+	public static inline function setTexture(texture:Texture) {
+		if (_shader == null) {
+			trace("setTexture() -> No shader in use!");
+			return;
+		}
+		
+		_texture = texture;
+		
+		texture.bind();
+		GL.uniform1i(_shader.u_Texture0, 0);
+	}
+	
+	public static inline function setShader(shader:Shader) {
+		_shader = shader;
+		shader.use();
+	}
+	
+	public static inline function setOffset(x:Int, y:Int) {
+		_offsetX = x;
+		_offsetY = y;
 	}
 	
 	public static inline function setViewport(x:Int, y:Int, w:Int, h:Int) {
-		gl.viewport(x, y, w, h);
+		if (_matrix == null) {
+			trace("setViewport() -> No matrix!");
+			return;
+		}
+		
+		if (_shader == null) {
+			trace("setViewport() -> No shader in use!");
+			return;
+		}
+		
+		GL.uniformMatrix4fv(_shader.u_camMatrix, 1, false, _matrix);
+		GL.viewport(x, y, w, h);
 	}
 	
 	public static inline function clear(color:Color) {
-		gl.clearColor(color.r, color.g, color.b, 1.0);
-		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		GL.clearColor(color.r, color.g, color.b, 1.0);
+		GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 	}
 	
 	public static inline function drawTexture(x:Float, y:Float, w:Float, h:Float, rect:Rectangle, ?color:Color = null) {
-		if (batchCurrent == null) {
+		if (_batch == null) {
 			trace("GFX ERROR: No batch bound!");
+			return;
 		}
 		
-		if (color == null) color = colorCurrent;
+		if (color == null) color = _color;
 		
-		batchCurrent.pushVertex(
-			offsetX + x, 
-			offsetY + y, 			
+		_batch.pushVertex(
+			_offsetX + x, 
+			_offsetY + y, 			
 			rect.left, rect.top, 	
 			color.r, color.g, color.b, color.a
 		);
 		
-		batchCurrent.pushVertex(
-			offsetX + x, 
-			offsetY + y + h, 		
+		_batch.pushVertex(
+			_offsetX + x, 
+			_offsetY + y + h, 		
 			rect.left, rect.bottom, 	
 			color.r, color.g, color.b, color.a
 		);
 		
-		batchCurrent.pushVertex(
-			offsetX + x + w, 
-			offsetY + y + h, 	
+		_batch.pushVertex(
+			_offsetX + x + w, 
+			_offsetY + y + h, 	
 			rect.right, rect.bottom, 	
 			color.r, color.g, color.b, color.a
 		);
 		
-		batchCurrent.pushVertex(
-			offsetX + x + w, 
-			offsetY + y, 		
+		_batch.pushVertex(
+			_offsetX + x + w, 
+			_offsetY + y, 		
 			rect.right, rect.top, 	
 			color.r, color.g, color.b, color.a
 		);
 		
-		batchCurrent.addIndices([0, 1, 2, 2, 3, 0]);
+		_batch.addIndices([0, 1, 2, 2, 3, 0]);
 	}
 	
-	public static inline function drawRect(x:Float, y:Float, rect:Rectangle, ?color:Color = null) {
-		drawTexture(x, y, Tobor.OBJECT_WIDTH, Tobor.OBJECT_HEIGHT, rect, color);
+	public static inline function drawSprite(x:Float, y:Float, spr:Sprite, ?color:Color = null) {
+		if (color == null) {
+			if (spr.color != null) color = spr.color;
+		}
+		
+		drawTexture(x, y, spr.width, spr.height, spr.uv, color);
 	}
 	
-	// Tileset
-	
-	
-	
-	public static inline var VERT_SPRITE_RAW:String =
-		"precision mediump float;" + 
+	public static inline function getSprite(x:Int, y:Int, ?w:Int = -1, ?h:Int = -1):Sprite {
+		if (_texture == null) {
+			trace("getSprite(): No texture loaded!");
+			return null;
+		}
 		
-		"attribute vec4 a_Position;" + 
-		"attribute vec2 a_TexCoord0;" +
-		"attribute vec4 a_Color;" + 
-		
-		"uniform mat4 u_camMatrix;" +
-        
-		"varying vec2 v_TexCoord0;" +
-		"varying vec4 v_Color;" +
-		
-		"void main(void) {" +
-		"    v_TexCoord0 = a_TexCoord0;" +
-		"    v_Color = a_Color;" + 
-		"    gl_Position = u_camMatrix * a_Position;" +
-		"}"
-	;
-	
-	public static inline var FRAG_SPRITE_RAW:String =
-		"precision mediump float;" +
-		
-		"uniform sampler2D u_Texture0;" +
-		
-		"varying vec2 v_TexCoord0;" + 
-		"varying vec4 v_Color;" +
-		
-		"void main(void) {" +
-		"    vec4 texColor = texture2D(u_Texture0, v_TexCoord0);" +
-		"    if (texColor.a == 0.0) discard;" +
-		"    gl_FragColor = texColor * v_Color;" +
-		"}"
-	;
+		if (w == -1 || h == -1) {
+			return new Sprite(_texture, x, y, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT, Tobor.ZOOM);
+		} else {
+			return new Sprite(_texture, x, y, w, h, Tobor.ZOOM);
+		}
+	}
 }

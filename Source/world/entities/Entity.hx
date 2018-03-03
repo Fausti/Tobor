@@ -1,81 +1,69 @@
 package world.entities;
-
-import lime.math.Vector2;
+import gfx.Gfx;
+import gfx.Sprite;
+import lime.math.Rectangle;
+import world.Room;
 
 /**
  * ...
  * @author Matthias Faust
- * 
- * Basisklasse aller Spielobjekte.
- * 
  */
-
 class Entity {
-	private var classPath:String;
+	private var room:Room;
 	
-	public function new() {
-		classPath = Type.getClassName(Type.getClass(this));
-	}
-	
-	// interner Klassenpath z.B. "world.entities.Object"
-	
-	public function getClassPath():String {
-		return classPath;
-	}
-	
-	// Bildschirmposition
-	
-	private var position:Vector2 = new Vector2();
+	private var boundingBox:Rectangle;
 	
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	
-	function get_x():Float {
-		return position.x;
+	private var sprites:Array<Sprite> = [];
+	
+	public function new() {
+		boundingBox = new Rectangle(0, 0, 1, 1);
 	}
 	
-	function set_x(v:Float):Float {
-		position.x = v;
+	public function setRoom(r:Room) {
+		room = r;
+	}
+	
+	public function update_begin(deltaTime:Float) {
+		update(deltaTime);
+	}
+	
+	public function update_end(deltaTime:Float) {
 		
-		return v;
 	}
 	
-	function get_y():Float {
-		return position.y;
+	public function update(deltaTime:Float) {
+		for (spr in sprites) {
+			spr.update(deltaTime);
+		}
 	}
 	
-	function set_y(v:Float):Float {
-		position.y = v;
-		
-		return v;
+	public function render() {
+		for (spr in sprites) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr);
+		}
 	}
 	
-	// Gridposition
-	
-	public var gridX(get, set):Int;
-	public var gridY(get, set):Int;
-	
-	inline function get_gridX():Int {
-		return Math.round(position.x / 16);
+	public function setPosition(x:Int, y:Int) {
+		this.x = x;
+		this.y = y;
 	}
 	
-	function set_gridX(v:Int):Int {
-		position.x = v * Tobor.OBJECT_WIDTH;
-		
-		return v * Tobor.OBJECT_WIDTH;
+	inline function get_x():Float {
+		return boundingBox.x;
 	}
 	
-	inline function get_gridY():Int {
-		return Math.round(position.y / Tobor.OBJECT_HEIGHT);
+	inline function set_x(v:Float):Float {
+		return boundingBox.x = v;
 	}
 	
-	function set_gridY(v:Int):Int {
-		position.y = v * Tobor.OBJECT_HEIGHT;
-		
-		return v * Tobor.OBJECT_HEIGHT;
+	inline function get_y():Float {
+		return boundingBox.y;
 	}
-
-	public function get_ID():String {
-		return null;
+	
+	inline function set_y(v:Float):Float {
+		return boundingBox.y = v;
 	}
 }

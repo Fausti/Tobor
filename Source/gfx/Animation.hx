@@ -5,75 +5,58 @@ import lime.math.Rectangle;
  * ...
  * @author Matthias Faust
  */
-class Animation implements IDrawable {
-	var frames:Array<Rectangle> = [];
-	var sequence:Array<Int> = [];
+class Animation extends Sprite {
+	var frames:Array<Sprite>;
+	var frame:Sprite;
 	
-	var index:Int = 0;
-	
-	var speed:Float = 1;
+	var length:Float;
 	var timeLeft:Float = 0;
 	
-	public var active:Bool = false;
+	var active:Bool;
 	
-	public function new() {
-	
-	}
-	
-	public function update(deltaTime:Float) {
-		if (!active) return;
+	public function new(frames:Array<Sprite>, length:Float) {
+		super();
 		
-		if (timeLeft < deltaTime) timeLeft = deltaTime;
-		timeLeft -= deltaTime;
+		this.frames = frames;
+		this.length = length;
 		
-		index = Math.floor(Utils.clamp((speed - timeLeft) / speed, 0.0, 1.0) * sequence.length);
+		frame = frames[0];
+		width = frame.width;
+		height = frame.height;
 		
-		if (timeLeft <= 0) {
-			timeLeft = 0;
-			active = false;
-		}
-	}
-	
-	public function start() {
-		if (sequence.length <= 0) return;
-		
-		active = true;
-		
-		reset();
-	}
-	
-	public function stop() {
 		active = false;
 	}
 	
 	public function reset() {
-		index = 0;
-		timeLeft = speed;
+		frame = frames[0];
+		timeLeft = length;
 	}
 	
-	public function setSpeed(spd:Float) {
-		speed = spd;
+	public function start(?reset:Bool = false) {
+		if (reset) reset;
+		
+		active = true;
 	}
 	
-	public function addFrame(r:Rectangle) {
-		var index = frames.indexOf(r);
+	public function stop(?reset:Bool = false) {
+		if (reset) reset;
 		
-		if (index < 0) {
-			index = frames.push(r) - 1;
-			sequence.push(index);
-		} else {
-			sequence.push(index);
-		}
+		active = false;
 	}
-
-	public function getUV():Rectangle {
-		if (active) {
-			// sicherheitshalber...
-			if (index >= sequence.length) index = sequence.length - 1;
-			
-			return frames[sequence[index]];
-		}
+	
+	override public function update(deltaTime:Float) {
+		if (!active) return;
 		
-		return frames[sequence[0]];
+		timeLeft = timeLeft - deltaTime;
+		if (timeLeft < 0) timeLeft = timeLeft + length;
+		
+		var index:Int = Std.int(((length - timeLeft) * frames.length) / length);
+		// trace(index);
+		
+		frame = frames[index];
+	}
+	
+	override function get_uv():Rectangle {
+		return frame.uv;
 	}
 }
