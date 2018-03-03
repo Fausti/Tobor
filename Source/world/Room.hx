@@ -30,7 +30,7 @@ class Room {
 		
 		var e:Entity;
 		
-		for (i in 0 ... 500) {
+		for (i in 0 ... 100) {
 			e = new Wall();
 			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
 			
@@ -69,6 +69,11 @@ class Room {
 			return;
 		}
 		
+		if (getEntitiesAt(e.x, e.y).length > 0) {
+			// Position ist schon belegt :(
+			return;
+		}
+		
 		if (listAll.indexOf(e) == -1) {
 			listAll.push(e);
 		}
@@ -91,8 +96,18 @@ class Room {
 	}
 	
 	function removeEntity(e:Entity) {
+		e.setRoom(null);
+		
 		listAll.remove(e);
 		listStatic.remove(e);
 		listDynamic.remove(e);
+	}
+	
+	public function getEntitiesAt(x:Float, y:Float):Array<Entity> {
+		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
+			return e.x == x && e.y == y;
+		});
+		
+		return listTarget;
 	}
 }

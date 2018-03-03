@@ -61,7 +61,7 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function update(deltaTime:Float) {
-		var speed:Float = 4;
+		var speed:Float = 8;
 		
 		if (Input.down([Input.key.A, Input.key.LEFT])) {
 			world.player.move(Direction.LEFT, speed);

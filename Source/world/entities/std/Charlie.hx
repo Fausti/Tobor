@@ -26,11 +26,13 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override function onStartMoving() {
+		super.onStartMoving();
 		sprites[0] = sprWalking;
 		sprWalking.start(false);
 	}
 	
 	override function onStopMoving() {
+		super.onStopMoving();
 		sprites[0] = sprStanding;
 		sprWalking.stop();
 	}

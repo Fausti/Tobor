@@ -2,6 +2,7 @@ package world.entities;
 import gfx.Gfx;
 import gfx.Sprite;
 import lime.math.Rectangle;
+import lime.math.Vector2;
 import world.Room;
 
 /**
@@ -46,6 +47,10 @@ class Entity {
 		}
 	}
 	
+	public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		return true;
+	}
+	
 	public function setPosition(x:Int, y:Int) {
 		this.x = x;
 		this.y = y;
@@ -65,5 +70,9 @@ class Entity {
 	
 	inline function set_y(v:Float):Float {
 		return boundingBox.y = v;
+	}
+	
+	private function isOutsideMap(x:Float, y:Float):Bool {
+		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
 	}
 }

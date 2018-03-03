@@ -19,16 +19,18 @@ class World {
 		
 		roomCurrent = room;
 		roomList.push(room);
+		
+		player.setRoom(roomCurrent);
 	}
 	
 	public function update_begin(deltaTime:Float) {
-		if (roomCurrent != null) roomCurrent.update_begin(deltaTime);
 		if (player != null) player.update_begin(deltaTime);
+		if (roomCurrent != null) roomCurrent.update_begin(deltaTime);
 	}
 	
 	public function update_end(deltaTime:Float) {
-		if (roomCurrent != null) roomCurrent.update_end(deltaTime);
 		if (player != null) player.update_end(deltaTime);
+		if (roomCurrent != null) roomCurrent.update_end(deltaTime);
 	}
 	
 	public function render() {

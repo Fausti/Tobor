@@ -1,4 +1,5 @@
 package world.entities;
+
 import lime.math.Vector2;
 
 /**
@@ -28,7 +29,7 @@ class EntityMoveable extends EntityDynamic {
 			distanceLeft: 0.0,
 			distanceRest: 0.0,
 			
-			twoPhases: true,
+			twoPhases: false,
 		}
 	}
 	
@@ -56,14 +57,29 @@ class EntityMoveable extends EntityDynamic {
 		}
 	}
 	
-	public function move(direction:Vector2, speed:Float) {
+	public function move(direction:Vector2, speed:Float):Bool {
+		if (direction == Direction.NONE) return false;
+		
 		if (!isMoving()) {
+			if (isOutsideMap(x + direction.x, y + direction.y)) return false;
+			
+			var atTarget:Array<Entity> = room.getEntitiesAt(x + direction.x, y + direction.y);
+			
+			for (e in atTarget) {
+				if (!e.canEnter(this, direction, speed)) return false;
+			}
+			
+			// dann bewegen wir uns mal...
 			moveData.direction = direction;
 			moveData.speedMovement = speed;
 			moveData.distanceLeft = 1.0;
 			
 			onStartMoving();
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	function processMovement(deltaTime:Float) {
@@ -75,6 +91,9 @@ class EntityMoveable extends EntityDynamic {
 			distance = moveData.distanceRest;
 			moveData.distanceRest = 0.0;
 		}
+		
+		// auf 3 Stellen nach dem Komma runden
+		// distance = Utils.fixedFloat(distance, 3);
 		
 		if (distance > moveData.distanceLeft) {
 			distance = moveData.distanceLeft;
@@ -109,6 +128,6 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	function onStopMoving() {
-		
+		// trace("" + this + ": " + moveData);
 	}
 }

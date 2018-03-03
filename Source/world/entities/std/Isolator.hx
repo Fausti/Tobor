@@ -1,5 +1,7 @@
 package world.entities.std;
 
+import lime.math.Vector2;
+
 import world.entities.EntityPushable;
 
 /**
@@ -13,5 +15,4 @@ class Isolator extends EntityPushable {
 		
 		sprites.push(Gfx.getSprite(240, 0));
 	}
-	
 }
