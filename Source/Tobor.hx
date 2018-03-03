@@ -55,9 +55,12 @@ class Tobor extends LimeGame {
 		world = new World();
 
 		// run the garbage collector
+		collectGarbage();
+	}
+	
+	function collectGarbage() {
 		Gc.run(true);
 		Gc.compact();
-		// Gc.run(false);
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -73,19 +76,7 @@ class Tobor extends LimeGame {
 			world.player.move(Direction.DOWN, speed);
 		}
 		
-		world.update_begin(deltaTime);
-		
-		if (Input.down([Input.key.A, Input.key.LEFT])) {
-			world.player.move(Direction.LEFT, speed);
-		} else if (Input.down([Input.key.D, Input.key.RIGHT])) {
-			world.player.move(Direction.RIGHT, speed);
-		} else if (Input.down([Input.key.W, Input.key.UP])) {
-			world.player.move(Direction.UP, speed);
-		} else if (Input.down([Input.key.S, Input.key.DOWN])) {
-			world.player.move(Direction.DOWN, speed);
-		}
-		
-		world.update_end(deltaTime);
+		world.update(deltaTime);
 	}
 	
 	override public function render() {

@@ -45,15 +45,9 @@ class Room {
 		}
 	}
 	
-	public function update_begin(deltaTime:Float) {
+	public function update(deltaTime:Float) {
 		for (e in listDynamic) {
-			e.update_begin(deltaTime);
-		}
-	}
-	
-	public function update_end(deltaTime:Float) {
-		for (e in listDynamic) {
-			e.update_end(deltaTime);
+			e.update(deltaTime);
 		}
 	}
 	

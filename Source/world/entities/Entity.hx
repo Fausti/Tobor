@@ -26,15 +26,7 @@ class Entity {
 	public function setRoom(r:Room) {
 		room = r;
 	}
-	
-	public function update_begin(deltaTime:Float) {
-		update(deltaTime);
-	}
-	
-	public function update_end(deltaTime:Float) {
-		
-	}
-	
+
 	public function update(deltaTime:Float) {
 		for (spr in sprites) {
 			spr.update(deltaTime);

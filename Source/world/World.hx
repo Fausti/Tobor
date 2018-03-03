@@ -23,14 +23,9 @@ class World {
 		player.setRoom(roomCurrent);
 	}
 	
-	public function update_begin(deltaTime:Float) {
-		if (player != null) player.update_begin(deltaTime);
-		if (roomCurrent != null) roomCurrent.update_begin(deltaTime);
-	}
-	
-	public function update_end(deltaTime:Float) {
-		if (player != null) player.update_end(deltaTime);
-		if (roomCurrent != null) roomCurrent.update_end(deltaTime);
+	public function update(deltaTime:Float) {
+		if (player != null) player.update(deltaTime);
+		if (roomCurrent != null) roomCurrent.update(deltaTime);
 	}
 	
 	public function render() {

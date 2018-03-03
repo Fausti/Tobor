@@ -8,16 +8,13 @@ import lime.math.Vector2;
  */
 
 typedef MoveData = {
-	var twoPhases:Bool;
-	
 	var distanceLeft:Float;
-	var distanceRest:Float;
-	
 	var direction:Vector2;
 	var speedMovement:Float; // Tiles per second
 }
 
 class EntityMoveable extends EntityDynamic {
+	var wasMoving:Bool = false;
 	var moveData:MoveData;
 	
 	public function new() {
@@ -27,26 +24,21 @@ class EntityMoveable extends EntityDynamic {
 			direction: Direction.NONE,
 			speedMovement:0.0,
 			distanceLeft: 0.0,
-			distanceRest: 0.0,
-			
-			twoPhases: false,
 		}
 	}
 	
-	override public function update_begin(deltaTime:Float) {
-		moveData.distanceRest = 0.0;
+	override public function update(deltaTime:Float) {
+		if (!isMoving() && wasMoving) {
+			onStopMoving();
+			wasMoving = false;
+		}
 		
 		if (isMoving()) {
 			processMovement(deltaTime);
-		}
-	}
-	
-	override public function update_end(deltaTime:Float) {
-		if (isMoving() && (moveData.distanceRest > 0.0)) {
-			processMovement(deltaTime);
+			wasMoving = true;
 		}
 		
-		update(deltaTime);
+		super.update(deltaTime);
 	}
 	
 	public function isMoving():Bool {
@@ -85,28 +77,12 @@ class EntityMoveable extends EntityDynamic {
 	function processMovement(deltaTime:Float) {
 		var distance:Float = 0;
 
-		if (moveData.distanceRest == 0.0) {
-			distance = deltaTime * moveData.speedMovement;
-		} else {
-			distance = moveData.distanceRest;
-			moveData.distanceRest = 0.0;
-		}
-		
-		// auf 3 Stellen nach dem Komma runden
-		// distance = Utils.fixedFloat(distance, 3);
+		distance = deltaTime * moveData.speedMovement;
 		
 		if (distance > moveData.distanceLeft) {
 			distance = moveData.distanceLeft;
-			
-			if (moveData.twoPhases) {
-				moveData.distanceRest = moveData.distanceLeft;
-			} else {
-				moveData.distanceRest = 0.0;
-			}
-			
 			moveData.distanceLeft = 0.0;
 		} else {
-			moveData.distanceRest = 0.0;
 			moveData.distanceLeft -= distance;
 		}
 		
@@ -119,7 +95,7 @@ class EntityMoveable extends EntityDynamic {
 			x = Math.fround(x);
 			y = Math.fround(y);
 			
-			onStopMoving();
+			// onStopMoving();
 		}
 	}
 	
@@ -128,6 +104,6 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	function onStopMoving() {
-		// trace("" + this + ": " + moveData);
+		
 	}
 }

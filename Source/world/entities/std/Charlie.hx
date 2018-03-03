@@ -20,20 +20,18 @@ class Charlie extends EntityMoveable {
 		sprWalking = new Animation([
 			Gfx.getSprite(32, 0),
 			Gfx.getSprite(48, 0)
-		], 0.5);
+		], 0.75);
 			
 		sprites[0] = sprStanding;
 	}
 	
 	override function onStartMoving() {
-		super.onStartMoving();
 		sprites[0] = sprWalking;
 		sprWalking.start(false);
 	}
 	
 	override function onStopMoving() {
-		super.onStopMoving();
 		sprites[0] = sprStanding;
-		sprWalking.stop();
+		sprWalking.stop(false);
 	}
 }
