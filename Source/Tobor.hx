@@ -1,6 +1,9 @@
 package;
 
 import cpp.vm.Gc;
+import lime.media.AudioBuffer;
+import lime.media.AudioManager;
+import lime.media.AudioSource;
 import lime.system.System;
 
 import core.LimeGame;
@@ -44,16 +47,16 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function init() {
+		Sound.init();
+		
 		Gfx.setup(SCREEN_WIDTH, SCREEN_HEIGHT);
 		
 		texture = Gfx.loadTexture("assets/tileset.png");
-		
 		shader = Shader.createDefaultShader();
-		
 		batch = new Batch();
 		
 		world = new World();
-
+		
 		// run the garbage collector
 		collectGarbage();
 	}

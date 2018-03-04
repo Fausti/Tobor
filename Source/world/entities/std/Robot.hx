@@ -46,10 +46,18 @@ class Robot extends EntityAI {
 	}
 	
 	override function idle() {
-		move(Direction.ALL[Std.random(Direction.ALL.length)], 4);
+		move(Direction.ALL[Std.random(Direction.ALL.length)], 2);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		return false;
+	}
+	
+	override function onStartMoving() {
+		Sound.play(Sound.SND_ROBOT_STEP);
+	}
+	
+	override function onStopMoving() {
+		// wait = Math.random() / 4;
 	}
 }

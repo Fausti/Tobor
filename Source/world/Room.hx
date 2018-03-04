@@ -45,7 +45,7 @@ class Room {
 			addEntity(e);
 		}
 		
-		for (i in 0 ... 100) {
+		for (i in 0 ... 5) {
 			e = new Robot();
 			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
 			
@@ -111,5 +111,9 @@ class Room {
 		});
 		
 		return listTarget;
+	}
+	
+	public function getPlayer():Charlie {
+		return world.player;
 	}
 }

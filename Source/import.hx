@@ -1,5 +1,6 @@
 import Tobor;
 import Input;
+import Sound;
 
 import gfx.Gfx;
 
