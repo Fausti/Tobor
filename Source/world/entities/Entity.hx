@@ -17,6 +17,9 @@ class Entity {
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	
+	public var gridX(get, set):Int;
+	public var gridY(get, set):Int;
+	
 	private var sprites:Array<Sprite> = [];
 	
 	public function new() {
@@ -62,6 +65,28 @@ class Entity {
 	
 	inline function set_y(v:Float):Float {
 		return boundingBox.y = v;
+	}
+	
+	// grid
+	
+	inline function get_gridX():Int {
+		return Std.int(x);
+	}
+	
+	inline function set_gridX(v:Int):Int {
+		x = v;
+		
+		return v;
+	}
+	
+	inline function get_gridY():Int {
+		return Std.int(y);
+	}
+	
+	inline function set_gridY(v:Int):Int {
+		y = v;
+		
+		return v;
 	}
 	
 	private function isOutsideMap(x:Float, y:Float):Bool {

@@ -7,7 +7,9 @@ import lime.math.Rectangle;
  */
 class Sprite {
 	public var uv(get, null):Rectangle;
-	public var color:Color = null;
+	
+	var _color:Color = null;
+	public var color(get, set):Color;
 	
 	public var width:Int;
 	public var height:Int;
@@ -25,8 +27,14 @@ class Sprite {
 		
 	}
 	
-	public function setColor(c:Color) {
-		this.color = c;
+	function get_color():Color {
+		return this._color;
+	}
+	
+	function set_color(c:Color):Color {
+		this._color = c;
+		
+		return this._color;
 	}
 	
 	function get_uv():Rectangle {

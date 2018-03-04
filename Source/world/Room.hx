@@ -5,6 +5,7 @@ import world.entities.Entity;
 import world.entities.EntityDynamic;
 import world.entities.EntityStatic;
 import world.entities.std.Isolator;
+import world.entities.std.Robot;
 import world.entities.std.Wall;
 import world.entities.std.Charlie;
 
@@ -37,8 +38,15 @@ class Room {
 			addEntity(e);
 		}
 		
-		for (i in 0 ... 500) {
+		for (i in 0 ... 100) {
 			e = new Isolator();
+			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
+			
+			addEntity(e);
+		}
+		
+		for (i in 0 ... 100) {
+			e = new Robot();
 			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
 			
 			addEntity(e);
@@ -99,7 +107,7 @@ class Room {
 	
 	public function getEntitiesAt(x:Float, y:Float):Array<Entity> {
 		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
-			return e.x == x && e.y == y;
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
 		});
 		
 		return listTarget;

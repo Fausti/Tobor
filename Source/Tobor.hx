@@ -67,13 +67,13 @@ class Tobor extends LimeGame {
 		var speed:Float = 8;
 		
 		if (Input.down([Input.key.A, Input.key.LEFT])) {
-			world.player.move(Direction.LEFT, speed);
+			world.player.move(Direction.W, speed);
 		} else if (Input.down([Input.key.D, Input.key.RIGHT])) {
-			world.player.move(Direction.RIGHT, speed);
+			world.player.move(Direction.E, speed);
 		} else if (Input.down([Input.key.W, Input.key.UP])) {
-			world.player.move(Direction.UP, speed);
+			world.player.move(Direction.N, speed);
 		} else if (Input.down([Input.key.S, Input.key.DOWN])) {
-			world.player.move(Direction.DOWN, speed);
+			world.player.move(Direction.S, speed);
 		}
 		
 		world.update(deltaTime);

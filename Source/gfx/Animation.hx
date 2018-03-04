@@ -59,4 +59,16 @@ class Animation extends Sprite {
 	override function get_uv():Rectangle {
 		return frame.uv;
 	}
+	
+	override function get_color():Color {
+		return frame.color;
+	}
+	
+	override function set_color(c:Color):Color {
+		for (f in frames) {
+			f.color = c;
+		}
+		
+		return c;
+	}
 }
