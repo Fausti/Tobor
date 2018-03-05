@@ -40,6 +40,7 @@ class LimeApplication extends Application {
 	override public function onPreloadComplete():Void {
 		super.onPreloadComplete();
 
+		// init();
 		if (game != null) game.__init(this);
 	}
 	

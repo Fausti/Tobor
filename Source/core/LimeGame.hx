@@ -73,4 +73,14 @@ class LimeGame {
 	public function resize(width:Int, height:Int) {
 		
 	}
+	
+	public function dispose() {
+		
+	}
+	
+	public function exit() {
+		trace("exit");
+		dispose();
+		Sys.exit(0);
+	}
 }

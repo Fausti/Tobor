@@ -1,25 +1,19 @@
 package;
 
 import cpp.vm.Gc;
-import lime.media.AudioBuffer;
-import lime.media.AudioManager;
-import lime.media.AudioSource;
-import lime.system.System;
+import screens.IntroScreen;
+import screens.PlayScreen;
+import screens.EpisodesScreen;
+import ui.Screen;
 
 import core.LimeGame;
-import gfx.Batch;
 import gfx.Shader;
-import gfx.Sprite;
-import lime.math.Rectangle;
-
-import lime.Assets;
 
 import gfx.Gfx;
-import gfx.Color;
 import gfx.Texture;
+import gfx.Batch;
 
 import world.World;
-import world.Direction;
 
 /**
  * ...
@@ -33,11 +27,14 @@ class Tobor extends LimeGame {
 	public static inline var TILE_WIDTH:Int = 16 * ZOOM;
 	public static inline var TILE_HEIGHT:Int = 12 * ZOOM;
 	
+	var screen:Screen;
+	
 	var texture:Texture;
 	var shader:Shader;
-	var batch:Batch;
 	
-	var world:World;
+	public var batch:Batch;
+		
+	public var world:World;
 	
 	public function new() {
 		super();
@@ -53,12 +50,15 @@ class Tobor extends LimeGame {
 		
 		texture = Gfx.loadTexture("assets/tileset.png");
 		shader = Shader.createDefaultShader();
+		
 		batch = new Batch();
 		
 		world = new World();
 		
 		// run the garbage collector
 		collectGarbage();
+		
+		setScreen(new EpisodesScreen(this));
 	}
 	
 	function collectGarbage() {
@@ -67,43 +67,33 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function update(deltaTime:Float) {
-		var speed:Float = 8;
-		
-		if (Input.down([Input.key.A, Input.key.LEFT])) {
-			world.player.move(Direction.W, speed);
-		} else if (Input.down([Input.key.D, Input.key.RIGHT])) {
-			world.player.move(Direction.E, speed);
-		} else if (Input.down([Input.key.W, Input.key.UP])) {
-			world.player.move(Direction.N, speed);
-		} else if (Input.down([Input.key.S, Input.key.DOWN])) {
-			world.player.move(Direction.S, speed);
+		if (this.screen != null) {
+			this.screen.update(deltaTime);
 		}
-		
-		world.update(deltaTime);
 	}
 	
 	override public function render() {
 		Gfx.setShader(shader);
 		Gfx.setTexture(texture);
 		
-		Gfx.setOffset(0, 0);
-		Gfx.setViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		Gfx.clear(Color.WHITE);
+		Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 		
 		Gfx.begin(batch);
-			Gfx.setOffset(0, Tobor.TILE_HEIGHT);
-			renderWorld();
-			
-			Gfx.setOffset(0, 0);
-			renderUI();
+		if (this.screen != null) {
+			this.screen.render();
+		}
 		Gfx.end();
 	}
 	
-	function renderUI() {
+	public function setScreen(newScreen:Screen) {
+		if (this.screen != null) {
+			this.screen.hide();
+		}
 		
-	}
-	
-	function renderWorld() {
-		world.render();
+		Input.clearKeys();
+		
+		this.screen = newScreen;
+		this.screen.show();
 	}
 }

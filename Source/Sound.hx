@@ -12,10 +12,16 @@ class Sound {
 	static var LIMIT_PER_SOUND:Int = 2;
 	static var _playing:Array<AudioSource> = [];
 	
+	public static var MUS_CHOOSER:AudioBuffer;
+	public static var MUS_INTRO_DOS:AudioBuffer;
+	
 	public static var SND_CHARLIE_STEP:AudioBuffer;
 	public static var SND_ROBOT_STEP:AudioBuffer;
 	
 	public static function init() {
+		MUS_CHOOSER = Assets.getAudioBuffer("assets/mus/chooser.ogg");
+		MUS_INTRO_DOS = Assets.getAudioBuffer("assets/mus/intro-dos.ogg");
+		
 		SND_CHARLIE_STEP = Assets.getAudioBuffer("assets/sfx/step-charlie.wav");
 		SND_ROBOT_STEP = Assets.getAudioBuffer("assets/sfx/step-robot.wav");
 	}
@@ -37,14 +43,18 @@ class Sound {
 		}
 	}
 	
-	public static function play(sound:AudioBuffer) {
+	public static function play(sound:AudioBuffer, ?repeat:Bool = false) {
 		var list = findPlaying(sound);
 		if (list.length >= LIMIT_PER_SOUND) return;
 		
 		var snd:AudioSource = new AudioSource(sound);
 		_playing.push(snd);
 		
-		snd.onComplete.add(function() {_playing.remove(snd);});
+		if (repeat) {
+			snd.onComplete.add(function() {_playing.remove(snd); play(sound, true); });
+		} else {
+			snd.onComplete.add(function() {_playing.remove(snd); });
+		}
 		
 		snd.play();
 	}
