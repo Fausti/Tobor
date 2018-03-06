@@ -62,6 +62,9 @@ class Frame {
 	public function drawBox(x:Int, y:Int, w:Int, h:Int) {
 		var r:Sprite;
 		
+		x = x * Tobor.ZOOM;
+		y = y * Tobor.ZOOM;
+		
 		// Hintergrund
 		Gfx.drawTexture(x, y, w * sizeX * Tobor.ZOOM, h * sizeY * Tobor.ZOOM, BG.uv, Color.WHITE); // MIDDLE
 		
@@ -102,6 +105,9 @@ class Frame {
 		if (bg == null) bg = Color.WHITE;
 		
 		var r:Sprite;
+		
+		x = x * Tobor.ZOOM;
+		y = y * Tobor.ZOOM;
 		
 		// Hintergrund
 		Gfx.drawTexture(x, y, w * sizeX * Tobor.ZOOM, h * sizeY * Tobor.ZOOM, BG.uv, bg); // MIDDLE

@@ -98,6 +98,7 @@ class Tobor extends LimeGame {
 		Gfx.begin(batch);
 		if (this.screen != null) {
 			this.screen.render();
+			this.screen.renderUI();
 		}
 		Gfx.end();
 	}

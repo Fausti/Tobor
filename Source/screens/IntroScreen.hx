@@ -1,6 +1,7 @@
 package screens;
 
 import ui.Screen;
+import ui.DialogMenu;
 
 /**
  * ...
@@ -24,10 +25,16 @@ class IntroScreen extends Screen {
 	}
 	
 	override public function update(deltaTime:Float) {
-		if (Input.down([Input.key.ESCAPE])) {
-			game.setScreen(new EpisodesScreen(game));
-		} else if (Input.down([Input.key.RETURN])) {
-			game.setScreen(new PlayScreen(game));
+		if (dialog != null) {
+			dialog.update(deltaTime);
+			return;
+		}
+		
+		if (Input.isKeyDown([Input.key.ESCAPE])) {
+			// game.setScreen(new EpisodesScreen(game));
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			// game.setScreen(new PlayScreen(game));
+			showMainMenu();
 		}
 	}
 	
@@ -37,5 +44,31 @@ class IntroScreen extends Screen {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, bgSprite);
 			}
 		}
+	}
+	
+	function showMainMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			["Hilfe", "F1"],
+			["Story", "F2"],
+			["Spielstart", "F4", function() {
+				game.setScreen(new PlayScreen(game));
+			}],
+			["Laden", "F7"],
+			["Ende", "F9", function() {
+				game.exit();
+			}],	
+		]);
+		
+		menu.select(2);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
 	}
 }

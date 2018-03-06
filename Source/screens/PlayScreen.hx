@@ -1,7 +1,7 @@
 package screens;
 
 import ui.Screen;
-import gfx.Batch;
+import ui.DialogMenu;
 
 import world.Direction;
 /**
@@ -24,20 +24,25 @@ class PlayScreen extends Screen {
 	}
 	
 	override public function update(deltaTime:Float) {
+		if (dialog != null) {
+			dialog.update(deltaTime);
+			return;
+		}
+		
 		var speed:Float = 8;
 		
-		if (Input.down([Input.key.A, Input.key.LEFT])) {
+		if (Input.isKeyDown([Input.key.A, Input.key.LEFT])) {
 			game.world.player.move(Direction.W, speed);
-		} else if (Input.down([Input.key.D, Input.key.RIGHT])) {
+		} else if (Input.isKeyDown([Input.key.D, Input.key.RIGHT])) {
 			game.world.player.move(Direction.E, speed);
-		} else if (Input.down([Input.key.W, Input.key.UP])) {
+		} else if (Input.isKeyDown([Input.key.W, Input.key.UP])) {
 			game.world.player.move(Direction.N, speed);
-		} else if (Input.down([Input.key.S, Input.key.DOWN])) {
+		} else if (Input.isKeyDown([Input.key.S, Input.key.DOWN])) {
 			game.world.player.move(Direction.S, speed);
-		} else if (Input.down([Input.key.ESCAPE])) {
-			game.setScreen(new IntroScreen(game));
-		} else if (Input.down([Input.key.RETURN])) {
-			
+		} else if (Input.isKeyDown([Input.key.ESCAPE])) {
+			// game.setScreen(new IntroScreen(game));
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			showMainMenu();
 		}
 		
 		game.world.update(deltaTime);
@@ -46,13 +51,16 @@ class PlayScreen extends Screen {
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
 		game.world.render();
-			
-		Gfx.setOffset(0, 0);
-		renderUI();
 	}
 	
-	public function renderUI() {
+	override public function renderUI() {
+		Gfx.setOffset(0, 0);
+		
 		renderStatusLine();
+		
+		if (dialog != null) {
+			dialog.render();
+		}
 	}
 	
 	function renderStatusLine() {
@@ -80,5 +88,31 @@ class PlayScreen extends Screen {
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawSprite(471 * Tobor.ZOOM, 0, SPR_BAG);
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
+	}
+	
+	function showMainMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			["Hilfe", "F1"],
+			["Story", "F2"],
+			["Spielstart", "F4", function() {
+				
+			}],
+			["Laden", "F7"],
+			["Ende", "F9", function() {
+				game.setScreen(new IntroScreen(game));
+			}],	
+		]);
+		
+		menu.select(2);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
 	}
 }

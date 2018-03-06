@@ -49,6 +49,7 @@ class LimeApplication extends Application {
 		
 		super.update(deltaTime);
 		
+		Input.update(deltaTime / 1000.0);
 		if (game != null) game.__update(deltaTime / 1000.0);
 	}
 	

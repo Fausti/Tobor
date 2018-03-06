@@ -24,9 +24,9 @@ class EpisodesScreen extends Screen {
 	}
 	
 	override public function update(deltaTime:Float) {
-		if (Input.down([Input.key.ESCAPE])) {
+		if (Input.isKeyDown([Input.key.ESCAPE])) {
 			game.exit();
-		} else if (Input.down([Input.key.RETURN])) {
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
 			game.setScreen(new IntroScreen(game));
 		}
 	}
