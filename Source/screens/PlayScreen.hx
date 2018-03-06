@@ -68,17 +68,17 @@ class PlayScreen extends Screen {
 		var leben = 0; // game.world.player.lives;
 		
 		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
-		Tobor.font8.drawString(224, 0, strStatus, Color.BLACK);
+		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
 		
 		var gold = 0; // game.world.player.gold;
 		if (gold > 0) {
 			Gfx.drawSprite(416 * Tobor.ZOOM, 0, SPR_GOLD);
-			Tobor.font8.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
+			Tobor.fontSmall.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
 		var weight = 0; // game.world.player.inventory.length;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawSprite(471 * Tobor.ZOOM, 0, SPR_BAG);
-		Tobor.font8.drawString(488, 0, strWeight, Color.BLACK);
+		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
 	}
 }

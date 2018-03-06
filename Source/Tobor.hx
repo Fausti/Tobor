@@ -5,6 +5,7 @@ import screens.IntroScreen;
 import screens.PlayScreen;
 import screens.EpisodesScreen;
 import ui.Font;
+import ui.Frame;
 import ui.Screen;
 
 import core.LimeGame;
@@ -28,8 +29,11 @@ class Tobor extends LimeGame {
 	public static inline var TILE_WIDTH:Int = 16 * ZOOM;
 	public static inline var TILE_HEIGHT:Int = 12 * ZOOM;
 	
-	public static var font8:Font;
-	public static var font16:Font;
+	public static var fontSmall:Font;
+	public static var fontBig:Font;
+	
+	public static var frameSmall:Frame;
+	public static var frameBig:Frame;
 	
 	var screen:Screen;
 	
@@ -55,8 +59,11 @@ class Tobor extends LimeGame {
 		texture = Gfx.loadTexture("assets/tileset.png");
 		shader = Shader.createDefaultShader();
 		
-		Tobor.font8 = new Font(8, 10, 430);
-		Tobor.font16 = new Font(16, 10, 360);
+		Tobor.fontSmall = new Font(8, 10, 430);
+		Tobor.fontBig = new Font(16, 10, 360);
+		
+		Tobor.frameBig = new Frame(128, 432, 16, 12);
+		Tobor.frameSmall = new Frame(128, 468, 8, 10); // original
 		
 		batch = new Batch();
 		
