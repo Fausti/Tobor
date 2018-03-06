@@ -34,6 +34,7 @@ class Tobor extends LimeGame {
 	
 	public static var frameSmall:Frame;
 	public static var frameBig:Frame;
+	public static var frameSmallNew:Frame;
 	
 	var screen:Screen;
 	
@@ -64,6 +65,7 @@ class Tobor extends LimeGame {
 		
 		Tobor.frameBig = new Frame(128, 432, 16, 12);
 		Tobor.frameSmall = new Frame(128, 468, 8, 10); // original
+		Tobor.frameSmallNew = new Frame(152, 468, 8, 10);
 		
 		batch = new Batch();
 		
