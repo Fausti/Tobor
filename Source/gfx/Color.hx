@@ -57,6 +57,8 @@ class Color {
 	public static var BROWN = Color.from(0x4f5000);
 	public static var WHITE = Color.from(0xffffff);
 	
+	public static var DARK_GRAY = Color.from(0x525252);
+	
 	public static var palette:Array<Color> = [
 		BLACK, YELLOW, DARK_GREEN, GRAY, PURPLE, DARK_RED, RED, ORANGE,
 		GREEN, LIGHT_GREEN, LIGHT_BLUE, BLUE, BLUE2, DARK_BLUE, BROWN, WHITE

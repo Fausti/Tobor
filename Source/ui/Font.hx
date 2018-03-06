@@ -33,6 +33,8 @@ class Font {
 	}
 	
 	inline function drawChar(x:Float, y:Float, charIndex:Int, fg:Color = null, bg:Color = null) {
+		if (bg == null) bg = Color.NONE;
+		
 		// Hintergrund zeichnen
 		if (bg != Color.NONE) Gfx.drawSprite(x, y, tileBG, bg);
 		
@@ -46,6 +48,30 @@ class Font {
 		
 		for (i in 0 ... text.length) {
 			drawChar(posX, posY, GLYPHS.indexOf(text.charAt(i)), fg, bg);
+			posX += glyphW;
+		}
+	}
+	
+	// Schattenvariante
+	
+	inline function drawShadowChar(x:Float, y:Float, charIndex:Int, bg:Color = null) {
+		if (bg == null) bg = Color.NONE;
+		
+		// Hintergrund zeichnen
+		if (bg != Color.NONE) Gfx.drawSprite(x, y, tileBG, bg);
+		
+		// Char zeichnen
+		Gfx.drawSprite(x, y, chars[charIndex], Color.GRAY);
+		Gfx.drawSprite(x + Tobor.ZOOM * 2, y + Tobor.ZOOM * 2, chars[charIndex], Color.BLACK);
+		Gfx.drawSprite(x + Tobor.ZOOM, y + Tobor.ZOOM, chars[charIndex], Color.DARK_GRAY);
+	}
+	
+	public inline function drawShadowString(x:Float, y:Float, text:String, bg:Color = null) {
+		var posX:Float = x * Tobor.ZOOM;
+		var posY:Float = y * Tobor.ZOOM;
+		
+		for (i in 0 ... text.length) {
+			drawShadowChar(posX, posY, GLYPHS.indexOf(text.charAt(i)), bg);
 			posX += glyphW;
 		}
 	}
