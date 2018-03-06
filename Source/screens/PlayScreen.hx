@@ -9,8 +9,18 @@ import world.Direction;
  * @author Matthias Faust
  */
 class PlayScreen extends Screen {
+	var SPR_ISOLATOR:Sprite;
+	var SPR_CHARLIE:Sprite;
+	var SPR_GOLD:Sprite;
+	var SPR_BAG:Sprite;
+	
 	public function new(game:Tobor) {
 		super(game);
+		
+		SPR_ISOLATOR = Gfx.getSprite(240, 0);
+		SPR_CHARLIE = Gfx.getSprite(32, 0);
+		SPR_GOLD = Gfx.getSprite(96, 12);
+		SPR_BAG = Gfx.getSprite(112, 12);
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -42,6 +52,33 @@ class PlayScreen extends Screen {
 	}
 	
 	public function renderUI() {
+		renderStatusLine();
+	}
+	
+	function renderStatusLine() {
+		for (x in 0 ... 8) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
+			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
+		}
 		
+		// TODO: Blaumann! Oder Charlieobjekt fragen?
+		Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
+		
+		var punkte = 0; // game.world.player.points;
+		var leben = 0; // game.world.player.lives;
+		
+		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
+		Tobor.font8.drawString(224, 0, strStatus, Color.BLACK);
+		
+		var gold = 0; // game.world.player.gold;
+		if (gold > 0) {
+			Gfx.drawSprite(416 * Tobor.ZOOM, 0, SPR_GOLD);
+			Tobor.font8.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
+		}
+		
+		var weight = 0; // game.world.player.inventory.length;
+		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
+		Gfx.drawSprite(471 * Tobor.ZOOM, 0, SPR_BAG);
+		Tobor.font8.drawString(488, 0, strWeight, Color.BLACK);
 	}
 }
