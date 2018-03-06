@@ -40,9 +40,9 @@ class PlayScreen extends Screen {
 		} else if (Input.isKeyDown([Input.key.S, Input.key.DOWN])) {
 			game.world.player.move(Direction.S, speed);
 		} else if (Input.isKeyDown([Input.key.ESCAPE])) {
-			// game.setScreen(new IntroScreen(game));
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
 			showMainMenu();
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			
 		}
 		
 		game.world.update(deltaTime);
@@ -92,13 +92,17 @@ class PlayScreen extends Screen {
 	
 	function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			["Hilfe", "F1"],
-			["Story", "F2"],
-			["Spielstart", "F4", function() {
+			["Einstellungen", ""],
+			["Szenen-Text", "?"],
+			["Rucksack", "<-", function() {
 				
 			}],
+			["Hilfe", "F1"],
+			["Story", "F2"],
+			["Szenenanfang", "F3"],
+			["Sichern", "F5"],
 			["Laden", "F7"],
-			["Ende", "F9", function() {
+			["Abbruch", "F9", function() {
 				game.setScreen(new IntroScreen(game));
 			}],	
 		]);
