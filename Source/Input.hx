@@ -9,11 +9,13 @@ import lime.ui.KeyModifier;
  */
 class Input {
 	public static var key = KeyCode;
+	public static var mod = KeyModifier;
 	
 	static var lastKeyCode:KeyCode = -1;
 	static var waitTime:Float = 0;
 	
 	static var _keys:Map<KeyCode, Bool> = new Map<KeyCode, Bool>();
+	static var _mods:Map<KeyModifier, Bool> = new Map<KeyModifier, Bool>();
 	
 	public static function update(deltaTime:Float) {
 		if (waitTime > 0) {
@@ -30,7 +32,9 @@ class Input {
 	public static function onKeyDown(keyCode:KeyCode, modifier:KeyModifier):Void {
 		if (keyCode == lastKeyCode) return;
 		
+		if (modifier != KeyModifier.NONE) _mods.set(modifier, true);
 		_keys.set(keyCode, true);
+		
 		lastKeyCode = keyCode;
 	}
 	
@@ -38,11 +42,26 @@ class Input {
 		if (keyCode == lastKeyCode) lastKeyCode = -1;
 		waitTime = 0;
 		
+		if (modifier != KeyModifier.NONE) _mods.set(modifier, false);
 		_keys.set(keyCode, false);
 	}
 	
-	public static function isKeyDown(_key:Array<KeyCode>):Bool {
+	static function modsDown():Int {
+		var count:Int = 0;
+		
+		for (m in _mods.keys()) {
+			if (_mods.get(m) == true) count++;
+		}
+		
+		return count;
+	}
+	
+	public static function isKeyDown(_key:Array<KeyCode>, ?keyOnly:Bool = true):Bool {
 		if (waitTime > 0) return false;
+		
+		if (keyOnly) {
+			if (modsDown() > 0) return false;
+		}
 		
 		for (k in _key) {
 			if (_keys.get(k)) return true;
@@ -51,7 +70,18 @@ class Input {
 		return false;
 	}
 	
+	public static function isModDown(_key:Array<KeyModifier>):Bool {
+		if (waitTime > 0) return false;
+		
+		for (k in _key) {
+			if (_mods.get(k)) return true;
+		}
+		
+		return false;
+	}
+	
 	public static function clearKeys() {
 		_keys = new Map<KeyCode, Bool>();
+		_mods = new Map<KeyModifier, Bool>();
 	}
 }
