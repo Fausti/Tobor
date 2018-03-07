@@ -1,7 +1,5 @@
 package ui;
 
-import lime.math.Rectangle;
-
 import gfx.Sprite;
 /**
  * ...
@@ -59,14 +57,16 @@ class Frame {
 		);
 	}
 	
-	public function drawBox(x:Int, y:Int, w:Int, h:Int) {
+	public function drawBox(x:Int, y:Int, w:Int, h:Int, ?bg:Color = null) {
 		var r:Sprite;
 		
 		x = x * Tobor.ZOOM;
 		y = y * Tobor.ZOOM;
 		
+		if (bg == null) bg = Color.WHITE;
+		
 		// Hintergrund
-		Gfx.drawTexture(x, y, w * sizeX * Tobor.ZOOM, h * sizeY * Tobor.ZOOM, BG.uv, Color.WHITE); // MIDDLE
+		Gfx.drawTexture(x, y, w * sizeX * Tobor.ZOOM, h * sizeY * Tobor.ZOOM, BG.uv, bg); // MIDDLE
 		
 		for (i in 0 ... w) {
 			// obere Zeile

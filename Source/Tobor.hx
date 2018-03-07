@@ -74,7 +74,7 @@ class Tobor extends LimeGame {
 		// run the garbage collector
 		collectGarbage();
 		
-		setScreen(new EpisodesScreen(this));
+		setScreen(new IntroScreen(this));
 	}
 	
 	function collectGarbage() {

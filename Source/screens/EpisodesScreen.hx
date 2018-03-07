@@ -38,4 +38,16 @@ class EpisodesScreen extends Screen {
 			}
 		}
 	}
+	
+	override public function renderUI() {
+		super.renderUI();
+		
+		var x:Int = 32;
+		var y:Int = 72;
+		
+		Tobor.frameSmallNew.drawBox(x, y, 32, 4, Color.YELLOW);
+		
+		Tobor.fontBig.drawShadowString(x + 37, y + 7, "TOBOR", Color.YELLOW);
+		Tobor.fontSmall.drawString(x + 37, y + 23, "Hase gesucht!", Color.BLACK);
+	}
 }
