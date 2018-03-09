@@ -45,6 +45,8 @@ class Tobor extends LimeGame {
 		
 	public var world:World;
 	
+	public var highScore:Highscore;
+	
 	public function new() {
 		super();
 		
@@ -70,6 +72,9 @@ class Tobor extends LimeGame {
 		batch = new Batch();
 		
 		world = new World();
+		
+		highScore = new Highscore();
+		highScore.load();
 		
 		// run the garbage collector
 		collectGarbage();

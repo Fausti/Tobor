@@ -17,6 +17,19 @@ class Input {
 	static var _keys:Map<KeyCode, Bool> = new Map<KeyCode, Bool>();
 	static var _mods:Map<KeyModifier, Bool> = new Map<KeyModifier, Bool>();
 	
+	static var lastMouseButton:Int = -1;
+	public static var _mouseButton:Map<Int, Bool> = new Map<Int, Bool>();
+	public static var mouseX:Float;
+	public static var mouseY:Float;
+	
+	public static function onMouseDown(btn:Int) {
+		_mouseButton.set(btn, true);
+	}
+	
+	public static function onMouseUp(btn:Int) {
+		_mouseButton.set(btn, false);
+	}
+	
 	public static function update(deltaTime:Float) {
 		if (waitTime > 0) {
 			waitTime = waitTime - deltaTime;
@@ -56,6 +69,14 @@ class Input {
 		return count;
 	}
 	
+	public static function isMouseDown(btn:Int):Bool {
+		if (waitTime > 0) return false;
+		
+		if (_mouseButton.get(btn)) return true;
+		
+		return false;
+	}
+	
 	public static function isKeyDown(_key:Array<KeyCode>, ?keyOnly:Bool = true):Bool {
 		if (waitTime > 0) return false;
 		
@@ -83,5 +104,6 @@ class Input {
 	public static function clearKeys() {
 		_keys = new Map<KeyCode, Bool>();
 		_mods = new Map<KeyModifier, Bool>();
+		_mouseButton = new Map<Int, Bool>();
 	}
 }

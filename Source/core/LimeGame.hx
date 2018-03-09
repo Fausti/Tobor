@@ -18,6 +18,9 @@ class LimeGame {
 	
 	private var __application:LimeApplication;
 	
+	private var __scaleX:Float = 1;
+	private var __scaleY:Float = 1;
+	
 	public function new() {
 		
 	}
@@ -55,6 +58,9 @@ class LimeGame {
 	
 	@:final	@:noCompletion @:allow(core.LimeApplication)
 	private function __resize(width:Int, height:Int) {
+		__scaleX = width / __framebuffer_w;
+		__scaleY = height / __framebuffer_h;
+		
 		resize(width, height);
 	}
 	
@@ -82,5 +88,24 @@ class LimeGame {
 		trace("exit");
 		dispose();
 		Sys.exit(0);
+	}
+	
+	public function onMouseMove(x:Float, y:Float) {
+		Input.mouseX = x / __scaleX;
+		Input.mouseY = y / __scaleY;
+	}
+	
+	public function onMouseButtonDown(x:Float, y:Float, button:Int) {
+		Input.mouseX = x / __scaleX;
+		Input.mouseY = y / __scaleY;
+		
+		Input.onMouseDown(button);
+	}
+	
+	public function onMouseButtonUp(x:Float, y:Float, button:Int) {
+		Input.mouseX = x / __scaleX;
+		Input.mouseY = y / __scaleY;
+		
+		Input.onMouseUp(button);
 	}
 }

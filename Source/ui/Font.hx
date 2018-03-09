@@ -4,6 +4,7 @@ import haxe.Utf8;
 
 import lime.math.Rectangle;
 
+using hx.strings.Strings;
 /**
  * ...
  * @author Matthias Faust
@@ -45,6 +46,8 @@ class Font {
 	public inline function drawString(x:Float, y:Float, text:String, fg:Color = null, bg:Color = null) {
 		var posX:Float = x * Tobor.ZOOM;
 		var posY:Float = y * Tobor.ZOOM;
+		
+		text = Utf8.decode(text);
 		
 		for (i in 0 ... text.length) {
 			drawChar(posX, posY, GLYPHS.indexOf(text.charAt(i)), fg, bg);

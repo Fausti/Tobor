@@ -49,8 +49,10 @@ class LimeApplication extends Application {
 		
 		super.update(deltaTime);
 		
-		Input.update(deltaTime / 1000.0);
-		if (game != null) game.__update(deltaTime / 1000.0);
+		var dt:Float = 1 / 60; // deltaTime / 1000.0;
+		
+		Input.update(dt);
+		if (game != null) game.__update(dt);
 	}
 	
 	
@@ -82,6 +84,26 @@ class LimeApplication extends Application {
 		super.onKeyUp(window, keyCode, modifier);
 		
 		Input.onKeyUp(keyCode, modifier);
+	}
+	
+	// Maus
+	
+	override public function onMouseMove(window:Window, x:Float, y:Float):Void {
+		super.onMouseMove(window, x, y);
+		
+		if (game != null) game.onMouseMove(x, y);
+	}
+	
+	override public function onMouseDown(window:Window, x:Float, y:Float, button:Int):Void {
+		super.onMouseDown(window, x, y, button);
+		
+		if (game != null) game.onMouseButtonDown(x, y, button);
+	}
+	
+	override public function onMouseUp(window:Window, x:Float, y:Float, button:Int):Void {
+		super.onMouseUp(window, x, y, button);
+		
+		if (game != null) game.onMouseButtonUp(x, y, button);
 	}
 	
 	// Gamepad!

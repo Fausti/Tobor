@@ -4,6 +4,7 @@ import ui.Screen;
 import ui.DialogMenu;
 
 import world.Direction;
+
 /**
  * ...
  * @author Matthias Faust
@@ -27,8 +28,14 @@ class PlayScreen extends Screen {
 		if (dialog != null) {
 			dialog.update(deltaTime);
 			return;
+		} else {
+			checkPlayerMovement();
 		}
 		
+		game.world.update(deltaTime);
+	}
+	
+	function checkPlayerMovement() {
 		var speed:Float = 8;
 		
 		if (Input.isKeyDown([Input.key.A, Input.key.LEFT])) {
@@ -44,8 +51,6 @@ class PlayScreen extends Screen {
 		} else if (Input.isKeyDown([Input.key.RETURN])) {
 			
 		}
-		
-		game.world.update(deltaTime);
 	}
 	
 	override public function render() {

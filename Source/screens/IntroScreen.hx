@@ -46,12 +46,18 @@ class IntroScreen extends Screen {
 		}
 	}
 	
+	override public function renderUI() {
+		game.highScore.draw(64, 132);
+		
+		super.renderUI();
+	}
+	
 	function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			["Hilfe", "F1"],
 			["Story", "F2"],
 			["Spielstart", "F4", function() {
-				game.setScreen(new PlayScreen(game));
+				game.setScreen(new EditorScreen(game));
 			}],
 			["Laden", "F7"],
 			["Ende", "F9", function() {
