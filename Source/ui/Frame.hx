@@ -26,47 +26,44 @@ class Frame {
 		this.sizeY = h;
 		
 		NW = Gfx.getSprite(
-			x, y, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x, y, w, h
 		);
 		N = Gfx.getSprite(
-			x + w, y, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x + w, y, w, h
 		);
 		
 		NE = Gfx.getSprite(
-			x + w * 2, y, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x + w * 2, y, w, h
 		);
 		
 		W = Gfx.getSprite(
-			x, y + h, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x, y + h, w, h
 		);
 		BG = Gfx.getSprite(
-			0, 0, w * Tobor.ZOOM, h * Tobor.ZOOM
+			0, 0, w, h
 		);
 		E = Gfx.getSprite(
-			x + w * 2, y + h, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x + w * 2, y + h, w, h
 		);
 		
 		SW = Gfx.getSprite(
-			x, y + h * 2, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x, y + h * 2, w, h
 		);
 		S = Gfx.getSprite(
-			x + w, y + h * 2, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x + w, y + h * 2, w, h
 		);
 		SE = Gfx.getSprite(
-			x + w * 2, y + h * 2, w * Tobor.ZOOM, h * Tobor.ZOOM
+			x + w * 2, y + h * 2, w, h
 		);
 	}
 	
 	public function drawBox(x:Int, y:Int, w:Int, h:Int, ?bg:Color = null) {
 		var r:Sprite;
 		
-		x = x * Tobor.ZOOM;
-		y = y * Tobor.ZOOM;
-		
 		if (bg == null) bg = Color.WHITE;
 		
 		// Hintergrund
-		Gfx.drawTexture(x, y, w * sizeX * Tobor.ZOOM, h * sizeY * Tobor.ZOOM, BG.uv, bg); // MIDDLE
+		Gfx.drawTexture(x, y, w * sizeX, h * sizeY, BG.uv, bg); // MIDDLE
 		
 		for (i in 0 ... w) {
 			// obere Zeile
@@ -79,7 +76,7 @@ class Frame {
 				r = N;
 			}
 			
-			Gfx.drawSprite(x + sizeX * i * Tobor.ZOOM, y, r);
+			Gfx.drawSprite(x + sizeX * i, y, r);
 		
 			// obere Zeile
 			
@@ -91,12 +88,12 @@ class Frame {
 				r = S;
 			}
 			
-			Gfx.drawSprite(x + sizeX * i * Tobor.ZOOM, y + (h - 1) * sizeY * Tobor.ZOOM, r);
+			Gfx.drawSprite(x + sizeX * i, y + (h - 1) * sizeY, r);
 		}
 		
 		for (i in 1 ... (h - 1)) {
-			Gfx.drawSprite(x, y + sizeY * i * Tobor.ZOOM, W);
-			Gfx.drawSprite(x + (w - 1) * sizeX * Tobor.ZOOM, y + sizeY * i * Tobor.ZOOM, E);
+			Gfx.drawSprite(x, y + sizeY * i, W);
+			Gfx.drawSprite(x + (w - 1) * sizeX, y + sizeY * i, E);
 		}
 	}
 	
@@ -106,11 +103,8 @@ class Frame {
 		
 		var r:Sprite;
 		
-		x = x * Tobor.ZOOM;
-		y = y * Tobor.ZOOM;
-		
 		// Hintergrund
-		Gfx.drawTexture(x, y, w * sizeX * Tobor.ZOOM, h * sizeY * Tobor.ZOOM, BG.uv, bg); // MIDDLE
+		Gfx.drawTexture(x, y, w * sizeX, h * sizeY, BG.uv, bg); // MIDDLE
 		
 		for (i in 0 ... w) {
 			// obere Zeile
@@ -123,7 +117,7 @@ class Frame {
 				r = N;
 			}
 			
-			Gfx.drawSprite(x + sizeX * i * Tobor.ZOOM, y, r, fg);
+			Gfx.drawSprite(x + sizeX * i, y, r, fg);
 		
 			// obere Zeile
 			
@@ -135,12 +129,12 @@ class Frame {
 				r = S;
 			}
 			
-			Gfx.drawSprite(x + sizeX * i * Tobor.ZOOM, y + (h - 1) * sizeY * Tobor.ZOOM, r, fg);
+			Gfx.drawSprite(x + sizeX * i, y + (h - 1) * sizeY, r, fg);
 		}
 		
 		for (i in 1 ... (h - 1)) {
-			Gfx.drawSprite(x, y + sizeY * i * Tobor.ZOOM, W, fg);
-			Gfx.drawSprite(x + (w - 1) * sizeX * Tobor.ZOOM, y + sizeY * i * Tobor.ZOOM, E, fg);
+			Gfx.drawSprite(x, y + sizeY * i, W, fg);
+			Gfx.drawSprite(x + (w - 1) * sizeX, y + sizeY * i, E, fg);
 		}
 	}
 }

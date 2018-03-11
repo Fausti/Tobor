@@ -149,9 +149,9 @@ class Gfx {
 		}
 		
 		if (w == -1 || h == -1) {
-			return new Sprite(_texture, x, y, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT, Tobor.ZOOM);
+			return new Sprite(_texture, x, y, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
 		} else {
-			return new Sprite(_texture, x, y, w, h, Tobor.ZOOM);
+			return new Sprite(_texture, x, y, w, h);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package core;
 
-import lime.Lib;
 import lime.graphics.opengl.GL;
 
 import gfx.Framebuffer;
@@ -31,6 +30,9 @@ class LimeGame {
 		
 		__defaultShader = Shader.createDefaultShader();
 		__frameBuffer = new Framebuffer(__framebuffer_w, __framebuffer_h);
+		
+		// falls das Spielfenster initial nicht der originalen Spielgröße entspricht
+		__resize(__application.window.width, __application.window.height);
 		
 		init();
 	}

@@ -23,12 +23,10 @@ import world.World;
  * @author Matthias Faust
  */
 class Tobor extends LimeGame {
-	public static inline var ZOOM:Int = 2;
-	
-	public static inline var SCREEN_WIDTH:Int = 640 * ZOOM;
-	public static inline var SCREEN_HEIGHT:Int = 348 * ZOOM;
-	public static inline var TILE_WIDTH:Int = 16 * ZOOM;
-	public static inline var TILE_HEIGHT:Int = 12 * ZOOM;
+	public static inline var SCREEN_WIDTH:Int = 640;
+	public static inline var SCREEN_HEIGHT:Int = 348;
+	public static inline var TILE_WIDTH:Int = 16;
+	public static inline var TILE_HEIGHT:Int = 12;
 	
 	public static var fontSmall:Font;
 	public static var fontBig:Font;

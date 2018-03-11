@@ -89,13 +89,13 @@ class PlayScreen extends Screen {
 		
 		var gold = 0; // game.world.player.gold;
 		if (gold > 0) {
-			Gfx.drawSprite(416 * Tobor.ZOOM, 0, SPR_GOLD);
+			Gfx.drawSprite(416, 0, SPR_GOLD);
 			Tobor.fontSmall.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
 		var weight = 0; // game.world.player.inventory.length;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
-		Gfx.drawSprite(471 * Tobor.ZOOM, 0, SPR_BAG);
+		Gfx.drawSprite(471, 0, SPR_BAG);
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
 	}
 	

@@ -18,8 +18,8 @@ class Font {
 	private var chars:Array<Sprite> = [];
 	
 	public function new(w:Int, h:Int, offsetY:Int) {
-		this.glyphW = w * Tobor.ZOOM;
-		this.glyphH = h * Tobor.ZOOM; 
+		this.glyphW = w;
+		this.glyphH = h; 
 		
 		this.offsetY = offsetY;
 		
@@ -44,8 +44,8 @@ class Font {
 	}
 	
 	public inline function drawString(x:Float, y:Float, text:String, fg:Color = null, bg:Color = null) {
-		var posX:Float = x * Tobor.ZOOM;
-		var posY:Float = y * Tobor.ZOOM;
+		var posX:Float = x;
+		var posY:Float = y;
 		
 		text = Utf8.decode(text);
 		
@@ -65,13 +65,13 @@ class Font {
 		
 		// Char zeichnen
 		Gfx.drawSprite(x, y, chars[charIndex], Color.GRAY);
-		Gfx.drawSprite(x + Tobor.ZOOM * 2, y + Tobor.ZOOM * 2, chars[charIndex], Color.BLACK);
-		Gfx.drawSprite(x + Tobor.ZOOM, y + Tobor.ZOOM, chars[charIndex], Color.DARK_GRAY);
+		Gfx.drawSprite(x + 2, y + 2, chars[charIndex], Color.BLACK);
+		Gfx.drawSprite(x + 1, y + 1, chars[charIndex], Color.DARK_GRAY);
 	}
 	
 	public inline function drawShadowString(x:Float, y:Float, text:String, bg:Color = null) {
-		var posX:Float = x * Tobor.ZOOM;
-		var posY:Float = y * Tobor.ZOOM;
+		var posX:Float = x;
+		var posY:Float = y;
 		
 		for (i in 0 ... text.length) {
 			drawShadowChar(posX, posY, GLYPHS.indexOf(text.charAt(i)), bg);
