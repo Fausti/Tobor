@@ -1,4 +1,5 @@
 package ui;
+import lime.math.Rectangle;
 
 /**
  * ...
@@ -46,5 +47,4 @@ class Dialog {
 	public function ok() {
 		if (onOk != null) onOk();
 	}
-	
 }

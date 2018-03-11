@@ -6,7 +6,7 @@ import gfx.Batch;
  * @author Matthias Faust
  */
 class Screen {
-	var game:Tobor;
+	public var game:Tobor;
 	var batch:Batch;
 	var dialog:Dialog;
 	

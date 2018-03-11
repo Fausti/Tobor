@@ -9,8 +9,6 @@ import world.entities.EntityAI;
  * @author Matthias Faust
  */
 class Robot extends EntityAI {
-	private var type:Int;
-	
 	public function new() {
 		super();
 	

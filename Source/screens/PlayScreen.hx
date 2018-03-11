@@ -29,6 +29,14 @@ class PlayScreen extends Screen {
 			dialog.update(deltaTime);
 			return;
 		} else {
+			if (Input.isKeyDown([Input.key.ESCAPE])) {
+				showMainMenu();
+				
+				return;
+			} else if (Input.isKeyDown([Input.key.RETURN])) {
+				return;
+			}
+		
 			checkPlayerMovement();
 		}
 		
@@ -38,18 +46,14 @@ class PlayScreen extends Screen {
 	function checkPlayerMovement() {
 		var speed:Float = 8;
 		
-		if (Input.isKeyDown([Input.key.A, Input.key.LEFT])) {
+		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
 			game.world.player.move(Direction.W, speed);
-		} else if (Input.isKeyDown([Input.key.D, Input.key.RIGHT])) {
+		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
 			game.world.player.move(Direction.E, speed);
-		} else if (Input.isKeyDown([Input.key.W, Input.key.UP])) {
+		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
 			game.world.player.move(Direction.N, speed);
-		} else if (Input.isKeyDown([Input.key.S, Input.key.DOWN])) {
+		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
 			game.world.player.move(Direction.S, speed);
-		} else if (Input.isKeyDown([Input.key.ESCAPE])) {
-			showMainMenu();
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
-			
 		}
 	}
 	

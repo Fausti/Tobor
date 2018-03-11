@@ -1,0 +1,102 @@
+package ui;
+import screens.EditorScreen;
+import world.Objects;
+
+/**
+ * ...
+ * @author Matthias Faust
+ */
+class DialogTiles extends Dialog {
+	public static inline var MAX_ITEMS:Int = 32;
+	
+	var SPR_SELECTOR:Sprite;
+	var SPR_NONE:Sprite;
+	
+	var cursorX:Int = 0;
+	var cursorY:Int = 0;
+	
+	var factory:Objects;
+	var editor:EditorScreen;
+	
+	public function new(screen:Screen, x:Int, y:Int) {
+		super(screen, x, y);
+		
+		SPR_SELECTOR = Gfx.getSprite(160, 240);
+		SPR_NONE = Gfx.getSprite(0, 0);
+		
+		this.editor = cast screen;
+		this.factory = screen.game.world.factory;
+	}
+
+	override public function update(deltaTime:Float) {
+		super.update(deltaTime);
+		
+		var tile:Int = editor.currentTile;
+		
+		if (Input.isKeyDown([Input.key.ESCAPE])) {
+			screen.hideDialog();
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			screen.hideDialog();
+		} else if (Input.isKeyDown(Tobor.KEY_LEFT)) {
+			tile--;
+			Input.wait(0.2);
+		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
+			tile++;
+			Input.wait(0.2);
+		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
+			tile -= MAX_ITEMS;
+			Input.wait(0.2);
+		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
+			tile += MAX_ITEMS;
+			Input.wait(0.2);
+		}
+		
+		if (tile < 0) {
+			tile = 0;
+		} else if (tile >= factory.length) {
+			tile = factory.length - 1;
+		}
+		
+		editor.currentTile = tile;
+	}
+	
+	override public function render() {
+		var tiles:Int = factory.length; // 256
+		
+		var boxH:Int;
+		var boxW:Int;
+		
+		if (tiles <= MAX_ITEMS) {
+			boxW = MAX_ITEMS;
+			boxH = 1;
+		} else {
+			boxW = MAX_ITEMS;
+			boxH = Math.ceil(tiles / boxW);
+		}
+		
+		Gfx.drawTexture(x, y, 40 * Tobor.TILE_WIDTH, boxH * Tobor.TILE_HEIGHT, SPR_NONE.uv, Color.GREEN);
+		// Dialog.drawBackground(x, y, 40 * 16, boxH * 12);
+		
+		var tX:Int = 0;
+		var tY:Int = 0;
+		
+		for (i in 0 ... tiles) {
+			var t = factory.get(i);
+			
+			Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_NONE);
+			
+			if (editor.currentTile == i) {
+				Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr);
+				Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_SELECTOR);
+			} else {
+				Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr, Color.DARK_GREEN);
+			}
+			
+			tX++;
+			if (tX >= boxW) {
+				tX = 0;
+				tY++;
+			}
+		}
+	}
+}

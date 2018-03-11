@@ -22,8 +22,32 @@ class Entity {
 	
 	private var sprites:Array<Sprite> = [];
 	
+	private var type:Int = 0;
+	
 	public function new() {
 		boundingBox = new Rectangle(0, 0, 1, 1);
+		
+		init();
+	}
+	
+	public function init() {
+		
+	}
+	
+	function hasData(data:Dynamic, id:String):Bool {
+		return Reflect.hasField(data, id);
+	}
+	
+	function getData(data:Dynamic, id:String):Dynamic {
+		if (hasData(data, id)) {
+			return Reflect.field(data, id);
+		}
+		
+		return 0;
+	}
+	
+	public function parseData(data) {
+		
 	}
 	
 	public function setRoom(r:Room) {
@@ -37,6 +61,12 @@ class Entity {
 	}
 	
 	public function render() {
+		for (spr in sprites) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr);
+		}
+	}
+	
+	public function render_editor() {
 		for (spr in sprites) {
 			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr);
 		}

@@ -4,6 +4,7 @@ import cpp.vm.Gc;
 import screens.IntroScreen;
 import screens.PlayScreen;
 import screens.EpisodesScreen;
+import screens.EditorScreen;
 import ui.Font;
 import ui.Frame;
 import ui.Screen;
@@ -50,6 +51,8 @@ class Tobor extends LimeGame {
 	public function new() {
 		super();
 		
+		CompileTime.importPackage("world.entities.std");
+		
 		__framebuffer_w = SCREEN_WIDTH;
 		__framebuffer_h = SCREEN_HEIGHT;
 	}
@@ -79,7 +82,8 @@ class Tobor extends LimeGame {
 		// run the garbage collector
 		collectGarbage();
 		
-		setScreen(new IntroScreen(this));
+		// setScreen(new IntroScreen(this));
+		setScreen(new EditorScreen(this));
 	}
 	
 	function collectGarbage() {
@@ -118,4 +122,14 @@ class Tobor extends LimeGame {
 		this.screen = newScreen;
 		this.screen.show();
 	}
+	
+	// Tasten...
+	
+	public static var KEY_LEFT = [Input.key.A, Input.key.LEFT];
+	public static var KEY_RIGHT = [Input.key.D, Input.key.RIGHT];
+	public static var KEY_UP = [Input.key.W, Input.key.UP];
+	public static var KEY_DOWN = [Input.key.S, Input.key.DOWN];
+	
+	public static var KEY_ESC = [Input.key.ESCAPE];
+	public static var KEY_ENTER = [Input.key.RETURN, Input.key.RETURN2];
 }

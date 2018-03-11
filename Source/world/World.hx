@@ -6,13 +6,17 @@ import world.entities.std.Charlie;
  * @author Matthias Faust
  */
 class World {
+	public var factory:Objects;
+	
 	public var roomCurrent:Room;
 	public var roomList:Array<Room> = [];
 	
 	public var player:Charlie;
 	
 	public function new() {
-		player = new Charlie();
+		factory = new Objects();
+		
+		player = cast factory.create("OBJ_CHARLIE");
 		player.setPosition(20, 14);
 		
 		var room = new Room(this);
@@ -31,5 +35,10 @@ class World {
 	public function render() {
 		if (roomCurrent != null) roomCurrent.render();
 		if (player != null) player.render();
+	}
+	
+	public function render_editor() {
+		if (roomCurrent != null) roomCurrent.render_editor();
+		if (player != null) player.render_editor();
 	}
 }

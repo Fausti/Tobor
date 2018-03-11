@@ -31,25 +31,36 @@ class Room {
 		
 		var e:Entity;
 		
-		for (i in 0 ... 100) {
-			e = new Wall();
-			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-			
-			addEntity(e);
+		for (i in 0 ... 50) {
+			e = world.factory.create("OBJ_WALL");
+			if (e != null) {
+				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
+				addEntity(e);
+			}
+		}
+		
+		for (i in 0 ... 50) {
+			e = world.factory.create("OBJ_WALL_BLACK");
+			if (e != null) {
+				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
+				addEntity(e);
+			}
 		}
 		
 		for (i in 0 ... 100) {
-			e = new Isolator();
-			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-			
-			addEntity(e);
+			e = world.factory.create("OBJ_ISOLATOR");
+			if (e != null) {
+				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
+				addEntity(e);
+			}
 		}
 		
 		for (i in 0 ... 5) {
-			e = new Robot();
-			e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-			
-			addEntity(e);
+			e = world.factory.create("OBJ_ROBOT");
+			if (e != null) {
+				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
+				addEntity(e);
+			}
 		}
 	}
 	
@@ -62,6 +73,12 @@ class Room {
 	public function render() {
 		for (e in listAll) {
 			e.render();
+		}
+	}
+	
+	public function render_editor() {
+		for (e in listAll) {
+			e.render_editor();
 		}
 	}
 	
