@@ -1,5 +1,8 @@
 package screens;
+
 import ui.DialogTiles;
+import world.Room;
+import world.entities.Entity;
 
 /**
  * ...
@@ -10,6 +13,8 @@ class EditorScreen extends PlayScreen {
 	
 	public var cursorX:Int;
 	public var cursorY:Int;
+	var oldCursorX:Int;
+	var oldCursorY:Int;
 	
 	public var currentTile:Int = 0;
 	
@@ -44,8 +49,12 @@ class EditorScreen extends PlayScreen {
 			} else if (Input.isKeyDown([Input.key.RETURN])) {
 				if (editMode) {
 					showDialog(dialogTiles);
+					
+					return;
 				} else {
 					// showDialog(dialogInventory);
+					
+					return;
 				}
 				
 				return;
@@ -53,12 +62,49 @@ class EditorScreen extends PlayScreen {
 		
 			if (!editMode) checkPlayerMovement();
 			
-			if (cursorX == 1 && cursorY == 0 && Input.isMouseDown(0)) {
+			if (cursorX == 1 && cursorY == 0 && Input.mouseBtnLeft) {
 				switchEditMode();
+				return;
 			}
 			
 			if (Input.isKeyDown([Input.key.F5])) {
 				switchEditMode();
+				return;
+			}
+			
+			if (Input.mouseBtnLeft) {
+				if (editMode) {
+					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY < Room.HEIGHT) {
+						// im Raum zeichnen
+						var template = game.world.factory.get(currentTile);
+						
+						var e:Entity = template.create();
+						e.setPosition(cursorX, cursorY - 1);
+						
+						game.world.roomCurrent.addEntity(e);
+						
+						return;
+					} else if (cursorX == 10 && cursorY == 0) {
+						// den Objektwahl Dialog öffnen
+						showDialog(dialogTiles);
+						
+						return;
+					}
+				}
+			} else if (Input.mouseBtnRight) {
+				if (editMode) {
+					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY < Room.HEIGHT) {
+						// Objekte an Position entfernen
+						
+						var list = game.world.roomCurrent.getEntitiesAt(cursorX, cursorY - 1);
+						
+						for (e in list) {
+							game.world.roomCurrent.removeEntity(e);
+						}
+						
+						return;
+					}
+				}
 			}
 		}
 		
@@ -140,6 +186,17 @@ class EditorScreen extends PlayScreen {
 			}
 			
 			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
+			
+			// aktives Objekt
+			Tobor.fontBig.drawString(9 * 16 + 8, 0, "[", Color.BLACK);
+			Tobor.fontBig.drawString(11 * 16 - 4, 0, "]", Color.BLACK);
+			
+			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, game.world.factory.get(currentTile).spr);
+			
+			// (Debug) Anzahl Objekte im Raum
+			var countEntities:Int = game.world.roomCurrent.length;
+			var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
+			Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
 		}
 	}
 }

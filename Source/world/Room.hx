@@ -4,9 +4,6 @@ import world.World;
 import world.entities.Entity;
 import world.entities.EntityDynamic;
 import world.entities.EntityStatic;
-import world.entities.std.Isolator;
-import world.entities.std.Robot;
-import world.entities.std.Wall;
 import world.entities.std.Charlie;
 
 /**
@@ -25,6 +22,12 @@ class Room {
 	private var listStatic:Array<Entity> = [];
 	
 	private var listRemove:Array<Entity> = [];
+
+	public var length(get, null):Int;
+	
+	function get_length():Int {
+		return listAll.length;
+	}
 	
 	public function new(w:World) {
 		this.world = w;
@@ -114,7 +117,7 @@ class Room {
 		e.setRoom(this);
 	}
 	
-	function removeEntity(e:Entity) {
+	public function removeEntity(e:Entity) {
 		e.setRoom(null);
 		
 		listAll.remove(e);

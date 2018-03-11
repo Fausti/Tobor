@@ -136,4 +136,8 @@ private class ObjectsEntry {
 		
 		return e;
 	}
+	
+	function toString() {
+		return Std.string(index) + "# " + Std.string(_class);
+	}
 }
