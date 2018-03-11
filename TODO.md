@@ -1,0 +1,1 @@
+- einige Objektklassen durch passende Interfaces ersetzen?
