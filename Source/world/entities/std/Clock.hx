@@ -11,7 +11,7 @@ class Clock extends EntityCollectable {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(176, 12));
+		setSprite(Gfx.getSprite(176, 12));
 	}
 	
 }

@@ -11,7 +11,7 @@ class QuestionMark extends EntityStatic {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(144, 12));
+		setSprite(Gfx.getSprite(144, 12));
 	}
 	
 }

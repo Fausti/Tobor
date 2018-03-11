@@ -48,20 +48,11 @@ class Wall extends EntityStatic {
 		}
 		
 		if (spr != null) {
-			sprites.push(spr);
+			setSprite(spr);
 		}
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
 		return false;
-	}
-	
-	override public function parseData(data) {
-		super.parseData(data);
-		
-		if (hasData(data, "type")) {
-			this.type = data.type;
-			init();
-		}
 	}
 }

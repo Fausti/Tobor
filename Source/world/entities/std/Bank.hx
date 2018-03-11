@@ -11,7 +11,7 @@ class Bank extends EntityStatic {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(48, 12));
+		setSprite(Gfx.getSprite(48, 12));
 	}
 	
 }

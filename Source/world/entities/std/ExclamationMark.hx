@@ -11,7 +11,7 @@ class ExclamationMark extends EntityCollectable {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(192, 12));
+		setSprite(Gfx.getSprite(192, 12));
 	}
 	
 }

@@ -47,7 +47,10 @@ class Entity {
 	}
 	
 	public function parseData(data) {
-		
+		if (hasData(data, "type")) {
+			this.type = data.type;
+			init();
+		}
 	}
 	
 	public function setRoom(r:Room) {
@@ -58,6 +61,10 @@ class Entity {
 		for (spr in sprites) {
 			spr.update(deltaTime);
 		}
+	}
+	
+	public function setSprite(spr:Sprite, ?index:Int = 0) {
+		sprites[0] = spr;
 	}
 	
 	public function render() {

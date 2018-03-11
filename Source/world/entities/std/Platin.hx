@@ -11,7 +11,7 @@ class Platin extends EntityCollectable {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(128, 12));
+		setSprite(Gfx.getSprite(128, 12));
 	}
 	
 }

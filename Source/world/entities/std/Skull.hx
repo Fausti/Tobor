@@ -11,7 +11,7 @@ class Skull extends EntityStatic {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(80, 12));
+		setSprite(Gfx.getSprite(80, 12));
 	}
 	
 }

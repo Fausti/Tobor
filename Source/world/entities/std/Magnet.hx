@@ -25,7 +25,7 @@ class Magnet extends EntityCollectable {
 		}
 		
 		if (spr != null) {
-			sprites.push(spr);
+			setSprite(spr);
 		}
 	}
 }

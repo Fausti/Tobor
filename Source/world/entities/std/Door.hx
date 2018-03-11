@@ -18,7 +18,7 @@ class Door extends EntityStatic {
 		spr = Gfx.getSprite(type * 16, 36);
 		
 		if (spr != null) {
-			sprites.push(spr);
+			setSprite(spr);
 		}
 	}
 }

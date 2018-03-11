@@ -13,6 +13,6 @@ class Isolator extends EntityPushable {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(240, 0));
+		setSprite(Gfx.getSprite(240, 0));
 	}
 }

@@ -15,10 +15,10 @@ class Munition extends EntityCollectable {
 	override public function init() {
 		var spr:Sprite = null;
 		
-		spr = Gfx.getSprite(type * 144, 60);
+		spr = Gfx.getSprite(type * 16 + 144, 60);
 		
 		if (spr != null) {
-			sprites.push(spr);
+			setSprite(spr);
 		}
 	}
 	

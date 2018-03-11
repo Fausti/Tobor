@@ -18,8 +18,7 @@ class Key extends EntityCollectable {
 		spr = Gfx.getSprite(type * 16, 48);
 		
 		if (spr != null) {
-			sprites.push(spr);
+			setSprite(spr);
 		}
 	}
-	
 }

@@ -27,7 +27,7 @@ class Exit extends EntityDynamic {
 		}
 		
 		if (spr != null) {
-			sprites.push(spr);
+			setSprite(spr);
 		}
 	}
 }

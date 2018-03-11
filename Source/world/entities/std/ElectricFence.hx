@@ -11,7 +11,7 @@ class ElectricFence extends EntityPushable {
 	public function new() {
 		super();
 		
-		sprites.push(Gfx.getSprite(64, 12));
+		setSprite(Gfx.getSprite(64, 12));
 	}
 	
 }
