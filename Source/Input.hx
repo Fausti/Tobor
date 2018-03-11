@@ -45,7 +45,7 @@ class Input {
 	public static function onKeyDown(keyCode:KeyCode, modifier:KeyModifier):Void {
 		if (keyCode == lastKeyCode) return;
 		
-		if (modifier != KeyModifier.NONE) _mods.set(modifier, true);
+		if (modifier != KeyModifier.NONE && modifier != KeyModifier.NUM_LOCK) _mods.set(modifier, true);
 		_keys.set(keyCode, true);
 		
 		lastKeyCode = keyCode;
@@ -55,7 +55,7 @@ class Input {
 		if (keyCode == lastKeyCode) lastKeyCode = -1;
 		waitTime = 0;
 		
-		if (modifier != KeyModifier.NONE) _mods.set(modifier, false);
+		if (modifier != KeyModifier.NONE && modifier != KeyModifier.NUM_LOCK) _mods.set(modifier, false);
 		_keys.set(keyCode, false);
 	}
 	

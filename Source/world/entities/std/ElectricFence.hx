@@ -6,7 +6,7 @@ import world.entities.EntityPushable;
  * ...
  * @author Matthias Faust
  */
-class ElektrikFence extends EntityPushable {
+class ElectricFence extends EntityPushable {
 
 	public function new() {
 		super();

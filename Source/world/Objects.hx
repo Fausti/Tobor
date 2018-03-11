@@ -17,7 +17,7 @@ class Objects {
 		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120));
 		
 		register("OBJ_ISOLATOR", 	Isolator, 	Gfx.getSprite(240, 0));
-		register("OBJ_ELECTRIC_FENCE", ElektrikFence, Gfx.getSprite(64, 12));
+		register("OBJ_ELECTRIC_FENCE", ElectricFence, Gfx.getSprite(64, 12));
 		
 		register("OBJ_SKULL", 		Skull, 		Gfx.getSprite(80, 12));
 		
