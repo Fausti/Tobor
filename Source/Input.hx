@@ -19,15 +19,37 @@ class Input {
 	
 	static var lastMouseButton:Int = -1;
 	public static var _mouseButton:Map<Int, Bool> = new Map<Int, Bool>();
+	
 	public static var mouseX:Float;
 	public static var mouseY:Float;
+	public static var mouseBtnLeft:Bool = false;
+	public static var mouseBtnMiddle:Bool = false;
+	public static var mouseBtnRight:Bool = false;
 	
 	public static function onMouseDown(btn:Int) {
 		_mouseButton.set(btn, true);
+		
+		switch(btn) {
+			case 0:
+				mouseBtnLeft = true;
+			case 1:
+				mouseBtnMiddle  = true;
+			case 2:
+				mouseBtnRight = true;
+		}
 	}
 	
 	public static function onMouseUp(btn:Int) {
 		_mouseButton.set(btn, false);
+		
+		switch(btn) {
+			case 0:
+				mouseBtnLeft = false;
+			case 1:
+				mouseBtnMiddle  = false;
+			case 2:
+				mouseBtnRight = false;
+		}
 	}
 	
 	public static function update(deltaTime:Float) {
@@ -105,5 +127,9 @@ class Input {
 		_keys = new Map<KeyCode, Bool>();
 		_mods = new Map<KeyModifier, Bool>();
 		_mouseButton = new Map<Int, Bool>();
+		
+		mouseBtnLeft = false;
+		mouseBtnMiddle = false;
+		mouseBtnRight = false;
 	}
 }

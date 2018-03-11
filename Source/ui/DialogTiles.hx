@@ -33,6 +33,44 @@ class DialogTiles extends Dialog {
 		
 		var tile:Int = editor.currentTile;
 		
+		{
+			var oldX = cursorX;
+			var oldY = cursorY;
+			
+			cursorX = editor.cursorX;
+			cursorY = editor.cursorY;
+			
+			var tiles:Int = factory.length; // 256
+		
+			var boxH:Int;
+			var boxW:Int;
+		
+			if (tiles <= MAX_ITEMS) {
+				boxW = MAX_ITEMS;
+				boxH = 1;
+			} else {
+				boxW = MAX_ITEMS;
+				boxH = Math.ceil(tiles / boxW);
+			}
+			
+			if (oldX != cursorX || oldY != cursorY) {
+				// trace(cursorX, cursorY);
+				
+				if (cursorY < boxH && cursorX >= 4 && cursorX < 36) {
+					// trace(cursorX, cursorY);
+					tile = cursorY * MAX_ITEMS + (cursorX - 4);
+				}
+			}
+			
+			if (Input.mouseBtnLeft) {
+				if (cursorY < boxH && cursorX >= 4 && cursorX < 36) {
+					Input.clearKeys();
+					editor.currentTile = tile;
+					screen.hideDialog();
+				}
+			}
+		}
+		
 		if (Input.isKeyDown([Input.key.ESCAPE])) {
 			screen.hideDialog();
 		} else if (Input.isKeyDown([Input.key.RETURN])) {

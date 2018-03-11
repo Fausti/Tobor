@@ -7,6 +7,10 @@ import ui.DialogTiles;
  */
 class EditorScreen extends PlayScreen {
 	var editMode:Bool = true;
+	
+	public var cursorX:Int;
+	public var cursorY:Int;
+	
 	public var currentTile:Int = 0;
 	
 	var SPR_CURSOR:Sprite;
@@ -26,7 +30,9 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	override public function update(deltaTime:Float) {
-		
+		cursorX = Math.floor(Input.mouseX / Tobor.TILE_WIDTH);
+		cursorY = Math.floor(Input.mouseY / Tobor.TILE_HEIGHT);
+				
 		if (dialog != null) {
 			dialog.update(deltaTime);
 			return;
@@ -47,13 +53,21 @@ class EditorScreen extends PlayScreen {
 		
 			if (!editMode) checkPlayerMovement();
 			
+			if (cursorX == 1 && cursorY == 0 && Input.isMouseDown(0)) {
+				switchEditMode();
+			}
+			
 			if (Input.isKeyDown([Input.key.F5])) {
-				editMode = !editMode;
-				Input.clearKeys();
+				switchEditMode();
 			}
 		}
 		
 		if (!editMode) game.world.update(deltaTime);
+	}
+	
+	function switchEditMode() {
+		editMode = !editMode;
+		Input.clearKeys();
 	}
 	
 	override public function render() {
@@ -110,9 +124,6 @@ class EditorScreen extends PlayScreen {
 			dialog.render();
 		} else {
 			if (editMode) {
-				var cursorX:Int = Math.floor(Input.mouseX / Tobor.TILE_WIDTH);
-				var cursorY:Int = Math.floor(Input.mouseY / Tobor.TILE_HEIGHT);
-		
 				if (cursorY > 0) {
 					Gfx.drawSprite(cursorX * Tobor.TILE_WIDTH, cursorY * Tobor.TILE_HEIGHT, SPR_CURSOR);
 				}
