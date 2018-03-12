@@ -56,6 +56,7 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function init() {
+		Files.init();
 		Sound.init();
 		
 		Gfx.setup(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -73,6 +74,7 @@ class Tobor extends LimeGame {
 		batch = new Batch();
 		
 		world = new World();
+		Files.saveToFile(Files.DIR_EPISODES + "/test.episode", world.save());
 		
 		highScore = new Highscore();
 		highScore.load();

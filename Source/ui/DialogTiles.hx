@@ -1,6 +1,6 @@
 package ui;
 import screens.EditorScreen;
-import world.Objects;
+import world.ObjectFactory;
 
 /**
  * ...
@@ -15,7 +15,7 @@ class DialogTiles extends Dialog {
 	var cursorX:Int = 0;
 	var cursorY:Int = 0;
 	
-	var factory:Objects;
+	var factory:ObjectFactory;
 	var editor:EditorScreen;
 	
 	public function new(screen:Screen, x:Int, y:Int) {

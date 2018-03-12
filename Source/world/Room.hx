@@ -15,6 +15,9 @@ class Room {
 	public static inline var HEIGHT:Int = 28;
 	
 	public var world:World;
+	public var x:Int;
+	public var y:Int;
+	public var z:Int;
 	
 	private var listAll:Array<Entity> = [];
 	
@@ -135,5 +138,23 @@ class Room {
 	
 	public function getPlayer():Charlie {
 		return world.player;
+	}
+	
+	// Save / Load
+	
+	public function save():Array<Map<String, Dynamic>> {
+		var data:Array<Map<String, Dynamic>> = [];
+		
+		for (e in listAll) {
+			if (e != null) {
+				if (!Std.is(e, Charlie)) {
+					if (e.canSave()) {
+						data.push(e.saveData());
+					}
+				}
+			}
+		}
+		
+		return data;
 	}
 }

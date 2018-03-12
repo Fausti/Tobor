@@ -4,6 +4,7 @@ import gfx.Sprite;
 import lime.math.Rectangle;
 import lime.math.Vector2;
 import world.Room;
+import world.ObjectFactory.ObjectTemplate;
 
 /**
  * ...
@@ -22,7 +23,7 @@ class Entity {
 	
 	private var sprites:Array<Sprite> = [];
 	
-	private var type:Int = 0;
+	public var type:Int = 0;
 	
 	public function new() {
 		boundingBox = new Rectangle(0, 0, 1, 1);
@@ -128,5 +129,28 @@ class Entity {
 	
 	private function isOutsideMap(x:Float, y:Float):Bool {
 		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
+	}
+	
+	// Save / Load
+	
+	public function canSave():Bool {
+		return true;
+	}
+	
+	public function saveData():Map<String, Dynamic> {
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+		
+		var def:ObjectTemplate = room.world.factory.findIDFromObject(this);
+		
+		if (def != null) {
+			data.set("id", def.name);
+			data.set("type", type);
+			data.set("x", gridX);
+			data.set("y", gridY);
+		} else {
+			return null;
+		}
+		
+		return data;
 	}
 }

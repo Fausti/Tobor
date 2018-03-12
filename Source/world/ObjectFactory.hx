@@ -6,10 +6,10 @@ import world.entities.std.*;
  * ...
  * @author Matthias Faust
  */
-class Objects {
+class ObjectFactory {
 	public var length(default, null):Int = 0;
 	
-	private var list:Map<String, ObjectsEntry> = new Map<String, ObjectsEntry>();
+	private var list:Map<String, ObjectTemplate> = new Map<String, ObjectTemplate>();
 	
 	public function new() {
 		register("OBJ_CHARLIE", 	Charlie, 	Gfx.getSprite(16, 0));
@@ -80,12 +80,12 @@ class Objects {
 			_class = c;
 		}
 		
-		list.set(id, new ObjectsEntry(length, _class, d, spr));
+		list.set(id, new ObjectTemplate(id, length, _class, d, spr));
 		length++;
 	}
 	
-	public function get(index:Int):ObjectsEntry {
-		var oe:ObjectsEntry = null;
+	public function get(index:Int):ObjectTemplate {
+		var oe:ObjectTemplate = null;
 		
 		for (key in list.keys()) {
 			oe = list.get(key);
@@ -95,8 +95,29 @@ class Objects {
 		return null;
 	}
 	
+	public function findIDFromObject(o:Dynamic, ?checkForType:Bool = true):ObjectTemplate {
+		for (key in list.keys()) {
+			var oe:ObjectTemplate = list.get(key);
+			
+			if (oe.classPath == Type.getClass(o)) {
+				if (checkForType) {
+					if (Reflect.hasField(oe.data, "type")) { 
+						if (oe.data.type == cast(o, Entity).type) return oe;
+					} else {
+						return oe;
+					}
+				} else {
+					return oe;
+				}
+			}
+		}
+		
+		trace("Template not found for: " + Type.getClass(o));
+		return null;
+	}
+	
 	public function create(id:Dynamic):Entity {
-		var oe:ObjectsEntry;
+		var oe:ObjectTemplate;
 		
 		if (Std.is(id, String)) {
 			oe = list.get(id);
@@ -114,21 +135,23 @@ class Objects {
 	}
 }
 
-private class ObjectsEntry {
+class ObjectTemplate {
 	public var index:Int = -1;
-	var _class:Class<Entity>;
-	var data:Dynamic;
+	public var name:String;
+	public var classPath:Class<Entity>;
+	public var data:Dynamic;
 	public var spr:Sprite;
 	
-	public function new(index:Int, c:Class<Entity>, d:Dynamic, spr:Sprite) {
+	public function new(id:String, index:Int, c:Class<Entity>, d:Dynamic, spr:Sprite) {
+		this.name = id;
 		this.index = index;
-		this._class = c;
+		this.classPath = c;
 		this.data = d;
 		this.spr = spr;
 	}
 	
 	public function create():Entity {
-		var e:Entity = Type.createInstance(_class, []);
+		var e:Entity = Type.createInstance(classPath, []);
 		
 		if (e != null) {
 			e.parseData(data);
@@ -138,6 +161,6 @@ private class ObjectsEntry {
 	}
 	
 	function toString() {
-		return Std.string(index) + "# " + Std.string(_class);
+		return Std.string(index) + "# " + Std.string(classPath);
 	}
 }

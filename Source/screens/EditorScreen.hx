@@ -81,7 +81,7 @@ class EditorScreen extends PlayScreen {
 						var e:Entity = template.create();
 						e.setPosition(cursorX, cursorY - 1);
 						
-						game.world.roomCurrent.addEntity(e);
+						game.world.room.addEntity(e);
 						
 						return;
 					} else if (cursorX == 10 && cursorY == 0) {
@@ -96,10 +96,10 @@ class EditorScreen extends PlayScreen {
 					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY < Room.HEIGHT) {
 						// Objekte an Position entfernen
 						
-						var list = game.world.roomCurrent.getEntitiesAt(cursorX, cursorY - 1);
+						var list = game.world.room.getEntitiesAt(cursorX, cursorY - 1);
 						
 						for (e in list) {
-							game.world.roomCurrent.removeEntity(e);
+							game.world.room.removeEntity(e);
 						}
 						
 						return;
@@ -194,7 +194,7 @@ class EditorScreen extends PlayScreen {
 			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, game.world.factory.get(currentTile).spr);
 			
 			// (Debug) Anzahl Objekte im Raum
-			var countEntities:Int = game.world.roomCurrent.length;
+			var countEntities:Int = game.world.room.length;
 			var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
 			Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
 		}
