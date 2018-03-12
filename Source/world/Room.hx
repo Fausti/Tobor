@@ -19,11 +19,15 @@ class Room {
 	public var y:Int;
 	public var z:Int;
 	
-	private var listAll:Array<Entity> = [];
+	// Savestate Liste
+	private var listState:Array<Entity> = [];
 	
+	// Objectlisten
+	private var listAll:Array<Entity> = [];
 	private var listDynamic:Array<Entity> = [];
 	private var listStatic:Array<Entity> = [];
 	
+	// Liste mit zu löschenden Objekten
 	private var listRemove:Array<Entity> = [];
 
 	public var length(get, null):Int;
@@ -34,40 +38,6 @@ class Room {
 	
 	public function new(w:World) {
 		this.world = w;
-		
-		var e:Entity;
-		
-		for (i in 0 ... 50) {
-			e = world.factory.create("OBJ_WALL");
-			if (e != null) {
-				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-				addEntity(e);
-			}
-		}
-		
-		for (i in 0 ... 50) {
-			e = world.factory.create("OBJ_WALL_BLACK");
-			if (e != null) {
-				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-				addEntity(e);
-			}
-		}
-		
-		for (i in 0 ... 100) {
-			e = world.factory.create("OBJ_ISOLATOR");
-			if (e != null) {
-				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-				addEntity(e);
-			}
-		}
-		
-		for (i in 0 ... 5) {
-			e = world.factory.create("OBJ_ROBOT");
-			if (e != null) {
-				e.setPosition(Std.random(WIDTH), Std.random(HEIGHT));
-				addEntity(e);
-			}
-		}
 	}
 	
 	public function update(deltaTime:Float) {
@@ -83,12 +53,17 @@ class Room {
 	}
 	
 	public function render_editor() {
-		for (e in listAll) {
+		for (e in listState) {
 			e.render_editor();
 		}
 	}
 	
 	public function addEntity(e:Entity) {
+		if (e == null) {
+			trace("addEntity: object is null!");
+			return;
+		}
+		
 		if (Std.is(e, Charlie)) {
 			trace("Player shouldn't added to rooms!");
 			return;
@@ -120,6 +95,24 @@ class Room {
 		e.setRoom(this);
 	}
 	
+	public function addEntity_editor(e:Entity) {
+		if (Std.is(e, Charlie)) {
+			trace("Player shouldn't added to rooms!");
+			return;
+		}
+		
+		if (getEntitiesAt_editor(e.x, e.y).length > 0) {
+			// Position ist schon belegt :(
+			return;
+		}
+		
+		if (listState.indexOf(e) == -1) {
+			listState.push(e);
+		}
+		
+		e.setRoom(this);
+	}
+	
 	public function removeEntity(e:Entity) {
 		e.setRoom(null);
 		
@@ -128,8 +121,22 @@ class Room {
 		listDynamic.remove(e);
 	}
 	
+	public function removeEntity_editor(e:Entity) {
+		e.setRoom(null);
+		
+		listState.remove(e);
+	}
+	
 	public function getEntitiesAt(x:Float, y:Float):Array<Entity> {
 		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
+		});
+		
+		return listTarget;
+	}
+	
+	public function getEntitiesAt_editor(x:Float, y:Float):Array<Entity> {
+		var listTarget:Array<Entity> = listState.filter(function(e):Bool {
 			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
 		});
 		
@@ -141,6 +148,36 @@ class Room {
 	}
 	
 	// Save / Load
+	
+	public function clear(?state:Bool = false) {
+		listAll = [];
+		listDynamic = [];
+		listStatic = [];
+	
+		listRemove = [];
+		
+		if (state) {
+			listState = [];
+		}
+	}
+	
+	public function saveState() {
+		listState = [];
+		
+		for (e in listAll) {
+			listState.push(e.clone());
+		}
+		
+		clear();
+	}
+	
+	public function loadState() {
+		clear();
+		
+		for (e in listState) {
+			addEntity(e.clone());
+		}
+	}
 	
 	public function save():Array<Map<String, Dynamic>> {
 		var data:Array<Map<String, Dynamic>> = [];

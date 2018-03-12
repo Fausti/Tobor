@@ -81,7 +81,7 @@ class EditorScreen extends PlayScreen {
 						var e:Entity = template.create();
 						e.setPosition(cursorX, cursorY - 1);
 						
-						game.world.room.addEntity(e);
+						game.world.room.addEntity_editor(e);
 						
 						return;
 					} else if (cursorX == 10 && cursorY == 0) {
@@ -96,10 +96,10 @@ class EditorScreen extends PlayScreen {
 					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY < Room.HEIGHT) {
 						// Objekte an Position entfernen
 						
-						var list = game.world.room.getEntitiesAt(cursorX, cursorY - 1);
+						var list = game.world.room.getEntitiesAt_editor(cursorX, cursorY - 1);
 						
 						for (e in list) {
-							game.world.room.removeEntity(e);
+							game.world.room.removeEntity_editor(e);
 						}
 						
 						return;
@@ -113,7 +113,12 @@ class EditorScreen extends PlayScreen {
 	
 	function switchEditMode() {
 		editMode = !editMode;
+		
 		Input.clearKeys();
+		
+		if (!editMode) {
+			game.world.room.loadState();
+		}
 	}
 	
 	override public function render() {

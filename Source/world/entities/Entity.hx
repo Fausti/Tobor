@@ -133,6 +133,16 @@ class Entity {
 	
 	// Save / Load
 	
+	public function clone():Entity {
+		var o = Type.createInstance(Type.getClass(this), []);
+		
+		o.x = x;
+		o.y = y;
+		o.type = type;
+		
+		return o;
+	}
+	
 	public function canSave():Bool {
 		return true;
 	}
