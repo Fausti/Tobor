@@ -102,10 +102,15 @@ class EditorScreen extends PlayScreen {
 						// im Raum zeichnen
 						var template = game.world.factory.get(currentTile);
 						
-						var e:Entity = template.create();
-						e.setPosition(cursorX, cursorY - 1);
-						
-						game.world.room.addEntity_editor(e);
+						if (template.name != "OBJ_CHARLIE") {
+							var e:Entity = template.create();
+							e.setPosition(cursorX, cursorY - 1);
+							game.world.room.addEntity_editor(e);
+						} else {
+							game.world.player.setPosition(cursorX, cursorY - 1);
+							game.world.oldPlayerX = cursorX;
+							game.world.oldPlayerY = cursorY - 1;
+						}
 						
 						return;
 					} else if (cursorX == 10 && cursorY == 0) {
@@ -141,7 +146,9 @@ class EditorScreen extends PlayScreen {
 		Input.clearKeys();
 		
 		if (!editMode) {
-			game.world.room.loadState();
+			game.world.loadState();
+		} else {
+			game.world.player.setPosition(game.world.oldPlayerX, game.world.oldPlayerY);
 		}
 	}
 	

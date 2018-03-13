@@ -15,12 +15,16 @@ class World {
 	public var rooms:Array<Room> = [];
 	
 	public var player:Charlie;
+	public var oldPlayerX:Int = 0;
+	public var oldPlayerY:Int = 0;
 	
 	public function new() {
 		factory = new ObjectFactory();
 		
 		player = cast factory.create("OBJ_CHARLIE");
 		player.setPosition(20, 14);
+		oldPlayerX = 20;
+		oldPlayerY = 14;
 		
 		addRoom(createRoom(0, 0, 0));
 		switchRoom(0, 0, 0);
@@ -83,6 +87,17 @@ class World {
 			roomCurrent = r;
 			player.setRoom(roomCurrent);
 		}
+	}
+	
+	public function loadState() {
+		roomCurrent.loadState();
+		player.setPosition(oldPlayerX, oldPlayerY);
+	}
+	
+	public function saveState() {
+		roomCurrent.saveState();
+		oldPlayerX = player.gridX;
+		oldPlayerY = player.gridY;
 	}
 	
 	// Save / Load
