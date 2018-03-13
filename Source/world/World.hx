@@ -12,7 +12,7 @@ class World {
 	private var roomCurrent:Room;
 	public var room(get, null):Room;
 	
-	public var roomList:Array<Room> = [];
+	public var rooms:Array<Room> = [];
 	
 	public var player:Charlie;
 	
@@ -61,13 +61,13 @@ class World {
 	}
 	
 	public function addRoom(r:Room) {
-		if (roomList.indexOf(r) == -1) {
-			roomList.push(r);
+		if (rooms.indexOf(r) == -1) {
+			rooms.push(r);
 		}
 	}
 	
 	public function findRoom(x:Int, y:Int, z:Int):Room {
-		for (r in roomList) {
+		for (r in rooms) {
 			if (r.x == x && r.y == y && r.z == z) {
 				return r;
 			}
@@ -79,7 +79,10 @@ class World {
 	public function switchRoom(x:Int, y:Int, z:Int) {
 		var r:Room = findRoom(x, y, z);
 		
-		if (r != null) roomCurrent = r;
+		if (r != null) {
+			roomCurrent = r;
+			player.setRoom(roomCurrent);
+		}
 	}
 	
 	// Save / Load
@@ -89,7 +92,7 @@ class World {
 
 		data.set("player", player.saveData());
 		
-		for (r in roomList) {
+		for (r in rooms) {
 			var worldData:Map<String, Dynamic> = new Map();
 			
 			worldData.set("x", r.x);

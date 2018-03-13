@@ -36,8 +36,11 @@ class Room {
 		return listAll.length;
 	}
 	
-	public function new(w:World) {
+	public function new(w:World, ?x:Int = 0, ?y:Int = 0, ?z:Int = 0) {
 		this.world = w;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 	
 	public function update(deltaTime:Float) {

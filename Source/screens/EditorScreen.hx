@@ -1,5 +1,6 @@
 package screens;
 
+import ui.DialogRooms;
 import ui.DialogTiles;
 import world.Room;
 import world.entities.Entity;
@@ -23,6 +24,7 @@ class EditorScreen extends PlayScreen {
 	var SPR_MODE_EDIT:Sprite;
 	
 	var dialogTiles:DialogTiles;
+	var dialogRooms:DialogRooms;
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -32,6 +34,22 @@ class EditorScreen extends PlayScreen {
 		SPR_MODE_EDIT = Gfx.getSprite(192, 240);
 		
 		dialogTiles = new DialogTiles(this, 0, 0);
+		
+		dialogRooms = new DialogRooms(this, 0, 0);
+		dialogRooms.onOk = function() {
+			var nextRoom:Room = game.world.findRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
+			
+			if (nextRoom == null) {
+				nextRoom = new Room(game.world, dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
+				game.world.addRoom(nextRoom);
+			} else {
+				
+			}
+			
+			game.world.switchRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
+			
+			this.showDialog(null);
+		}
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -58,6 +76,12 @@ class EditorScreen extends PlayScreen {
 				}
 				
 				return;
+			} else if (Input.isKeyDown([Input.key.TAB])) {
+				if (editMode) {
+					showDialog(dialogRooms);
+					
+					return;
+				}
 			}
 		
 			if (!editMode) checkPlayerMovement();
@@ -168,7 +192,7 @@ class EditorScreen extends PlayScreen {
 		if (!editMode) {
 			renderStatusLine();
 		} else {
-			renderMenuBar();
+			if (dialog == null) renderMenuBar();
 		}
 		
 		if (dialog != null) {
@@ -198,10 +222,19 @@ class EditorScreen extends PlayScreen {
 			
 			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, game.world.factory.get(currentTile).spr);
 			
+			var roomCoords:String = "Raum " 
+				+ Std.string(game.world.room.z) 
+				+ Std.string(game.world.room.x) 
+				+ Std.string(game.world.room.y);
+				
+			Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
+			
+			/*
 			// (Debug) Anzahl Objekte im Raum
 			var countEntities:Int = game.world.room.length;
 			var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
 			Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
+			*/
 		}
 	}
 }
