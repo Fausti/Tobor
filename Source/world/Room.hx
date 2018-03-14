@@ -44,8 +44,18 @@ class Room {
 	}
 	
 	public function update(deltaTime:Float) {
+		listRemove = [];
+		
 		for (e in listDynamic) {
-			e.update(deltaTime);
+			if (e.alive) e.update(deltaTime);
+			
+			if (!e.alive) {
+				listRemove.push(e);
+			}
+		}
+		
+		for (e in listRemove) {
+			removeEntity(e);
 		}
 	}
 	
@@ -130,10 +140,12 @@ class Room {
 		listState.remove(e);
 	}
 	
-	public function getEntitiesAt(x:Float, y:Float):Array<Entity> {
+	public function getEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
 		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
 			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
 		});
+		
+		if (without != null) listTarget.remove(without);
 		
 		return listTarget;
 	}

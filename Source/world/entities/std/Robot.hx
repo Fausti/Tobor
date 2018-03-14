@@ -9,6 +9,8 @@ import world.entities.EntityAI;
  * @author Matthias Faust
  */
 class Robot extends EntityAI {
+	var stress:Int = 0;
+	
 	public function new() {
 		super();
 	
@@ -44,11 +46,55 @@ class Robot extends EntityAI {
 	}
 	
 	override function idle() {
-		move(Direction.ALL[Std.random(Direction.ALL.length)], 2);
+		var playerDirectionX = 0;
+		var playerDirectionY = 0;
+		
+		var player = room.getPlayer();
+		
+		if (player.gridX < gridX) {
+			playerDirectionX = -1;
+		} else if (player.gridX > gridX) {
+			playerDirectionX = 1;
+		}
+		
+		if (player.gridY < gridY) {
+			playerDirectionY = -1;
+		} else if (player.gridY > gridY) {
+			playerDirectionY = 1;
+		}
+		
+		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
+		if (!move(Direction.get(playerDirectionX, playerDirectionY), 2)) {
+			// ... soll er versuchen in eine zufällige Richtung zu gehen
+			
+			stress++;
+			
+			if (!move(Direction.ALL[Std.random(Direction.ALL.length)], 2)) {
+				stress++;
+				// waitTicks = 2;
+			} else {
+				stress--;
+			}
+		} else {
+			stress--;
+		}
+		
+		trace(stress);
+		
+		if (stress > 75) {
+			if (Std.random(100) == 0) {
+				die();
+			}
+		}
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (Std.is(e, Charlie)) return true;
 		return false;
+	}
+	
+	override public function onEnter(e:Entity, direction:Vector2) {
+		trace(e);
 	}
 	
 	override function onStartMoving() {

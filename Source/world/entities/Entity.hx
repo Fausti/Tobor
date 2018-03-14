@@ -25,6 +25,8 @@ class Entity {
 	
 	public var type:Int = 0;
 	
+	public var alive:Bool = true;
+	
 	public function new() {
 		boundingBox = new Rectangle(0, 0, 1, 1);
 		
@@ -33,6 +35,10 @@ class Entity {
 	
 	public function init() {
 		
+	}
+	
+	public function die() {
+		alive = false;
 	}
 	
 	function hasData(data:Dynamic, id:String):Bool {
@@ -80,8 +86,16 @@ class Entity {
 		}
 	}
 	
+	public function isMoving():Bool {
+		return false;
+	}
+	
 	public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		return true;
+	}
+	
+	public function onEnter(e:Entity, direction:Vector2) {
+		
 	}
 	
 	public function setPosition(x:Int, y:Int) {

@@ -41,7 +41,7 @@ class EntityMoveable extends EntityDynamic {
 		super.update(deltaTime);
 	}
 	
-	public function isMoving():Bool {
+	override public function isMoving():Bool {
 		if (moveData.direction != Direction.NONE) {
 			return true;
 		} else {
@@ -55,7 +55,7 @@ class EntityMoveable extends EntityDynamic {
 		if (!isMoving()) {
 			if (isOutsideMap(x + direction.x, y + direction.y)) return false;
 			
-			var atTarget:Array<Entity> = room.getEntitiesAt(x + direction.x, y + direction.y);
+			var atTarget:Array<Entity> = room.getEntitiesAt(gridX + direction.x, gridY + direction.y);
 			
 			for (e in atTarget) {
 				if (!e.canEnter(this, direction, speed)) return false;
@@ -90,12 +90,16 @@ class EntityMoveable extends EntityDynamic {
 		y += (moveData.direction.y * distance);
 		
 		if (moveData.distanceLeft == 0.0) {
-			moveData.direction = Direction.NONE;
-			
 			x = Math.fround(x);
 			y = Math.fround(y);
 			
-			// onStopMoving();
+			var atTarget:Array<Entity> = room.getEntitiesAt(gridX, gridY, this);
+			
+			for (e in atTarget) {
+				e.onEnter(this, moveData.direction);
+			}
+			
+			moveData.direction = Direction.NONE;
 		}
 	}
 	

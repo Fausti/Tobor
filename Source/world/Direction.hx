@@ -19,4 +19,12 @@ class Direction {
 	public static var SE(default, null):Vector2 = S.add(E);
 	
 	public static var ALL:Array<Vector2> = [NONE, S, N, W, E, NW, NE, SW, SE];
+	
+	public static function get(x:Float, y:Float):Vector2 {
+		for (dir in ALL) {
+			if (dir.x == x && dir.y == y) return dir;
+		}
+		
+		return NONE;
+	}
 }
