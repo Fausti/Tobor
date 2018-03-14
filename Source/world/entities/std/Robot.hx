@@ -10,6 +10,7 @@ import world.entities.EntityAI;
  */
 class Robot extends EntityAI {
 	var stress:Int = 0;
+	var maxStress:Int = 150;
 	
 	public function new() {
 		super();
@@ -67,24 +68,18 @@ class Robot extends EntityAI {
 		if (!move(Direction.get(playerDirectionX, playerDirectionY), 2)) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
 			
-			stress++;
-			
 			if (!move(Direction.ALL[Std.random(Direction.ALL.length)], 2)) {
 				stress++;
-				// waitTicks = 2;
 			} else {
 				stress--;
 			}
+			
 		} else {
-			stress--;
+			
 		}
 		
-		trace(stress);
-		
-		if (stress > 75) {
-			if (Std.random(100) == 0) {
-				die();
-			}
+		if (stress > maxStress) {
+			die();
 		}
 	}
 	
@@ -94,7 +89,17 @@ class Robot extends EntityAI {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		trace(e);
+		if (isMoving()) return;
+		
+		if (Std.is(e, Robot)) {
+			e.die();
+		}
+	}
+	
+	override public function die() {
+		room.spawnEntity(x, y, new Explosion());
+		
+		super.die();
 	}
 	
 	override function onStartMoving() {
@@ -102,6 +107,6 @@ class Robot extends EntityAI {
 	}
 	
 	override function onStopMoving() {
-		// wait = Math.random() / 4;
+
 	}
 }

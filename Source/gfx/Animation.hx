@@ -14,13 +14,16 @@ class Animation extends Sprite {
 	
 	var active:Bool;
 	
+	public var onAnimationEnd:Dynamic;
+	
 	public function new(frames:Array<Sprite>, length:Float) {
 		super();
 		
 		this.frames = frames;
 		this.length = length;
 		
-		frame = frames[0];
+		reset();
+		
 		width = frame.width;
 		height = frame.height;
 		
@@ -48,7 +51,10 @@ class Animation extends Sprite {
 		if (!active) return;
 		
 		timeLeft = timeLeft - deltaTime;
-		if (timeLeft < 0) timeLeft = timeLeft + length;
+		if (timeLeft < 0) {
+			if (onAnimationEnd != null) onAnimationEnd();
+			timeLeft = timeLeft + length;
+		}
 		
 		var index:Int = Std.int(((length - timeLeft) * frames.length) / length);
 		// trace(index);

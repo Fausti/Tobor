@@ -119,6 +119,12 @@ class Entity {
 		return boundingBox.y = v;
 	}
 	
+	public function collisionAt(cx:Float, cy:Float):Bool {
+		if (!alive) return false;
+		
+		return boundingBox.intersects(new Rectangle(cx, cy, 1, 1));
+	}
+	
 	// grid
 	
 	inline function get_gridX():Int {

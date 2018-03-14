@@ -71,7 +71,14 @@ class Room {
 		}
 	}
 	
-	public function addEntity(e:Entity) {
+	public function spawnEntity(x:Float, y:Float, e:Entity) {
+		e.x = x;
+		e.y = y;
+		
+		addEntity(e, true);
+	}
+	
+	public function addEntity(e:Entity, ?ignoreCollision = false) {
 		if (e == null) {
 			trace("addEntity: object is null!");
 			return;
@@ -82,9 +89,11 @@ class Room {
 			return;
 		}
 		
-		if (getEntitiesAt(e.x, e.y).length > 0) {
-			// Position ist schon belegt :(
-			return;
+		if (!ignoreCollision) {
+			if (getEntitiesAt(e.x, e.y).length > 0) {
+				// Position ist schon belegt :(
+				return;
+			}
 		}
 		
 		if (listAll.indexOf(e) == -1) {
@@ -140,9 +149,19 @@ class Room {
 		listState.remove(e);
 	}
 	
+	public function getCollisionsAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
+		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
+			return e.collisionAt(x, y);
+		});
+		
+		if (without != null) listTarget.remove(without);
+		
+		return listTarget;
+	}
+	
 	public function getEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
 		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
-			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive;
 		});
 		
 		if (without != null) listTarget.remove(without);

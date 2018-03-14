@@ -17,7 +17,7 @@ class EntityPushable extends EntityMoveable {
 		if (!(Std.is(e, Charlie) || Std.is(e, EntityPushable))) return false;
 		if (isOutsideMap(x + direction.x, y + direction.y)) return false;
 		
-		var atTarget:Array<Entity> = room.getEntitiesAt(x + direction.x, y + direction.y);
+		var atTarget:Array<Entity> = room.getCollisionsAt(x + direction.x, y + direction.y);
 			
 		for (e in atTarget) {
 			if (!e.canEnter(this, direction, speed)) return false;

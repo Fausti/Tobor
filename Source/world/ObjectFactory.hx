@@ -63,6 +63,8 @@ class ObjectFactory {
 			register("OBJ_KEY_" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i});
 		}
 		
+		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0));
+		
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null) {
