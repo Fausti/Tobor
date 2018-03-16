@@ -65,6 +65,8 @@ class ObjectFactory {
 		
 		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0));
 		
+		register("OBJ_BARRIER", 	Barrier, 		Gfx.getSprite(240, 96));
+		
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null) {

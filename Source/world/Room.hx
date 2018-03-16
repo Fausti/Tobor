@@ -5,6 +5,7 @@ import world.entities.Entity;
 import world.entities.EntityDynamic;
 import world.entities.EntityStatic;
 import world.entities.std.Charlie;
+import world.entities.std.Robot;
 
 /**
  * ...
@@ -33,6 +34,8 @@ class Room {
 	public var length(get, null):Int;
 	public var lengthState(get, null):Int;
 	
+	public var robots:Int = 0;
+	
 	function get_length():Int {
 		return listAll.length;
 	}
@@ -51,8 +54,15 @@ class Room {
 	public function update(deltaTime:Float) {
 		listRemove = [];
 		
+		robots = 0;
 		for (e in listDynamic) {
-			if (e.alive) e.update(deltaTime);
+			if (Std.is(e, Robot)) robots++;
+		}
+		
+		for (e in listDynamic) {
+			if (e.alive) {
+				e.update(deltaTime);
+			}
 			
 			if (!e.alive) {
 				listRemove.push(e);

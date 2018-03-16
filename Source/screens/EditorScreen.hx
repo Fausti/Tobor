@@ -98,7 +98,7 @@ class EditorScreen extends PlayScreen {
 			
 			if (Input.mouseBtnLeft) {
 				if (editMode) {
-					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY < Room.HEIGHT) {
+					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
 						// im Raum zeichnen
 						var template = game.world.factory.get(currentTile);
 						
@@ -122,7 +122,7 @@ class EditorScreen extends PlayScreen {
 				}
 			} else if (Input.mouseBtnRight) {
 				if (editMode) {
-					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY < Room.HEIGHT) {
+					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
 						// Objekte an Position entfernen
 						
 						var list = game.world.room.getEntitiesAt_editor(cursorX, cursorY - 1);

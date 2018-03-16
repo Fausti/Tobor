@@ -1,27 +1,24 @@
 package world.entities.std;
 
-import lime.math.Vector2;
-import world.entities.Entity;
 import world.entities.EntityDynamic;
+import lime.math.Vector2;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Exit extends EntityDynamic {
+class Barrier extends EntityDynamic {
 	
 	var spr_closed:Sprite;
-	var spr_open_ns:Sprite;
-	var spr_open_we:Sprite;
+	var spr_open:Sprite;
 	
 	public function new() {
 		super();
 	}
 	
 	override public function init() {
-		spr_closed = Gfx.getSprite(0, 12);
-		spr_open_ns = Gfx.getSprite(32, 12);
-		spr_open_we = Gfx.getSprite(16, 12);
+		spr_closed = Gfx.getSprite(240, 96);
+		spr_open = Gfx.getSprite(224, 96);
 
 		setSprite(spr_closed);
 	}
@@ -32,11 +29,7 @@ class Exit extends EntityDynamic {
 		if (room.robots != 0) {
 			setSprite(spr_closed);
 		} else {
-			if (x == 0 || x == 39) {
-				setSprite(spr_open_we);
-			} else if (y == 0 || y == 27) {
-				setSprite(spr_open_ns);
-			}
+			setSprite(spr_open);
 		}
 	}
 	
