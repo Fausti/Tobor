@@ -191,6 +191,11 @@ class EditorScreen extends PlayScreen {
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawSprite(471, 0, SPR_BAG);
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
+		
+		// (Debug) Anzahl Objekte im Raum
+		var countEntities:Int = game.world.room.length; // game.world.room.length;
+		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
+		Tobor.fontSmall.drawString(524, 0, strStatus, Color.BLACK);
 	}
 	
 	override public function renderUI() {
@@ -236,12 +241,10 @@ class EditorScreen extends PlayScreen {
 				
 			Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
 			
-			/*
 			// (Debug) Anzahl Objekte im Raum
-			var countEntities:Int = game.world.room.length;
+			var countEntities:Int = game.world.room.lengthState; // game.world.room.length;
 			var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
-			Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
-			*/
+			Tobor.fontSmall.drawString(524, 0, strStatus, Color.BLACK);
 		}
 	}
 }

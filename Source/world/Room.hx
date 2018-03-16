@@ -31,9 +31,14 @@ class Room {
 	private var listRemove:Array<Entity> = [];
 
 	public var length(get, null):Int;
+	public var lengthState(get, null):Int;
 	
 	function get_length():Int {
 		return listAll.length;
+	}
+	
+	function get_lengthState():Int {
+		return listState.length;
 	}
 	
 	public function new(w:World, ?x:Int = 0, ?y:Int = 0, ?z:Int = 0) {
