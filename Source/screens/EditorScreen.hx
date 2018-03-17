@@ -169,7 +169,7 @@ class EditorScreen extends PlayScreen {
 		
 		for (x in 0 ... 8) {
 			if (x == 1) {
-				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_PLAY);
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_EDIT);
 			} else {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
 			}
@@ -203,7 +203,7 @@ class EditorScreen extends PlayScreen {
 	function renderMenuBar() {
 		for (x in 0 ... 8) {
 			if (x == 1) {
-				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_EDIT);
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_PLAY);
 			} else {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
 			}
