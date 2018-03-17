@@ -2,6 +2,8 @@ package screens;
 
 import ui.DialogRooms;
 import ui.DialogTiles;
+import ui.DialogMenu;
+
 import world.Room;
 import world.entities.Entity;
 
@@ -63,7 +65,11 @@ class EditorScreen extends PlayScreen {
 			return;
 		} else {
 			if (Input.isKeyDown([Input.key.ESCAPE])) {
-				showMainMenu();
+				if (editMode) {
+					showEditMenu();
+				} else {
+					showMainMenu();
+				}
 				
 				return;
 			} else if (Input.isKeyDown([Input.key.RETURN])) {
@@ -186,7 +192,9 @@ class EditorScreen extends PlayScreen {
 		if (!editMode) {
 			renderStatusLine();
 		} else {
-			if (dialog == null) renderMenuBar();
+			if (dialog == null || Std.is(dialog, DialogMenu)) {
+				renderMenuBar();
+			}
 		}
 		
 		if (dialog != null) {
@@ -238,5 +246,36 @@ class EditorScreen extends PlayScreen {
 		
 		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
 		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
+	}
+	
+	function showEditMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			["Einstellungen", ""],
+			["Szenen-Text", "?"],
+			["Szene...", "TAB", function() {
+				showDialog(dialogRooms);
+			}],
+			["Objekte", "ENTER", function () {
+				showDialog(dialogTiles);
+			}],
+			["Hilfe", "F1"],
+			["Sichern", "F5"],
+			["Laden", "F7"],
+			["Abbruch", "F9", function() {
+				game.setScreen(new IntroScreen(game));
+			}],	
+		]);
+		
+		menu.select(2);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			// hideDialog();
+		};
+		
+		showDialog(menu);
 	}
 }

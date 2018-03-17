@@ -29,8 +29,9 @@ class DialogMenu extends Dialog {
 			if (Input.isKeyDown([Input.key.RETURN])) {
 				if (menu.currentItem.hasCallback()) {
 					menu.currentItem.call();
+				} else {
+					ok();
 				}
-				ok();
 				Input.wait(0.25);
 			} else if (Input.isKeyDown([Input.key.ESCAPE])) {
 				exit();
