@@ -1,12 +1,12 @@
 package world.entities.std;
 
-import world.entities.EntityCollectable;
+import world.entities.EntityItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Clock extends EntityCollectable {
+class Clock extends EntityItem {
 
 	public function new() {
 		super();

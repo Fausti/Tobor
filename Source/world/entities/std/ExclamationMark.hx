@@ -1,12 +1,12 @@
 package world.entities.std;
 
-import world.entities.EntityCollectable;
+import world.entities.EntityItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class ExclamationMark extends EntityCollectable {
+class ExclamationMark extends EntityItem {
 
 	public function new() {
 		super();

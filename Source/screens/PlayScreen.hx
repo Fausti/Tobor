@@ -1,5 +1,6 @@
 package screens;
 
+import ui.DialogInventory;
 import ui.Screen;
 import ui.DialogMenu;
 
@@ -34,7 +35,7 @@ class PlayScreen extends Screen {
 				
 				return;
 			} else if (Input.isKeyDown([Input.key.RETURN])) {
-				return;
+				showInventory();
 			}
 		
 			checkPlayerMovement();
@@ -125,6 +126,24 @@ class PlayScreen extends Screen {
 		menu.onOk = function () {
 			hideDialog();
 		};
+		
+		showDialog(menu);
+	}
+	
+	function showInventory() {
+		if (game.world.inventory.size == 0) return;
+		
+		var menu = new DialogInventory(this, 0, 0);
+		
+		menu.onOk = function () {
+			hideDialog();
+			
+			game.world.inventory.doItemAction(game.world, menu.selectedAction, menu.selectedItem);
+		}
+		
+		menu.onCancel = function () {
+			hideDialog();
+		}
 		
 		showDialog(menu);
 	}

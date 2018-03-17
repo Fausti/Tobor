@@ -39,6 +39,9 @@ class Entity {
 	
 	public function die() {
 		alive = false;
+		
+		// dynamische Objekte werden durch Room.update() gelöscht
+		if (Std.is(this, EntityStatic)) room.removeEntity(this);
 	}
 	
 	function hasData(data:Dynamic, id:String):Bool {
@@ -170,7 +173,7 @@ class Entity {
 	public function saveData():Map<String, Dynamic> {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
-		var def:ObjectTemplate = room.world.factory.findIDFromObject(this);
+		var def:ObjectTemplate = getTemplate();
 		
 		if (def != null) {
 			data.set("id", def.name);
@@ -182,5 +185,9 @@ class Entity {
 		}
 		
 		return data;
+	}
+	
+	function getTemplate():ObjectTemplate {
+		return room.world.factory.findIDFromObject(this);
 	}
 }

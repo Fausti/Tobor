@@ -22,6 +22,7 @@ class EditorScreen extends PlayScreen {
 	var SPR_CURSOR:Sprite;
 	var SPR_MODE_PLAY:Sprite;
 	var SPR_MODE_EDIT:Sprite;
+	var SPR_EFENCE:Sprite;
 	
 	var dialogTiles:DialogTiles;
 	var dialogRooms:DialogRooms;
@@ -29,6 +30,7 @@ class EditorScreen extends PlayScreen {
 	public function new(game:Tobor) {
 		super(game);
 		
+		SPR_EFENCE = Gfx.getSprite(64, 12);
 		SPR_CURSOR = Gfx.getSprite(208, 240);
 		SPR_MODE_PLAY = Gfx.getSprite(176, 240);
 		SPR_MODE_EDIT = Gfx.getSprite(192, 240);
@@ -70,7 +72,7 @@ class EditorScreen extends PlayScreen {
 					
 					return;
 				} else {
-					// showDialog(dialogInventory);
+					showInventory();
 					
 					return;
 				}
@@ -146,6 +148,7 @@ class EditorScreen extends PlayScreen {
 		Input.clearKeys();
 		
 		if (!editMode) {
+			game.world.inventory.clear();
 			game.world.loadState();
 		} else {
 			game.world.player.setPosition(game.world.oldPlayerX, game.world.oldPlayerY);
@@ -162,6 +165,8 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	override function renderStatusLine() {
+		super.renderStatusLine();
+		
 		for (x in 0 ... 8) {
 			if (x == 1) {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_PLAY);
@@ -172,30 +177,7 @@ class EditorScreen extends PlayScreen {
 			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
 		}
 		
-		// TODO: Blaumann! Oder Charlieobjekt fragen?
-		Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
-		
-		var punkte = 0; // game.world.player.points;
-		var leben = 0; // game.world.player.lives;
-		
-		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
-		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
-		
-		var gold = 0; // game.world.player.gold;
-		if (gold > 0) {
-			Gfx.drawSprite(416, 0, SPR_GOLD);
-			Tobor.fontSmall.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
-		}
-		
-		var weight = 0; // game.world.player.inventory.length;
-		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
-		Gfx.drawSprite(471, 0, SPR_BAG);
-		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
-		
-		// (Debug) Anzahl Objekte im Raum
-		var countEntities:Int = game.world.room.length; // game.world.room.length;
-		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
-		Tobor.fontSmall.drawString(524, 0, strStatus, Color.BLACK);
+		renderObjectCount();
 	}
 	
 	override public function renderUI() {
@@ -223,10 +205,10 @@ class EditorScreen extends PlayScreen {
 			if (x == 1) {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_EDIT);
 			} else {
-				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
 			}
 			
-			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
+			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
 			
 			// aktives Objekt
 			Tobor.fontBig.drawString(9 * 16 + 8, 0, "[", Color.BLACK);
@@ -241,10 +223,20 @@ class EditorScreen extends PlayScreen {
 				
 			Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
 			
-			// (Debug) Anzahl Objekte im Raum
-			var countEntities:Int = game.world.room.lengthState; // game.world.room.length;
-			var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
-			Tobor.fontSmall.drawString(524, 0, strStatus, Color.BLACK);
+			renderObjectCount();
 		}
+	}
+	
+	function renderObjectCount() {
+		var countEntities:Int;
+		
+		if (editMode) {
+			countEntities = game.world.room.lengthState; // game.world.room.length;
+		} else {
+			countEntities = game.world.room.length;
+		}
+		
+		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
+		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
 	}
 }

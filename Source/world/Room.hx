@@ -130,6 +130,7 @@ class Room {
 		}
 		
 		e.setRoom(this);
+		e.init();
 	}
 	
 	public function addEntity_editor(e:Entity) {

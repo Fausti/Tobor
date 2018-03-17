@@ -1,12 +1,12 @@
 package world.entities.std;
 
-import world.entities.EntityCollectable;
+import world.entities.EntityItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Magnet extends EntityCollectable {
+class Magnet extends EntityItem {
 
 	public function new() {
 		super();

@@ -12,6 +12,9 @@ class ObjectFactory {
 	private var list:Map<String, ObjectTemplate> = new Map<String, ObjectTemplate>();
 	
 	public function new() {
+		// OBJECT_NAME # OBJECT_TYPE
+		// e.g. OBJ_KEY#2
+		
 		register("OBJ_CHARLIE", 	Charlie, 	Gfx.getSprite(16, 0));
 		
 		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120));
@@ -48,19 +51,19 @@ class ObjectFactory {
 		
 		register("OBJ_NOTICE", Notice, Gfx.getSprite(208, 12));
 		
-		register("OBJ_MAGNET_0", Magnet, Gfx.getSprite(224, 12), {type: 0});
-		register("OBJ_MAGNET_1", Magnet, Gfx.getSprite(240, 12), {type: 1});
+		register("OBJ_MAGNET#0", Magnet, Gfx.getSprite(224, 12), {type: 0});
+		register("OBJ_MAGNET#1", Magnet, Gfx.getSprite(240, 12), {type: 1});
 		
 		for (i in 0 ... 6) {
-			register("OBJ_MUNITION_" + Std.string(i), Munition, Gfx.getSprite(144 + i * 16, 60), {type: i});
+			register("OBJ_MUNITION#" + Std.string(i), Munition, Gfx.getSprite(144 + i * 16, 60), {type: i});
 		}
 		
 		for (i in 0 ... 15) {
-			register("OBJ_DOOR_" + Std.string(i), Door, Gfx.getSprite(i * 16, 36), {type: i});
+			register("OBJ_DOOR#" + Std.string(i), Door, Gfx.getSprite(i * 16, 36), {type: i});
 		}
 		
 		for (i in 0 ... 15) {
-			register("OBJ_KEY_" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i});
+			register("OBJ_KEY#" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i});
 		}
 		
 		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0));

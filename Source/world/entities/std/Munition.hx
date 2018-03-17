@@ -1,12 +1,12 @@
 package world.entities.std;
 
-import world.entities.EntityCollectable;
+import world.entities.EntityItem;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Munition extends EntityCollectable {
+class Munition extends EntityItem {
 
 	public function new() {
 		super();

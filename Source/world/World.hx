@@ -18,6 +18,8 @@ class World {
 	public var oldPlayerX:Int = 0;
 	public var oldPlayerY:Int = 0;
 	
+	public var inventory:Inventory;
+	
 	public function new() {
 		factory = new ObjectFactory();
 		
@@ -25,6 +27,8 @@ class World {
 		player.setPosition(20, 14);
 		oldPlayerX = 20;
 		oldPlayerY = 14;
+		
+		inventory = new Inventory();
 		
 		addRoom(createRoom(0, 0, 0));
 		switchRoom(0, 0, 0);
