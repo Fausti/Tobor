@@ -45,6 +45,12 @@ class Inventory {
 		}
 	}
 	
+	public function hasItem(id:String):Bool {
+		var item:InventoryItem = list.get(id);
+		
+		return item != null;
+	}
+	
 	public var size(get, null):Int;
 	function get_size():Int {
 		return Lambda.count(list);
