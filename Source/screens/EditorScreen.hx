@@ -250,8 +250,12 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			["Einstellungen", ""],
-			["Szenen-Text", "?"],
+			["Einstellungen", "", function () {
+				hideDialog();
+			}],
+			["Szenen-Text", "?", function () {
+				hideDialog();
+			}],
 			["Szene...", "TAB", function() {
 				showDialog(dialogRooms);
 			}],
@@ -259,8 +263,14 @@ class EditorScreen extends PlayScreen {
 				showDialog(dialogTiles);
 			}],
 			["Hilfe", "F1"],
-			["Sichern", "F5"],
-			["Laden", "F7"],
+			["Sichern", "F5", function () {
+				Files.saveToFile(Files.DIR_EPISODES + "/test.episode", game.world.save_editor());
+				hideDialog();
+			}],
+			["Laden", "F7", function () {
+				game.world.load_editor(Files.loadFromFile(Files.DIR_EPISODES + "/test.episode"));
+				hideDialog();
+			}],
 			["Abbruch", "F9", function() {
 				game.setScreen(new IntroScreen(game));
 			}],	

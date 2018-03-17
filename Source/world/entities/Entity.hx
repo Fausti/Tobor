@@ -56,13 +56,6 @@ class Entity {
 		return 0;
 	}
 	
-	public function parseData(data) {
-		if (hasData(data, "type")) {
-			this.type = data.type;
-			init();
-		}
-	}
-	
 	public function setRoom(r:Room) {
 		room = r;
 	}
@@ -170,6 +163,23 @@ class Entity {
 		return true;
 	}
 	
+	public function parseData(data) {
+		if (hasData(data, "type")) {
+			this.type = data.type;
+			init();
+		}
+		
+		if (hasData(data, "x")) {
+			this.x = data.x;
+			init();
+		}
+		
+		if (hasData(data, "y")) {
+			this.y = data.y;
+			init();
+		}
+	}
+	
 	public function saveData():Map<String, Dynamic> {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
@@ -188,6 +198,6 @@ class Entity {
 	}
 	
 	function getTemplate():ObjectTemplate {
-		return room.world.factory.findIDFromObject(this);
+		return room.world.factory.findFromObject(this);
 	}
 }

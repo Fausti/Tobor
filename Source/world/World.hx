@@ -129,4 +129,88 @@ class World {
 		
 		return TJSON.encode(data, 'fancy');
 	}
+	
+	public function save_editor():String {
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+
+		data.set("player", player.saveData());
+		
+		for (r in rooms) {
+			var worldData:Map<String, Dynamic> = new Map();
+			
+			worldData.set("x", r.x);
+			worldData.set("y", r.y);
+			worldData.set("z", r.z);
+			
+			worldData.set("data", r.save_editor());
+			
+			data.set("ROOM_" + r.x + "_" + r.y + "_" + r.z, worldData);
+		}
+		
+		return TJSON.encode(data, 'fancy');
+	}
+	
+	public function load_editor(fileData:String) {
+		roomCurrent = null;
+		rooms = [];
+		
+		// player.reset();
+		
+		var data = TJSON.parse(fileData);
+		
+		for (key in Reflect.fields(data)) {
+			switch(key) {
+			case "player":
+				parsePlayer(Reflect.field(data, "player"));
+			default:
+				if (StringTools.startsWith(key, "ROOM_")) {
+					parseRoom(Reflect.field(data, key));
+				} else {
+					// Debug.error(this, "Unknown key '" + key + "' in WorldData!");
+				}
+			}
+		}
+		
+		/*
+		for (roomData in data.data) {
+			
+		}
+		*/
+	}
+	
+	function parseRoom(data) {
+		var rx:Int = -1;
+		var ry:Int = -1;
+		var rz:Int = -1;
+		var rdata = null;
+		
+		for (key in Reflect.fields(data)) {
+			switch(key) {
+			case "x":
+				rx = Reflect.field(data, "x");
+			case "y":
+				ry = Reflect.field(data, "y");
+			case "z":
+				rz = Reflect.field(data, "z");
+			case "data":
+				rdata = Reflect.field(data, "data");
+			default:
+			}
+		}
+		
+		var newRoom:Room = new Room(this, rx, ry, rz);
+		newRoom.load(rdata);
+		
+		addRoom(newRoom);
+		switchRoom(rx, ry, rz);
+	}
+	
+	function parsePlayer(data) {
+		player.parseData(data);
+		/*
+		for (key in Reflect.fields(data)) {
+			player.parseData(key, Reflect.field(data, key));
+		}
+		*/
+	}
 }

@@ -74,7 +74,6 @@ class Tobor extends LimeGame {
 		batch = new Batch();
 		
 		world = new World();
-		Files.saveToFile(Files.DIR_EPISODES + "/test.episode", world.save());
 		
 		highScore = new Highscore();
 		highScore.load();

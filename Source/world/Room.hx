@@ -6,6 +6,7 @@ import world.entities.EntityDynamic;
 import world.entities.EntityStatic;
 import world.entities.std.Charlie;
 import world.entities.std.Robot;
+import world.ObjectFactory.ObjectTemplate;
 
 /**
  * ...
@@ -229,10 +230,41 @@ class Room {
 		}
 	}
 	
+	public function load(data) {
+		listState = [];
+		
+		for (entry in cast(data, Array<Dynamic>)) {
+			var template:ObjectTemplate = world.factory.findFromID(entry.id);
+			
+			var obj = template.create();
+			obj.parseData(entry);
+			
+			obj.init();
+			
+			addEntity_editor(obj);
+		}
+	}
+	
 	public function save():Array<Map<String, Dynamic>> {
 		var data:Array<Map<String, Dynamic>> = [];
 		
 		for (e in listAll) {
+			if (e != null) {
+				if (!Std.is(e, Charlie)) {
+					if (e.canSave()) {
+						data.push(e.saveData());
+					}
+				}
+			}
+		}
+		
+		return data;
+	}
+	
+	public function save_editor():Array<Map<String, Dynamic>> {
+		var data:Array<Map<String, Dynamic>> = [];
+		
+		for (e in listState) {
 			if (e != null) {
 				if (!Std.is(e, Charlie)) {
 					if (e.canSave()) {

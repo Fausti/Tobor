@@ -102,7 +102,17 @@ class ObjectFactory {
 		return null;
 	}
 	
-	public function findIDFromObject(o:Dynamic, ?checkForType:Bool = true):ObjectTemplate {
+	public function findFromID(id:String):ObjectTemplate {
+		for (key in list.keys()) {
+			var oe:ObjectTemplate = list.get(key);
+			
+			if (oe.name == id) return oe;
+		}
+		
+		return null;
+	}
+	
+	public function findFromObject(o:Dynamic, ?checkForType:Bool = true):ObjectTemplate {
 		for (key in list.keys()) {
 			var oe:ObjectTemplate = list.get(key);
 			
