@@ -14,4 +14,8 @@ class Gold extends EntityCollectable {
 		setSprite(Gfx.getSprite(96, 12));
 	}
 	
+	override public function onPickup() {
+		room.world.gold++;
+		room.world.points++;
+	}
 }

@@ -8,13 +8,19 @@ import world.entities.std.Charlie;
  * @author Matthias Faust
  */
 class EntityCollectable extends EntityStatic {
-	var group:String = null;
-	
 	public function new() {
 		super();
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
+		if (Std.is(e, Charlie)) {
+			
+			onPickup();
+			die();
+		}
+	}
+	
+	public function onPickup() {
 		
 	}
 }

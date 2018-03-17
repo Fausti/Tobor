@@ -9,20 +9,19 @@ import world.entities.std.Charlie;
  * @author Matthias Faust
  */
 class EntityItem extends EntityCollectable {
-
+	// var group:String = null;
+	
 	public function new() {
 		super();
 	}
 	
-	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
-			var template = getTemplate();
+	override public function onPickup() {
+		trace("onPickup -> " + this);
+		
+		var template = getTemplate();
 			
-			if (template != null) {
-				room.world.inventory.add(template.name, template.spr);
-			}
-			
-			die();
+		if (template != null) {
+			room.world.inventory.add(template.name, template.spr);
 		}
 	}
 	

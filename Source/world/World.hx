@@ -20,6 +20,10 @@ class World {
 	
 	public var inventory:Inventory;
 	
+	public var lives:Int = 3;
+	public var points:Int = 0;
+	public var gold:Int = 0;
+	
 	public function new() {
 		factory = new ObjectFactory();
 		

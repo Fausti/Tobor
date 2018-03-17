@@ -82,19 +82,19 @@ class PlayScreen extends Screen {
 		// TODO: Blaumann! Oder Charlieobjekt fragen?
 		Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
 		
-		var punkte = 0; // game.world.player.points;
-		var leben = 0; // game.world.player.lives;
+		var punkte = game.world.points; // game.world.player.points;
+		var leben = game.world.lives; // game.world.player.lives;
 		
 		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
 		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
 		
-		var gold = 0; // game.world.player.gold;
+		var gold = game.world.gold; // game.world.player.gold;
 		if (gold > 0) {
 			Gfx.drawSprite(416, 0, SPR_GOLD);
 			Tobor.fontSmall.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
-		var weight = 0; // game.world.player.inventory.length;
+		var weight = game.world.inventory.size; // game.world.player.inventory.length;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawSprite(471, 0, SPR_BAG);
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
