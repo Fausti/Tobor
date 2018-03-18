@@ -83,10 +83,6 @@ class Tobor extends LimeGame {
 		
 		// setScreen(new IntroScreen(this));
 		setScreen(new EditorScreen(this));
-		
-		trace("Auswählen");
-		trace("Auswählen".length);
-		trace("Auswählen".length8());
 	}
 	
 	function collectGarbage() {
