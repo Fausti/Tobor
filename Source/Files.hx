@@ -1,8 +1,13 @@
 package;
 
+import haxe.zip.Reader;
+import haxe.zip.Tools;
+import haxe.zip.Uncompress;
+import lime.tools.helpers.ZipHelper;
 import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.File;
+import sys.io.FileInput;
 
 /**
  * ...
@@ -33,8 +38,47 @@ class Files {
 		for (fileName in FileSystem.readDirectory(dirName)) {
 			var path = new Path(dirName + "/" + fileName);
 			
-			if (path.ext == ext) {
+			if (ext != "*") {
+				if (path.ext == ext && !FileSystem.isDirectory(path.toString())) {
+					list.push(path);
+				}
+			} else {
+				if (!FileSystem.isDirectory(path.toString())) {
+					list.push(path);
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	public static function getDirsAndFiles(dirName:String, ?list:Array<Path> = null):Array<Path> {
+		if (list == null) list = [];
+		
+		for (fileName in FileSystem.readDirectory(dirName)) {
+			var path = new Path(dirName + "/" + fileName);
+			
+			if (path.ext == "zip") {
 				list.push(path);
+			} else if (FileSystem.isDirectory(path.toString())) {
+				list.push(path);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static function getContent(path:Path):Array<Path> {
+		var list:Array<Path> = [];
+		
+		if (FileSystem.isDirectory(path.toString())) {
+			getFiles(path.toString(), "*", list);
+		} else {
+			var file:FileInput = File.read(path.toString());
+			var unzip:Reader = new Reader(file);
+			
+			for (e in unzip.read()) {
+				list.push(new Path(e.fileName));
 			}
 		}
 		

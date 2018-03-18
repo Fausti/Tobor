@@ -22,7 +22,7 @@ class EpisodesScreen extends Screen {
 	var SPR_SCROLLBAR_0:Sprite;
 	var SPR_SCROLLBAR_1:Sprite;
 	
-	var episoden:Array<Episode> = [];
+	var episoden:Array<FileEpisode> = [];
 	var index:Int = 0;
 	
 	var scrollingText:String;
@@ -48,15 +48,15 @@ class EpisodesScreen extends Screen {
 		SPR_SCROLLBAR_0 = Gfx.getSprite(240, 0);
 		SPR_SCROLLBAR_1 = Gfx.getSprite(64, 12);
 		
-		for (i in 0 ... 20) {
-			var ep:Episode = new Episode("Tobor " + i, "Beschreibung");
-			episoden.push(ep);
-		}
-		
 		scrollingText = "Danke an TOM Productions für ihre tollen ROBOT Spiele! ";
 		scrollingText = scrollingText.rpad(38 * 2, " ");
 		scrollingText = scrollingText + scrollingText;
 		scrollingTime = scrollingSpeed;
+		
+		var files = Files.getDirsAndFiles(Files.DIR_EPISODES);
+		for (path in files) {
+			episoden.push(new FileEpisode(path));
+		}
 	}
 	
 	override public function show() {
@@ -145,7 +145,7 @@ class EpisodesScreen extends Screen {
 		}
 		
 		for (i in 0 ... lines) {
-			var ep:Episode = episoden[i + begin];
+			var ep:FileEpisode = episoden[i + begin];
 			
 			if (ep != null) {
 				if ((i + begin) == index) {
@@ -181,23 +181,5 @@ class EpisodesScreen extends Screen {
 		
 		var text:String = scrollingText.substr8(scrollingPosition, 38 * 2).rpad(38 * 2, " ");
 		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
-	}
-}
-
-private class Episode {
-	public var name:String = "";
-	public var desc:String = "";
-	
-	public function new(name:String, desc:String ) {
-		this.name = name;
-		this.desc = desc;
-	}
-	
-	public function getName(l:Int):String {
-		return name.rpad(l, ".", false);
-	}
-	
-	public function getDesc(l:Int):String {
-		return desc.rpad(l, ".", false);
 	}
 }
