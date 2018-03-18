@@ -25,23 +25,22 @@ class EntityItem extends EntityCollectable {
 		}
 	}
 	
-	public function onDrop(room:Room, x:Float, y:Float) {
+	public function onDrop(x:Float, y:Float) {
 		trace("onDrop -> " + this);
 		
 		room.spawnEntity(x, y, this);
-		
-		var template = getTemplate();
-		room.world.inventory.remove(template.name);
+
+		room.world.inventory.remove(getID());
 	}
 	
 	public function onLook() {
 		trace("onLook -> " + this);
 	}
 	
-	public function onUse(room:Room, x:Float, y:Float) {
+	public function onUse(x:Float, y:Float) {
 		trace("onUse -> " + this);
 		
-		onDrop(room, x, y);
+		onDrop(x, y);
 	}
 	
 }

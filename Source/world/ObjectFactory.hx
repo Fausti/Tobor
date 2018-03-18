@@ -70,6 +70,8 @@ class ObjectFactory {
 		
 		register("OBJ_BARRIER", 	Barrier, 		Gfx.getSprite(240, 96));
 		
+		register("OBJ_ELEXIR",		Elexir,			Gfx.getSprite(224, 24));
+		
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null) {

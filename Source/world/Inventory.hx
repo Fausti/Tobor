@@ -63,6 +63,8 @@ class Inventory {
 		}
 		
 		var e:Entity = world.factory.create(item.id);
+		e.setRoom(world.room);
+		
 		if (!Std.is(e, EntityItem)) {
 			trace("Item is not an item!");
 			return;
@@ -72,11 +74,11 @@ class Inventory {
 		
 		switch(action) {
 			case Inventory.ACTION_DROP:
-				obj.onDrop(world.room, world.player.x, world.player.y);
+				obj.onDrop(world.player.x, world.player.y);
 			case Inventory.ACTION_LOOK:
 				obj.onLook();
 			case Inventory.ACTION_USE:
-				obj.onUse(world.room, world.player.x, world.player.y);
+				obj.onUse(world.player.x, world.player.y);
 			default:
 				trace("Unknown Item Action!");
 		}

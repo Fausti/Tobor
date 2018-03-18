@@ -200,4 +200,12 @@ class Entity {
 	function getTemplate():ObjectTemplate {
 		return room.world.factory.findFromObject(this);
 	}
+	
+	function getID():String {
+		var template:ObjectTemplate = getTemplate();
+		
+		if (template != null) return template.name;
+		
+		return "ERROR";
+	}
 }
