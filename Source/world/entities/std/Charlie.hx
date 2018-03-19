@@ -23,6 +23,8 @@ class Charlie extends EntityMoveable {
 		], 0.75);
 			
 		sprites[0] = sprStanding;
+		
+		z = Room.LAYER_LEVEL_0 + 1;
 	}
 	
 	override function onStartMoving() {

@@ -63,12 +63,10 @@ class World {
 	
 	public function render() {
 		if (roomCurrent != null) roomCurrent.render();
-		if (player != null) player.render();
 	}
 	
 	public function render_editor() {
 		if (roomCurrent != null) roomCurrent.render_editor();
-		if (player != null) player.render_editor();
 	}
 	
 	function get_room():Room {

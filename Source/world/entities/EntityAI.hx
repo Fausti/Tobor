@@ -9,6 +9,8 @@ class EntityAI extends EntityMoveable {
 	
 	public function new() {
 		super();
+		
+		z = Room.LAYER_LEVEL_0 + 1;
 	}
 	
 	

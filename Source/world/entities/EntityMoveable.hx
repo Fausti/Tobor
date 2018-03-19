@@ -57,6 +57,7 @@ class EntityMoveable extends EntityDynamic {
 			
 			var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
 			
+			// kann Feld betreten werden?
 			for (e in atTarget) {
 				if (!e.canEnter(this, direction, speed)) return false;
 			}
@@ -65,6 +66,11 @@ class EntityMoveable extends EntityDynamic {
 			moveData.direction = direction;
 			moveData.speedMovement = speed;
 			moveData.distanceLeft = 1.0;
+			
+			// informieren wir mal jeden auf dem Zielfeld das wir es demnächst betreten
+			for (e in atTarget) {
+				e.willEnter(this, direction, speed);
+			}
 			
 			onStartMoving();
 			

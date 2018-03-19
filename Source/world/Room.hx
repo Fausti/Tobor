@@ -13,6 +13,11 @@ import world.ObjectFactory.ObjectTemplate;
  * @author Matthias Faust
  */
 class Room {
+	public static inline var LAYER_FLOOR:Int = 0;
+	public static inline var LAYER_LEVEL_0:Int = 10;
+	public static inline var LAYER_LEVEL_1:Int = 20;
+	public static inline var LAYER_ROOF:Int = 30;
+	
 	public static inline var WIDTH:Int = 40;
 	public static inline var HEIGHT:Int = 28;
 	
@@ -73,18 +78,46 @@ class Room {
 		for (e in listRemove) {
 			removeEntity(e);
 		}
+		
+		listAll.sort(function (a:Entity, b:Entity):Int {
+			if (a.z < b.z) return -1;
+			if (a.z > b.z) return 1;
+			return 0;
+		});
 	}
 	
 	public function render() {
+		var playerDrawn:Bool = false;
+		
 		for (e in listAll) {
+			if (e.z > world.player.z) {
+				if (!playerDrawn) {
+					playerDrawn = true;
+					if (world.player != null) world.player.render();
+				}
+			}
+			
 			e.render();
 		}
+		
+		if (!playerDrawn) if (world.player != null) world.player.render();
 	}
 	
 	public function render_editor() {
+		var playerDrawn:Bool = false;
+		
 		for (e in listState) {
+			if (e.z > world.player.z) {
+				if (!playerDrawn) {
+					playerDrawn = true;
+					if (world.player != null) world.player.render();
+				}
+			}
+			
 			e.render_editor();
 		}
+		
+		if (!playerDrawn) if (world.player != null) world.player.render();
 	}
 	
 	public function spawnEntity(x:Float, y:Float, e:Entity) {
@@ -189,6 +222,14 @@ class Room {
 	public function getEntitiesAt_editor(x:Float, y:Float):Array<Entity> {
 		var listTarget:Array<Entity> = listState.filter(function(e):Bool {
 			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
+		});
+		
+		return listTarget;
+	}
+	
+	public function findEntityAt(x:Float, y:Float, cl:Dynamic):Array<Entity> {
+		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive && Std.is(e, cl);
 		});
 		
 		return listTarget;

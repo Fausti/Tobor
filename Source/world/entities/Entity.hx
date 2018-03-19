@@ -15,6 +15,7 @@ class Entity {
 	
 	private var boundingBox:Rectangle;
 	
+	public var z:Int = Room.LAYER_FLOOR;
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	
@@ -86,10 +87,17 @@ class Entity {
 		return false;
 	}
 	
+	// darf betreten?
 	public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		return true;
 	}
 	
+	// wird betreten...
+	public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
+		
+	}
+	
+	// hat betreten...
 	public function onEnter(e:Entity, direction:Vector2) {
 		
 	}
@@ -154,6 +162,7 @@ class Entity {
 		
 		o.x = x;
 		o.y = y;
+		o.z = z;
 		o.type = type;
 		
 		return o;
@@ -166,18 +175,21 @@ class Entity {
 	public function parseData(data) {
 		if (hasData(data, "type")) {
 			this.type = data.type;
-			init();
 		}
 		
 		if (hasData(data, "x")) {
 			this.x = data.x;
-			init();
 		}
 		
 		if (hasData(data, "y")) {
 			this.y = data.y;
-			init();
 		}
+		
+		if (hasData(data, "z")) {
+			this.z = data.z;
+		}
+		
+		init();
 	}
 	
 	public function saveData():Map<String, Dynamic> {
@@ -190,6 +202,7 @@ class Entity {
 			data.set("type", type);
 			data.set("x", gridX);
 			data.set("y", gridY);
+			data.set("z", z);
 		} else {
 			return null;
 		}
