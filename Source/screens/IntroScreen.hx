@@ -53,17 +53,37 @@ class IntroScreen extends Screen {
 	}
 	
 	function showMainMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
-			["Hilfe", "F1"],
-			["Story", "F2"],
-			["Spielstart", "F4", function() {
-				game.setScreen(new EditorScreen(game));
-			}],
-			["Laden", "F7"],
-			["Ende", "F9", function() {
-				game.exit();
-			}],	
-		]);
+		var menu;
+		
+		if (game.world.file.isZIP) {
+			menu = new DialogMenu(this, 320, 166, [
+				["Story", "F2"],
+				["Spielstart", "F4", function() {
+					game.world.start();
+					game.setScreen(new PlayScreen(game));
+				}],
+				["Laden", "F7"],
+				["Ende", "F9", function() {
+					game.setScreen(new EpisodesScreen(game));
+				}],	
+			]);
+		} else {
+			menu = new DialogMenu(this, 320, 166, [
+				["Story", "F2"],
+				["Spielstart", "F4", function() {
+					game.world.start();
+					game.setScreen(new PlayScreen(game));
+				}],
+				["Editor", "", function() {
+					game.world.start();
+					game.setScreen(new EditorScreen(game));
+				}],
+				["Laden", "F7"],
+				["Ende", "F9", function() {
+					game.setScreen(new EpisodesScreen(game));
+				}],	
+			]);
+		}
 		
 		menu.select(2);
 		

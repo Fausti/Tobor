@@ -264,11 +264,11 @@ class EditorScreen extends PlayScreen {
 			}],
 			["Hilfe", "F1"],
 			["Sichern", "F5", function () {
-				Files.saveToFile(Files.DIR_EPISODES + "/test.episode", game.world.save_editor());
+				game.world.save();
 				hideDialog();
 			}],
 			["Laden", "F7", function () {
-				game.world.load_editor(Files.loadFromFile(Files.DIR_EPISODES + "/test.episode"));
+				game.world.load();
 				hideDialog();
 			}],
 			["Abbruch", "F9", function() {

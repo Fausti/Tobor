@@ -41,7 +41,7 @@ class Tobor extends LimeGame {
 	var shader:Shader;
 	
 	public var batch:Batch;
-		
+
 	public var world:World;
 	
 	public var highScore:Highscore;
@@ -73,7 +73,7 @@ class Tobor extends LimeGame {
 		
 		batch = new Batch();
 		
-		world = new World();
+		// world = new World();
 		
 		highScore = new Highscore();
 		highScore.load();

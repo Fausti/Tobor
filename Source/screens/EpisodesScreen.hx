@@ -1,6 +1,7 @@
 package screens;
 
 import ui.Screen;
+import world.World;
 
 /**
  * ...
@@ -55,8 +56,12 @@ class EpisodesScreen extends Screen {
 		
 		var files = Files.getDirsAndFiles(Files.DIR_EPISODES);
 		for (path in files) {
-			episoden.push(new FileEpisode(path));
+			var fe:FileEpisode = new FileEpisode(path);
+			if (fe.isOK) episoden.push(fe);
 		}
+		
+		var fe:FileEpisode = new FileEpisode(null);
+		if (fe.isOK) episoden.push(fe);
 	}
 	
 	override public function show() {
@@ -71,6 +76,7 @@ class EpisodesScreen extends Screen {
 		if (Input.isKeyDown([Input.key.ESCAPE])) {
 			game.exit();
 		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			game.world = new World(episoden[index]);
 			game.setScreen(new IntroScreen(game));
 		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
 			index--;

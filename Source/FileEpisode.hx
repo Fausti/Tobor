@@ -16,9 +16,29 @@ class FileEpisode {
 	public var desc:String = "";
 	
 	var root:String = "";
-	var isZIP:Bool = false;
+	
+	public var isZIP(default, null):Bool = false;
+	public var isEmpty(default, null):Bool = false;
+	public var isOK(default, null):Bool = false;
 	
 	public function new(path:Path) {
+		if (path == null) {
+			if (FileSystem.exists(Files.DIR_EPISODES + '/__NEU__')) {
+				isOK = false;
+				return;
+			} else {
+				FileSystem.createDirectory(Files.DIR_EPISODES + '/__NEU__');
+				path = new Path(Files.DIR_EPISODES + '/__NEU__');
+				isEmpty = true;
+			}
+			
+			if (!FileSystem.exists(path.toString() + '/info.txt')) {
+				var fout = File.write(path.toString() + '/info.txt', false);
+				fout.writeString("Eine neue Episode im Editor erstellen");
+				fout.close();
+			}
+		}
+		
 		this.root = path.toString();
 		
 		if (FileSystem.isDirectory(path.toString())) {
@@ -29,13 +49,24 @@ class FileEpisode {
 		
 		name = path.file;
 		
-		var content:String = getFile("info.txt");
+		var content:String = loadFile("info.txt");
 		if (content != null) {
 			desc = content;
+			isOK = true;
+		} else {
+			isOK = false;
 		}
 	}
 	
-	public function getFile(fileName:String):String {
+	public function saveFile(fileName:String, content:String) {
+		fileName = root + "/" + fileName;
+		
+		var fout = File.write(fileName, false);
+		fout.writeString(content);
+		fout.close();
+	}
+	
+	public function loadFile(fileName:String):String {
 		var content:String = null;
 		
 		if (isZIP) {
@@ -53,7 +84,6 @@ class FileEpisode {
 			} else {
 				trace(fileName + " in " + root + " not found!");
 			}
-			
 		} else {
 			fileName = root + "/" + fileName;
 			

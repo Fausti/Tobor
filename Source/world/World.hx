@@ -7,6 +7,8 @@ import tjson.TJSON;
  * @author Matthias Faust
  */
 class World {
+	public var file:FileEpisode;
+	
 	public var factory:ObjectFactory;
 	
 	private var roomCurrent:Room;
@@ -24,20 +26,34 @@ class World {
 	public var points:Int = 0;
 	public var gold:Int = 0;
 	
-	public function new() {
-		factory = new ObjectFactory();
+	public function new(file:FileEpisode) {
+		this.file = file;
 		
+		factory = new ObjectFactory();
+	}
+	
+	public function start() {
 		player = cast factory.create("OBJ_CHARLIE");
-		player.setPosition(20, 14);
-		oldPlayerX = 20;
-		oldPlayerY = 14;
+		player.setPosition(0, 0);
+		oldPlayerX = 0;
+		oldPlayerY = 0;
 		
 		inventory = new Inventory();
 		
-		addRoom(createRoom(0, 0, 0));
-		switchRoom(0, 0, 0);
+		gold = 0;
+		lives = 3;
+		points = 0;
+			
+		var content:String = file.loadFile('rooms.json');
 		
-		player.setRoom(roomCurrent);
+		if (content == null) { 
+			addRoom(createRoom(0, 0, 0));
+			switchRoom(0, 0, 0);
+		
+			player.setRoom(roomCurrent);
+		} else {
+			loadData(content);
+		}
 	}
 	
 	public function update(deltaTime:Float) {
@@ -110,27 +126,17 @@ class World {
 	
 	// Save / Load
 	
-	public function save():String {
-		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
-
-		data.set("player", player.saveData());
-		
-		for (r in rooms) {
-			var worldData:Map<String, Dynamic> = new Map();
-			
-			worldData.set("x", r.x);
-			worldData.set("y", r.y);
-			worldData.set("z", r.z);
-			
-			worldData.set("data", r.save());
-			
-			data.set("ROOM_" + r.x + "_" + r.y + "_" + r.z, worldData);
-		}
-		
-		return TJSON.encode(data, 'fancy');
+	public function load() {
+		var content:String = file.loadFile('rooms.json');
+		if (content != null) loadData(content);
 	}
 	
-	public function save_editor():String {
+	public function save() {
+		var content:String = saveData();
+		file.saveFile('rooms.json', content);
+	}
+	
+	function saveData():String {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 
 		data.set("player", player.saveData());
@@ -150,7 +156,7 @@ class World {
 		return TJSON.encode(data, 'fancy');
 	}
 	
-	public function load_editor(fileData:String) {
+	function loadData(fileData:String) {
 		roomCurrent = null;
 		rooms = [];
 		
