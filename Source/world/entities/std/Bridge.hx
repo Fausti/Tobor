@@ -9,7 +9,10 @@ import world.entities.EntityStatic;
  * @author Matthias Faust
  */
 class Bridge extends EntityStatic {
-
+	public static var ON_GROUND:Int = Room.LAYER_LEVEL_0 + 1;
+	public static var UNDER_BRIDGE:Int = Room.LAYER_LEVEL_1 - 1;
+	public static var ON_BRIDGE:Int = Room.LAYER_LEVEL_1 + 1;
+	
 	public function new() {
 		super();
 		
@@ -30,8 +33,40 @@ class Bridge extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		// Prüfen ob Entity von Brücke kommt...
+		var fromBridge:Bool = false;
+		var sameBridge:Bool = false;
+			
+		var fromList:Array<Entity> = room.findEntityAt(e.x, e.y, Type.getClass(this));
+		if (fromList.length > 0) fromBridge = true;
+		for (ee in fromList) {
+			if (ee.type == type) sameBridge = true;
+		}
+			
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
-			return true;
+			switch(type) {
+				case 0:
+					if (direction == Direction.N || direction == Direction.S) {
+						if (!fromBridge) return true;
+						else {
+							if (sameBridge) return true;
+						}
+					}
+				case 1:
+					if (direction == Direction.W || direction == Direction.E) {
+						if (!fromBridge) return true;
+						else {
+							if (sameBridge) return true;
+						}
+					}
+			}
+		} else {
+			switch(type) {
+				case 0:
+					if (direction == Direction.W || direction == Direction.E) return true;
+				case 1:
+					if (direction == Direction.N || direction == Direction.S) return true;
+			}
 		}
 		
 		return false;
@@ -39,27 +74,15 @@ class Bridge extends EntityStatic {
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
-			// Prüfen ob Entity von Brücke kommt...
-			var fromBridge:Bool = false;
-			var fromList:Array<Entity> = room.findEntityAt(e.x, e.y, Type.getClass(this));
-			for (ee in fromList) {
-				if (ee.type == type) fromBridge = true;
-			}
-			
-			// müssen wir z des Objektes anpassen?
 			switch(type) {
 				case 0:
 					if (direction == Direction.N || direction == Direction.S) {
-						if (e.z != Room.LAYER_LEVEL_1 + 1) {
-							if (!fromBridge) e.z = Room.LAYER_LEVEL_1 + 1;
-						}
-					} else e.z = Room.LAYER_LEVEL_0 + 1;
+						e.z = ON_BRIDGE;
+					} else e.z = ON_GROUND;
 				case 1:
 					if (direction == Direction.W || direction == Direction.E) {
-						if (e.z != Room.LAYER_LEVEL_1 + 1) {
-							if (!fromBridge) e.z = Room.LAYER_LEVEL_1 + 1;
-						}
-					} else e.z = Room.LAYER_LEVEL_0 + 1;
+						e.z = ON_BRIDGE;
+					} else e.z = ON_GROUND;
 				default:
 			}
 		}

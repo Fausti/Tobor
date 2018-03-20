@@ -72,6 +72,12 @@ class EntityMoveable extends EntityDynamic {
 				e.willEnter(this, direction, speed);
 			}
 			
+			// auf dem Startfeld auch alle Objekte informieren...
+			var atStart:Array<Entity> = room.getCollisionsAt(gridX, gridY, this);
+			for (e in atStart) {
+				e.onLeave(this, direction);
+			}
+			
 			onStartMoving();
 			
 			return true;

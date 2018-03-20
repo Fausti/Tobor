@@ -102,6 +102,11 @@ class Entity {
 		
 	}
 	
+	// wird verlassen...
+	public function onLeave(e:Entity, direction:Vector2) {
+		
+	}
+	
 	public function setPosition(x:Int, y:Int) {
 		this.x = x;
 		this.y = y;

@@ -72,8 +72,8 @@ class ObjectFactory {
 		
 		register("OBJ_ELEXIR",		Elexir,			Gfx.getSprite(224, 24));
 		
-		register("OBJ_BRIDGE_NS",		Bridge,			Gfx.getSprite(176,156), {type: 0});
-		register("OBJ_BRIDGE_WE",		Bridge,			Gfx.getSprite(192,156), {type: 1});
+		// register("OBJ_BRIDGE_NS",		Bridge,			Gfx.getSprite(176,156), {type: 0});
+		// register("OBJ_BRIDGE_WE",		Bridge,			Gfx.getSprite(192,156), {type: 1});
 		
 	}
 	
