@@ -17,8 +17,14 @@ class World {
 	public var rooms:Array<Room> = [];
 	
 	public var player:Charlie;
+	
 	public var oldPlayerX:Int = 0;
 	public var oldPlayerY:Int = 0;
+	
+	// Temporär?
+	var inRoomX:Int = 0;
+	var inRoomY:Int = 0;
+	var inRoomZ:Int = 0;
 	
 	public var inventory:Inventory;
 	
@@ -53,6 +59,11 @@ class World {
 			player.setRoom(roomCurrent);
 		} else {
 			loadData(content);
+			
+			switchRoom(inRoomX, inRoomY, inRoomZ);
+			player.setRoom(roomCurrent);
+			
+			loadState();
 		}
 	}
 	
@@ -136,8 +147,14 @@ class World {
 	
 	function saveData():String {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
-
-		data.set("player", player.saveData());
+		
+		var playerData:Map<String, Dynamic> = player.saveData();
+		
+		playerData.set("inRoomX", roomCurrent.x);
+		playerData.set("inRoomY", roomCurrent.y);
+		playerData.set("inRoomZ", roomCurrent.z);
+		
+		data.set("player", playerData);
 		
 		for (r in rooms) {
 			var worldData:Map<String, Dynamic> = new Map();
@@ -211,10 +228,20 @@ class World {
 	
 	function parsePlayer(data) {
 		player.parseData(data);
-		/*
+		
+		oldPlayerX = Std.int(player.x);
+		oldPlayerY = Std.int(player.y);
+		
 		for (key in Reflect.fields(data)) {
-			player.parseData(key, Reflect.field(data, key));
+			switch(key) {
+			case "x":
+				inRoomX = Reflect.field(data, "inRoomX");
+			case "y":
+				inRoomY = Reflect.field(data, "inRoomY");
+			case "z":
+				inRoomZ = Reflect.field(data, "inRoomZ");
+			default:
+			}
 		}
-		*/
 	}
 }
