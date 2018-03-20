@@ -131,12 +131,13 @@ class EditorScreen extends PlayScreen {
 			} else if (Input.mouseBtnRight) {
 				if (editMode) {
 					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
-						// Objekte an Position entfernen
+						var template = game.world.factory.get(currentTile);
 						
+						// Objekte an Position entfernen
 						var list = game.world.room.getEntitiesAt_editor(cursorX, cursorY - 1);
 						
 						for (e in list) {
-							game.world.room.removeEntity_editor(e);
+							if (e.z == template.layer) game.world.room.removeEntity_editor(e);
 						}
 						
 						return;
@@ -164,6 +165,9 @@ class EditorScreen extends PlayScreen {
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
 		if (editMode) {
+			var template = game.world.factory.get(currentTile);
+			game.world.room.underRoof = template.layer != Room.LAYER_ROOF;
+			
 			game.world.render_editor();
 		} else {
 			game.world.render();

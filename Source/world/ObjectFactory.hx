@@ -75,19 +75,19 @@ class ObjectFactory {
 		// register("OBJ_BRIDGE_NS",		Bridge,			Gfx.getSprite(176,156), {type: 0});
 		// register("OBJ_BRIDGE_WE",		Bridge,			Gfx.getSprite(192,156), {type: 1});
 		
-		register("OBJ_ROOF_0", Roof, Gfx.getSprite(0, 132), {type: 0});
-		register("OBJ_ROOF_1", Roof, Gfx.getSprite(0, 144), {type: 1});
-		register("OBJ_ROOF_2", Roof, Gfx.getSprite(16, 132), {type: 2});
-		register("OBJ_ROOF_3", Roof, Gfx.getSprite(16, 144), {type: 3});
-		register("OBJ_ROOF_4", Roof, Gfx.getSprite(32, 132), {type: 4});
-		register("OBJ_ROOF_5", Roof, Gfx.getSprite(32, 144), {type: 5});
-		register("OBJ_ROOF_6", Roof, Gfx.getSprite(48, 144), {type: 6});
-		register("OBJ_ROOF_7", Roof, Gfx.getSprite(64, 144), {type: 7});
-		register("OBJ_ROOF_8", Roof, Gfx.getSprite(80, 144), {type: 8});
+		register("OBJ_ROOF_0", Roof, Gfx.getSprite(0, 132), {type: 0}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_1", Roof, Gfx.getSprite(0, 144), {type: 1}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_2", Roof, Gfx.getSprite(16, 132), {type: 2}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_3", Roof, Gfx.getSprite(16, 144), {type: 3}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_4", Roof, Gfx.getSprite(32, 132), {type: 4}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_5", Roof, Gfx.getSprite(32, 144), {type: 5}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_6", Roof, Gfx.getSprite(48, 144), {type: 6}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_7", Roof, Gfx.getSprite(64, 144), {type: 7}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_8", Roof, Gfx.getSprite(80, 144), {type: 8}, Room.LAYER_ROOF);
 		
 	}
 	
-	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null) {
+	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0) {
 		var _class:Class<Entity> = null;
 		
 		if (d == null) d = {};
@@ -102,7 +102,7 @@ class ObjectFactory {
 			_class = c;
 		}
 		
-		list.set(id, new ObjectTemplate(id, length, _class, d, spr));
+		list.set(id, new ObjectTemplate(id, length, _class, d, spr, layer));
 		length++;
 	}
 	
@@ -174,12 +174,15 @@ class ObjectTemplate {
 	public var data:Dynamic;
 	public var spr:Sprite;
 	
-	public function new(id:String, index:Int, c:Class<Entity>, d:Dynamic, spr:Sprite) {
+	public var layer:Int;
+	
+	public function new(id:String, index:Int, c:Class<Entity>, d:Dynamic, spr:Sprite, ?layer:Int = Room.LAYER_LEVEL_0) {
 		this.name = id;
 		this.index = index;
 		this.classPath = c;
 		this.data = d;
 		this.spr = spr;
+		this.layer = layer;
 	}
 	
 	public function create():Entity {
@@ -194,5 +197,13 @@ class ObjectTemplate {
 	
 	function toString() {
 		return Std.string(index) + "# " + Std.string(classPath);
+	}
+	
+	public function isRoof():Bool {
+		return layer == Room.LAYER_ROOF;
+	}
+	
+	public function isFloor():Bool {
+		return layer == Room.LAYER_FLOOR;
 	}
 }

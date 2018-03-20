@@ -1,5 +1,6 @@
 package;
 
+import lime.graphics.opengl.GL;
 import cpp.vm.Gc;
 import screens.IntroScreen;
 import screens.PlayScreen;
@@ -56,6 +57,10 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function init() {
+		GL.enable(GL.BLEND);
+		GL.disable(GL.DEPTH_TEST);
+		GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
+		
 		Files.init();
 		Sound.init();
 		

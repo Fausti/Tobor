@@ -15,7 +15,7 @@ class Entity {
 	
 	private var boundingBox:Rectangle;
 	
-	public var z:Int = Room.LAYER_FLOOR;
+	public var z:Int = Room.LAYER_LEVEL_0;
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	

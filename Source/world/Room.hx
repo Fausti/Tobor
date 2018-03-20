@@ -185,9 +185,13 @@ class Room {
 			return;
 		}
 		
-		if (getEntitiesAt_editor(e.x, e.y).length > 0) {
-			// Position ist schon belegt :(
-			return;
+		var atPosition:Array<Entity> = getEntitiesAt_editor(e.x, e.y);
+		if (atPosition.length > 0) {
+			for (o in atPosition) {
+				if (o.z == e.z) return;
+			}
+			
+			// return;
 		}
 		
 		if (listState.indexOf(e) == -1) {
@@ -195,6 +199,12 @@ class Room {
 		}
 		
 		e.setRoom(this);
+		
+		listState.sort(function (a:Entity, b:Entity):Int {
+			if (a.z < b.z) return -1;
+			if (a.z > b.z) return 1;
+			return 0;
+		});
 	}
 	
 	public function removeEntity(e:Entity) {
@@ -279,7 +289,7 @@ class Room {
 		clear();
 		
 		for (e in listState) {
-			addEntity(e.clone());
+			addEntity(e.clone(), true);
 		}
 	}
 	
