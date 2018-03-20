@@ -1,10 +1,14 @@
 package screens;
 
+import lime.math.Vector2;
+import world.entities.Entity;
+
 import ui.DialogInventory;
 import ui.Screen;
 import ui.DialogMenu;
 
 import world.Direction;
+import world.Room;
 
 /**
  * ...
@@ -48,13 +52,51 @@ class PlayScreen extends Screen {
 		var speed:Float = 8;
 		
 		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
-			game.world.player.move(Direction.W, speed);
+			movePlayer(Direction.W, speed);
 		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
-			game.world.player.move(Direction.E, speed);
+			movePlayer(Direction.E, speed);
 		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
-			game.world.player.move(Direction.N, speed);
+			movePlayer(Direction.N, speed);
 		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
-			game.world.player.move(Direction.S, speed);
+			movePlayer(Direction.S, speed);
+		}
+	}
+	
+	function movePlayer(direction:Vector2, speed:Float) {
+		var player = game.world.player;
+		
+		if (!Room.isOutsideMap(player.x + direction.x, player.y + direction.y)) {
+			game.world.player.move(direction, speed);
+		} else {
+			if (!game.world.player.isMoving()) {
+				var nextRoom = game.world.findRoom(
+					Std.int(game.world.room.x + direction.x), 
+					Std.int(game.world.room.y + direction.y), 
+					game.world.room.z
+				);
+				
+				if (nextRoom != null) {
+					game.world.saveState();
+					game.world.switchRoom(
+						Std.int(game.world.room.x + direction.x), 
+						Std.int(game.world.room.y + direction.y), 
+						game.world.room.z
+					);
+					game.world.loadState();
+					
+					if (player.x == 0) player.x = Room.WIDTH - 1;
+					else if (player.x == Room.WIDTH - 1) player.x = 0;
+					else if (player.y == 0) player.y = Room.HEIGHT - 1;
+					else if (player.y == Room.HEIGHT - 1) player.y = 0;
+					
+					var atTarget:Array<Entity> = game.world.room.getEntitiesAt(player.x, player.y, player);
+					for (e in atTarget) {
+						e.onEnter(player, direction);
+					}
+					
+					Input.wait(0.25);
+				}
+			}
 		}
 	}
 	

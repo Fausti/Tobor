@@ -339,4 +339,10 @@ class Room {
 		
 		return data;
 	}
+	
+	// STATIC
+	
+	public static function isOutsideMap(x:Float, y:Float):Bool {
+		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
+	}
 }
