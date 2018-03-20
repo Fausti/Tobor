@@ -4,6 +4,7 @@ import world.World;
 import world.entities.Entity;
 import world.entities.EntityDynamic;
 import world.entities.EntityStatic;
+import world.entities.EntityRoof;
 import world.entities.std.Charlie;
 import world.entities.std.Robot;
 import world.ObjectFactory.ObjectTemplate;
@@ -41,6 +42,7 @@ class Room {
 	public var lengthState(get, null):Int;
 	
 	public var robots:Int = 0;
+	public var underRoof:Bool = false;
 	
 	function get_length():Int {
 		return listAll.length;
@@ -84,6 +86,16 @@ class Room {
 			if (a.z > b.z) return 1;
 			return 0;
 		});
+		
+		underRoof = false;
+		
+		var atPlayerPos:Array<Entity> = getEntitiesAt(world.player.x, world.player.y, world.player);
+		for (e in atPlayerPos) {
+			if (Std.is(e, EntityRoof)) {
+				underRoof = true;
+				return;
+			}
+		}
 	}
 	
 	public function render() {

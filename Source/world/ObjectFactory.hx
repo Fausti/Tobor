@@ -75,6 +75,16 @@ class ObjectFactory {
 		// register("OBJ_BRIDGE_NS",		Bridge,			Gfx.getSprite(176,156), {type: 0});
 		// register("OBJ_BRIDGE_WE",		Bridge,			Gfx.getSprite(192,156), {type: 1});
 		
+		register("OBJ_ROOF_0", Roof, Gfx.getSprite(0, 132), {type: 0});
+		register("OBJ_ROOF_1", Roof, Gfx.getSprite(0, 144), {type: 1});
+		register("OBJ_ROOF_2", Roof, Gfx.getSprite(16, 132), {type: 2});
+		register("OBJ_ROOF_3", Roof, Gfx.getSprite(16, 144), {type: 3});
+		register("OBJ_ROOF_4", Roof, Gfx.getSprite(32, 132), {type: 4});
+		register("OBJ_ROOF_5", Roof, Gfx.getSprite(32, 144), {type: 5});
+		register("OBJ_ROOF_6", Roof, Gfx.getSprite(48, 144), {type: 6});
+		register("OBJ_ROOF_7", Roof, Gfx.getSprite(64, 144), {type: 7});
+		register("OBJ_ROOF_8", Roof, Gfx.getSprite(80, 144), {type: 8});
+		
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null) {
