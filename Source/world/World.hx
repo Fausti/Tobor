@@ -32,6 +32,8 @@ class World {
 	public var points:Int = 0;
 	public var gold:Int = 0;
 	
+	public var garlic:Float = 0;
+	
 	public function new(file:FileEpisode) {
 		this.file = file;
 		
@@ -66,6 +68,11 @@ class World {
 	}
 	
 	public function update(deltaTime:Float) {
+		if (garlic > 0) {
+			garlic = garlic - deltaTime;
+			if (garlic < 0) garlic = 0;
+		}
+		
 		if (player != null) player.update(deltaTime);
 		if (roomCurrent != null) roomCurrent.update(deltaTime);
 	}

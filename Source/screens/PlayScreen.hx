@@ -19,6 +19,7 @@ class PlayScreen extends Screen {
 	var SPR_CHARLIE:Sprite;
 	var SPR_GOLD:Sprite;
 	var SPR_BAG:Sprite;
+	var SPR_GARLIC:Sprite;
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -27,6 +28,7 @@ class PlayScreen extends Screen {
 		SPR_CHARLIE = Gfx.getSprite(32, 0);
 		SPR_GOLD = Gfx.getSprite(96, 12);
 		SPR_BAG = Gfx.getSprite(112, 12);
+		SPR_GARLIC = Gfx.getSprite(192, 24);
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -126,6 +128,18 @@ class PlayScreen extends Screen {
 		
 		var punkte = game.world.points; // game.world.player.points;
 		var leben = game.world.lives; // game.world.player.lives;
+		var garlic = Math.ceil(game.world.garlic);
+		
+		if (garlic > 0) {
+			if (garlic < 100) {
+				var strGarlic:String = StringTools.lpad(Std.string(garlic), "0", 2);
+				Tobor.fontSmall.drawString(200, 0, strGarlic, Color.BLACK);
+			} else {
+				Gfx.drawSprite(200, 0, SPR_GARLIC);
+			}
+			
+			Gfx.drawSprite(200 - 16, 0, SPR_GARLIC);
+		}
 		
 		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
 		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);

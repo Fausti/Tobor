@@ -64,6 +64,14 @@ class Robot extends EntityAI {
 			playerDirectionY = 1;
 		}
 		
+		if (room.world.garlic > 0) {
+			if (Utils.distance(x, y, player.x, player.y) < 4) { 
+				// Richtung umkehren wenn Knoblauch aktiv
+				playerDirectionX = -playerDirectionX;
+				playerDirectionY = -playerDirectionY;
+			}
+		}
+		
 		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
 		if (!move(Direction.get(playerDirectionX, playerDirectionY), 2)) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
