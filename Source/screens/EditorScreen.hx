@@ -113,7 +113,7 @@ class EditorScreen extends PlayScreen {
 						if (template.name != "OBJ_CHARLIE") {
 							var e:Entity = template.create();
 							e.setPosition(cursorX, cursorY - 1);
-							game.world.room.addEntity_editor(e);
+							addEntity(e);
 						} else {
 							game.world.player.setPosition(cursorX, cursorY - 1);
 							game.world.oldPlayerX = cursorX;
@@ -134,10 +134,10 @@ class EditorScreen extends PlayScreen {
 						var template = game.world.factory.get(currentTile);
 						
 						// Objekte an Position entfernen
-						var list = game.world.room.getEntitiesAt_editor(cursorX, cursorY - 1);
+						var list = game.world.room.getEntitiesAt(cursorX, cursorY - 1);
 						
 						for (e in list) {
-							if (e.z == template.layer) game.world.room.removeEntity_editor(e);
+							if (e.z == template.layer) game.world.room.removeEntity(e);
 						}
 						
 						return;
@@ -150,28 +150,32 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function switchEditMode() {
+		if (editMode) {
+			// Savestate anlegen
+			game.world.room.saveState();
+		}
+		
 		editMode = !editMode;
 		
 		Input.clearKeys();
 		
 		if (!editMode) {
 			game.world.inventory.clear();
-			game.world.loadState();
 		} else {
+			game.world.room.restoreState();
 			game.world.player.setPosition(game.world.oldPlayerX, game.world.oldPlayerY);
 		}
 	}
 	
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
+		
 		if (editMode) {
 			var template = game.world.factory.get(currentTile);
 			game.world.room.underRoof = template.layer != Room.LAYER_ROOF;
-			
-			game.world.render_editor();
-		} else {
-			game.world.render();
 		}
+		
+		game.world.render(editMode);
 	}
 	
 	override function renderStatusLine() {
@@ -242,11 +246,7 @@ class EditorScreen extends PlayScreen {
 	function renderObjectCount() {
 		var countEntities:Int;
 		
-		if (editMode) {
-			countEntities = game.world.room.lengthState; // game.world.room.length;
-		} else {
-			countEntities = game.world.room.length;
-		}
+		countEntities = game.world.room.length;
 		
 		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
 		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
@@ -291,5 +291,17 @@ class EditorScreen extends PlayScreen {
 		};
 		
 		showDialog(menu);
+	}
+	
+	function addEntity(e:Entity) {
+		var atPosition:Array<Entity> = game.world.room.getEntitiesAt(e.x, e.y);
+			
+		for (o in atPosition) {
+			if (o.z == e.z) {
+				return;
+			}
+		}
+		
+		game.world.room.addEntity(e);
 	}
 }

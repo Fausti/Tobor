@@ -76,13 +76,13 @@ class PlayScreen extends Screen {
 				);
 				
 				if (nextRoom != null) {
-					game.world.saveState();
+					game.world.room.saveState();
 					game.world.switchRoom(
 						Std.int(game.world.room.x + direction.x), 
 						Std.int(game.world.room.y + direction.y), 
 						game.world.room.z
 					);
-					game.world.loadState();
+					game.world.room.restoreState();
 					
 					if (player.x == 0) player.x = Room.WIDTH - 1;
 					else if (player.x == Room.WIDTH - 1) player.x = 0;

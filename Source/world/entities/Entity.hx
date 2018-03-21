@@ -107,6 +107,15 @@ class Entity {
 		
 	}
 	
+	// Raum Ereignisse
+	public function onAddToRoom() {
+		
+	}
+	
+	public function onRemoveFromRoom() {
+		
+	}
+	
 	public function setPosition(x:Int, y:Int) {
 		this.x = x;
 		this.y = y;
@@ -168,6 +177,7 @@ class Entity {
 		o.x = x;
 		o.y = y;
 		o.z = z;
+		
 		o.type = type;
 		
 		o.room = room;

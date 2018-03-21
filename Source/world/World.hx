@@ -62,8 +62,6 @@ class World {
 			
 			switchRoom(inRoomX, inRoomY, inRoomZ);
 			player.setRoom(roomCurrent);
-			
-			loadState();
 		}
 	}
 	
@@ -72,12 +70,8 @@ class World {
 		if (roomCurrent != null) roomCurrent.update(deltaTime);
 	}
 	
-	public function render() {
-		if (roomCurrent != null) roomCurrent.render();
-	}
-	
-	public function render_editor() {
-		if (roomCurrent != null) roomCurrent.render_editor();
+	public function render(?editMode:Bool = false) {
+		if (roomCurrent != null) roomCurrent.render(editMode);
 	}
 	
 	function get_room():Room {
@@ -122,8 +116,9 @@ class World {
 		}
 	}
 	
-	public function loadState() {
-		roomCurrent.loadState();
+	/*
+	public function restoreState() {
+		roomCurrent.restoreState();
 		player.setPosition(oldPlayerX, oldPlayerY);
 	}
 	
@@ -132,6 +127,7 @@ class World {
 		oldPlayerX = player.gridX;
 		oldPlayerY = player.gridY;
 	}
+	*/
 	
 	// Save / Load
 	
@@ -163,7 +159,7 @@ class World {
 			worldData.set("y", r.y);
 			worldData.set("z", r.z);
 			
-			worldData.set("data", r.save_editor());
+			worldData.set("data", r.save());
 			
 			data.set("ROOM_" + r.x + "_" + r.y + "_" + r.z, worldData);
 		}
