@@ -11,7 +11,7 @@ import world.ObjectFactory.ObjectTemplate;
  * @author Matthias Faust
  */
 class Entity {
-	private var room:Room;
+	public var room:Room;
 	
 	private var boundingBox:Rectangle;
 	
@@ -169,6 +169,8 @@ class Entity {
 		o.y = y;
 		o.z = z;
 		o.type = type;
+		
+		o.room = room;
 		
 		return o;
 	}

@@ -68,6 +68,12 @@ class Room {
 		}
 		
 		for (e in listDynamic) {
+			// streunernde Objekte finden o.O
+			if (e.room == null) {
+				// vielleicht einfach room zuordnen?
+				trace(e, "is NULL!");
+			}
+			
 			if (e.alive) {
 				e.update(deltaTime);
 			}
@@ -122,14 +128,14 @@ class Room {
 			if (e.z > world.player.z) {
 				if (!playerDrawn) {
 					playerDrawn = true;
-					if (world.player != null) world.player.render();
+					if (world.player != null) world.player.render_editor();
 				}
 			}
 			
 			e.render_editor();
 		}
 		
-		if (!playerDrawn) if (world.player != null) world.player.render();
+		if (!playerDrawn) if (world.player != null) world.player.render_editor();
 	}
 	
 	public function spawnEntity(x:Float, y:Float, e:Entity) {
@@ -208,16 +214,12 @@ class Room {
 	}
 	
 	public function removeEntity(e:Entity) {
-		e.setRoom(null);
-		
 		listAll.remove(e);
 		listStatic.remove(e);
 		listDynamic.remove(e);
 	}
 	
 	public function removeEntity_editor(e:Entity) {
-		e.setRoom(null);
-		
 		listState.remove(e);
 	}
 	
