@@ -17,6 +17,8 @@ class Sound {
 	
 	public static var SND_CHARLIE_STEP:AudioBuffer;
 	public static var SND_ROBOT_STEP:AudioBuffer;
+	public static var SND_DISSOLVE_WALL:AudioBuffer;
+	public static var SND_PICKUP_MISC:AudioBuffer;
 	
 	public static function init() {
 		MUS_CHOOSER = Assets.getAudioBuffer("assets/mus/chooser.ogg");
@@ -24,6 +26,10 @@ class Sound {
 		
 		SND_CHARLIE_STEP = Assets.getAudioBuffer("assets/sfx/step-charlie.wav");
 		SND_ROBOT_STEP = Assets.getAudioBuffer("assets/sfx/step-robot.wav");
+		
+		SND_DISSOLVE_WALL = Assets.getAudioBuffer("assets/sfx/dissolve-wall.wav");
+		
+		SND_PICKUP_MISC = Assets.getAudioBuffer("assets/sfx/pickup-misc.wav");
 	}
 	
 	private static function findPlaying(sound:AudioBuffer):Array <AudioSource> {

@@ -161,6 +161,20 @@ class Room {
 		return listTarget;
 	}
 	
+	public function findEntityAround(x:Float, y:Float, cl:Dynamic):Array<Entity> {
+		var list:Array<Entity> = [];
+		
+		for (mx in 0 ... 3) {
+			for (my in 0 ... 3) {
+				for (e in findEntityAt(x + mx - 1, y + my - 1, cl)) {
+					list.push(e);
+				}
+			}
+		}
+		
+		return list;
+	}
+	
 	public function getPlayer():Charlie {
 		return world.player;
 	}

@@ -91,6 +91,8 @@ class ObjectFactory {
 			register("OBJ_SHADOW#" + Std.string(i), Shadow, Gfx.getSprite(48 + (i * 16), 156), {type: i}, Room.LAYER_FLOOR);
 		}
 		
+		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
+		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0) {

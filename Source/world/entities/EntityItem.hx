@@ -16,6 +16,8 @@ class EntityItem extends EntityCollectable {
 		if (template != null) {
 			room.world.inventory.add(template.name, template.spr);
 		}
+		
+		Sound.play(Sound.SND_PICKUP_MISC);
 	}
 	
 	public function onDrop(x:Float, y:Float) {
@@ -30,6 +32,10 @@ class EntityItem extends EntityCollectable {
 	
 	public function onUse(x:Float, y:Float) {
 		onDrop(x, y);
+	}
+	
+	public function removeFromInventory() {
+		room.world.inventory.remove(getID());
 	}
 	
 }

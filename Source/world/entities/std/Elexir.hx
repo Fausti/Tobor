@@ -18,7 +18,7 @@ class Elexir extends EntityItem {
 		if (room.world.lives < 3) {
 			room.world.lives++;
 			
-			room.world.inventory.remove(getID());
+			removeFromInventory();
 		}
 	}
 }

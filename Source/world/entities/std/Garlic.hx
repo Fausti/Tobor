@@ -17,6 +17,6 @@ class Garlic extends EntityItem {
 	override public function onUse(x:Float, y:Float) {
 		room.world.garlic = room.world.garlic + 60;
 		
-		room.world.inventory.remove(getID());
+		removeFromInventory();
 	}
 }
