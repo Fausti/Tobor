@@ -92,6 +92,10 @@ class ObjectFactory {
 			register("OBJ_SHADOW#" + Std.string(i), Shadow, Gfx.getSprite(48 + (i * 16), 156), {type: i}, Room.LAYER_FLOOR);
 		}
 		
+		for (i in 0 ... 5) {
+			register("OBJ_SAND#" + Std.string(i), Sand, Gfx.getSprite(16 * i, 24), {type: i}, Room.LAYER_FLOOR);
+		}
+		
 		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
 		
