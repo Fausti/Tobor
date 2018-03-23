@@ -5,6 +5,7 @@ import lime.math.Rectangle;
 import lime.math.Vector2;
 import world.Room;
 import world.ObjectFactory.ObjectTemplate;
+import world.entities.interfaces.IElectric;
 
 /**
  * ...
@@ -25,6 +26,7 @@ class Entity {
 	private var sprites:Array<Sprite> = [];
 	
 	public var type:Int = 0;
+	public var flag:Int = Marker.MARKER_NO;
 	
 	public var alive:Bool = true;
 	
@@ -78,8 +80,25 @@ class Entity {
 	}
 	
 	public function render_editor() {
-		for (spr in sprites) {
-			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr);
+		render();
+		
+		if (flag != Marker.MARKER_NO) {
+			var spr_marker:Sprite = null;
+			
+			switch(flag) {
+				case 0:
+					spr_marker = Marker.SPR_MARKER_0;
+				case 1:
+					spr_marker = Marker.SPR_MARKER_1;
+				case 2:
+					spr_marker = Marker.SPR_MARKER_2;
+				case 3:
+					spr_marker = Marker.SPR_MARKER_3;
+				case 4:
+					spr_marker = Marker.SPR_MARKER_4;
+			}
+			
+			if (spr_marker != null) Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr_marker);
 		}
 	}
 	
@@ -179,6 +198,7 @@ class Entity {
 		o.z = z;
 		
 		o.type = type;
+		o.flag = flag;
 		
 		o.room = room;
 		
@@ -192,6 +212,12 @@ class Entity {
 	public function parseData(data) {
 		if (hasData(data, "type")) {
 			this.type = data.type;
+		}
+		
+		if (Std.is(this, IElectric)) {
+			if (hasData(data, "flag")) {
+				this.flag = data.flag;
+			}
 		}
 		
 		if (hasData(data, "x")) {
@@ -217,6 +243,7 @@ class Entity {
 		if (def != null) {
 			data.set("id", def.name);
 			data.set("type", type);
+			if (Std.is(this, IElectric)) data.set("flag", flag);
 			data.set("x", gridX);
 			data.set("y", gridY);
 			data.set("z", z);
@@ -237,5 +264,15 @@ class Entity {
 		if (template != null) return template.name;
 		
 		return "ERROR";
+	}
+	
+	// Electric stuff
+	
+	public function setMarker(f:Int) {
+		if (Std.is(this, IElectric)) this.flag = f;
+	}
+	
+	public function switchStatus() {
+
 	}
 }

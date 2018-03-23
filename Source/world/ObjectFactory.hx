@@ -1,5 +1,6 @@
 package world;
 import world.entities.Entity;
+import world.entities.Marker;
 import world.entities.std.*;
 
 /**
@@ -17,7 +18,7 @@ class ObjectFactory {
 		
 		register("OBJ_CHARLIE", 	Charlie, 	Gfx.getSprite(16, 0));
 		
-		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120));
+		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120), null, Room.LAYER_LEVEL_0 + 1);
 		
 		register("OBJ_ISOLATOR", 	Isolator, 	Gfx.getSprite(240, 0));
 		register("OBJ_ELECTRIC_FENCE", ElectricFence, Gfx.getSprite(64, 12));
@@ -93,6 +94,19 @@ class ObjectFactory {
 		
 		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
+		
+		// Electric Stuff
+		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER);
+		register("MARKER_1", Marker, Gfx.getSprite(16, 348), {type:1}, Room.LAYER_MARKER);
+		register("MARKER_2", Marker, Gfx.getSprite(32, 348), {type:2}, Room.LAYER_MARKER);
+		register("MARKER_3", Marker, Gfx.getSprite(48, 348), {type:3}, Room.LAYER_MARKER);
+		register("MARKER_4", Marker, Gfx.getSprite(64, 348), {type:4}, Room.LAYER_MARKER);
+		
+		register("OBJ_ELECTRIC_DOOR_0", ElectricDoor, Gfx.getSprite(0, 336), {type: 0});
+		register("OBJ_ELECTRIC_DOOR_1", ElectricDoor, Gfx.getSprite(16, 336), {type: 1});
+		
+		register("OBJ_ELECTRIC_FLOOR_PLATE_0", ElectricFloorPlate, Gfx.getSprite(32, 336), {type: 0});
+		register("OBJ_ELECTRIC_FLOOR_PLATE_1", ElectricFloorPlate, Gfx.getSprite(48, 336), {type: 1});
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0) {

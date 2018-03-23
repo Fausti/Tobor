@@ -17,6 +17,8 @@ class Room {
 	public static inline var LAYER_LEVEL_1:Int = 20;
 	public static inline var LAYER_ROOF:Int = 30;
 	
+	public static inline var LAYER_MARKER:Int = 99;
+	
 	public static inline var WIDTH:Int = 40;
 	public static inline var HEIGHT:Int = 28;
 	
@@ -142,6 +144,8 @@ class Room {
 			return e.collisionAt(x, y);
 		});
 		
+		if (world.player.collisionAt(x, y)) listTarget.push(world.player);
+		
 		if (without != null) listTarget.remove(without);
 		
 		return listTarget;
@@ -150,6 +154,8 @@ class Room {
 	public function getEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAt(x, y, without);
 		
+		if (world.player.gridX == x && world.player.gridY == y) listTarget.push(world.player);
+		
 		return listTarget;
 	}
 	
@@ -157,6 +163,10 @@ class Room {
 		var listTarget:Array<Entity> = entities.getAll().filter(function(e):Bool {
 			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive && Std.is(e, cl);
 		});
+		
+		if (Std.is(world.player, cl)) {
+			if (world.player.gridX == x && world.player.gridY == y) listTarget.push(world.player);
+		}
 		
 		return listTarget;
 	}
@@ -218,6 +228,12 @@ class Room {
 		}
 		
 		return data;
+	}
+	
+	public function switchStatus(f:Int, ?e:Entity = null) {
+		for (ee in entities.getElectric()) {
+			if (e != ee) if (ee.flag == f) ee.switchStatus();
+		}
 	}
 	
 	// STATIC

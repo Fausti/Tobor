@@ -3,6 +3,7 @@ package screens;
 import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
+import world.entities.interfaces.IElectric;
 
 import world.Room;
 import world.entities.Entity;
@@ -112,8 +113,16 @@ class EditorScreen extends PlayScreen {
 						
 						if (template.name != "OBJ_CHARLIE") {
 							var e:Entity = template.create();
-							e.setPosition(cursorX, cursorY - 1);
-							addEntity(e);
+							
+							if (template.layer == Room.LAYER_MARKER) {
+								var l:Array<Entity> = game.world.room.getEntitiesAt(cursorX, cursorY-  1);
+								for (le in l) {
+									le.setMarker(e.type);
+								}
+							} else {
+								e.setPosition(cursorX, cursorY - 1);
+								addEntity(e);
+							}
 						} else {
 							game.world.player.setPosition(cursorX, cursorY - 1);
 							game.world.oldPlayerX = cursorX;

@@ -34,6 +34,8 @@ class World {
 	
 	public var garlic:Float = 0;
 	
+	public var flags:Array<Bool> = [false, false, false, false, false];
+	
 	public function new(file:FileEpisode) {
 		this.file = file;
 		
@@ -65,6 +67,8 @@ class World {
 			switchRoom(inRoomX, inRoomY, inRoomZ);
 			player.setRoom(roomCurrent);
 		}
+		
+		flags = [false, false, false, false, false];
 	}
 	
 	public function update(deltaTime:Float) {
@@ -158,6 +162,7 @@ class World {
 		playerData.set("inRoomZ", roomCurrent.z);
 		
 		data.set("player", playerData);
+		data.set("flags", flags);
 		
 		for (r in rooms) {
 			var worldData:Map<String, Dynamic> = new Map();
@@ -186,6 +191,8 @@ class World {
 			switch(key) {
 			case "player":
 				parsePlayer(Reflect.field(data, "player"));
+			case "flags":
+				flags = Reflect.field(data, "flags");
 			default:
 				if (StringTools.startsWith(key, "ROOM_")) {
 					parseRoom(Reflect.field(data, key));
