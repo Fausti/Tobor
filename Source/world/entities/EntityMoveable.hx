@@ -42,6 +42,10 @@ class EntityMoveable extends EntityDynamic implements IWeight {
 		super.update(deltaTime);
 	}
 	
+	override public function render() {
+		super.render();
+	}
+	
 	override public function isMoving():Bool {
 		if (moveData.direction != Direction.NONE) {
 			return true;
@@ -54,7 +58,7 @@ class EntityMoveable extends EntityDynamic implements IWeight {
 		moveData.speedMovement = spd;
 	}
 	
-	public function move(direction:Vector2, speed:Float):Bool {
+	public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
 		if (direction == Direction.NONE) return false;
 		
 		if (!isMoving()) {
@@ -63,14 +67,16 @@ class EntityMoveable extends EntityDynamic implements IWeight {
 			var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
 			
 			// kann Feld betreten werden?
-			for (e in atTarget) {
-				if (!e.canEnter(this, direction, speed)) return false;
+			if (dist == 1) { // Tunnel ignorieren dies hier...
+				for (e in atTarget) {
+					if (!e.canEnter(this, direction, speed)) return false;
+				}
 			}
 			
 			// dann bewegen wir uns mal...
 			moveData.direction = direction;
 			moveData.speedMovement = speed;
-			moveData.distanceLeft = 1.0;
+			moveData.distanceLeft = dist;
 			
 			// informieren wir mal jeden auf dem Zielfeld das wir es demnächst betreten
 			for (e in atTarget) {
@@ -112,11 +118,14 @@ class EntityMoveable extends EntityDynamic implements IWeight {
 			
 			var atTarget:Array<Entity> = room.getEntitiesAt(gridX, gridY, this);
 			
+			var oldDirection = moveData.direction;
+			moveData.direction = Direction.NONE;
+			
 			for (e in atTarget) {
-				e.onEnter(this, moveData.direction);
+				e.onEnter(this, oldDirection);
 			}
 			
-			moveData.direction = Direction.NONE;
+			
 		}
 	}
 	

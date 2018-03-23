@@ -30,6 +30,8 @@ class Entity {
 	
 	public var alive:Bool = true;
 	
+	public var visible:Bool = true;
+	
 	public function new() {
 		boundingBox = new Rectangle(0, 0, 1, 1);
 		

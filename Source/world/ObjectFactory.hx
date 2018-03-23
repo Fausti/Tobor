@@ -96,6 +96,10 @@ class ObjectFactory {
 			register("OBJ_SAND#" + Std.string(i), Sand, Gfx.getSprite(16 * i, 24), {type: i}, Room.LAYER_FLOOR);
 		}
 		
+		for (i in 0 ... 4) {
+			register("OBJ_TUNNEL#" + Std.string(i), Tunnel, Gfx.getSprite(192 + i * 16, 72), {type: i});
+		}
+		
 		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
 		
