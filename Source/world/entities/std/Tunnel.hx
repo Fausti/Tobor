@@ -37,6 +37,8 @@ class Tunnel extends EntityStatic {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
+		var walkSpeed:Float = 4;
+		
 		if (!e.visible) {
 			e.visible = true;
 			return;
@@ -67,7 +69,7 @@ class Tunnel extends EntityStatic {
 					if (target != null) {
 						var ee:EntityMoveable = cast e;
 						
-						ee.move(Direction.S, 8, dist);
+						ee.move(Direction.S, walkSpeed, dist);
 						ee.visible = false;
 					}
 				}
@@ -95,7 +97,7 @@ class Tunnel extends EntityStatic {
 					if (target != null) {
 						var ee:EntityMoveable = cast e;
 						
-						ee.move(Direction.N, 8, dist);
+						ee.move(Direction.N, walkSpeed, dist);
 						ee.visible = false;
 					}
 				}
@@ -125,7 +127,7 @@ class Tunnel extends EntityStatic {
 					if (target != null) {
 						var ee:EntityMoveable = cast e;
 
-						ee.move(Direction.E, 8, dist);
+						ee.move(Direction.E, walkSpeed, dist);
 						ee.visible = false;
 					}
 				}
@@ -153,7 +155,7 @@ class Tunnel extends EntityStatic {
 					if (target != null) {
 						var ee:EntityMoveable = cast e;
 						
-						ee.move(Direction.W, 8, dist);
+						ee.move(Direction.W, walkSpeed, dist);
 						ee.visible = false;
 					}
 				}

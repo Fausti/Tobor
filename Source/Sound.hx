@@ -16,6 +16,7 @@ class Sound {
 	public static var MUS_INTRO_DOS:AudioBuffer;
 	
 	public static var SND_CHARLIE_STEP:AudioBuffer;
+	public static var SND_TUNNEL_STEP:AudioBuffer;
 	public static var SND_ROBOT_STEP:AudioBuffer;
 	public static var SND_DISSOLVE_WALL:AudioBuffer;
 	public static var SND_PICKUP_MISC:AudioBuffer;
@@ -25,6 +26,7 @@ class Sound {
 		MUS_INTRO_DOS = Assets.getAudioBuffer("assets/mus/intro-dos.ogg");
 		
 		SND_CHARLIE_STEP = Assets.getAudioBuffer("assets/sfx/step-charlie.wav");
+		SND_TUNNEL_STEP = Assets.getAudioBuffer("assets/sfx/step-tunnel.wav");
 		SND_ROBOT_STEP = Assets.getAudioBuffer("assets/sfx/step-robot.wav");
 		
 		SND_DISSOLVE_WALL = Assets.getAudioBuffer("assets/sfx/dissolve-wall.wav");

@@ -12,6 +12,9 @@ class Charlie extends EntityMoveable {
 	var sprStanding:Sprite;
 	var sprWalking:Animation;
 	
+	public var walkInTunnel:Bool = false;
+	var lastTunnelStep:Int = 0;
+	
 	public function new() {
 		super();
 		
@@ -27,17 +30,46 @@ class Charlie extends EntityMoveable {
 		z = Room.LAYER_LEVEL_0 + 1;
 	}
 	
+	override public function update(deltaTime:Float) {
+		super.update(deltaTime);
+		
+		if (isMoving()) {
+			if (walkInTunnel) {
+				var step = Math.floor(moveData.distanceLeft);
+				
+				if (step < lastTunnelStep) {
+					Sound.play(Sound.SND_TUNNEL_STEP);
+					lastTunnelStep = step;
+				}
+			}
+		}
+	}
+	
 	override function onStartMoving() {
 		sprites[0] = sprWalking;
 		sprWalking.start(false);
 		
-		Sound.play(Sound.SND_CHARLIE_STEP);
+		if (moveData.distanceLeft > 1.0) {
+			walkInTunnel = true;
+			lastTunnelStep = Math.floor(moveData.distanceLeft);
+		}
+		
+		if (walkInTunnel) {
+			Sound.play(Sound.SND_TUNNEL_STEP);
+		} else {
+			Sound.play(Sound.SND_CHARLIE_STEP);
+		}
 	}
 	
 	override function onStopMoving() {
 		sprites[0] = sprStanding;
 		sprWalking.stop(false);
 		
-		Sound.play(Sound.SND_CHARLIE_STEP);
+		if (walkInTunnel) {
+			Sound.play(Sound.SND_TUNNEL_STEP);
+			walkInTunnel = false;
+		} else {
+			Sound.play(Sound.SND_CHARLIE_STEP);
+		}
 	}
 }

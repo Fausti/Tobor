@@ -20,6 +20,7 @@ class PlayScreen extends Screen {
 	var SPR_GOLD:Sprite;
 	var SPR_BAG:Sprite;
 	var SPR_GARLIC:Sprite;
+	var SPR_TUNNEL:Sprite;
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -29,6 +30,8 @@ class PlayScreen extends Screen {
 		SPR_GOLD = Gfx.getSprite(96, 12);
 		SPR_BAG = Gfx.getSprite(112, 12);
 		SPR_GARLIC = Gfx.getSprite(192, 24);
+		
+		SPR_TUNNEL = Gfx.getSprite(240, 120);
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -124,7 +127,11 @@ class PlayScreen extends Screen {
 		}
 		
 		// TODO: Blaumann! Oder Charlieobjekt fragen?
-		Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
+		if (game.world.player.walkInTunnel) {
+			Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_TUNNEL);
+		} else {
+			Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
+		}
 		
 		var punkte = game.world.points; // game.world.player.points;
 		var leben = game.world.lives; // game.world.player.lives;
