@@ -105,6 +105,10 @@ class ObjectFactory {
 		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
 		
+		for (i in 0 ... 4) {
+			register("OBJ_ARROW_" +Std.string(i), Arrow, Gfx.getSprite(96 + 16 * i, 24), {type: i});
+		}
+		
 		// Electric Stuff
 		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER);
 		register("MARKER_1", Marker, Gfx.getSprite(16, 348), {type:1}, Room.LAYER_MARKER);

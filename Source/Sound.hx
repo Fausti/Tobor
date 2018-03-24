@@ -25,6 +25,8 @@ class Sound {
 	public static var SND_PICKUP_KEY:AudioBuffer;
 	public static var SND_PICKUP_GOLD:AudioBuffer;
 	
+	public static var SND_ROTATE_ARROW:AudioBuffer;
+	
 	public static var SND_OPEN_DOOR:AudioBuffer;
 	
 	public static var SND_EXPLOSION_CHARLIE:AudioBuffer;
@@ -43,6 +45,8 @@ class Sound {
 		SND_PICKUP_MISC = Assets.getAudioBuffer("assets/sfx/pickup-misc.wav");
 		SND_PICKUP_KEY = Assets.getAudioBuffer("assets/sfx/pickup-key.wav");
 		SND_PICKUP_GOLD = Assets.getAudioBuffer("assets/sfx/pickup-gold.wav");
+		
+		SND_ROTATE_ARROW = Assets.getAudioBuffer("assets/sfx/drop-magnet.wav");
 		
 		SND_OPEN_DOOR = Assets.getAudioBuffer("assets/sfx/open-door.wav");
 		
