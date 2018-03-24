@@ -30,4 +30,10 @@ class Explosion extends EntityDynamic {
 		sprites[0] = SPR_EXPLOSION;
 		SPR_EXPLOSION.start();
 	}
+	
+	override public function die() {
+		if (onRemove != null) onRemove();
+		
+		super.die();
+	}
 }

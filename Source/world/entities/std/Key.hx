@@ -21,4 +21,10 @@ class Key extends EntityItem {
 			setSprite(spr);
 		}
 	}
+	
+	override public function onPickup() {
+		addToInventory();
+		
+		Sound.play(Sound.SND_PICKUP_KEY);
+	}
 }

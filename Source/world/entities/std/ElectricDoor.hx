@@ -37,6 +37,14 @@ class ElectricDoor extends EntityStatic implements IElectric {
 		return false;
 	}
 	
+	override public function onEnter(e:Entity, direction:Vector2) {
+		if (Std.is(e, Charlie)) {
+			Sound.play(Sound.SND_OPEN_DOOR);
+		}
+		
+		super.onEnter(e, direction);
+	}
+	
 	override public function switchStatus() {
 		if (type == 0) type = 1; else type = 0;
 	}

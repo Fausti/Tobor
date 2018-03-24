@@ -11,11 +11,7 @@ class EntityItem extends EntityCollectable {
 	}
 	
 	override public function onPickup() {
-		var template = getTemplate();
-			
-		if (template != null) {
-			room.world.inventory.add(template.name, template.spr);
-		}
+		addToInventory();
 		
 		Sound.play(Sound.SND_PICKUP_MISC);
 	}
@@ -36,6 +32,14 @@ class EntityItem extends EntityCollectable {
 	
 	public function removeFromInventory() {
 		room.world.inventory.remove(getID());
+	}
+	
+	public function addToInventory() {
+		var template = getTemplate();
+			
+		if (template != null) {
+			room.world.inventory.add(template.name, template.spr);
+		}
 	}
 	
 }

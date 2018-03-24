@@ -52,23 +52,25 @@ class Robot extends EntityAI {
 		
 		var player = room.getPlayer();
 		
-		if (player.gridX < gridX) {
-			playerDirectionX = -1;
-		} else if (player.gridX > gridX) {
-			playerDirectionX = 1;
-		}
+		if (player.visible) {
+			if (player.gridX < gridX) {
+				playerDirectionX = -1;
+			} else if (player.gridX > gridX) {
+				playerDirectionX = 1;
+			}
 		
-		if (player.gridY < gridY) {
-			playerDirectionY = -1;
-		} else if (player.gridY > gridY) {
-			playerDirectionY = 1;
-		}
+			if (player.gridY < gridY) {
+				playerDirectionY = -1;
+			} else if (player.gridY > gridY) {
+				playerDirectionY = 1;
+			}
 		
-		if (room.world.garlic > 0) {
-			if (Utils.distance(x, y, player.x, player.y) < 4) { 
-				// Richtung umkehren wenn Knoblauch aktiv
-				playerDirectionX = -playerDirectionX;
-				playerDirectionY = -playerDirectionY;
+			if (room.world.garlic > 0) {
+				if (Utils.distance(x, y, player.x, player.y) < 4) { 
+					// Richtung umkehren wenn Knoblauch aktiv
+					playerDirectionX = -playerDirectionX;
+					playerDirectionY = -playerDirectionY;
+				}
 			}
 		}
 		
@@ -106,6 +108,8 @@ class Robot extends EntityAI {
 	
 	override public function die() {
 		room.spawnEntity(x, y, new Explosion());
+		
+		Sound.play(Sound.SND_EXPLOSION_ROBOT);
 		
 		super.die();
 	}

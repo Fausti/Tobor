@@ -32,6 +32,8 @@ class Entity {
 	
 	public var visible:Bool = true;
 	
+	public var onRemove:Dynamic = null; // Callback
+	
 	public function new() {
 		boundingBox = new Rectangle(0, 0, 1, 1);
 		

@@ -2,6 +2,8 @@ package world.entities.std;
 
 import gfx.Animation;
 import gfx.Sprite;
+import lime.math.Vector2;
+import world.entities.Entity;
 import world.entities.EntityMoveable;
 
 /**
@@ -45,6 +47,12 @@ class Charlie extends EntityMoveable {
 		}
 	}
 	
+	override public function isMoving():Bool {
+		if (!visible) return true;
+		
+		return super.isMoving();
+	}
+	
 	override function onStartMoving() {
 		sprites[0] = sprWalking;
 		sprWalking.start(false);
@@ -70,6 +78,29 @@ class Charlie extends EntityMoveable {
 			walkInTunnel = false;
 		} else {
 			Sound.play(Sound.SND_CHARLIE_STEP);
+		}
+	}
+	
+	override public function die() {
+		var e:Explosion = new Explosion();
+		
+		e.onRemove = function() {
+			room.world.player.visible = true;
+		}
+		
+		room.spawnEntity(x, y, e);
+		
+		Sound.play(Sound.SND_EXPLOSION_CHARLIE);
+		
+		visible = false;
+		room.world.lives--;
+		
+		super.die();
+	}
+	
+	override public function onEnter(e:Entity, direction:Vector2) {
+		if (visible && Std.is(e, Robot)) {
+			die();
 		}
 	}
 }
