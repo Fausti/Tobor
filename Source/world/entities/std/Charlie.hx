@@ -86,6 +86,7 @@ class Charlie extends EntityMoveable {
 		
 		e.onRemove = function() {
 			room.world.player.visible = true;
+			room.world.lives--;
 		}
 		
 		room.spawnEntity(x, y, e);
@@ -93,7 +94,6 @@ class Charlie extends EntityMoveable {
 		Sound.play(Sound.SND_EXPLOSION_CHARLIE);
 		
 		visible = false;
-		room.world.lives--;
 		
 		super.die();
 	}
