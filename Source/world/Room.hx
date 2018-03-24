@@ -73,7 +73,7 @@ class Room {
 		underRoof = false;
 		
 		if (world.player.visible) {
-			var atPlayerPos:Array<Entity> = getEntitiesAt(world.player.x, world.player.y, world.player);
+			var atPlayerPos:Array<Entity> = getAllEntitiesAt(world.player.x, world.player.y, world.player);
 			for (e in atPlayerPos) {
 				if (Std.is(e, EntityRoof)) {
 					underRoof = true;
@@ -160,6 +160,18 @@ class Room {
 	}
 	
 	public function getEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
+		var listTarget:Array<Entity> = entities.getAt(x, y, without);
+		
+		var remTarget:Array<Entity> = listTarget.filter(function (e) {
+			if (!Std.is(e, EntityRoof)) return true; return false;
+		});
+				
+		if (world.player.gridX == x && world.player.gridY == y) remTarget.push(world.player);
+		
+		return remTarget;
+	}
+	
+	public function getAllEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAt(x, y, without);
 		
 		if (world.player.gridX == x && world.player.gridY == y) listTarget.push(world.player);

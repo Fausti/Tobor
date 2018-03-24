@@ -115,7 +115,7 @@ class EditorScreen extends PlayScreen {
 							var e:Entity = template.create();
 							
 							if (template.layer == Room.LAYER_MARKER) {
-								var l:Array<Entity> = game.world.room.getEntitiesAt(cursorX, cursorY-  1);
+								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY-  1);
 								for (le in l) {
 									le.setMarker(e.type);
 								}
@@ -143,7 +143,7 @@ class EditorScreen extends PlayScreen {
 						var template = game.world.factory.get(currentTile);
 						
 						// Objekte an Position entfernen
-						var list = game.world.room.getEntitiesAt(cursorX, cursorY - 1);
+						var list = game.world.room.getAllEntitiesAt(cursorX, cursorY - 1);
 						
 						for (e in list) {
 							if (e.z == template.layer) game.world.room.removeEntity(e);
@@ -303,7 +303,7 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function addEntity(e:Entity) {
-		var atPosition:Array<Entity> = game.world.room.getEntitiesAt(e.x, e.y);
+		var atPosition:Array<Entity> = game.world.room.getAllEntitiesAt(e.x, e.y);
 			
 		for (o in atPosition) {
 			if (o.z == e.z) {

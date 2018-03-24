@@ -94,7 +94,7 @@ class PlayScreen extends Screen {
 					else if (player.y == 0) player.y = Room.HEIGHT - 1;
 					else if (player.y == Room.HEIGHT - 1) player.y = 0;
 					
-					var atTarget:Array<Entity> = game.world.room.getEntitiesAt(player.x, player.y, player);
+					var atTarget:Array<Entity> = game.world.room.getAllEntitiesAt(player.x, player.y, player);
 					for (e in atTarget) {
 						e.onEnter(player, direction);
 					}
