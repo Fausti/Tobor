@@ -3,12 +3,15 @@ package world.entities.std;
 import lime.math.Vector2;
 import world.entities.Entity;
 import world.entities.EntityAI;
+import lime.math.Rectangle;
 
 /**
  * ...
  * @author Matthias Faust
  */
 class Robot extends EntityAI {
+	public static var SPEED:Float = 2.0;
+	
 	var stress:Int = 0;
 	var maxStress:Int = 150;
 	
@@ -75,10 +78,10 @@ class Robot extends EntityAI {
 		}
 		
 		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
-		if (!move(Direction.get(playerDirectionX, playerDirectionY), 2)) {
+		if (!move(Direction.get(playerDirectionX, playerDirectionY), SPEED)) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
 			
-			if (!move(Direction.ALL[Std.random(Direction.ALL.length)], 2)) {
+			if (!move(Direction.ALL[Std.random(Direction.ALL.length)], SPEED)) {
 				stress++;
 			} else {
 				stress--;
@@ -120,5 +123,12 @@ class Robot extends EntityAI {
 	
 	override function onStopMoving() {
 
+	}
+	
+	override public function collisionAt(cx:Float, cy:Float):Bool {
+		if (!alive) return false;
+		
+		var r = boundingBox.intersects(new Rectangle(cx, cy, 1, 1));
+		return r;
 	}
 }

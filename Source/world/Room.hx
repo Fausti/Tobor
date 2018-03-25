@@ -1,5 +1,6 @@
 package world;
 
+import lime.math.Rectangle;
 import world.World;
 import world.entities.Entity;
 import world.entities.EntityRoof;
@@ -153,6 +154,21 @@ class Room {
 		});
 		
 		if (world.player.collisionAt(x, y)) listTarget.push(world.player);
+		
+		if (without != null) listTarget.remove(without);
+		
+		return listTarget;
+	}
+	
+	public function getCollisionsWithAI(x:Float, y:Float, ?w:Float = 1, ?h:Float = 1, ?without:Entity = null):Array<Entity> {
+		var bb:Rectangle = new Rectangle(x, y, w, h);
+		
+		var listTarget:Array<Entity> = entities.getAI().filter(function(e):Bool {
+			if (!e.alive) return false;
+			return e.getBoundingBox().intersects(bb);
+		});
+		
+		if (world.player.getBoundingBox().intersects(bb)) listTarget.push(world.player);
 		
 		if (without != null) listTarget.remove(without);
 		

@@ -57,6 +57,8 @@ class ObjectFactory {
 		register("OBJ_MAGNET#0", Magnet, Gfx.getSprite(224, 12), {type: 0});
 		register("OBJ_MAGNET#1", Magnet, Gfx.getSprite(240, 12), {type: 1});
 		
+		register("OBJ_SLING", Sling, Gfx.getSprite(240, 60));
+		
 		for (i in 0 ... 6) {
 			register("OBJ_MUNITION#" + Std.string(i), Munition, Gfx.getSprite(144 + i * 16, 60), {type: i});
 		}
@@ -108,6 +110,8 @@ class ObjectFactory {
 		for (i in 0 ... 4) {
 			register("OBJ_ARROW_" +Std.string(i), Arrow, Gfx.getSprite(96 + 16 * i, 24), {type: i});
 		}
+		
+		register("OBJ_GRATE", Grate, Gfx.getSprite(240, 84));
 		
 		// Electric Stuff
 		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER);

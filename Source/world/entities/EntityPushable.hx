@@ -1,6 +1,7 @@
 package world.entities;
 
 import lime.math.Vector2;
+import world.entities.std.Bullet;
 import world.entities.std.Charlie;
 
 /**

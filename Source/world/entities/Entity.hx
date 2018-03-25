@@ -144,6 +144,10 @@ class Entity {
 		this.y = y;
 	}
 	
+	public function getBoundingBox():Rectangle {
+		return boundingBox;
+	}
+	
 	inline function get_x():Float {
 		return boundingBox.x;
 	}

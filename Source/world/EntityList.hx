@@ -1,6 +1,7 @@
 package world;
 
 import world.entities.Entity;
+import world.entities.EntityAI;
 import world.entities.EntityDynamic;
 import world.entities.interfaces.IElectric;
 
@@ -14,6 +15,7 @@ class EntityList {
 	var listAll:Array<Entity>;
 	var listTicking:Array<Entity>;
 	var listElectric:Array<Entity>;
+	var listAI:Array<Entity>;
 	
 	var listState:Array<Entity>;
 	
@@ -29,6 +31,7 @@ class EntityList {
 		listAll = [];
 		listTicking = [];
 		listElectric = [];
+		listAI = [];
 	}
 	
 	public function add(e:Entity) {
@@ -50,6 +53,12 @@ class EntityList {
 			}
 		}
 		
+		if (Std.is(e, EntityAI)) {
+			if (listAI.indexOf(e) == -1) {
+				listAI.push(e);
+			}
+		}
+		
 		e.room = room;
 		e.init();
 		e.onAddToRoom();
@@ -63,6 +72,7 @@ class EntityList {
 		listAll.remove(e);
 		listTicking.remove(e);
 		listElectric.remove(e);
+		listAI.remove(e);
 	}
 	
 	public function getAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
@@ -77,6 +87,10 @@ class EntityList {
 	
 	public function getAll():Array<Entity> {
 		return listAll;
+	}
+	
+	public function getAI():Array<Entity> {
+		return listAI;
 	}
 	
 	public function getElectric():Array<Entity> {

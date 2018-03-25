@@ -1,4 +1,6 @@
 package world.entities;
+import lime.math.Vector2;
+import world.entities.Entity;
 
 /**
  * ...
@@ -10,4 +12,7 @@ class EntityStatic extends Entity {
 		super();
 	}
 	
+	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		return false;
+	}
 }

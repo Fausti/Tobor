@@ -32,6 +32,8 @@ class Sound {
 	public static var SND_EXPLOSION_CHARLIE:AudioBuffer;
 	public static var SND_EXPLOSION_ROBOT:AudioBuffer;
 	
+	public static var SND_SHOOT_BULLET:AudioBuffer;
+	
 	public static function init() {
 		MUS_CHOOSER = Assets.getAudioBuffer("assets/mus/chooser.ogg");
 		MUS_INTRO_DOS = Assets.getAudioBuffer("assets/mus/intro-dos.ogg");
@@ -52,6 +54,8 @@ class Sound {
 		
 		SND_EXPLOSION_CHARLIE = Assets.getAudioBuffer("assets/sfx/explosion.wav");
 		SND_EXPLOSION_ROBOT = Assets.getAudioBuffer("assets/sfx/explosion-short.wav");
+		
+		SND_SHOOT_BULLET = Assets.getAudioBuffer("assets/sfx/shoot-bullet.wav");
 	}
 	
 	private static function findPlaying(sound:AudioBuffer):Array <AudioSource> {
