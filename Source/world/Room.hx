@@ -18,6 +18,7 @@ class Room {
 	public static inline var LAYER_LEVEL_1:Int = 20;
 	public static inline var LAYER_ROOF:Int = 30;
 	
+	public static inline var LAYER_DRIFT:Int = 98;
 	public static inline var LAYER_MARKER:Int = 99;
 	
 	public static inline var WIDTH:Int = 40;
@@ -280,6 +281,10 @@ class Room {
 		for (ee in entities.getElectric()) {
 			if (e != ee) if (ee.flag == f) ee.switchStatus();
 		}
+	}
+	
+	public function getInventory():Inventory {
+		return world.inventory;
 	}
 	
 	// STATIC

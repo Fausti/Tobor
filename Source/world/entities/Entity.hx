@@ -7,6 +7,7 @@ import world.Room;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.interfaces.IElectric;
 import world.entities.std.Charlie;
+import world.entities.std.Water;
 
 /**
  * ...
@@ -34,6 +35,10 @@ class Entity {
 	public var visible:Bool = true;
 	
 	public var onRemove:Dynamic = null; // Callback
+	
+	// Water
+	
+	var drift:Int = -1;
 	
 	public function new() {
 		boundingBox = new Rectangle(0, 0, 1, 1);
@@ -213,6 +218,8 @@ class Entity {
 		o.type = type;
 		o.flag = flag;
 		
+		o.drift = drift;
+		
 		o.room = room;
 		
 		return o;
@@ -223,6 +230,10 @@ class Entity {
 	}
 	
 	public function parseData(data) {
+		if (hasData(data, "drift")) {
+			this.drift = data.drift;
+		}
+		
 		if (hasData(data, "type")) {
 			this.type = data.type;
 		}
@@ -260,6 +271,8 @@ class Entity {
 			data.set("x", gridX);
 			data.set("y", gridY);
 			data.set("z", z);
+			
+			data.set("drift", drift);
 		} else {
 			return null;
 		}
@@ -277,6 +290,12 @@ class Entity {
 		if (template != null) return template.name;
 		
 		return "ERROR";
+	}
+	
+	// Water
+	
+	public function setDrift(f:Int) {
+		if (Std.is(this, Water)) this.drift = f;
 	}
 	
 	// Electric stuff

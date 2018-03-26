@@ -58,6 +58,10 @@ class EntityMoveable extends EntityDynamic implements IWeight {
 		moveData.speedMovement = spd;
 	}
 	
+	public function changeDirection(dir:Vector2) {
+		moveData.direction = dir;
+	}
+	
 	public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
 		if (direction == Direction.NONE) return false;
 		

@@ -41,4 +41,48 @@ class Direction {
 	public static function getRandom():Vector2 {
 		return Direction.ALL[Std.random(Direction.ALL.length - 1) + 1];
 	}
+	
+	public static function rotate(d:Vector2, ?clockwise:Bool = true):Vector2 {
+		if (d == N) {
+			if (clockwise) return NE;
+			else return NW;
+		}
+		
+		if (d == S) {
+			if (clockwise) return SW;
+			else return SE;
+		}
+		
+		if (d == W) {
+			if (clockwise) return NW;
+			else return SW;
+		}
+		
+		if (d == E) {
+			if (clockwise) return SE;
+			else return NE;
+		}
+		
+		if (d == NW) {
+			if (clockwise) return N;
+			else return W;
+		}
+		
+		if (d == NE) {
+			if (clockwise) return E;
+			else return N;
+		}
+		
+		if (d == SE) {
+			if (clockwise) return S;
+			else return E;
+		}
+		
+		if (d == SW) {
+			if (clockwise) return W;
+			else return S;
+		}
+		
+		return NONE;
+	}
 }

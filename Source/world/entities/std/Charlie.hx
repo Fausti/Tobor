@@ -11,6 +11,8 @@ import world.entities.EntityMoveable;
  * @author Matthias Faust
  */
 class Charlie extends EntityMoveable {
+	public static var PLAYER_SPEED:Float = 8;
+	
 	var sprStanding:Sprite;
 	var sprWalking:Animation;
 	
@@ -19,6 +21,10 @@ class Charlie extends EntityMoveable {
 	
 	public var walkInTunnel:Bool = false;
 	var lastTunnelStep:Int = 0;
+	
+	public var walkInWater:Bool = false;
+	var lastX:Float = 0;
+	var lastY:Float = 0;
 	
 	public function new() {
 		super();
@@ -68,6 +74,14 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override function onStartMoving() {
+		if (room.findEntityAt(x, y, Water).length != 0) {
+			walkInWater = true;
+		} else {
+			walkInWater = false;
+			lastX = x;
+			lastY = y;
+		}
+		
 		if (room.world.inventory.containsOverall) {
 			sprites[0] = sprWalkingOverall;
 			sprWalkingOverall.start(false);
@@ -79,12 +93,11 @@ class Charlie extends EntityMoveable {
 		if (moveData.distanceLeft > 1.0) {
 			walkInTunnel = true;
 			lastTunnelStep = Math.floor(moveData.distanceLeft);
-		}
-		
-		if (walkInTunnel) {
 			Sound.play(Sound.SND_TUNNEL_STEP);
 		} else {
-			Sound.play(Sound.SND_CHARLIE_STEP);
+			if (!walkInWater) {
+				Sound.play(Sound.SND_CHARLIE_STEP);
+			}
 		}
 	}
 	
@@ -95,7 +108,15 @@ class Charlie extends EntityMoveable {
 			Sound.play(Sound.SND_TUNNEL_STEP);
 			walkInTunnel = false;
 		} else {
-			Sound.play(Sound.SND_CHARLIE_STEP);
+			if (room.findEntityAt(x, y, Water).length != 0) {
+				walkInWater = true;
+			} else {
+				walkInWater = false;
+			}
+			
+			if (!walkInWater) {
+				Sound.play(Sound.SND_CHARLIE_STEP);
+			}
 		}
 	}
 	
@@ -105,6 +126,12 @@ class Charlie extends EntityMoveable {
 		e.onRemove = function() {
 			room.world.player.visible = true;
 			room.world.lives--;
+			
+			if (walkInWater) {
+				walkInWater = false;
+				x = lastX;
+				y = lastY;
+			}
 		}
 		
 		room.spawnEntity(x, y, e);

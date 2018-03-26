@@ -3,6 +3,7 @@ package screens;
 import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
+import world.entities.Marker;
 import world.entities.interfaces.IElectric;
 
 import world.Room;
@@ -115,9 +116,14 @@ class EditorScreen extends PlayScreen {
 							var e:Entity = template.create();
 							
 							if (template.layer == Room.LAYER_MARKER) {
-								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY-  1);
+								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
 								for (le in l) {
 									le.setMarker(e.type);
+								}
+							} else if (template.layer == Room.LAYER_DRIFT) {
+								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
+								for (le in l) {
+									le.setDrift(e.type);
 								}
 							} else {
 								e.setPosition(cursorX, cursorY - 1);
@@ -146,7 +152,13 @@ class EditorScreen extends PlayScreen {
 						var list = game.world.room.getAllEntitiesAt(cursorX, cursorY - 1);
 						
 						for (e in list) {
-							if (e.z == template.layer) game.world.room.removeEntity(e);
+							if (template.layer == Room.LAYER_MARKER) {
+								e.setMarker(Marker.MARKER_NO);
+							} else if (template.layer == Room.LAYER_DRIFT) {
+								e.setDrift( -1);
+							} else {
+								if (e.z == template.layer) game.world.room.removeEntity(e);
+							}
 						}
 						
 						return;

@@ -3,6 +3,7 @@ package screens;
 import lime.math.Vector2;
 import world.Inventory;
 import world.entities.Entity;
+import world.entities.std.Charlie;
 
 import ui.DialogInventory;
 import ui.Screen;
@@ -57,16 +58,14 @@ class PlayScreen extends Screen {
 	}
 	
 	function checkPlayerMovement() {
-		var speed:Float = 8;
-		
 		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
-			movePlayer(Direction.W, speed);
+			movePlayer(Direction.W, Charlie.PLAYER_SPEED);
 		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
-			movePlayer(Direction.E, speed);
+			movePlayer(Direction.E, Charlie.PLAYER_SPEED);
 		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
-			movePlayer(Direction.N, speed);
+			movePlayer(Direction.N, Charlie.PLAYER_SPEED);
 		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
-			movePlayer(Direction.S, speed);
+			movePlayer(Direction.S, Charlie.PLAYER_SPEED);
 		}
 	}
 	
