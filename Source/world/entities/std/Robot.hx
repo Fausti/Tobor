@@ -81,7 +81,7 @@ class Robot extends EntityAI {
 		if (!move(Direction.get(playerDirectionX, playerDirectionY), SPEED)) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
 			
-			if (!move(Direction.ALL[Std.random(Direction.ALL.length)], SPEED)) {
+			if (!move(Direction.getRandomAll(), SPEED)) {
 				stress++;
 			} else {
 				stress--;

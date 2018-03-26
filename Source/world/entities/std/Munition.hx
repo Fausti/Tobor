@@ -32,7 +32,7 @@ class Munition extends EntityItem {
 		if (Std.is(e, Charlie)) {
 			onPickup();
 		} else if (Std.is(e, EntityAI)) {
-			if (direction == Direction.N || direction == Direction.S || direction == Direction.W || direction == Direction.E) {
+			// if (!Direction.isDiagonal(direction)) {
 				var bullet:Bullet = new Bullet();
 				room.spawnEntity(x, y, bullet);
 				bullet.move(direction, Robot.SPEED * 2);
@@ -41,7 +41,7 @@ class Munition extends EntityItem {
 				
 				type = type - 1;
 				if (type < 0) die();
-			}
+			// }
 		}
 	}
 	

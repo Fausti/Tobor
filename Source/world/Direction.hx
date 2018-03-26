@@ -8,6 +8,7 @@ import lime.math.Vector2;
  */
 class Direction {
 	public static var NONE(default, null):Vector2 = new Vector2(0, 0);
+	
 	public static var S(default, null):Vector2 = new Vector2(0, 1);
 	public static var N(default, null):Vector2 = new Vector2(0, -1);
 	public static var W(default, null):Vector2 = new Vector2( -1, 0);
@@ -26,5 +27,18 @@ class Direction {
 		}
 		
 		return NONE;
+	}
+	
+	public static function isDiagonal(d:Vector2):Bool {
+		if (d == NW || d == NE || d == SW || d == SE) return true;
+		return false;
+	}
+	
+	public static function getRandomAll():Vector2 {
+		return Direction.ALL[Std.random(Direction.ALL.length)];
+	}
+	
+	public static function getRandom():Vector2 {
+		return Direction.ALL[Std.random(Direction.ALL.length - 1) + 1];
 	}
 }

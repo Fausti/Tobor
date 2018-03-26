@@ -1,3 +1,6 @@
-- einige Objektklassen durch passende Interfaces ersetzen?
+- Sprites der Objekte statisch in ihren Klassen definieren
+- statische Spritedatenbank (Map<String, Sprite>), einmal mit defaultwerten und 1x mit werten die episodenspezifisch sind
 
-- Objekten eine Layer Eigenschaft geben, diese legt die Renderreihenfolge fest und sagt dem Editor ob bestimmte Objekte auf dem selben Feld erstellt werden dürfen
+Editor:
+	
+- markieren und verschieben von objekten/bereichen
