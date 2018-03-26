@@ -275,6 +275,9 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
+			["Leeren", "", function () {
+				game.world.room.clear();
+			}],
 			["Einstellungen", "", function () {
 				hideDialog();
 			}],

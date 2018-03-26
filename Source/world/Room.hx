@@ -49,6 +49,10 @@ class Room {
 		entities = new EntityList(this);
 	}
 	
+	public function clear() {
+		entities.clear();
+	}
+	
 	public function update(deltaTime:Float) {
 		var listRemove:Array<Entity> = [];
 		
