@@ -14,17 +14,31 @@ class Charlie extends EntityMoveable {
 	var sprStanding:Sprite;
 	var sprWalking:Animation;
 	
+	var sprStandingOverall:Sprite;
+	var sprWalkingOverall:Animation;
+	
 	public var walkInTunnel:Bool = false;
 	var lastTunnelStep:Int = 0;
 	
 	public function new() {
 		super();
 		
+		// normal
+		
 		sprStanding = Gfx.getSprite(16, 0);
 		
 		sprWalking = new Animation([
 			Gfx.getSprite(32, 0),
 			Gfx.getSprite(48, 0)
+		], 0.75);
+		
+		// Blaumann
+		
+		sprStandingOverall = Gfx.getSprite(0, 156);
+		
+		sprWalkingOverall = new Animation([
+			Gfx.getSprite(16, 156),
+			Gfx.getSprite(32, 156)
 		], 0.75);
 			
 		sprites[0] = sprStanding;
@@ -54,8 +68,13 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override function onStartMoving() {
-		sprites[0] = sprWalking;
-		sprWalking.start(false);
+		if (room.world.inventory.containsOverall) {
+			sprites[0] = sprWalkingOverall;
+			sprWalkingOverall.start(false);
+		} else {
+			sprites[0] = sprWalking;
+			sprWalking.start(false);
+		}
 		
 		if (moveData.distanceLeft > 1.0) {
 			walkInTunnel = true;
@@ -70,8 +89,7 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override function onStopMoving() {
-		sprites[0] = sprStanding;
-		sprWalking.stop(false);
+		checkForOverall();
 		
 		if (walkInTunnel) {
 			Sound.play(Sound.SND_TUNNEL_STEP);
@@ -101,6 +119,18 @@ class Charlie extends EntityMoveable {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (visible && Std.is(e, Robot)) {
 			die();
+		}
+	}
+	
+	public function hasOverall():Bool {
+		return room.world.inventory.containsOverall;
+	}
+	
+	public function checkForOverall() {
+		if (hasOverall()) {
+			setSprite(sprStandingOverall);
+		} else {
+			setSprite(sprStanding);
 		}
 	}
 }

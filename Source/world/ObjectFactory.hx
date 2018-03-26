@@ -113,6 +113,8 @@ class ObjectFactory {
 		
 		register("OBJ_GRATE", Grate, Gfx.getSprite(240, 84));
 		
+		register("OBJ_OVERALL", Overall, Gfx.getSprite(176, 132));
+		
 		// Electric Stuff
 		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER);
 		register("MARKER_1", Marker, Gfx.getSprite(16, 348), {type:1}, Room.LAYER_MARKER);

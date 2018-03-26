@@ -19,6 +19,8 @@ class Inventory {
 	
 	public var list:Map<String, InventoryItem>;
 	
+	public var containsOverall:Bool = false;
+	
 	public function new() {
 		for (i in 0 ... 6) {
 			SPR_MUNITION.push(Gfx.getSprite(i * 16 + 144, 60));
@@ -29,6 +31,7 @@ class Inventory {
 	
 	public function clear() {
 		list = new Map<String, InventoryItem>();
+		containsOverall = false;
 	}
 	
 	public function add(id:String, spr:Sprite, ?count:Int = 1):Int {
@@ -40,6 +43,8 @@ class Inventory {
 		}
 		
 		item.add(count);
+		
+		if (id == "OBJ_OVERALL") containsOverall = true;
 		
 		if (id.contains("OBJ_MUNITION")) {
 			return sortMunition(countMunition());
@@ -56,6 +61,10 @@ class Inventory {
 			if (item.count <= 0) {
 				list.remove(id);
 			}
+		}
+		
+		if (id == "OBJ_OVERALL") {
+			containsOverall = hasItem(id);
 		}
 	}
 	

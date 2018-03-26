@@ -48,9 +48,14 @@ class ElectricFence extends EntityPushable implements IElectric {
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (type == 0) {
-			if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+			if (Std.is(e, EntityAI)) {
 				e.die();
 				die();
+			} else if (Std.is(e, Charlie)) {
+				if (!getPlayer().hasOverall()) {
+					e.die();
+					die();
+				}
 			}
 		}
 	}

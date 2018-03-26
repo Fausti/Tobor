@@ -1,6 +1,7 @@
 package screens;
 
 import lime.math.Vector2;
+import world.Inventory;
 import world.entities.Entity;
 
 import ui.DialogInventory;
@@ -17,6 +18,7 @@ import world.Room;
 class PlayScreen extends Screen {
 	var SPR_ISOLATOR:Sprite;
 	var SPR_CHARLIE:Sprite;
+	var SPR_CHARLIE_OVERALL:Sprite;
 	var SPR_GOLD:Sprite;
 	var SPR_BAG:Sprite;
 	var SPR_GARLIC:Sprite;
@@ -27,6 +29,7 @@ class PlayScreen extends Screen {
 		
 		SPR_ISOLATOR = Gfx.getSprite(240, 0);
 		SPR_CHARLIE = Gfx.getSprite(32, 0);
+		SPR_CHARLIE_OVERALL = Gfx.getSprite(16, 156);
 		SPR_GOLD = Gfx.getSprite(96, 12);
 		SPR_BAG = Gfx.getSprite(112, 12);
 		SPR_GARLIC = Gfx.getSprite(192, 24);
@@ -130,7 +133,11 @@ class PlayScreen extends Screen {
 		if (game.world.player.walkInTunnel) {
 			Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_TUNNEL);
 		} else {
-			Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
+			if (game.world.inventory.containsOverall) {
+				Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE_OVERALL);
+			} else {
+				Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
+			}
 		}
 		
 		var punkte = game.world.points; // game.world.player.points;

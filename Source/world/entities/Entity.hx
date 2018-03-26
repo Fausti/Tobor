@@ -6,6 +6,7 @@ import lime.math.Vector2;
 import world.Room;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.interfaces.IElectric;
+import world.entities.std.Charlie;
 
 /**
  * ...
@@ -194,6 +195,10 @@ class Entity {
 	
 	private function isOutsideMap(x:Float, y:Float):Bool {
 		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
+	}
+	
+	private function getPlayer():Charlie {
+		return room.world.player;
 	}
 	
 	// Save / Load
