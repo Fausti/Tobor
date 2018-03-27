@@ -120,15 +120,15 @@ class ObjectFactory {
 		
 		register("OBJ_FLIPPERS", Flippers, Gfx.getSprite(96, 144));
 		
-		register("WATER_SHALLOW", Water, Gfx.getSprite(0, 72), {type: 0});
-		register("WATER_DEEP", Water, Gfx.getSprite(16, 72), {type: 1});
+		register("OBJ_WATER_SHALLOW", Water, Gfx.getSprite(0, 72), {type: 0});
+		register("OBJ_WATER_DEEP", Water, Gfx.getSprite(16, 72), {type: 1});
 			
-		register("WATER_NW", Water, Gfx.getSprite(80, 72), {type: 2});
-		register("WATER_SW", Water, Gfx.getSprite(96, 72), {type: 3});
-		register("WATER_NE", Water, Gfx.getSprite(112, 72), {type: 4});
-		register("WATER_SE", Water, Gfx.getSprite(128, 72), {type: 5});
+		register("OBJ_WATER_NW", Water, Gfx.getSprite(80, 72), {type: 2});
+		register("OBJ_WATER_SW", Water, Gfx.getSprite(96, 72), {type: 3});
+		register("OBJ_WATER_NE", Water, Gfx.getSprite(112, 72), {type: 4});
+		register("OBJ_WATER_SE", Water, Gfx.getSprite(128, 72), {type: 5});
 			
-		register("WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72));
+		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72));
 		
 		// Drift
 		
