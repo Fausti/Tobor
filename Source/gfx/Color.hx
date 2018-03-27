@@ -59,6 +59,8 @@ class Color {
 	
 	public static var DARK_GRAY = Color.from(0x525252);
 	
+	public static var NEON_GREEN = Color.from(0xacff00);
+	
 	public static var palette:Array<Color> = [
 		BLACK, YELLOW, DARK_GREEN, GRAY, PURPLE, DARK_RED, RED, ORANGE,
 		GREEN, LIGHT_GREEN, LIGHT_BLUE, BLUE, BLUE2, DARK_BLUE, BROWN, WHITE

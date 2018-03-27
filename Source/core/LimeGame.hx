@@ -110,4 +110,8 @@ class LimeGame {
 		
 		Input.onMouseUp(button);
 	}
+	
+	public function onTextInput(text:String) {
+		
+	}
 }

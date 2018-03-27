@@ -174,4 +174,9 @@ class LimeApplication extends Application {
 				
 		}
 	}
+	
+	override public function onTextInput(window:Window, text:String):Void 
+	{
+		if (game != null) game.onTextInput(text);
+	}
 }

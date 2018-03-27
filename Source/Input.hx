@@ -99,7 +99,17 @@ class Input {
 		return false;
 	}
 	
-	public static function isKeyDown(_key:Array<KeyCode>, ?keyOnly:Bool = true):Bool {
+	public static function isKeyDown(_key:Array<KeyCode>):Bool {
+		if (waitTime > 0) return false;
+
+		for (k in _key) {
+			if (_keys.get(k)) return true;
+		}
+		
+		return false;
+	}
+	
+	public static function isKeyDownExt(_key:Array<KeyCode>, ?keyOnly:Bool = true):Bool {
 		if (waitTime > 0) return false;
 		
 		if (keyOnly) {

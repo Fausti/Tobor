@@ -1,6 +1,7 @@
 package screens;
 
 import lime.math.Vector2;
+import ui.DialogInput;
 import world.Inventory;
 import world.entities.Entity;
 import world.entities.std.Charlie;
@@ -215,5 +216,20 @@ class PlayScreen extends Screen {
 		}
 		
 		showDialog(menu);
+	}
+	
+	function askForName() {
+		var d:DialogInput = new DialogInput(this, 0, 0, "Willkommen zu TOBOR-Junior!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:");
+		
+		d.onCancel = function () {
+			hideDialog();
+		}
+		
+		d.onOk = function () {
+			hideDialog();
+			// namen vermerken!
+		}
+		
+		showDialog(d);
 	}
 }

@@ -1,5 +1,8 @@
 package screens;
 
+import ui.DialogMessage;
+import ui.DialogInput;
+import ui.DialogQuestion;
 import ui.Screen;
 import world.World;
 
@@ -73,17 +76,24 @@ class EpisodesScreen extends Screen {
 	}
 	
 	override public function update(deltaTime:Float) {
-		if (Input.isKeyDown([Input.key.ESCAPE])) {
-			game.exit();
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
-			game.world = new World(episoden[index]);
-			game.setScreen(new IntroScreen(game));
-		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
-			index--;
-			Input.wait(0.25);
-		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
-			index++;
-			Input.wait(0.25);
+		if (dialog != null) {
+			dialog.update(deltaTime);
+		} else {
+			if (Input.isKeyDown([Input.key.ESCAPE])) {
+				game.exit();
+			} else if (Input.isKeyDown([Input.key.RETURN])) {
+				game.world = new World(episoden[index]);
+				game.setScreen(new IntroScreen(game));
+			} else if (Input.isKeyDown(Tobor.KEY_UP)) {
+				index--;
+				Input.wait(0.25);
+			} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
+				index++;
+				Input.wait(0.25);
+			} else if (Input.isKeyDown([Input.key.Q])) {
+				Input.wait(0.25);
+				showDialog(new DialogQuestion(this, 0, 0, "*** Spiel beenden ***\n\nWillst Du das Spiel wirklich beenden? Bla bla bla... Ich meine... überleg dir das wirklich gut!\n\nDieser Schritt ist nicht rückgängig zu machen!!!"));
+			}
 		}
 		
 		if (index < 0) index = 0;
@@ -135,8 +145,6 @@ class EpisodesScreen extends Screen {
 	}
 	
 	override public function renderUI() {
-		super.renderUI();
-		
 		var x:Int = 2 * Tobor.TILE_WIDTH;
 		var y:Int = 9 * Tobor.TILE_HEIGHT;
 
@@ -187,5 +195,7 @@ class EpisodesScreen extends Screen {
 		
 		var text:String = scrollingText.substr8(scrollingPosition, 38 * 2).rpad(38 * 2, " ");
 		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
+		
+		super.renderUI();
 	}
 }

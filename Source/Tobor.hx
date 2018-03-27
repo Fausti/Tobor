@@ -127,6 +127,12 @@ class Tobor extends LimeGame {
 		this.screen.show();
 	}
 	
+	override public function onTextInput(text:String) {
+		if (this.screen != null) {
+			this.screen.onTextInput(text);
+		}
+	}
+	
 	// Tasten...
 	
 	public static var KEY_LEFT = [Input.key.A, Input.key.LEFT];

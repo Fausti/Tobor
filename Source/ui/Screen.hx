@@ -59,4 +59,10 @@ class Screen {
 			dialog = null;
 		}
 	}
+	
+	public function onTextInput(text:String) {
+		if (this.dialog != null) {
+			this.dialog.onTextInput(text);
+		}
+	}
 }

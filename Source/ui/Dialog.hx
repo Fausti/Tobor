@@ -47,4 +47,8 @@ class Dialog {
 	public function ok() {
 		if (onOk != null) onOk();
 	}
+	
+	public function onTextInput(text:String) {
+		
+	}
 }
