@@ -90,9 +90,6 @@ class EpisodesScreen extends Screen {
 			} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
 				index++;
 				Input.wait(0.25);
-			} else if (Input.isKeyDown([Input.key.Q])) {
-				Input.wait(0.25);
-				showDialog(new DialogQuestion(this, 0, 0, "*** Spiel beenden ***\n\nWillst Du das Spiel wirklich beenden? Bla bla bla... Ich meine... überleg dir das wirklich gut!\n\nDieser Schritt ist nicht rückgängig zu machen!!!"));
 			}
 		}
 		
