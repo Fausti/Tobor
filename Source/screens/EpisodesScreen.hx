@@ -63,8 +63,9 @@ class EpisodesScreen extends Screen {
 			if (fe.isOK) episoden.push(fe);
 		}
 		
+		// Editor - Episode xD
 		var fe:FileEpisode = new FileEpisode(null);
-		if (fe.isOK) episoden.push(fe);
+		episoden.push(fe);
 	}
 	
 	override public function show() {
@@ -75,6 +76,32 @@ class EpisodesScreen extends Screen {
 		Sound.stop(Sound.MUS_CHOOSER);
 	}
 	
+	function showError(str:String) {
+		var d:DialogMessage = new DialogMessage(this, 0, 0, str);
+		
+		showDialog(d);
+	}
+	
+	function createEpisode() {
+		var d:DialogInput = new DialogInput(this, 0, 0, "Wie soll die Episode heißen?");
+		
+		d.onOk = function () {
+			var ret:String = episoden[index].create(d.getInput());
+			
+			if (ret != null) {
+				showError(ret);
+				return;
+			}
+			
+			if (episoden[index].isOK) {
+				game.world = new World(episoden[index]);
+				game.setScreen(new IntroScreen(game));
+			}
+		};
+		
+		showDialog(d);
+	}
+	
 	override public function update(deltaTime:Float) {
 		if (dialog != null) {
 			dialog.update(deltaTime);
@@ -82,8 +109,12 @@ class EpisodesScreen extends Screen {
 			if (Input.isKeyDown([Input.key.ESCAPE])) {
 				game.exit();
 			} else if (Input.isKeyDown([Input.key.RETURN])) {
-				game.world = new World(episoden[index]);
-				game.setScreen(new IntroScreen(game));
+				if (episoden[index].isEditor) {
+					createEpisode();
+				} else {
+					game.world = new World(episoden[index]);
+					game.setScreen(new IntroScreen(game));
+				}
 			} else if (Input.isKeyDown(Tobor.KEY_UP)) {
 				index--;
 				Input.wait(0.25);

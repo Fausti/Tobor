@@ -61,8 +61,6 @@ class DialogInput extends DialogMessage {
 	}
 	
 	override public function onTextInput(text:String) {
-		trace("onTextInput", text);
-		
 		chars = chars.insertAt(index, text);
 		
 		index++;
@@ -71,5 +69,11 @@ class DialogInput extends DialogMessage {
 		}
 		
 		fixInput();
+	}
+	
+	public function getInput(?isFileName:Bool = false):String {
+		if (!isFileName) return chars.compact();
+		
+		return chars.compact();
 	}
 }

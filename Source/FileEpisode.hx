@@ -21,24 +21,17 @@ class FileEpisode {
 	public var isEmpty(default, null):Bool = false;
 	public var isOK(default, null):Bool = false;
 	
+	public var isEditor:Bool = false;
+	
 	public function new(path:Path) {
 		if (path == null) {
-			if (FileSystem.exists(Files.DIR_EPISODES + '/__NEU__')) {
-				isOK = false;
-				return;
-			} else {
-				FileSystem.createDirectory(Files.DIR_EPISODES + '/__NEU__');
-				path = new Path(Files.DIR_EPISODES + '/__NEU__');
-				isEmpty = true;
-			}
-			
-			if (!FileSystem.exists(path.toString() + '/info.txt')) {
-				var fout = File.write(path.toString() + '/info.txt', false);
-				fout.writeString("Eine neue Episode im Editor erstellen");
-				fout.close();
-			}
+			isEditor = true;
 		}
 		
+		if (!isEditor) init(path);
+	}
+	
+	public function init(path:Path) {
 		this.root = path.toString();
 		
 		if (FileSystem.isDirectory(path.toString())) {
@@ -56,6 +49,41 @@ class FileEpisode {
 		} else {
 			isOK = false;
 		}
+	}
+	
+	public function create(fileName:String):String {
+		var path:Path = null;
+		
+		if (FileSystem.exists(Files.DIR_EPISODES + '/' + fileName)) {
+			isOK = false;
+			return "Verzeichnis existiert bereits!";
+		} else {
+			try 
+			{
+				FileSystem.createDirectory(Files.DIR_EPISODES + '/' + fileName);	
+			}
+			catch (err:Dynamic)
+			{
+				return "Verzeichnis konnte nicht erstellt werden!";
+			}
+			
+			if (FileSystem.exists(Files.DIR_EPISODES + '/' + fileName)) {
+				path = new Path(Files.DIR_EPISODES + '/' + fileName);
+				isEmpty = true;
+			} else {
+				return "Verzeichnis konnte nicht erstellt werden!";
+			}
+		}
+			
+		if (!FileSystem.exists(path.toString() + '/info.txt')) {
+			var fout = File.write(path.toString() + '/info.txt', false);
+			fout.writeString("Beschreibung bitte in info.txt bearbeiten!");
+			fout.close();
+		}
+		
+		init(path);
+		
+		return null;
 	}
 	
 	public function saveFile(fileName:String, content:String) {
@@ -100,10 +128,12 @@ class FileEpisode {
 	}
 	
 	public function getName(l:Int):String {
+		if (isEditor) return StringTools.rpad(">> Neue Episode <<", ".", l);
 		return name.rpad(l, ".", false);
 	}
 	
 	public function getDesc(l:Int):String {
+		if (isEditor) return StringTools.rpad("Erstelle eine neue Episode im Editor!", ".", l);
 		return desc.rpad(l, ".", false);
 	}
 }
