@@ -5,7 +5,7 @@ package ui;
  * @author Matthias Faust
  */
 class DialogQuestion extends DialogMessage {
-	var index:Int = 0;
+	public var index:Int = 0;
 
 	public var strOK:String = "OK";
 	public var strCancel:String = "Abbruch";
@@ -15,6 +15,9 @@ class DialogQuestion extends DialogMessage {
 		
 		this.y = this.y - 12;
 		this.h = this.h + 2;
+		
+		if (index > 1) index = 1;
+		if (index < 0) index = 0;
 	}
 	
 	override public function update(deltaTime:Float) {

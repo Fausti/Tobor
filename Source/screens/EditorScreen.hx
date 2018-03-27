@@ -1,5 +1,6 @@
 package screens;
 
+import ui.DialogQuestion;
 import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
@@ -43,18 +44,7 @@ class EditorScreen extends PlayScreen {
 		
 		dialogRooms = new DialogRooms(this, 0, 0);
 		dialogRooms.onOk = function() {
-			var nextRoom:Room = game.world.findRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
-			
-			if (nextRoom == null) {
-				nextRoom = new Room(game.world, dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
-				game.world.addRoom(nextRoom);
-			} else {
-				
-			}
-			
-			game.world.switchRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
-			
-			this.showDialog(null);
+			switchRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
 		}
 	}
 	
@@ -95,6 +85,7 @@ class EditorScreen extends PlayScreen {
 			}
 		
 			if (!editMode) checkPlayerMovement();
+			else checkRoomSwitch();
 			
 			if (cursorX == 1 && cursorY == 0 && Input.mouseBtnLeft) {
 				switchEditMode();
@@ -102,8 +93,10 @@ class EditorScreen extends PlayScreen {
 			}
 			
 			if (Input.isKeyDown([Input.key.F5])) {
-				switchEditMode();
-				return;
+				if (!game.world.player.isMoving()) {
+					switchEditMode();
+					return;
+				}
 			}
 			
 			if (Input.mouseBtnLeft) {
@@ -170,6 +163,50 @@ class EditorScreen extends PlayScreen {
 		if (!editMode) game.world.update(deltaTime);
 	}
 	
+	function checkRoomSwitch() {
+		var rx:Int = game.world.room.x;
+		var ry:Int = game.world.room.y;
+		var rz:Int = game.world.room.z;
+		
+		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
+			switchRoom(rx - 1, ry, rz);
+			Input.clearKeys();
+		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
+			switchRoom(rx + 1, ry, rz);
+			Input.clearKeys();
+		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
+			switchRoom(rx, ry - 1, rz);
+			Input.clearKeys();
+		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
+			switchRoom(rx, ry + 1, rz);
+			Input.clearKeys();
+		} else if (Input.isKeyDown([Input.key.PAGE_UP])) {
+			switchRoom(rx, ry, rz - 1);
+			Input.clearKeys();
+		} else if (Input.isKeyDown([Input.key.PAGE_DOWN])) {
+			switchRoom(rx, ry, rz + 1);
+			Input.clearKeys();
+		}
+	}
+	
+	function switchRoom(x:Int, y:Int, z:Int) {
+		if (x < 0 || x >= 10) return;
+		if (y < 0 || y >= 10) return;
+		if (z < 0 || z >= 10) return;
+		
+		var nextRoom:Room = game.world.findRoom(x, y, z);
+		
+		if (nextRoom == null) {
+			askNewRoom(function () {
+				nextRoom = new Room(game.world, x, y, z);
+				game.world.addRoom(nextRoom);
+				game.world.switchRoom(x, y, z);
+			});
+		}
+		
+		if (nextRoom != null) game.world.switchRoom(x, y, z);
+	}
+
 	function switchEditMode() {
 		if (editMode) {
 			// Savestate anlegen
@@ -276,7 +313,7 @@ class EditorScreen extends PlayScreen {
 	function showEditMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			["Leeren", "", function () {
-				game.world.room.clear();
+				askClearRoom();
 			}],
 			["Einstellungen", "", function () {
 				hideDialog();
@@ -315,6 +352,26 @@ class EditorScreen extends PlayScreen {
 		};
 		
 		showDialog(menu);
+	}
+	
+	function askClearRoom() {
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, "Objekte im Raum löschen?");
+		d.index = 1;
+		
+		d.onOk = function () {
+			game.world.room.clear();
+		}
+		
+		showDialog(d);
+	}
+	
+	function askNewRoom(cb:Dynamic) {
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, "Neuen Raum erstellen?");
+		d.index = 1;
+		
+		d.onOk = cb;
+		
+		showDialog(d);
 	}
 	
 	function addEntity(e:Entity) {
