@@ -19,7 +19,7 @@ class EntityItem extends EntityCollectable {
 	public function onDrop(x:Float, y:Float) {
 		room.spawnEntity(x, y, this);
 
-		room.world.inventory.remove(getID());
+		getInventory().remove(getID());
 	}
 	
 	public function onLook() {
@@ -31,14 +31,14 @@ class EntityItem extends EntityCollectable {
 	}
 	
 	public function removeFromInventory() {
-		room.world.inventory.remove(getID());
+		getInventory().remove(getID());
 	}
 	
 	public function addToInventory() {
 		var template = getTemplate();
 			
 		if (template != null) {
-			room.world.inventory.add(template.name, template.spr);
+			getInventory().add(template.name, template.spr);
 		}
 	}
 	

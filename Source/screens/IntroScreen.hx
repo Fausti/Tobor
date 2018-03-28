@@ -14,6 +14,8 @@ class IntroScreen extends Screen {
 		super(game);
 		
 		bgSprite = Gfx.getSprite(48, 132, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
+		
+		game.world.editing = false;
 	}
 	
 	override public function show() {
@@ -59,7 +61,6 @@ class IntroScreen extends Screen {
 			menu = new DialogMenu(this, 320, 166, [
 				["Story", "F2"],
 				["Spielstart", "F4", function() {
-					game.world.start();
 					game.setScreen(new PlayScreen(game));
 				}],
 				["Laden", "F7"],
@@ -71,11 +72,9 @@ class IntroScreen extends Screen {
 			menu = new DialogMenu(this, 320, 166, [
 				["Story", "F2"],
 				["Spielstart", "F4", function() {
-					game.world.start();
 					game.setScreen(new PlayScreen(game));
 				}],
 				["Editor", "", function() {
-					game.world.start();
 					game.setScreen(new EditorScreen(game));
 				}],
 				["Laden", "F7"],

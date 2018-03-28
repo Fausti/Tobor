@@ -17,7 +17,7 @@ class EntityList {
 	var listElectric:Array<Entity>;
 	var listAI:Array<Entity>;
 	
-	var listState:Array<Entity>;
+	var listState:Array<Entity> = [];
 	
 	public var length(get, null):Int;
 	
@@ -73,6 +73,20 @@ class EntityList {
 		listTicking.remove(e);
 		listElectric.remove(e);
 		listAI.remove(e);
+	}
+	
+	public function removeState(cl:Dynamic) {
+		for (e in listAll) {
+			if (Std.is(e, cl)) {
+				remove(e);
+			}
+		}
+		
+		for (e in listState) {
+			if (Std.is(e, cl)) {
+				listState.remove(e);
+			}
+		}
 	}
 	
 	public function getAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {

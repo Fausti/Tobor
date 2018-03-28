@@ -3,8 +3,11 @@ import gfx.Gfx;
 import gfx.Sprite;
 import lime.math.Rectangle;
 import lime.math.Vector2;
+import world.Inventory;
+import world.ObjectFactory;
 import world.Room;
 import world.ObjectFactory.ObjectTemplate;
+import world.World;
 import world.entities.interfaces.IElectric;
 import world.entities.std.Charlie;
 import world.entities.std.Water;
@@ -145,6 +148,18 @@ class Entity {
 		
 	}
 	
+	public function onGameStart() {
+		
+	}
+	
+	public function onRoomStart() {
+		
+	}
+	
+	public function onRoomEnds() {
+		
+	}
+	
 	public function setPosition(x:Int, y:Int) {
 		this.x = x;
 		this.y = y;
@@ -200,10 +215,6 @@ class Entity {
 	
 	private function isOutsideMap(x:Float, y:Float):Bool {
 		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
-	}
-	
-	private function getPlayer():Charlie {
-		return room.world.player;
 	}
 	
 	// Save / Load
@@ -280,8 +291,24 @@ class Entity {
 		return data;
 	}
 	
-	function getTemplate():ObjectTemplate {
-		return room.world.factory.findFromObject(this);
+	inline function getWorld():World {
+		return room.world;
+	}
+	
+	inline function getPlayer():Charlie {
+		return getWorld().player;
+	}
+	
+	inline function getFactory():ObjectFactory {
+		return getWorld().factory;
+	}
+	
+	inline function getInventory():Inventory {
+		return getWorld().inventory;
+	}
+	
+	inline function getTemplate():ObjectTemplate {
+		return getFactory().findFromObject(this);
 	}
 	
 	function getID():String {

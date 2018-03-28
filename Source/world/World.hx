@@ -2,11 +2,14 @@ package world;
 
 import world.entities.std.Charlie;
 import tjson.TJSON;
+import world.entities.std.StartPosition;
 /**
  * ...
  * @author Matthias Faust
  */
 class World {
+	public var editing:Bool = false;
+	
 	public var file:FileEpisode;
 	
 	public var factory:ObjectFactory;
@@ -42,7 +45,7 @@ class World {
 		factory = new ObjectFactory();
 	}
 	
-	public function start() {
+	public function init() {
 		player = cast factory.create("OBJ_CHARLIE");
 		player.setPosition(0, 0);
 		oldPlayerX = 0;
@@ -60,6 +63,9 @@ class World {
 			addRoom(createRoom(0, 0, 0));
 			switchRoom(0, 0, 0);
 		
+			var sp:StartPosition = cast factory.create("OBJ_START_POSITION");
+			room.addEntity(sp);
+			
 			player.setRoom(roomCurrent);
 		} else {
 			loadData(content);
@@ -69,6 +75,36 @@ class World {
 		}
 		
 		flags = [false, false, false, false, false];
+	}
+	
+	public function start() {
+		// Startposition suchen...
+		var sp:StartPosition = null;
+		
+		for (r in rooms) {
+			if (sp == null) {
+				sp = r.findStartPosition();
+				
+				if (sp != null) {
+					oldPlayerX = Std.int(sp.x);
+					oldPlayerY = Std.int(sp.y);
+			
+					player.setPosition(oldPlayerX, oldPlayerY);
+				
+					switchRoom(r.x, r.y, r.z);
+				}
+			}
+		}
+
+		if (room != null) {
+			room.start();
+		}
+	}
+	
+	public function clearStartPositions() {
+		for (r in rooms) {
+			r.removeStateEntity(StartPosition);
+		}
 	}
 	
 	public function update(deltaTime:Float) {

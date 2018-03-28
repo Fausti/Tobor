@@ -7,6 +7,7 @@ import world.entities.EntityRoof;
 import world.entities.std.Charlie;
 import world.entities.std.Robot;
 import world.ObjectFactory.ObjectTemplate;
+import world.entities.std.StartPosition;
 
 /**
  * ...
@@ -36,6 +37,8 @@ class Room {
 	public var robots:Int = 0;
 	public var underRoof:Bool = false;
 	
+	var listRemove:Array<Entity>;
+	
 	function get_length():Int {
 		return entities.length;
 	}
@@ -49,12 +52,19 @@ class Room {
 		entities = new EntityList(this);
 	}
 	
+	public function start() {
+		for (e in entities.getAll()) {
+			e.onGameStart();
+			e.onRoomStart();
+		}
+	}
+	
 	public function clear() {
 		entities.clear();
 	}
 	
 	public function update(deltaTime:Float) {
-		var listRemove:Array<Entity> = [];
+		listRemove = [];
 		
 		// Anzahl lebender Roboter
 		robots = 0;
@@ -289,6 +299,18 @@ class Room {
 	
 	public function getInventory():Inventory {
 		return world.inventory;
+	}
+	
+	public function removeStateEntity(cl:Dynamic) {
+		entities.removeState(cl);
+	}
+	
+	public function findStartPosition():StartPosition {
+		for (e in entities.getState()) {
+			if (Std.is(e, StartPosition)) return cast e;
+		}
+		
+		return null;
 	}
 	
 	// STATIC

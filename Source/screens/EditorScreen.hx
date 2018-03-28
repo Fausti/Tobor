@@ -6,6 +6,7 @@ import ui.DialogTiles;
 import ui.DialogMenu;
 import world.entities.Marker;
 import world.entities.interfaces.IElectric;
+import world.entities.std.StartPosition;
 
 import world.Room;
 import world.entities.Entity;
@@ -33,12 +34,14 @@ class EditorScreen extends PlayScreen {
 	var dialogRooms:DialogRooms;
 	
 	public function new(game:Tobor) {
-		super(game);
-		
 		SPR_EFENCE = Gfx.getSprite(64, 12);
 		SPR_CURSOR = Gfx.getSprite(208, 240);
 		SPR_MODE_PLAY = Gfx.getSprite(176, 240);
 		SPR_MODE_EDIT = Gfx.getSprite(192, 240);
+		
+		game.world.editing = true;
+		
+		super(game);
 		
 		dialogTiles = new DialogTiles(this, 0, 0);
 		
@@ -381,6 +384,10 @@ class EditorScreen extends PlayScreen {
 			if (o.z == e.z) {
 				return;
 			}
+		}
+		
+		if (Std.is(e, StartPosition)) {
+			game.world.clearStartPositions();
 		}
 		
 		game.world.room.addEntity(e);

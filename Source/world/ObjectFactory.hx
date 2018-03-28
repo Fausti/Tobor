@@ -18,6 +18,7 @@ class ObjectFactory {
 		// e.g. OBJ_KEY#2
 		
 		register("OBJ_CHARLIE", 	Charlie, 	Gfx.getSprite(16, 0));
+		register("OBJ_START_POSITION", StartPosition, Gfx.getSprite(128, 156));
 		
 		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120), null, Room.LAYER_LEVEL_0 + 1);
 		

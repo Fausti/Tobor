@@ -37,6 +37,13 @@ class PlayScreen extends Screen {
 		SPR_GARLIC = Gfx.getSprite(192, 24);
 		
 		SPR_TUNNEL = Gfx.getSprite(240, 120);
+		
+		init();
+	}
+	
+	function init() {
+		game.world.init();
+		game.world.start();
 	}
 	
 	override public function update(deltaTime:Float) {
