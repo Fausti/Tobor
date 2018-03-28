@@ -313,6 +313,14 @@ class Room {
 		return null;
 	}
 	
+	public function getID():String {
+		return "ROOM_" + x + "" + y + "" + z;
+	}
+	
+	public function getName():String {
+		return Text.getFromWorld("TXT_" + getID());
+	}
+	
 	// STATIC
 	
 	public static function isOutsideMap(x:Float, y:Float):Bool {

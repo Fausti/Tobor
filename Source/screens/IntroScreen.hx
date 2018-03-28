@@ -59,26 +59,26 @@ class IntroScreen extends Screen {
 		
 		if (game.world.file.isZIP) {
 			menu = new DialogMenu(this, 320, 166, [
-				["Story", "F2"],
-				["Spielstart", "F4", function() {
+				[Text.get("TXT_MENU_STORY"), ""],
+				[Text.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
 				}],
-				["Laden", "F7"],
-				["Ende", "F9", function() {
+				[Text.get("TXT_MENU_LOAD"), ""],
+				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
 			]);
 		} else {
 			menu = new DialogMenu(this, 320, 166, [
-				["Story", "F2"],
-				["Spielstart", "F4", function() {
+				[Text.get("TXT_MENU_STORY"), ""],
+				[Text.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
 				}],
-				["Editor", "", function() {
+				[Text.get("TXT_MENU_EDIT"), "", function() {
 					game.setScreen(new EditorScreen(game));
 				}],
-				["Laden", "F7"],
-				["Ende", "F9", function() {
+				[Text.get("TXT_MENU_LOAD"), ""],
+				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
 			]);

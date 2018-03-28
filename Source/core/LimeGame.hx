@@ -87,9 +87,13 @@ class LimeGame {
 	}
 	
 	public function exit() {
-		trace("exit");
+		onExit();
 		dispose();
 		Sys.exit(0);
+	}
+	
+	public function onExit() {
+		
 	}
 	
 	public function onMouseMove(x:Float, y:Float) {

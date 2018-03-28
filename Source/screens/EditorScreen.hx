@@ -4,7 +4,9 @@ import ui.DialogQuestion;
 import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
+import world.ObjectFactory.ObjectTemplate;
 import world.entities.Marker;
+import world.entities.interfaces.IContainer;
 import world.entities.interfaces.IElectric;
 import world.entities.std.StartPosition;
 
@@ -123,7 +125,7 @@ class EditorScreen extends PlayScreen {
 								}
 							} else {
 								e.setPosition(cursorX, cursorY - 1);
-								addEntity(e);
+								addEntity(e, template);
 							}
 						} else {
 							game.world.player.setPosition(cursorX, cursorY - 1);
@@ -204,10 +206,14 @@ class EditorScreen extends PlayScreen {
 				nextRoom = new Room(game.world, x, y, z);
 				game.world.addRoom(nextRoom);
 				game.world.switchRoom(x, y, z);
+				nextRoom.getName();
 			});
 		}
 		
-		if (nextRoom != null) game.world.switchRoom(x, y, z);
+		if (nextRoom != null) {
+			game.world.switchRoom(x, y, z);
+			hideDialog();
+		}
 	}
 
 	function switchEditMode() {
@@ -313,6 +319,25 @@ class EditorScreen extends PlayScreen {
 		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
 	}
 	
+	override function showMainMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_MENU_OPTIONS"), ""],
+			[Text.get("TXT_MENU_HELP"), ""],
+		]);
+		
+		menu.select(2);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showEditMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			["Leeren", "", function () {
@@ -377,7 +402,16 @@ class EditorScreen extends PlayScreen {
 		showDialog(d);
 	}
 	
-	function addEntity(e:Entity) {
+	function addEntity(e:Entity, template:ObjectTemplate) {
+		var container:Array<Entity> = game.world.room.findEntityAt(e.x, e.y, IContainer);
+		if (container.length > 0) {
+			for (ce in container) {
+				ce.setContent(template.name);
+			}
+			
+			return;
+		}
+		
 		var atPosition:Array<Entity> = game.world.room.getAllEntitiesAt(e.x, e.y);
 			
 		for (o in atPosition) {

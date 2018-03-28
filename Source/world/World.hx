@@ -1,5 +1,7 @@
 package world;
 
+import ui.Dialog;
+import ui.DialogMessage;
 import world.entities.std.Charlie;
 import tjson.TJSON;
 import world.entities.std.StartPosition;
@@ -39,7 +41,10 @@ class World {
 	
 	public var flags:Array<Bool> = [false, false, false, false, false];
 	
-	public function new(file:FileEpisode) {
+	private var game:Tobor;
+	
+	public function new(game:Tobor, file:FileEpisode) {
+		this.game = game;
 		this.file = file;
 		
 		factory = new ObjectFactory();
@@ -56,7 +61,9 @@ class World {
 		gold = 0;
 		lives = 3;
 		points = 0;
-			
+		
+		Text.loadForWorld(file.loadFile('translation.json'));
+		
 		var content:String = file.loadFile('rooms.json');
 		
 		if (content == null) { 
@@ -133,6 +140,8 @@ class World {
 			r.x = x;
 			r.y = y;
 			r.z = z;
+			
+			r.getName();
 		}
 		
 		return r;
@@ -163,6 +172,16 @@ class World {
 		}
 	}
 	
+	public function showDialog(dialog:Dialog) {
+		game.showDialog(dialog);
+	}
+	
+	public function showMessage(key:String) {
+		var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, Text.getFromWorld(key), true);
+		
+		showDialog(messageBox);
+	}
+	
 	/*
 	public function restoreState() {
 		roomCurrent.restoreState();
@@ -184,8 +203,19 @@ class World {
 	}
 	
 	public function save() {
-		var content:String = saveData();
+		var content:String;
+		
+		Text.loadForWorld(file.loadFile('translation.json'));
+		Text.loadForWorld(file.loadFile('translation_missing.json'));
+		
+		content = saveData();
 		file.saveFile('rooms.json', content);
+		
+		content = Text.saveForWorld();
+		file.saveFile('translation.json', content);
+		
+		content = Text.saveForWorldMissing();
+		file.saveFile('translation_missing.json', content);
 	}
 	
 	function saveData():String {
@@ -209,7 +239,7 @@ class World {
 			
 			worldData.set("data", r.save());
 			
-			data.set("ROOM_" + r.x + "_" + r.y + "_" + r.z, worldData);
+			data.set(r.getID(), worldData);
 		}
 		
 		return TJSON.encode(data, 'fancy');
@@ -267,6 +297,7 @@ class World {
 		
 		var newRoom:Room = new Room(this, rx, ry, rz);
 		newRoom.load(rdata);
+		newRoom.getName();
 		
 		addRoom(newRoom);
 		switchRoom(rx, ry, rz);

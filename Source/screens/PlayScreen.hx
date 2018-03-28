@@ -2,7 +2,6 @@ package screens;
 
 import lime.math.Vector2;
 import ui.DialogInput;
-import world.Inventory;
 import world.entities.Entity;
 import world.entities.std.Charlie;
 
@@ -26,8 +25,14 @@ class PlayScreen extends Screen {
 	var SPR_GARLIC:Sprite;
 	var SPR_TUNNEL:Sprite;
 	
+	var TXT_STATUS_POINTS:String;
+	var TXT_STATUS_LIVES:String;
+	
 	public function new(game:Tobor) {
 		super(game);
+		
+		TXT_STATUS_POINTS = Text.get("TXT_STATUS_POINTS");
+		TXT_STATUS_LIVES = Text.get("TXT_STATUS_LIVES");
 		
 		SPR_ISOLATOR = Gfx.getSprite(240, 0);
 		SPR_CHARLIE = Gfx.getSprite(32, 0);
@@ -162,7 +167,7 @@ class PlayScreen extends Screen {
 			Gfx.drawSprite(200 - 16, 0, SPR_GARLIC);
 		}
 		
-		var strStatus:String = "Punkte " + StringTools.lpad(Std.string(punkte), "0", 8) + " Leben " + Std.string(leben);
+		var strStatus:String = TXT_STATUS_POINTS + " " + StringTools.lpad(Std.string(punkte), "0", 8) + " " + TXT_STATUS_LIVES + " " + Std.string(leben);
 		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
 		
 		var gold = game.world.gold; // game.world.player.gold;
@@ -179,17 +184,17 @@ class PlayScreen extends Screen {
 	
 	function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			["Einstellungen", ""],
-			["Szenen-Text", "?"],
-			["Rucksack", "<-", function() {
+			[Text.get("TXT_MENU_OPTIONS"), ""],
+			[Text.get("TXT_MENU_SCENE_TEXT"), ""],
+			[Text.get("TXT_MENU_BACKPACK"), "<-", function() {
 				
 			}],
-			["Hilfe", "F1"],
-			["Story", "F2"],
-			["Szenenanfang", "F3"],
-			["Sichern", "F5"],
-			["Laden", "F7"],
-			["Abbruch", "F9", function() {
+			[Text.get("TXT_MENU_HELP"), ""],
+			[Text.get("TXT_MENU_STORY"), ""],
+			[Text.get("TXT_MENU_RESTART"), ""],
+			[Text.get("TXT_MENU_SAVE"), ""],
+			[Text.get("TXT_MENU_LOAD"), ""],
+			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
 			}],	
 		]);

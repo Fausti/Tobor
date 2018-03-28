@@ -1,9 +1,6 @@
 package;
 
 import haxe.zip.Reader;
-import haxe.zip.Tools;
-import haxe.zip.Uncompress;
-import lime.tools.helpers.ZipHelper;
 import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.File;
@@ -102,7 +99,16 @@ class Files {
 	}
 	
 	public static function loadFromFile(fileName:String):String {
-		var fin = File.read(fileName, false);
+		var fin:FileInput;
+		
+		try 
+		{
+			fin = File.read(fileName, false);
+		}
+		catch (err:Dynamic)
+		{
+			return null;
+		}
 		
 		// erste Zeile lesen, falls Kommentar vorhanden
 		var header = fin.readLine();

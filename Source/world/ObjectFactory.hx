@@ -246,6 +246,8 @@ class ObjectTemplate {
 	
 	public var layer:Int;
 	
+	public var editorName:String;
+	
 	public function new(id:String, index:Int, c:Class<Entity>, d:Dynamic, spr:Sprite, ?layer:Int = Room.LAYER_LEVEL_0) {
 		this.name = id;
 		this.index = index;
@@ -253,6 +255,8 @@ class ObjectTemplate {
 		this.data = d;
 		this.spr = spr;
 		this.layer = layer;
+		
+		this.editorName = Text.get(id);
 	}
 	
 	public function create():Entity {

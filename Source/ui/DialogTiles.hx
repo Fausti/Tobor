@@ -136,5 +136,12 @@ class DialogTiles extends Dialog {
 				tY++;
 			}
 		}
+		
+		var c:ObjectTemplate = factory.get(editor.currentTile);
+		
+		Gfx.drawTexture(16, 28 * 12, 40 * Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT, SPR_NONE.uv, Color.GREEN);
+		
+		Tobor.fontSmall.drawString(0, 28 * 12 + 1, "    " + c.editorName, Color.BLACK);
+		Gfx.drawSprite(0, 28 * 12, c.spr);
 	}
 }

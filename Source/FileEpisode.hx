@@ -42,7 +42,8 @@ class FileEpisode {
 		
 		name = path.file;
 		
-		var content:String = loadFile("info.txt");
+		var content:String = loadFile("info." + Tobor.locale);
+		if (content == null) content = loadFile("info." + Tobor.defaultLocale);
 		if (content != null) {
 			desc = content;
 			isOK = true;
@@ -56,7 +57,7 @@ class FileEpisode {
 		
 		if (FileSystem.exists(Files.DIR_EPISODES + '/' + fileName)) {
 			isOK = false;
-			return "Verzeichnis existiert bereits!";
+			return Text.get("TXT_DIR_ALREADY_EXISTS");
 		} else {
 			try 
 			{
@@ -64,20 +65,20 @@ class FileEpisode {
 			}
 			catch (err:Dynamic)
 			{
-				return "Verzeichnis konnte nicht erstellt werden!";
+				return Text.get("TXT_COULDNT_CREATE_DIR") + ": " + err;
 			}
 			
 			if (FileSystem.exists(Files.DIR_EPISODES + '/' + fileName)) {
 				path = new Path(Files.DIR_EPISODES + '/' + fileName);
 				isEmpty = true;
 			} else {
-				return "Verzeichnis konnte nicht erstellt werden!";
+				return Text.get("TXT_COULDNT_CREATE_DIR");
 			}
 		}
 			
-		if (!FileSystem.exists(path.toString() + '/info.txt')) {
-			var fout = File.write(path.toString() + '/info.txt', false);
-			fout.writeString("Beschreibung bitte in info.txt bearbeiten!");
+		if (!FileSystem.exists(path.toString() + "/info." + Tobor.defaultLocale)) {
+			var fout = File.write(path.toString() + "/info." + Tobor.defaultLocale, false);
+			fout.writeString(Text.get("TXT_SET_DESC_IN_INFO_FILE"));
 			fout.close();
 		}
 		
@@ -128,12 +129,12 @@ class FileEpisode {
 	}
 	
 	public function getName(l:Int):String {
-		if (isEditor) return StringTools.rpad(">> Neue Episode <<", ".", l);
+		if (isEditor) return StringTools.rpad(Text.get("TXT_NEW_EPISODE"), ".", l);
 		return name.rpad(l, ".", false);
 	}
 	
 	public function getDesc(l:Int):String {
-		if (isEditor) return StringTools.rpad("Erstelle eine neue Episode im Editor!", ".", l);
+		if (isEditor) return StringTools.rpad(Text.get("TXT_CREATE_NEW_EPISODE_IN_EDITOR"), ".", l);
 		return desc.rpad(l, ".", false);
 	}
 }

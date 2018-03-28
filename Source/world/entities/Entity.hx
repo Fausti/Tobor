@@ -8,6 +8,7 @@ import world.ObjectFactory;
 import world.Room;
 import world.ObjectFactory.ObjectTemplate;
 import world.World;
+import world.entities.interfaces.IContainer;
 import world.entities.interfaces.IElectric;
 import world.entities.std.Charlie;
 import world.entities.std.Water;
@@ -32,6 +33,7 @@ class Entity {
 	
 	public var type:Int = 0;
 	public var flag:Int = Marker.MARKER_NO;
+	public var content:String = null;
 	
 	public var alive:Bool = true;
 	
@@ -228,6 +230,7 @@ class Entity {
 		
 		o.type = type;
 		o.flag = flag;
+		o.content = content;
 		
 		o.drift = drift;
 		
@@ -247,6 +250,10 @@ class Entity {
 		
 		if (hasData(data, "type")) {
 			this.type = data.type;
+		}
+		
+		if (hasData(data, "content")) {
+			this.content = data.content;
 		}
 		
 		if (Std.is(this, IElectric)) {
@@ -278,6 +285,7 @@ class Entity {
 		if (def != null) {
 			data.set("id", def.name);
 			data.set("type", type);
+			if (content != null) data.set("content", content);
 			if (Std.is(this, IElectric)) data.set("flag", flag);
 			data.set("x", gridX);
 			data.set("y", gridY);
@@ -328,7 +336,27 @@ class Entity {
 	// Electric stuff
 	
 	public function setMarker(f:Int) {
-		if (Std.is(this, IElectric)) this.flag = f;
+		if (Std.is(this, IElectric)) {
+			this.flag = f;
+			onSetMarker(f);
+		}
+	}
+	
+	public function onSetMarker(f:Int) {
+		
+	}
+	
+	// Content
+	
+	public function setContent(s:String) {
+		if (Std.is(this, IContainer)) {
+			this.content = s;
+			onSetContent(s);
+		}
+	}
+	
+	public function onSetContent(s:String) {
+		
 	}
 	
 	public function switchStatus() {

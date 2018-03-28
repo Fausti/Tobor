@@ -179,4 +179,10 @@ class LimeApplication extends Application {
 	{
 		if (game != null) game.onTextInput(text);
 	}
+	
+	override public function onWindowClose(window:Window):Void {
+		if (game != null) game.onExit();
+		
+		super.onWindowClose(window);
+	}
 }

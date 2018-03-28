@@ -2,7 +2,6 @@ package screens;
 
 import ui.DialogMessage;
 import ui.DialogInput;
-import ui.DialogQuestion;
 import ui.Screen;
 import world.World;
 
@@ -83,7 +82,7 @@ class EpisodesScreen extends Screen {
 	}
 	
 	function createEpisode() {
-		var d:DialogInput = new DialogInput(this, 0, 0, "Wie soll die Episode heißen?");
+		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_EPISODE_NAME"));
 		
 		d.onOk = function () {
 			var ret:String = episoden[index].create(d.getInput());
@@ -94,7 +93,7 @@ class EpisodesScreen extends Screen {
 			}
 			
 			if (episoden[index].isOK) {
-				game.world = new World(episoden[index]);
+				game.world = new World(game, episoden[index]);
 				game.setScreen(new IntroScreen(game));
 			}
 		};
@@ -112,7 +111,7 @@ class EpisodesScreen extends Screen {
 				if (episoden[index].isEditor) {
 					createEpisode();
 				} else {
-					game.world = new World(episoden[index]);
+					game.world = new World(game, episoden[index]);
 					game.setScreen(new IntroScreen(game));
 				}
 			} else if (Input.isKeyDown(Tobor.KEY_UP)) {

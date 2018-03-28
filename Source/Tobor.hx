@@ -1,14 +1,14 @@
 package;
 
+import lime.Assets;
 import lime.graphics.opengl.GL;
 import cpp.vm.Gc;
-import screens.IntroScreen;
-import screens.PlayScreen;
+import lime.system.Locale;
 import screens.EpisodesScreen;
-import screens.EditorScreen;
 import ui.Font;
 import ui.Frame;
 import ui.Screen;
+import ui.Dialog;
 
 import core.LimeGame;
 import gfx.Shader;
@@ -47,6 +47,9 @@ class Tobor extends LimeGame {
 	
 	public var highScore:Highscore;
 	
+	public static var locale:String;
+	public static var defaultLocale:String = "de";
+	
 	public function new() {
 		super();
 		
@@ -54,9 +57,26 @@ class Tobor extends LimeGame {
 		
 		__framebuffer_w = SCREEN_WIDTH;
 		__framebuffer_h = SCREEN_HEIGHT;
+		
+		Tobor.locale = Locale.currentLocale.split8("_")[0];
 	}
 	
 	override public function init() {
+		Text.init();
+		
+		Text.load(Files.loadFromFile("translation.json"));
+						
+		try 
+		{
+			Text.load(Assets.getText("assets/translation.json"));
+		}
+		catch (err:Dynamic)
+		{
+			
+		}
+		
+		Text.load(Files.loadFromFile("translation_missing.json"));
+		
 		GL.enable(GL.BLEND);
 		GL.disable(GL.DEPTH_TEST);
 		GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
@@ -131,6 +151,19 @@ class Tobor extends LimeGame {
 		if (this.screen != null) {
 			this.screen.onTextInput(text);
 		}
+	}
+	
+	override function onExit() {
+		Files.saveToFile("translation.json", Text.save());
+		Files.saveToFile("translation_missing.json", Text.saveMissing());
+	}
+	
+	public function showDialog(dialog:Dialog) {
+		if (screen != null) screen.showDialog(dialog);
+	}
+	
+	public function getScreen():Screen {
+		return screen;
 	}
 	
 	// Tasten...

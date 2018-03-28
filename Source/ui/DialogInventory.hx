@@ -37,11 +37,11 @@ class DialogInventory extends Dialog {
 		
 		inventory = screen.game.world.inventory;
 		
-		STRINGS[Inventory.ACTION_COUNT] = " Stück";
-		STRINGS[Inventory.ACTION_USE] = "Benutzen";
-		STRINGS[Inventory.ACTION_DROP] = "Ablegen";
-		STRINGS[Inventory.ACTION_LOOK] = "Anschauen";
-		STRINGS[Inventory.ACTION_CHOOSE] = "Auswählen";
+		STRINGS[Inventory.ACTION_COUNT] = " " + Text.get("TXT_INVENTORY_COUNT");
+		STRINGS[Inventory.ACTION_USE] = Text.get("TXT_INVENTORY_USE");
+		STRINGS[Inventory.ACTION_DROP] = Text.get("TXT_INVENTORY_DROP");
+		STRINGS[Inventory.ACTION_LOOK] = Text.get("TXT_INVENTORY_LOOK");
+		STRINGS[Inventory.ACTION_CHOOSE] = Text.get("TXT_INVENTORY_CHOOSE");
 	}
 	
 	override public function show() {
