@@ -266,10 +266,14 @@ class Room {
 		for (entry in cast(data, Array<Dynamic>)) {
 			var template:ObjectTemplate = world.factory.findFromID(entry.id);
 			
-			var obj = template.create();
-			obj.parseData(entry);
+			if (template != null) {
+				var obj = template.create();
+				obj.parseData(entry);
 			
-			addEntity(obj);
+				addEntity(obj);
+			} else {
+				trace("There is no Entity with ID of: " + entry.id);
+			}
 		}
 		
 		saveState();

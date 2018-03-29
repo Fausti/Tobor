@@ -87,7 +87,7 @@ class ObjectFactory {
 		var ii:Int = 0;
 		for (iy in 0 ... 2) {
 			for (ix in 0 ... 3) {
-				register("SPR_GOAL_" + Std.string(ii), Goal, Gfx.getSprite(160 + ix * 16, 216 + iy * 12), {type: ii});
+				register("OBJ_GOAL_" + Std.string(ii), Goal, Gfx.getSprite(160 + ix * 16, 216 + iy * 12), {type: ii});
 				ii++;
 			}
 		}
