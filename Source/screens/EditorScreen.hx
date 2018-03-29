@@ -5,6 +5,7 @@ import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
 import world.ObjectFactory.ObjectTemplate;
+import world.entities.EntityItem;
 import world.entities.Marker;
 import world.entities.interfaces.IContainer;
 import world.entities.interfaces.IElectric;
@@ -403,13 +404,15 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function addEntity(e:Entity, template:ObjectTemplate) {
-		var container:Array<Entity> = game.world.room.findEntityAt(e.x, e.y, IContainer);
-		if (container.length > 0) {
-			for (ce in container) {
-				ce.setContent(template.name);
-			}
+		if (Std.is(e, EntityItem)) {
+			var container:Array<Entity> = game.world.room.findEntityAt(e.x, e.y, IContainer);
+			if (container.length > 0) {
+				for (ce in container) {
+					ce.setContent(template.name);
+				}
 			
-			return;
+				return;
+			}
 		}
 		
 		var atPosition:Array<Entity> = game.world.room.getAllEntitiesAt(e.x, e.y);

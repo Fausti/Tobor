@@ -2,6 +2,7 @@ package world;
 
 import ui.Dialog;
 import ui.DialogMessage;
+import world.entities.Entity;
 import world.entities.std.Charlie;
 import tjson.TJSON;
 import world.entities.std.StartPosition;
@@ -42,6 +43,15 @@ class World {
 	public var flags:Array<Bool> = [false, false, false, false, false];
 	
 	public var game:Tobor;
+	
+	// AFTER_UPDATE Aktionen
+	var actionSaveGame:Bool = false;
+	var actionLoadGame:Bool = false;
+	
+	var actionResetRoom:Bool = false;
+	
+	var actionTeleport:Bool = false;
+	var actionTeleportTarget:Entity = null;
 	
 	public function new(game:Tobor, file:FileEpisode) {
 		this.game = game;
@@ -122,6 +132,35 @@ class World {
 		
 		if (player != null) player.update(deltaTime);
 		if (roomCurrent != null) roomCurrent.update(deltaTime);
+		
+		// AFTER-UPDATE Aktionen durchführen
+		
+		if (actionTeleport) {
+			if (actionTeleportTarget != null) {
+				actionTeleport = false;
+				
+				var t = actionTeleportTarget;
+			
+				game.world.room.saveState();
+				switchRoom(t.room.x, t.room.y, t.room.z);
+				game.world.room.restoreState();
+			
+				player.setPosition(t.gridX, t.gridY);
+				actionTeleportTarget = null;
+			}
+		}
+		
+		if (actionResetRoom) {
+			actionResetRoom = false;
+		}
+		
+		if (actionSaveGame) {
+			actionSaveGame = false;
+		}
+		
+		if (actionLoadGame) {
+			actionLoadGame = false;
+		}
 	}
 	
 	public function render(?editMode:Bool = false) {
@@ -169,6 +208,32 @@ class World {
 		if (r != null) {
 			roomCurrent = r;
 			player.setRoom(roomCurrent);
+		}
+	}
+	
+	public function teleportFrom(e:Entity) {
+		var target:Entity;
+		
+		// im aktuellen Raum
+		target = room.findTeleportTarget(e.type, e.content);
+		
+		if (target != null) {
+			player.setPosition(target.gridX, target.gridY);
+			return;
+		}
+		
+		// freie Teleporter NUR im aktuellen Raum
+		if (e.content == null) return;
+		
+		// in allen Räumen
+		for (r in rooms) {
+			target = r.findTeleportTargetState(e.type, e.content);
+			
+			if (target != null) {
+				actionTeleport = true;
+				actionTeleportTarget = target;
+				return;
+			}
 		}
 	}
 	

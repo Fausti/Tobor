@@ -121,6 +121,12 @@ class ObjectFactory {
 			register("OBJ_BAGPACK#" + i, Bagpack, Gfx.getSprite(128 + i * 16, 144), {type: i});
 		}
 		
+		register("OBJ_TELEPORT_START_0", TeleportStart, Gfx.getSprite(0, 312), {type: 0});
+		register("OBJ_TELEPORT_START_1", TeleportStart, Gfx.getSprite(48, 312), {type: 1});
+		
+		register("OBJ_TELEPORT_END_0", TeleportEnd, Gfx.getSprite(16, 312), {type: 0});
+		register("OBJ_TELEPORT_END_1", TeleportEnd, Gfx.getSprite(64, 312), {type: 1});
+		
 		// Water
 		
 		register("OBJ_FLIPPERS", Flippers, Gfx.getSprite(96, 144));

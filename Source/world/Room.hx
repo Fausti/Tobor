@@ -8,6 +8,7 @@ import world.entities.std.Charlie;
 import world.entities.std.Robot;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.std.StartPosition;
+import world.entities.std.TeleportEnd;
 
 /**
  * ...
@@ -308,6 +309,24 @@ class Room {
 	public function findStartPosition():StartPosition {
 		for (e in entities.getState()) {
 			if (Std.is(e, StartPosition)) return cast e;
+		}
+		
+		return null;
+	}
+	
+	public function findTeleportTarget(_type:Int, _content:String):Entity {
+		for (e in findAll(TeleportEnd)) {
+			if (e.type == _type && e.content == _content) return e;
+		}
+		
+		return null;
+	}
+	
+	public function findTeleportTargetState(_type:Int, _content:String):Entity {
+		for (e in entities.getState()) {
+			if (Std.is(e, TeleportEnd)) {
+				if (e.type == _type && e.content == _content) return e;
+			}
 		}
 		
 		return null;
