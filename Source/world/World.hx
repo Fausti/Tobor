@@ -53,6 +53,9 @@ class World {
 	var actionTeleport:Bool = false;
 	var actionTeleportTarget:Entity = null;
 	
+	var actionStairs:Bool = false;
+	var actionStairsTarget:Entity = null;
+	
 	public function new(game:Tobor, file:FileEpisode) {
 		this.game = game;
 		this.file = file;
@@ -150,6 +153,21 @@ class World {
 			}
 		}
 		
+		if (actionStairs) {
+			if (actionStairsTarget != null) {
+				actionStairs = false;
+				
+				var t = actionStairsTarget;
+			
+				game.world.room.saveState();
+				switchRoom(t.room.x, t.room.y, t.room.z);
+				game.world.room.restoreState();
+			
+				player.setPosition(t.gridX, t.gridY);
+				actionStairsTarget = null;
+			}
+		}
+		
 		if (actionResetRoom) {
 			actionResetRoom = false;
 		}
@@ -208,6 +226,28 @@ class World {
 		if (r != null) {
 			roomCurrent = r;
 			player.setRoom(roomCurrent);
+		}
+	}
+	
+	public function stairsFrom(e:Entity) {
+		var target:Entity;
+		
+		for (r in rooms) {
+			if (r.x == room.x && r.y == room.y) {
+				if (e.type == 1 && r.z > room.z) { 
+					target = r.findStairs(e.gridX, e.gridY, 0);
+				} else if (e.type == 0 && r.z < room.z) {
+					target = r.findStairs(e.gridX, e.gridY, 1);
+				} else {
+					target = null;
+				}
+			
+				if (target != null) {
+					actionStairs = true;
+					actionStairsTarget = target;
+					return;
+				}
+			}
 		}
 	}
 	

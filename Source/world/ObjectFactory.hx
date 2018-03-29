@@ -106,6 +106,9 @@ class ObjectFactory {
 			register("OBJ_TUNNEL#" + Std.string(i), Tunnel, Gfx.getSprite(192 + i * 16, 72), {type: i});
 		}
 		
+		register("OBJ_STAIRS_UP", Stairs, Gfx.getSprite(224, 108), {type: 0});
+		register("OBJ_STAIRS_DOWN", Stairs, Gfx.getSprite(240, 108), {type: 1});
+		
 		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
 		

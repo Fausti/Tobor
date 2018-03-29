@@ -9,6 +9,7 @@ import world.entities.std.Robot;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.std.StartPosition;
 import world.entities.std.TeleportEnd;
+import world.entities.std.Stairs;
 
 /**
  * ...
@@ -309,6 +310,18 @@ class Room {
 	public function findStartPosition():StartPosition {
 		for (e in entities.getState()) {
 			if (Std.is(e, StartPosition)) return cast e;
+		}
+		
+		return null;
+	}
+	
+	public function findStairs(stairsX:Int, stairsY:Int, stairsType:Int):Entity {
+		for (e in entities.getState()) {
+			if (Std.is(e, Stairs)) {
+				if (e.type == stairsType && e.gridX == stairsX && e.gridY == stairsY) {
+					return e;
+				}
+			}
 		}
 		
 		return null;
