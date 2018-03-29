@@ -84,6 +84,14 @@ class ObjectFactory {
 		// register("OBJ_BRIDGE_NS",		Bridge,			Gfx.getSprite(176,156), {type: 0});
 		// register("OBJ_BRIDGE_WE",		Bridge,			Gfx.getSprite(192,156), {type: 1});
 		
+		var ii:Int = 0;
+		for (iy in 0 ... 2) {
+			for (ix in 0 ... 3) {
+				register("SPR_GOAL_" + Std.string(ii), Goal, Gfx.getSprite(160 + ix * 16, 216 + iy * 12), {type: ii});
+				ii++;
+			}
+		}
+		
 		register("OBJ_ROOF_0", Roof, Gfx.getSprite(0, 132), {type: 0}, Room.LAYER_ROOF);
 		register("OBJ_ROOF_1", Roof, Gfx.getSprite(0, 144), {type: 1}, Room.LAYER_ROOF);
 		register("OBJ_ROOF_2", Roof, Gfx.getSprite(16, 132), {type: 2}, Room.LAYER_ROOF);
