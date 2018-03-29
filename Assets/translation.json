@@ -5,6 +5,9 @@
     ,"OBJ_TUNNEL#3" : {
          "de" : "Tunnel"
     }
+    ,"TXT_DIALOG_OK" : {
+         "de" : "Ja"
+    }
     ,"OBJ_WALL_BLACK_NE" : {
          "de" : "Mauer (schwarz)"
     }
@@ -38,14 +41,14 @@
     ,"OBJ_MUNITION#2" : {
          "de" : "Munition"
     }
+    ,"OBJ_STAIRS_DOWN" : {
+         "de" : "Treppe (runter)"
+    }
     ,"TXT_MENU_EXIT" : {
          "de" : "Abbruch"
     }
     ,"OBJ_MUNITION#3" : {
          "de" : "Munition"
-    }
-    ,"OBJ_STAIRS_DOWN" : {
-         "de" : "Treppe (runter)"
     }
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
@@ -182,17 +185,17 @@
     ,"OBJ_ARROW_2" : {
          "de" : "Pfeil"
     }
+    ,"OBJ_SHADOW#0" : {
+         "de" : "Schatten"
+    }
     ,"OBJ_ARROW_3" : {
          "de" : "Pfeil"
-    }
-    ,"TXT_INVENTORY_USE" : {
-         "de" : "Benutzen"
     }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
     }
-    ,"OBJ_SHADOW#0" : {
-         "de" : "Schatten"
+    ,"TXT_INVENTORY_USE" : {
+         "de" : "Benutzen"
     }
     ,"OBJ_SHADOW#1" : {
          "de" : "Schatten"
@@ -374,14 +377,14 @@
     ,"DRIFT_S" : {
          "de" : "Strömung"
     }
+    ,"OBJ_WALL_DISSOLVE" : {
+         "de" : "sich auflösende Mauer"
+    }
     ,"TXT_MENU_RESTART" : {
          "de" : "Szenenanfang"
     }
     ,"OBJ_QUESTION_MARK" : {
          "de" : "Fragezeichen"
-    }
-    ,"OBJ_WALL_DISSOLVE" : {
-         "de" : "sich auflösende Mauer"
     }
     ,"OBJ_WALL_BLACK_SE" : {
          "de" : "Mauer (schwarz)"
@@ -397,6 +400,9 @@
     }
     ,"DRIFT_W" : {
          "de" : "Strömung"
+    }
+    ,"TXT_DIALOG_CANCEL" : {
+         "de" : "Nein"
     }
     ,"TXT_MENU_OBJECTS" : {
          "de" : "Objektauswahl..."
