@@ -33,9 +33,8 @@ class IntroScreen extends Screen {
 		}
 		
 		if (Input.isKeyDown([Input.key.ESCAPE])) {
-			// game.setScreen(new EpisodesScreen(game));
+			showMainMenu();
 		} else if (Input.isKeyDown([Input.key.RETURN])) {
-			// game.setScreen(new PlayScreen(game));
 			showMainMenu();
 		}
 	}
