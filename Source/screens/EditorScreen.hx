@@ -307,6 +307,12 @@ class EditorScreen extends PlayScreen {
 				
 			Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
 			
+			// Cursor Koordinaten
+			if (cursorY > 0) {
+				var strCoords:String = "" + StringTools.lpad(Std.string(cursorX), "0", 2) + ", " + StringTools.lpad(Std.string(cursorY - 1), "0", 2);
+				Tobor.fontSmall.drawString(48, 1, strCoords, Color.BLACK, Color.WHITE);
+			}
+		
 			renderObjectCount();
 		}
 	}
