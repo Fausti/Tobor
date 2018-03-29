@@ -1,5 +1,6 @@
 package world;
 
+import screens.PlayScreen;
 import ui.Dialog;
 import ui.DialogMessage;
 import world.entities.Entity;
@@ -44,6 +45,8 @@ class World {
 	
 	public var game:Tobor;
 	
+	private var visitedRooms:Map<String, Bool>;
+	
 	// AFTER_UPDATE Aktionen
 	var actionSaveGame:Bool = false;
 	var actionLoadGame:Bool = false;
@@ -64,6 +67,8 @@ class World {
 	}
 	
 	public function init() {
+		visitedRooms = new Map<String, Bool>();
+		
 		player = cast factory.create("OBJ_CHARLIE");
 		player.setPosition(0, 0);
 		oldPlayerX = 0;
@@ -98,6 +103,9 @@ class World {
 	}
 	
 	public function start() {
+		Input.wait(0.25);
+		Input.clearKeys();
+		
 		// Startposition suchen...
 		var sp:StartPosition = null;
 		
@@ -150,6 +158,9 @@ class World {
 			
 				player.setPosition(t.gridX, t.gridY);
 				actionTeleportTarget = null;
+				
+				var playScreen:PlayScreen = cast game.getScreen();
+				playScreen.showRoomName();
 			}
 		}
 		
@@ -165,6 +176,9 @@ class World {
 			
 				player.setPosition(t.gridX, t.gridY);
 				actionStairsTarget = null;
+				
+				var playScreen:PlayScreen = cast game.getScreen();
+				playScreen.showRoomName();
 			}
 		}
 		
@@ -227,6 +241,18 @@ class World {
 			roomCurrent = r;
 			player.setRoom(roomCurrent);
 		}
+	}
+	
+	public function markRoomVisited() {
+		visitedRooms.set(room.getID(), true);
+	}
+	
+	public function roomVisited():Bool {
+		if (visitedRooms.get(room.getID()) == true) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public function stairsFrom(e:Entity) {

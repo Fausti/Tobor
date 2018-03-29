@@ -2,6 +2,7 @@ package screens;
 
 import lime.math.Vector2;
 import ui.DialogInput;
+import ui.DialogMessage;
 import world.entities.Entity;
 import world.entities.std.Charlie;
 
@@ -49,6 +50,8 @@ class PlayScreen extends Screen {
 	function init() {
 		game.world.init();
 		game.world.start();
+		
+		showRoomName();
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -114,6 +117,7 @@ class PlayScreen extends Screen {
 						e.onEnter(player, direction);
 					}
 					
+					showRoomName();
 					Input.wait(0.25);
 				}
 			}
@@ -184,16 +188,31 @@ class PlayScreen extends Screen {
 	
 	function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			[Text.get("TXT_MENU_OPTIONS"), ""],
-			[Text.get("TXT_MENU_SCENE_TEXT"), ""],
-			[Text.get("TXT_MENU_BACKPACK"), "<-", function() {
-				
+			[Text.get("TXT_MENU_OPTIONS"), "", function () {
+				hideDialog();
 			}],
-			[Text.get("TXT_MENU_HELP"), ""],
-			[Text.get("TXT_MENU_STORY"), ""],
-			[Text.get("TXT_MENU_RESTART"), ""],
-			[Text.get("TXT_MENU_SAVE"), ""],
-			[Text.get("TXT_MENU_LOAD"), ""],
+			[Text.get("TXT_MENU_SCENE_TEXT"), "", function() {
+				showRoomName(true);
+			}],
+			[Text.get("TXT_MENU_BACKPACK"), "<-", function() {
+				hideDialog();
+				showInventory();
+			}],
+			[Text.get("TXT_MENU_HELP"), "", function () {
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_STORY"), "", function () {
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_RESTART"), "", function () {
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_SAVE"), "", function () {
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_LOAD"), "", function () {
+				hideDialog();
+			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
 			}],	
@@ -206,7 +225,7 @@ class PlayScreen extends Screen {
 		};
 			
 		menu.onOk = function () {
-			hideDialog();
+			
 		};
 		
 		showDialog(menu);
@@ -243,5 +262,19 @@ class PlayScreen extends Screen {
 		}
 		
 		showDialog(d);
+	}
+	
+	public function showRoomName(?force:Bool = false) {
+		if (Std.is(this, EditorScreen)) return;
+		
+		if (!game.world.roomVisited() || force) {
+			var roomName:String = game.world.room.getName();
+						
+			var d:DialogMessage = new DialogMessage(this, 0, 0, roomName, false);
+						
+			showDialog(d);
+						
+			game.world.markRoomVisited();
+		}
 	}
 }
