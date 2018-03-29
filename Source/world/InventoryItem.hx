@@ -12,10 +12,13 @@ class InventoryItem {
 	public var group:String;
 	public var id:String;
 	public var spr:Sprite;
+	
+	public var content:String;
 		
-	public function new(id:String, spr:Sprite) {
+	public function new(id:String, spr:Sprite, content:String = null) {
 		this.id = id;
 		this.spr = spr;
+		this.content = content;
 		
 		var split = id.split("#");
 		

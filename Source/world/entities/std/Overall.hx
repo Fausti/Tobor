@@ -14,8 +14,8 @@ class Overall extends EntityItem {
 		setSprite(Gfx.getSprite(176, 132));
 	}
 	
-	override public function onDrop(x:Float, y:Float) {
-		super.onDrop(x, y);
+	override public function onDrop(item:InventoryItem, x:Float, y:Float) {
+		super.onDrop(item, x, y);
 		
 		getPlayer().checkForOverall();
 	}

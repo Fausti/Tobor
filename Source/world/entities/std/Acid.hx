@@ -18,7 +18,7 @@ class Acid extends EntityItem {
 		setSprite(Gfx.getSprite(208, 24));
 	}
 	
-	override public function onUse(x:Float, y:Float) {
+	override public function onUse(item:InventoryItem, x:Float, y:Float) {
 		var list = room.findEntityAround(x, y, Wall);
 		
 		for (e in list) {

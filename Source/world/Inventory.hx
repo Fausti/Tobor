@@ -34,11 +34,11 @@ class Inventory {
 		containsOverall = false;
 	}
 	
-	public function add(id:String, spr:Sprite, ?count:Int = 1):Int {
+	public function add(id:String, spr:Sprite, ?count:Int = 1, ?content:String = null):Int {
 		var item:InventoryItem = list.get(id);
 		
 		if (item == null) {
-			item = new InventoryItem(id, spr);
+			item = new InventoryItem(id, spr, content);
 			list.set(id, item);
 		}
 		
@@ -158,6 +158,7 @@ class Inventory {
 		}
 		
 		var e:Entity = world.factory.create(item.id);
+		e.content = item.content;
 		e.setRoom(world.room);
 		
 		if (!Std.is(e, EntityItem)) {
@@ -169,11 +170,11 @@ class Inventory {
 		
 		switch(action) {
 			case Inventory.ACTION_DROP:
-				obj.onDrop(world.player.x, world.player.y);
+				obj.onDrop(item, world.player.x, world.player.y);
 			case Inventory.ACTION_LOOK:
-				obj.onLook();
+				obj.onLook(item);
 			case Inventory.ACTION_USE:
-				obj.onUse(world.player.x, world.player.y);
+				obj.onUse(item, world.player.x, world.player.y);
 			default:
 				trace("Unknown Item Action!");
 		}

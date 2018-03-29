@@ -27,7 +27,7 @@ class Magnet extends EntityItem {
 		super.render();
 	}
 	
-	override public function onDrop(x:Float, y:Float) {
+	override public function onDrop(item:InventoryItem, x:Float, y:Float) {
 		if (room.findEntityAt(x, y, Magnet).length == 0) {
 			var rotated:Int = 0;
 			
@@ -53,7 +53,7 @@ class Magnet extends EntityItem {
 				}
 			}
 		
-			super.onDrop(x, y);
+			super.onDrop(item, x, y);
 			if (rotated > 0) Sound.play(Sound.SND_ROTATE_ARROW);
 		}
 	}

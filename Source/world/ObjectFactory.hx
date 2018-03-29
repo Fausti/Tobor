@@ -117,6 +117,10 @@ class ObjectFactory {
 		
 		register("OBJ_OVERALL", Overall, Gfx.getSprite(176, 132));
 		
+		for (i in 0 ... 5) {
+			register("OBJ_BAGPACK#" + i, Bagpack, Gfx.getSprite(128 + i * 16, 144), {type: i});
+		}
+		
 		// Water
 		
 		register("OBJ_FLIPPERS", Flippers, Gfx.getSprite(96, 144));

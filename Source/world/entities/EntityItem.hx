@@ -1,4 +1,5 @@
 package world.entities;
+import world.InventoryItem;
 
 /**
  * ...
@@ -16,29 +17,31 @@ class EntityItem extends EntityCollectable {
 		Sound.play(Sound.SND_PICKUP_MISC);
 	}
 	
-	public function onDrop(x:Float, y:Float) {
+	public function onDrop(item:InventoryItem, x:Float, y:Float) {
 		room.spawnEntity(x, y, this);
+		
+		this.content = item.content;
 
-		getInventory().remove(getID());
+		removeFromInventory();
 	}
 	
-	public function onLook() {
+	public function onLook(item:InventoryItem) {
 
 	}
 	
-	public function onUse(x:Float, y:Float) {
-		onDrop(x, y);
+	public function onUse(item:InventoryItem, x:Float, y:Float) {
+		onDrop(item, x, y);
 	}
 	
 	public function removeFromInventory() {
 		getInventory().remove(getID());
 	}
 	
-	public function addToInventory() {
+	public function addToInventory(?num:Int = 1) {
 		var template = getTemplate();
 			
 		if (template != null) {
-			getInventory().add(template.name, template.spr);
+			getInventory().add(template.name, template.spr, num, content);
 		}
 	}
 	

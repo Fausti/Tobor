@@ -14,7 +14,7 @@ class Garlic extends EntityItem {
 		setSprite(Gfx.getSprite(192, 24));
 	}
 	
-	override public function onUse(x:Float, y:Float) {
+	override public function onUse(item:InventoryItem, x:Float, y:Float) {
 		room.world.garlic = room.world.garlic + 60;
 		
 		removeFromInventory();
