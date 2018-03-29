@@ -41,7 +41,7 @@ class World {
 	
 	public var flags:Array<Bool> = [false, false, false, false, false];
 	
-	private var game:Tobor;
+	public var game:Tobor;
 	
 	public function new(game:Tobor, file:FileEpisode) {
 		this.game = game;

@@ -37,10 +37,12 @@ class Bagpack extends EntityItem implements IContainer {
 	override public function render_editor() {
 		super.render_editor();
 		
-		if (content != "" && content != null) {
-			var template = getFactory().findFromID(content);
+		if (getWorld().game.blink) {
+			if (content != "" && content != null) {
+				var template = getFactory().findFromID(content);
 			
-			if (template != null) Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, template.spr);
+				if (template != null) Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, template.spr);
+			}
 		}
 	}
 	

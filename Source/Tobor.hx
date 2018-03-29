@@ -50,6 +50,10 @@ class Tobor extends LimeGame {
 	public static var locale:String;
 	public static var defaultLocale:String = "de";
 	
+	// Krams fürs Blinken im Editor... gehört sicherlich nicht hier her xD
+	var blinkTime:Float = 1;
+	public var blink(default, null):Bool = true;
+	
 	public function new() {
 		super();
 		
@@ -118,6 +122,12 @@ class Tobor extends LimeGame {
 	override public function update(deltaTime:Float) {
 		if (this.screen != null) {
 			this.screen.update(deltaTime);
+			
+			blinkTime = blinkTime - deltaTime;
+			if (blinkTime < 0) {
+				blinkTime = blinkTime + 1;
+				blink = !blink;
+			}
 		}
 	}
 	
