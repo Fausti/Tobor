@@ -8,7 +8,6 @@ import world.ObjectFactory.ObjectTemplate;
 import world.entities.EntityItem;
 import world.entities.Marker;
 import world.entities.interfaces.IContainer;
-import world.entities.interfaces.IElectric;
 import world.entities.std.StartPosition;
 
 import world.Room;
@@ -300,7 +299,7 @@ class EditorScreen extends PlayScreen {
 			
 			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, game.world.factory.get(currentTile).spr);
 			
-			var roomCoords:String = "Raum " 
+			var roomCoords:String = Text.get("TXT_EDITOR_ROOM") + " " 
 				+ Std.string(game.world.room.z) 
 				+ Std.string(game.world.room.x) 
 				+ Std.string(game.world.room.y);
@@ -322,7 +321,7 @@ class EditorScreen extends PlayScreen {
 		
 		countEntities = game.world.room.length;
 		
-		var strStatus:String = "Objekte: " + StringTools.lpad(Std.string(countEntities), "0", 4);
+		var strStatus:String = Text.get("TXT_EDITOR_OBJECTS") + ": " + StringTools.lpad(Std.string(countEntities), "0", 4);
 		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
 	}
 	
@@ -347,31 +346,28 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			["Leeren", "", function () {
+			[Text.get("TXT_MENU_CLEAR"), "", function () {
 				askClearRoom();
 			}],
-			["Einstellungen", "", function () {
+			[Text.get("TXT_MENU_OPTIONS"), "", function () {
 				hideDialog();
 			}],
-			["Szenen-Text", "?", function () {
-				hideDialog();
-			}],
-			["Szene...", "TAB", function() {
+			[Text.get("TXT_MENU_CHOOSE_SCENE"), "TAB", function() {
 				showDialog(dialogRooms);
 			}],
-			["Objekte", "ENTER", function () {
+			[Text.get("TXT_MENU_OBJECTS"), "ENTER", function () {
 				showDialog(dialogTiles);
 			}],
-			["Hilfe", "F1"],
-			["Sichern", "F5", function () {
+			[Text.get("TXT_MENU_HELP"), ""],
+			[Text.get("TXT_MENU_SAVE"), "", function () {
 				game.world.save();
 				hideDialog();
 			}],
-			["Laden", "F7", function () {
+			[Text.get("TXT_MENU_LOAD"), "", function () {
 				game.world.load();
 				hideDialog();
 			}],
-			["Abbruch", "F9", function() {
+			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
 			}],	
 		]);
@@ -390,7 +386,7 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function askClearRoom() {
-		var d:DialogQuestion = new DialogQuestion(this, 0, 0, "Objekte im Raum löschen?");
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_REMOVE_OBJECTS_FROM_ROOM"));
 		d.index = 1;
 		
 		d.onOk = function () {
@@ -401,7 +397,7 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function askNewRoom(cb:Dynamic) {
-		var d:DialogQuestion = new DialogQuestion(this, 0, 0, "Neuen Raum erstellen?");
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_CREATE_NEW_ROOM"));
 		d.index = 1;
 		
 		d.onOk = cb;

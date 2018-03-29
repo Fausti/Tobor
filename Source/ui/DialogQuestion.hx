@@ -7,8 +7,8 @@ package ui;
 class DialogQuestion extends DialogMessage {
 	public var index:Int = 0;
 
-	public var strOK:String = "OK";
-	public var strCancel:String = "Abbruch";
+	public var strOK:String = Text.get("TXT_DIALOG_OK");
+	public var strCancel:String = Text.get("TXT_DIALOG_CANCEL");
 	
 	public function new(screen:Screen, x:Int, y:Int, msg:String, ?smallFont:Bool=false) {
 		super(screen, x, y, msg, smallFont);
