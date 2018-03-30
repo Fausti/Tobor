@@ -132,10 +132,10 @@ class DialogRooms extends Dialog {
 		for (xx in 0 ... 10) {
 			for (yy in 0 ... 10) {
 				if (xx == roomX && yy == roomY) {
-					if (rooms[0][xx][yy]) drawRoom(160 - 8, 60, xx, yy, true);
+					if (rooms[roomZ][xx][yy]) drawRoom(160 - 8, 60, xx, yy, true);
 					else drawEmpty(160 - 8, 60, xx, yy);
 				} else {
-					if (rooms[0][xx][yy]) drawRoom(160 - 8, 60, xx, yy, false);
+					if (rooms[roomZ][xx][yy]) drawRoom(160 - 8, 60, xx, yy, false);
 				}
 			}
 		}
