@@ -18,6 +18,7 @@ class Inventory {
 	private var SPR_MUNITION:Array<Sprite> = [];
 	
 	public var list:Map<String, InventoryItem>;
+	public var seen:Map<String, Bool>;
 	
 	public var containsOverall:Bool = false;
 	
@@ -31,10 +32,19 @@ class Inventory {
 	
 	public function clear() {
 		list = new Map<String, InventoryItem>();
+		seen = new Map<String, Bool>();
+		
 		containsOverall = false;
 	}
 	
+	public function hasSeen(id:String):Bool {
+		if (seen.get(id.split("#")[0]) == true) return true;
+		return false;
+	}
+	
 	public function add(id:String, spr:Sprite, ?count:Int = 1, ?content:String = null):Int {
+		seen.set(id.split("#")[0], true);
+		
 		var item:InventoryItem = list.get(id);
 		
 		if (item == null) {

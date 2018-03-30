@@ -41,6 +41,10 @@ class EntityItem extends EntityCollectable {
 		var template = getTemplate();
 			
 		if (template != null) {
+			if (!getInventory().hasSeen(template.name)) {
+				getWorld().showMessage(template.name.split("#")[0] + "_DESC");
+			}
+			
 			getInventory().add(template.name, template.spr, num, content);
 		}
 	}

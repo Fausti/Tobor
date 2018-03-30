@@ -278,6 +278,8 @@ class ObjectTemplate {
 		this.layer = layer;
 		
 		this.editorName = Text.get(id);
+		
+		var temp:String = Text.get(id + "_DESC");
 	}
 	
 	public function create():Entity {

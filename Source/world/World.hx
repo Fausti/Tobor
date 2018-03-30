@@ -308,9 +308,12 @@ class World {
 	}
 	
 	public function showMessage(key:String) {
-		var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, Text.getFromWorld(key), true);
+		var msg:String = Text.getFromWorld(key);
+		if (msg != "") {
+			var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, msg, true);
 		
-		showDialog(messageBox);
+			showDialog(messageBox);
+		}
 	}
 	
 	/*
