@@ -207,6 +207,7 @@ class EditorScreen extends PlayScreen {
 				game.world.addRoom(nextRoom);
 				game.world.switchRoom(x, y, z);
 				nextRoom.getName();
+				hideDialog();
 			});
 		}
 		
@@ -391,6 +392,7 @@ class EditorScreen extends PlayScreen {
 		
 		d.onOk = function () {
 			game.world.room.clear();
+			hideDialog();
 		}
 		
 		showDialog(d);
