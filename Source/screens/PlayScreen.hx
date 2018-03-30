@@ -74,6 +74,34 @@ class PlayScreen extends Screen {
 		}
 		
 		game.world.update(deltaTime);
+		
+		if (!Std.is(this, EditorScreen)) {
+			if (game.world.lives <= 0) {
+				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), true);
+				
+				d.onCancel = function () {
+					game.world.checkHighScore();
+				}
+				
+				d.onOk = function () {
+					game.world.checkHighScore();
+				}
+				
+				showDialog(d);
+			} else if (game.world.episodeWon) {
+				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), true);
+				
+				d.onCancel = function () {
+					game.world.checkHighScore();
+				}
+				
+				d.onOk = function () {
+					game.world.checkHighScore();
+				}
+				
+				showDialog(d);
+			}
+		}
 	}
 	
 	function checkPlayerMovement() {

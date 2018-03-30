@@ -7,6 +7,8 @@ import world.entities.Entity;
 import world.entities.std.Charlie;
 import tjson.TJSON;
 import world.entities.std.StartPosition;
+import screens.IntroScreen;
+
 /**
  * ...
  * @author Matthias Faust
@@ -59,6 +61,9 @@ class World {
 	var actionStairs:Bool = false;
 	var actionStairsTarget:Entity = null;
 	
+	public var episodeWon:Bool = false;
+	public var episodeLost:Bool = false;
+	
 	public function new(game:Tobor, file:FileEpisode) {
 		this.game = game;
 		this.file = file;
@@ -100,6 +105,9 @@ class World {
 		}
 		
 		flags = [false, false, false, false, false];
+		
+		episodeWon = false;
+		episodeLost = false;
 	}
 	
 	public function start() {
@@ -127,6 +135,10 @@ class World {
 		if (room != null) {
 			room.start();
 		}
+	}
+	
+	public function checkHighScore() {
+		game.setScreen(new IntroScreen(game));
 	}
 	
 	public function clearStartPositions() {
