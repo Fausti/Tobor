@@ -82,7 +82,7 @@ class EpisodesScreen extends Screen {
 	}
 	
 	function createEpisode() {
-		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_EPISODE_NAME"));
+		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_EPISODE_NAME"));
 		
 		d.onOk = function () {
 			var ret:String = episoden[index].create(d.getInput());

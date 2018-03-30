@@ -1,9 +1,9 @@
 {
-     "OBJ_MAGNET#1" : {
-         "de" : "Magnet"
-    }
-    ,"OBJ_TUNNEL#3" : {
+     "OBJ_TUNNEL#3" : {
          "de" : "Tunnel"
+    }
+    ,"OBJ_MAGNET#1" : {
+         "de" : "Magnet"
     }
     ,"TXT_DIALOG_OK" : {
          "de" : "Ja"
@@ -64,6 +64,9 @@
     }
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
+    }
+    ,"TXT_EDITOR_NO_ROOM" : {
+         "de" : "keine Szene"
     }
     ,"OBJ_WALL_BLACK_NW" : {
          "de" : "Mauer (schwarz)"
@@ -185,23 +188,26 @@
     ,"OBJ_ARROW_2" : {
          "de" : "Pfeil"
     }
-    ,"OBJ_SHADOW#0" : {
-         "de" : "Schatten"
-    }
-    ,"OBJ_ARROW_3" : {
-         "de" : "Pfeil"
-    }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
     }
     ,"TXT_INVENTORY_USE" : {
          "de" : "Benutzen"
     }
+    ,"OBJ_ARROW_3" : {
+         "de" : "Pfeil"
+    }
+    ,"OBJ_SHADOW#0" : {
+         "de" : "Schatten"
+    }
     ,"OBJ_SHADOW#1" : {
          "de" : "Schatten"
     }
     ,"OBJ_SHADOW#2" : {
          "de" : "Schatten"
+    }
+    ,"TXT_ASK_FOR_EPISODE_NAME" : {
+         "de" : "Wie möchtest Du deine Episode nennen?"
     }
     ,"OBJ_PLATIN" : {
          "de" : "Platin"
@@ -353,6 +359,9 @@
     ,"OBJ_SKULL" : {
          "de" : "Totenkopf"
     }
+    ,"TXT_ASK_FOR_NAME" : {
+         "de" : "Willkommen!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:"
+    }
     ,"OBJ_GARLIC" : {
          "de" : "Knoblauch"
     }
@@ -377,29 +386,29 @@
     ,"DRIFT_S" : {
          "de" : "Strömung"
     }
-    ,"OBJ_WALL_DISSOLVE" : {
-         "de" : "sich auflösende Mauer"
-    }
     ,"TXT_MENU_RESTART" : {
          "de" : "Szenenanfang"
     }
     ,"OBJ_QUESTION_MARK" : {
          "de" : "Fragezeichen"
     }
+    ,"OBJ_WALL_DISSOLVE" : {
+         "de" : "sich auflösende Mauer"
+    }
     ,"OBJ_WALL_BLACK_SE" : {
          "de" : "Mauer (schwarz)"
     }
-    ,"OBJ_WATER_DEADLY" : {
-         "de" : "tödliches Wasser"
-    }
-    ,"TXT_STATUS_POINTS" : {
-         "de" : "Punkte"
+    ,"DRIFT_W" : {
+         "de" : "Strömung"
     }
     ,"TXT_INVENTORY_DROP" : {
          "de" : "Ablegen"
     }
-    ,"DRIFT_W" : {
-         "de" : "Strömung"
+    ,"TXT_STATUS_POINTS" : {
+         "de" : "Punkte"
+    }
+    ,"OBJ_WATER_DEADLY" : {
+         "de" : "tödliches Wasser"
     }
     ,"TXT_DIALOG_CANCEL" : {
          "de" : "Nein"
@@ -407,23 +416,23 @@
     ,"TXT_MENU_OBJECTS" : {
          "de" : "Objektauswahl..."
     }
-    ,"OBJ_WALL_NE" : {
-         "de" : "Mauer"
-    }
     ,"OBJ_BANK" : {
          "de" : "Bank"
     }
-    ,"OBJ_ACID" : {
-         "de" : "Säure"
+    ,"OBJ_WALL_NE" : {
+         "de" : "Mauer"
     }
     ,"TXT_MENU_PLAY" : {
          "de" : "Spielen"
     }
-    ,"OBJ_ELECTRIC_FENCE_OFF" : {
-         "de" : "elektrischer Zaun (AUS)"
+    ,"OBJ_ACID" : {
+         "de" : "Säure"
     }
     ,"OBJ_WATER_NE" : {
          "de" : "Wasser"
+    }
+    ,"OBJ_ELECTRIC_FENCE_OFF" : {
+         "de" : "elektrischer Zaun (AUS)"
     }
     ,"TXT_STATUS_LIVES" : {
          "de" : "Leben"
@@ -431,56 +440,56 @@
     ,"OBJ_CHARLIE" : {
          "de" : "Charlie (nur im Editor!)"
     }
-    ,"OBJ_DOOR#10" : {
-         "de" : "Tür Nr. 11"
-    }
     ,"OBJ_GOAL_0" : {
          "de" : "Ziel"
     }
-    ,"TXT_MENU_OPTIONS" : {
-         "de" : "Einstellungen"
+    ,"OBJ_DOOR#10" : {
+         "de" : "Tür Nr. 11"
     }
-    ,"OBJ_DOOR#11" : {
-         "de" : "Tür Nr. 12"
+    ,"OBJ_GOAL_1" : {
+         "de" : "Ziel"
     }
     ,"DRIFT_NE" : {
          "de" : "Strömung"
     }
-    ,"OBJ_GOAL_1" : {
+    ,"OBJ_DOOR#11" : {
+         "de" : "Tür Nr. 12"
+    }
+    ,"TXT_MENU_OPTIONS" : {
+         "de" : "Einstellungen"
+    }
+    ,"OBJ_GOAL_2" : {
          "de" : "Ziel"
     }
     ,"OBJ_DOOR#12" : {
          "de" : "Tür Nr. 13"
     }
-    ,"OBJ_GOAL_2" : {
+    ,"OBJ_BARRIER" : {
+         "de" : "Barriere"
+    }
+    ,"OBJ_GOAL_3" : {
          "de" : "Ziel"
     }
     ,"OBJ_DOOR#13" : {
          "de" : "Tür Nr. 14"
     }
-    ,"OBJ_GOAL_3" : {
-         "de" : "Ziel"
-    }
-    ,"OBJ_BARRIER" : {
-         "de" : "Barriere"
-    }
-    ,"OBJ_GOAL_4" : {
-         "de" : "Ziel"
+    ,"TXT_CREATE_NEW_EPISODE_IN_EDITOR" : {
+         "de" : "Neue Episode im Editor erstellen"
     }
     ,"OBJ_DOOR#14" : {
          "de" : "Tür Nr. 15"
     }
-    ,"TXT_CREATE_NEW_EPISODE_IN_EDITOR" : {
-         "de" : "Neue Episode im Editor erstellen"
-    }
-    ,"OBJ_GOAL_5" : {
+    ,"OBJ_GOAL_4" : {
          "de" : "Ziel"
+    }
+    ,"OBJ_WALL_BLACK_SW" : {
+         "de" : "Mauer (schwarz)"
     }
     ,"TXT_MENU_BACKPACK" : {
          "de" : "Rucksack"
     }
-    ,"OBJ_WALL_BLACK_SW" : {
-         "de" : "Mauer (schwarz)"
+    ,"OBJ_GOAL_5" : {
+         "de" : "Ziel"
     }
     ,"TXT_MENU_CHOOSE_SCENE" : {
          "de" : "Szenenauswahl..."
@@ -497,22 +506,22 @@
     ,"OBJ_TUNNEL#0" : {
          "de" : "Tunnel"
     }
-    ,"OBJ_TUNNEL#1" : {
-         "de" : "Tunnel"
-    }
     ,"TXT_EDITOR_ROOM" : {
          "de" : "Raum"
     }
-    ,"DRIFT_NW" : {
-         "de" : "Strömung"
-    }
-    ,"OBJ_MAGNET#0" : {
-         "de" : "Magnet"
-    }
-    ,"OBJ_TUNNEL#2" : {
+    ,"OBJ_TUNNEL#1" : {
          "de" : "Tunnel"
     }
     ,"OBJ_GRATE" : {
          "de" : "Gitter"
+    }
+    ,"OBJ_TUNNEL#2" : {
+         "de" : "Tunnel"
+    }
+    ,"OBJ_MAGNET#0" : {
+         "de" : "Magnet"
+    }
+    ,"DRIFT_NW" : {
+         "de" : "Strömung"
     }
 }

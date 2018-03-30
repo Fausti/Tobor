@@ -255,7 +255,7 @@ class PlayScreen extends Screen {
 	function askForName() {
 		if (Std.is(this, EditorScreen)) return;
 		
-		var d:DialogInput = new DialogInput(this, 0, 0, "Willkommen zu " + game.world.file.getName() + "!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:");
+		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_NAME"));
 		
 		d.onCancel = function () {
 			showRoomName();
