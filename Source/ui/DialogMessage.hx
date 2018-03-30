@@ -117,12 +117,10 @@ class DialogMessage extends Dialog {
 	
 	override public function ok() {
 		super.ok();
-		screen.hideDialog();
 	}
 	
 	override public function exit() {
 		super.exit();
-		screen.hideDialog();
 	}
 	
 	override public function render() {

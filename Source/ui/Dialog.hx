@@ -42,10 +42,16 @@ class Dialog {
 	
 	public function exit() {
 		if (onCancel != null) onCancel();
+		else {
+			screen.hideDialog();
+		}
 	}
 	
 	public function ok() {
 		if (onOk != null) onOk();
+		else {
+			screen.hideDialog();
+		}
 	}
 	
 	public function onTextInput(text:String) {

@@ -128,9 +128,14 @@ class FileEpisode {
 		return content;
 	}
 	
-	public function getName(l:Int):String {
+	public function getName(?l:Int = -1):String {
 		if (isEditor) return StringTools.rpad(Text.get("TXT_NEW_EPISODE"), ".", l);
-		return name.rpad(l, ".", false);
+		
+		if (l == -1) {
+			return name;
+		} else {
+			return name.rpad(l, ".", false);
+		}
 	}
 	
 	public function getDesc(l:Int):String {

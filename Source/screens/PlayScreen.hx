@@ -29,6 +29,8 @@ class PlayScreen extends Screen {
 	var TXT_STATUS_POINTS:String;
 	var TXT_STATUS_LIVES:String;
 	
+	var playerName:String = "";
+	
 	public function new(game:Tobor) {
 		super(game);
 		
@@ -51,7 +53,8 @@ class PlayScreen extends Screen {
 		game.world.init();
 		game.world.start();
 		
-		showRoomName();
+		// showRoomName();
+		askForName();
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -250,15 +253,17 @@ class PlayScreen extends Screen {
 	}
 	
 	function askForName() {
-		var d:DialogInput = new DialogInput(this, 0, 0, "Willkommen zu TOBOR-Junior!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:");
+		if (Std.is(this, EditorScreen)) return;
+		
+		var d:DialogInput = new DialogInput(this, 0, 0, "Willkommen zu " + game.world.file.getName() + "!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:");
 		
 		d.onCancel = function () {
-			hideDialog();
+			showRoomName();
 		}
 		
 		d.onOk = function () {
-			hideDialog();
-			// namen vermerken!
+			showRoomName();
+			playerName = d.getInput();
 		}
 		
 		showDialog(d);

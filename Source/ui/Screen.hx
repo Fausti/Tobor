@@ -38,25 +38,25 @@ class Screen {
 		if (dialog != null) dialog.render();
 	}
 	
-	public function showDialog(dialog:Dialog) {
+	public function showDialog(d:Dialog) {
 		Input.clearKeys();
 		
 		if (this.dialog != null) {
-			if (this.dialog != dialog) {
-				if (dialog != null) dialog.hide();
+			if (this.dialog != d) {
+				this.dialog.hide();
 			}
 		}
 		
-		this.dialog = dialog;
-		if (dialog != null) dialog.show();
+		this.dialog = d;
+		if (d != null) d.show();
 	}
 	
 	public function hideDialog() {
 		Input.clearKeys();
 		
-		if (dialog != null) {
-			dialog.hide();
-			dialog = null;
+		if (this.dialog != null) {
+			this.dialog.hide();
+			this.dialog = null;
 		}
 	}
 	
