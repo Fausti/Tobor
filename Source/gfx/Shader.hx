@@ -90,7 +90,7 @@ class Shader {
 	}
 	
 	public static inline var VERT_SPRITE_RAW:String =
-		"precision mediump float;" + 
+		// "precision mediump float;" + 
 		
 		"attribute vec4 a_Position;" + 
 		"attribute vec2 a_TexCoord0;" +
@@ -109,7 +109,7 @@ class Shader {
 	;
 	
 	public static inline var FRAG_SPRITE_RAW:String =
-		"precision mediump float;" +
+		// "precision mediump float;" +
 		
 		"uniform sampler2D u_Texture0;" +
 		
