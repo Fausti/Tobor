@@ -152,6 +152,18 @@ class ObjectFactory {
 			
 		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72));
 		
+		for (i in 0 ... 7) {
+			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i});
+		}
+		
+		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252));
+		
+		for (i in 0 ... 2) {
+			register("OBJ_GRASS_" + Std.string(i), Grass, Gfx.getSprite(128 + 16 * i, 252), {type: i});
+		}
+		
+		register("OBJ_SHOES", Shoes, Gfx.getSprite(112, 144));
+		
 		// Drift
 		
 		register("DRIFT_S", Drift, Gfx.getSprite(0, 300), {type: 0}, Room.LAYER_DRIFT);
