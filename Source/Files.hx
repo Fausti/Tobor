@@ -126,8 +126,14 @@ class Files {
 	}
 	
 	public static function saveToFile(fileName:String, data:String) {
-		var fout = File.write(fileName, false);
-		fout.writeString(data);
-		fout.close();
+		try {
+			var fout = File.write(fileName, false);
+			fout.writeString(data);
+			fout.close();
+		}
+		catch (err:Dynamic)
+		{
+			trace(err);
+		}
 	}
 }

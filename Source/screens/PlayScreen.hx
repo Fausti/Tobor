@@ -80,11 +80,11 @@ class PlayScreen extends Screen {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), true);
 				
 				d.onCancel = function () {
-					game.world.checkHighScore();
+					game.world.checkHighScore(playerName);
 				}
 				
 				d.onOk = function () {
-					game.world.checkHighScore();
+					game.world.checkHighScore(playerName);
 				}
 				
 				showDialog(d);
@@ -92,11 +92,11 @@ class PlayScreen extends Screen {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), true);
 				
 				d.onCancel = function () {
-					game.world.checkHighScore();
+					game.world.checkHighScore(playerName);
 				}
 				
 				d.onOk = function () {
-					game.world.checkHighScore();
+					game.world.checkHighScore(playerName);
 				}
 				
 				showDialog(d);
@@ -245,7 +245,7 @@ class PlayScreen extends Screen {
 				hideDialog();
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
-				game.setScreen(new IntroScreen(game));
+				game.world.checkHighScore(playerName);
 			}],	
 		]);
 		

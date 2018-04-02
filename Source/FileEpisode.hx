@@ -87,12 +87,42 @@ class FileEpisode {
 		return null;
 	}
 	
+	function checkSavePath() {
+		if (!FileSystem.exists(Files.DIR_SAVEGAMES + '/' + name)) {
+			try {
+				FileSystem.createDirectory(Files.DIR_SAVEGAMES + '/' + name);	
+			}
+			catch (err:Dynamic)
+			{
+				trace(err);
+			}
+		}
+	}
+	
+	public function loadHighscore():String {
+		checkSavePath();
+		
+		return Files.loadFromFile(Files.DIR_SAVEGAMES + '/' + name + '/highscore.dat');
+	}
+	
+	public function saveHighscore(data:String) {
+		checkSavePath();
+		
+		Files.saveToFile(Files.DIR_SAVEGAMES + '/' + name + '/highscore.dat', data);
+	}
+	
 	public function saveFile(fileName:String, content:String) {
 		fileName = root + "/" + fileName;
 		
-		var fout = File.write(fileName, false);
-		fout.writeString(content);
-		fout.close();
+		try {
+			var fout = File.write(fileName, false);
+			fout.writeString(content);
+			fout.close();
+		}
+		catch (err:Dynamic)
+		{
+			trace(err);
+		}
 	}
 	
 	public function loadFile(fileName:String):String {

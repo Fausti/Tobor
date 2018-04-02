@@ -49,6 +49,8 @@ class World {
 	
 	private var visitedRooms:Map<String, Bool>;
 	
+	public var highScore:Highscore;
+	
 	// AFTER_UPDATE Aktionen
 	var actionSaveGame:Bool = false;
 	var actionLoadGame:Bool = false;
@@ -69,6 +71,9 @@ class World {
 		this.file = file;
 		
 		factory = new ObjectFactory();
+		
+		highScore = new Highscore();
+		highScore.load(file.loadHighscore());
 	}
 	
 	public function init() {
@@ -137,7 +142,14 @@ class World {
 		}
 	}
 	
-	public function checkHighScore() {
+	public function checkHighScore(name:String) {
+		if (name != null && name != "" && points > 0) {
+			var roomsVisited:Int = Lambda.count(visitedRooms);
+			highScore.add(name, points, roomsVisited);
+			
+			file.saveHighscore(highScore.save());
+		}
+		
 		game.setScreen(new IntroScreen(game));
 	}
 	

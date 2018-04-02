@@ -13,7 +13,7 @@ class IntroScreen extends Screen {
 	public function new(game:Tobor) {
 		super(game);
 		
-		bgSprite = Gfx.getSprite(48, 132, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
+		bgSprite = Gfx.getSprite(160, 12, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
 		
 		game.world.editing = false;
 	}
@@ -48,7 +48,7 @@ class IntroScreen extends Screen {
 	}
 	
 	override public function renderUI() {
-		game.highScore.draw(64, 132);
+		game.world.highScore.draw(64, 132);
 		
 		super.renderUI();
 	}

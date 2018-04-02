@@ -45,8 +45,6 @@ class Tobor extends LimeGame {
 
 	public var world:World;
 	
-	public var highScore:Highscore;
-	
 	public static var locale:String;
 	public static var defaultLocale:String = "de";
 	
@@ -101,11 +99,6 @@ class Tobor extends LimeGame {
 		Tobor.frameSmallNew = new Frame(152, 468, 8, 10);
 		
 		batch = new Batch();
-		
-		// world = new World();
-		
-		highScore = new Highscore();
-		highScore.load();
 		
 		// run the garbage collector
 		collectGarbage();
