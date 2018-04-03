@@ -1,5 +1,6 @@
 package screens;
 
+import ui.DialogFiles;
 import ui.Screen;
 import ui.DialogMenu;
 
@@ -16,6 +17,22 @@ class IntroScreen extends Screen {
 		bgSprite = Gfx.getSprite(160, 12, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
 		
 		game.world.editing = false;
+	}
+	
+	function showLoadgameDialog() {
+		var files = game.world.file.getSavegames();
+		
+		if (files.length > 0) {
+			var d:DialogFiles = new DialogFiles(this, 0, 0, Text.get("TXT_LOAD_WHICH_GAME"), files);
+			
+			d.onOk = function () {
+				game.setScreen(new PlayScreen(game, d.getInput()));
+			};
+			
+			showDialog(d);
+		} else {
+			hideDialog();
+		}
 	}
 	
 	override public function show() {
@@ -63,7 +80,7 @@ class IntroScreen extends Screen {
 					game.setScreen(new PlayScreen(game));
 				}],
 				[Text.get("TXT_MENU_LOAD"), "", function () {
-					game.setScreen(new PlayScreen(game, "test"));
+					showLoadgameDialog();
 				}],
 				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
@@ -79,7 +96,7 @@ class IntroScreen extends Screen {
 					game.setScreen(new EditorScreen(game));
 				}],
 				[Text.get("TXT_MENU_LOAD"), "", function () {
-					game.setScreen(new PlayScreen(game, "test"));
+					showLoadgameDialog();
 				}],
 				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));

@@ -111,6 +111,26 @@ class FileEpisode {
 		Files.saveToFile(Files.DIR_SAVEGAMES + '/' + name + '/highscore.dat', data);
 	}
 	
+	public function getSavegames():Array<String> {
+		var list:Array<String> = [];
+		
+		for (path in Files.getFiles(Files.DIR_SAVEGAMES + '/' + name, 'sav')) {
+			list.push(path.file);
+		}
+		
+		list.sort(function (a:String, b:String) {
+			var statA = FileSystem.stat(Files.DIR_SAVEGAMES + '/' + name + '/' + a + ".sav");
+			var statB = FileSystem.stat(Files.DIR_SAVEGAMES + '/' + name + '/' + b + ".sav");
+			
+			if (statA.mtime.getTime() > statB.mtime.getTime()) return -1;
+			else if (statA.mtime.getTime() < statB.mtime.getTime()) return 1;
+			
+			return 0;
+		});
+		
+		return list;
+	}
+	
 	public function loadSavegame(fileName:String):String {
 		checkSavePath();
 		

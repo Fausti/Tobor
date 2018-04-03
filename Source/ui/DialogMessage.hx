@@ -1,6 +1,5 @@
 package ui;
 
-import haxe.Utf8;
 /**
  * ...
  * @author Matthias Faust
@@ -12,6 +11,8 @@ class DialogMessage extends Dialog {
 	var lines:Array<String>;
 	
 	var offsetX:Int = 0;
+	
+	var maxWidth:Int = 32;
 	
 	public function new(screen:Screen, x:Int, y:Int, msg:String, ?smallFont:Bool = false) {
 		super(screen, x, y);
@@ -38,7 +39,7 @@ class DialogMessage extends Dialog {
 		
 		this.w = this.w + 2;
 		
-		if (this.w >= 32) splitText();
+		if (this.w >= maxWidth) splitText();
 		
 		this.h = lines.length + 2;
 		
@@ -59,13 +60,13 @@ class DialogMessage extends Dialog {
 		for (nline in nlines) {
 			var l = nline.length8();
 			
-			if (l > 32) {
+			if (l > maxWidth) {
 				lineSize = 0;
 				var words:Array<String> = nline.split8(" ");
 				var ll:String = "";
 				
 				for (word in words) {
-					if ((lineSize + word.length8() + 1) >= 32) {
+					if ((lineSize + word.length8() + 1) >= maxWidth) {
 						lines.push(ll);
 						ll = "";
 						lineSize = 0;

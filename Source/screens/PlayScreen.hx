@@ -9,6 +9,7 @@ import world.entities.std.Charlie;
 import ui.DialogInventory;
 import ui.Screen;
 import ui.DialogMenu;
+import ui.DialogFiles;
 
 import world.Direction;
 import world.Room;
@@ -235,11 +236,8 @@ class PlayScreen extends Screen {
 			[Text.get("TXT_MENU_RESTART"), "", function () {
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SAVE"), "", function () {
-				hideDialog();
-			}],
 			[Text.get("TXT_MENU_LOAD"), "", function () {
-				hideDialog();
+				showLoadgameDialog();
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.world.checkHighScore();
@@ -296,6 +294,22 @@ class PlayScreen extends Screen {
 		}
 		
 		showDialog(d);
+	}
+	
+	public function showLoadgameDialog() {
+		var files = game.world.file.getSavegames();
+		
+		if (files.length > 0) {
+			var d:DialogFiles = new DialogFiles(this, 0, 0, Text.get("TXT_LOAD_WHICH_GAME"), files);
+			
+			d.onOk = function () {
+				game.setScreen(new PlayScreen(game, d.getInput()));
+			};
+			
+			showDialog(d);
+		} else {
+			hideDialog();
+		}
 	}
 	
 	public function showRoomName(?force:Bool = false) {

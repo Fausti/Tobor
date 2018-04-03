@@ -91,6 +91,7 @@ class World {
 		gold = 0;
 		lives = 3;
 		points = 0;
+		garlic = 0;
 		
 		Text.loadForWorld(file.loadFile('translation.json'));
 		
@@ -243,6 +244,13 @@ class World {
 		
 		if (actionLoadGame) {
 			actionLoadGame = false;
+			
+			/*
+			if (!editing) {
+				var playScreen:PlayScreen = cast game.getScreen();
+				playScreen.showLoadgameDialog();
+			}
+			*/
 		}
 	}
 	
