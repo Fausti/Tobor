@@ -49,10 +49,10 @@ class ObjectFactory {
 		register("OBJ_GOLD",		Gold, 		Gfx.getSprite(96, 12));
 		
 		register("OBJ_PLATIN", Platin, Gfx.getSprite(128, 12));
-		register("OBJ_QUESTION_MARK", QuestionMark, Gfx.getSprite(144, 12));
+		// register("OBJ_QUESTION_MARK", QuestionMark, Gfx.getSprite(144, 12));
 		
 		register("OBJ_CLOCK", Clock, Gfx.getSprite(176, 12));
-		register("OBJ_EXCLAMATION_MARK", ExclamationMark, Gfx.getSprite(192, 12));
+		// register("OBJ_EXCLAMATION_MARK", ExclamationMark, Gfx.getSprite(192, 12));
 		
 		register("OBJ_NOTICE", Notice, Gfx.getSprite(208, 12));
 		
