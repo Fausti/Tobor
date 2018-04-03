@@ -8,6 +8,7 @@ import world.entities.std.Charlie;
 import tjson.TJSON;
 import world.entities.std.StartPosition;
 import screens.IntroScreen;
+import ui.DialogInput;
 
 /**
  * ...
@@ -26,6 +27,7 @@ class World {
 	public var rooms:Array<Room> = [];
 	
 	public var player:Charlie;
+	public var playerName:String = null;
 	
 	public var oldPlayerX:Int = 0;
 	public var oldPlayerY:Int = 0;
@@ -76,7 +78,7 @@ class World {
 		highScore.load(file.loadHighscore());
 	}
 	
-	public function init() {
+	public function init(?fileName:String = null) {
 		visitedRooms = new Map<String, Bool>();
 		
 		player = cast factory.create("OBJ_CHARLIE");
@@ -92,7 +94,14 @@ class World {
 		
 		Text.loadForWorld(file.loadFile('translation.json'));
 		
-		var content:String = file.loadFile('rooms.json');
+		var content:String;
+		
+		if (fileName == null) {
+			content = file.loadFile('rooms.json');
+			playerName = null;
+		} else {
+			content = file.loadSavegame(fileName);
+		}
 		
 		if (content == null) { 
 			addRoom(createRoom(0, 0, 0));
@@ -142,10 +151,10 @@ class World {
 		}
 	}
 	
-	public function checkHighScore(name:String) {
-		if (name != null && name != "" && points > 0) {
+	public function checkHighScore() {
+		if (playerName != null && playerName != "" && points > 0) {
 			var roomsVisited:Int = Lambda.count(visitedRooms);
-			highScore.add(name, points, roomsVisited);
+			highScore.add(playerName, points, roomsVisited);
 			
 			file.saveHighscore(highScore.save());
 		}
@@ -212,6 +221,24 @@ class World {
 		
 		if (actionSaveGame) {
 			actionSaveGame = false;
+			
+			if (!editing) {
+				room.onRoomEnd();
+				room.saveState();
+				
+				var d:DialogInput = new DialogInput(game.getScreen(), 0, 0, Text.get("TXT_ASK_FOR_SAVEGAME_NAME"));
+		
+				d.onOk = function () {
+					var fileName:String = d.getInput(true);
+					
+					if (fileName != "" && fileName != null) {
+						saveGame(fileName);
+						game.getScreen().hideDialog();
+					}
+				};
+		
+				showDialog(d);
+			}
 		}
 		
 		if (actionLoadGame) {
@@ -340,24 +367,31 @@ class World {
 		}
 	}
 	
-	/*
-	public function restoreState() {
-		roomCurrent.restoreState();
-		player.setPosition(oldPlayerX, oldPlayerY);
-	}
-	
-	public function saveState() {
-		roomCurrent.saveState();
-		oldPlayerX = player.gridX;
-		oldPlayerY = player.gridY;
-	}
-	*/
-	
 	// Save / Load
 	
 	public function load() {
 		var content:String = file.loadFile('rooms.json');
 		if (content != null) loadData(content);
+	}
+	
+	public function doSaveGame() {
+		actionSaveGame = true;
+	}
+	
+	public function saveGame(fileName:String) {
+		var content:String;
+
+		content = saveData();
+		file.saveSavegame(fileName, content);
+	}
+	
+	public function loadGame(fileName:String) {
+		var content:String = file.loadSavegame(fileName);
+
+		loadData(content);
+			
+		switchRoom(inRoomX, inRoomY, inRoomZ);
+		player.setRoom(roomCurrent);
 	}
 	
 	public function save() {
@@ -369,15 +403,38 @@ class World {
 		content = saveData();
 		file.saveFile('rooms.json', content);
 		
-		content = Text.saveForWorld();
-		file.saveFile('translation.json', content);
+		if (editing) {
+			content = Text.saveForWorld();
+			file.saveFile('translation.json', content);
 		
-		content = Text.saveForWorldMissing();
-		file.saveFile('translation_missing.json', content);
+			content = Text.saveForWorldMissing();
+			file.saveFile('translation_missing.json', content);
+		}
 	}
 	
 	function saveData():String {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+		
+		if (!editing) {
+			data.set("garlic", garlic);
+			data.set("gold", gold);
+			data.set("points", points);
+			data.set("lives", lives);
+			
+			if (playerName != null) {
+				data.set("playerName", playerName);
+			}
+			
+			var visitedData:Array<String> = [];
+		
+			for (vr in visitedRooms.keys()) {
+				visitedData.push(vr);
+			}
+		
+			data.set("visited", visitedData);
+			
+			data.set("inventory", inventory.save());
+		}
 		
 		var playerData:Map<String, Dynamic> = player.saveData();
 		
@@ -413,6 +470,27 @@ class World {
 		
 		for (key in Reflect.fields(data)) {
 			switch(key) {
+			case "garlic":
+				if (!editing) garlic = Reflect.field(data, "garlic");
+			case "gold":
+				if (!editing) gold = Reflect.field(data, "gold");
+			case "points":
+				if (!editing) points = Reflect.field(data, "points");
+			case "lives":
+				if (!editing) lives = Reflect.field(data, "lives");
+			case "inventory":
+				if (!editing) inventory.load(factory, Reflect.field(data, "inventory"));
+			case "playerName":
+				if (!editing) playerName = cast Reflect.field(data, "playerName");
+			case "visited":
+				if (!editing) {
+					visitedRooms = new Map<String, Bool>();
+				
+					var vrs:Array<String> = Reflect.field(data, "visited");
+					for (vr in vrs) {
+						visitedRooms.set(vr, true);
+					}
+				}
 			case "player":
 				parsePlayer(Reflect.field(data, "player"));
 			case "flags":

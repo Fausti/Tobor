@@ -139,6 +139,18 @@ class Room {
 		}
 	}
 	
+	public function onRoomStart() {
+		for (e in entities.getAll()) {
+			e.onRoomStart();
+		}
+	}
+	
+	public function onRoomEnd() {
+		for (e in entities.getAll()) {
+			e.onRoomEnds();
+		}
+	}
+	
 	public function spawnEntity(x:Float, y:Float, e:Entity) {
 		e.x = x;
 		e.y = y;

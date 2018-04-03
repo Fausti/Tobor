@@ -2,6 +2,7 @@ package world;
 
 import world.entities.Entity;
 import world.entities.EntityItem;
+import world.ObjectFactory.ObjectTemplate;
 
 /**
  * ...
@@ -35,6 +36,37 @@ class Inventory {
 		seen = new Map<String, Bool>();
 		
 		containsOverall = false;
+	}
+	
+	public function load(factory:ObjectFactory, data) {
+		clear();
+		
+		for (key in Reflect.fields(data)) {
+			var template:ObjectTemplate = factory.findFromID(key);
+			
+			if (template != null) {
+				add(key, template.spr, Reflect.field(data, "count"), Reflect.field(data, "content"));
+			} else {
+				trace("Couldn't find inventory item: " + key);
+			}
+		}
+	}
+	
+	public function save():Map<String, Dynamic> {
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+		
+		for (key in list.keys()) {
+			var item = list.get(key);
+			
+			var idata:Map<String, Dynamic> = new Map<String, Dynamic>();
+			
+			idata.set("content", item.content);
+			idata.set("count", item.count);
+			
+			data.set(key, idata);
+		}
+		
+		return data;
 	}
 	
 	public function hasSeen(id:String):Bool {

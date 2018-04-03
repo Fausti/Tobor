@@ -29,9 +29,7 @@ class PlayScreen extends Screen {
 	var TXT_STATUS_POINTS:String;
 	var TXT_STATUS_LIVES:String;
 	
-	var playerName:String = "";
-	
-	public function new(game:Tobor) {
+	public function new(game:Tobor, ?loadFileName:String = null) {
 		super(game);
 		
 		TXT_STATUS_POINTS = Text.get("TXT_STATUS_POINTS");
@@ -46,14 +44,13 @@ class PlayScreen extends Screen {
 		
 		SPR_TUNNEL = Gfx.getSprite(240, 120);
 		
-		init();
+		init(loadFileName);
 	}
 	
-	function init() {
-		game.world.init();
+	function init(?loadFileName:String = null) {
+		game.world.init(loadFileName);
 		game.world.start();
-		
-		// showRoomName();
+
 		askForName();
 	}
 	
@@ -80,11 +77,11 @@ class PlayScreen extends Screen {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), true);
 				
 				d.onCancel = function () {
-					game.world.checkHighScore(playerName);
+					game.world.checkHighScore();
 				}
 				
 				d.onOk = function () {
-					game.world.checkHighScore(playerName);
+					game.world.checkHighScore();
 				}
 				
 				showDialog(d);
@@ -92,11 +89,11 @@ class PlayScreen extends Screen {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), true);
 				
 				d.onCancel = function () {
-					game.world.checkHighScore(playerName);
+					game.world.checkHighScore();
 				}
 				
 				d.onOk = function () {
-					game.world.checkHighScore(playerName);
+					game.world.checkHighScore();
 				}
 				
 				showDialog(d);
@@ -245,7 +242,7 @@ class PlayScreen extends Screen {
 				hideDialog();
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
-				game.world.checkHighScore(playerName);
+				game.world.checkHighScore();
 			}],	
 		]);
 		
@@ -282,6 +279,10 @@ class PlayScreen extends Screen {
 	
 	function askForName() {
 		if (Std.is(this, EditorScreen)) return;
+		if (game.world.playerName != null) {
+			showRoomName();
+			return;
+		}
 		
 		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_NAME"));
 		
@@ -290,8 +291,8 @@ class PlayScreen extends Screen {
 		}
 		
 		d.onOk = function () {
+			game.world.playerName = d.getInput();
 			showRoomName();
-			playerName = d.getInput();
 		}
 		
 		showDialog(d);

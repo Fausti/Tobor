@@ -111,6 +111,18 @@ class FileEpisode {
 		Files.saveToFile(Files.DIR_SAVEGAMES + '/' + name + '/highscore.dat', data);
 	}
 	
+	public function loadSavegame(fileName:String):String {
+		checkSavePath();
+		
+		return Files.loadFromFile(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav');
+	}
+	
+	public function saveSavegame(fileName:String, data:String) {
+		checkSavePath();
+		
+		Files.saveToFile(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav', data);
+	}
+	
 	public function saveFile(fileName:String, content:String) {
 		fileName = root + "/" + fileName;
 		

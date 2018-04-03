@@ -62,7 +62,9 @@ class IntroScreen extends Screen {
 				[Text.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
 				}],
-				[Text.get("TXT_MENU_LOAD"), ""],
+				[Text.get("TXT_MENU_LOAD"), "", function () {
+					game.setScreen(new PlayScreen(game, "test"));
+				}],
 				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
@@ -76,7 +78,9 @@ class IntroScreen extends Screen {
 				[Text.get("TXT_MENU_EDIT"), "", function() {
 					game.setScreen(new EditorScreen(game));
 				}],
-				[Text.get("TXT_MENU_LOAD"), ""],
+				[Text.get("TXT_MENU_LOAD"), "", function () {
+					game.setScreen(new PlayScreen(game, "test"));
+				}],
 				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	

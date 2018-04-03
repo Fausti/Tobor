@@ -1,5 +1,6 @@
 package world.entities.std;
 
+import world.InventoryItem;
 import world.entities.EntityItem;
 
 /**
@@ -14,4 +15,8 @@ class Clock extends EntityItem {
 		setSprite(Gfx.getSprite(176, 12));
 	}
 	
+	override public function onUse(item:InventoryItem, x:Float, y:Float) {
+		getWorld().doSaveGame();
+		removeFromInventory();
+	}
 }
