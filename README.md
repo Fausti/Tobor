@@ -1,4 +1,4 @@
-![](/docs/images/logo-tobor.png)
+![Tobor](/docs/images/logo-tobor.png)
 
 ## Inhalt
 
