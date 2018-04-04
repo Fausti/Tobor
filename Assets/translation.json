@@ -23,14 +23,35 @@
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
     }
+    ,"OBJ_WOOD_0" : {
+         "de" : "Wald"
+    }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
+    }
+    ,"OBJ_WOOD_1" : {
+         "de" : "Wald"
     }
     ,"OBJ_TELEPORT_START_1" : {
          "de" : "Positiv Teleporter Start"
     }
+    ,"OBJ_WOOD_2" : {
+         "de" : "Wald"
+    }
     ,"TXT_INVENTORY_CHOOSE" : {
          "de" : "Auswählen"
+    }
+    ,"OBJ_WOOD_3" : {
+         "de" : "Wald"
+    }
+    ,"OBJ_WOOD_4" : {
+         "de" : "Wald"
+    }
+    ,"OBJ_WOOD_5" : {
+         "de" : "Wald"
+    }
+    ,"OBJ_WOOD_6" : {
+         "de" : "Wald"
     }
     ,"OBJ_MUNITION#0" : {
          "de" : "Munition"
@@ -41,14 +62,17 @@
     ,"OBJ_MUNITION#2" : {
          "de" : "Munition"
     }
+    ,"OBJ_WOOD_PATH" : {
+         "de" : "Waldpfad"
+    }
     ,"OBJ_STAIRS_DOWN" : {
          "de" : "Treppe (runter)"
     }
-    ,"TXT_MENU_EXIT" : {
-         "de" : "Abbruch"
-    }
     ,"OBJ_MUNITION#3" : {
          "de" : "Munition"
+    }
+    ,"TXT_MENU_EXIT" : {
+         "de" : "Abbruch"
     }
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
@@ -92,11 +116,11 @@
     ,"OBJ_SAND#1" : {
          "de" : "Sand"
     }
-    ,"OBJ_ELECTRIC_FLOOR_PLATE_1" : {
-         "de" : "elektrische Bodenplatte (AN)"
-    }
     ,"OBJ_SAND#2" : {
          "de" : "Sand"
+    }
+    ,"OBJ_ELECTRIC_FLOOR_PLATE_1" : {
+         "de" : "elektrische Bodenplatte (AN)"
     }
     ,"OBJ_SAND#3" : {
          "de" : "Sand"
@@ -104,11 +128,20 @@
     ,"OBJ_SAND#4" : {
          "de" : "Sand"
     }
+    ,"OBJ_GRASS_0" : {
+         "de" : "Pfad mit Beeren"
+    }
+    ,"OBJ_GRASS_1" : {
+         "de" : "Pfad"
+    }
     ,"OBJ_SLING" : {
          "de" : "Schleuder"
     }
     ,"OBJ_ROBOT" : {
          "de" : "Roboter (zufällig)"
+    }
+    ,"OBJ_ISOLATOR_SOFT" : {
+         "de" : "Isolator (betretbar)"
     }
     ,"OBJ_EXCLAMATION_MARK" : {
          "de" : "Ausrufezeichen"
@@ -179,14 +212,17 @@
     ,"OBJ_ARROW_1" : {
          "de" : "Pfeil"
     }
+    ,"OBJ_WATCHER" : {
+         "de" : "Wächter (auf dem Boden versteckt / auf Objekten immer sichtbar)"
+    }
     ,"OBJ_ROOF_7" : {
          "de" : "Dach"
     }
-    ,"TXT_EDITOR_ASK_CREATE_NEW_ROOM" : {
-         "de" : "Diese Szene erstellen?"
-    }
     ,"OBJ_ARROW_2" : {
          "de" : "Pfeil"
+    }
+    ,"TXT_EDITOR_ASK_CREATE_NEW_ROOM" : {
+         "de" : "Diese Szene erstellen?"
     }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
@@ -380,11 +416,11 @@
     ,"DRIFT_SW" : {
          "de" : "Strömung"
     }
-    ,"TXT_MENU_CLEAR" : {
-         "de" : "Objekte löschen"
-    }
     ,"OBJ_WATER_DEEP" : {
          "de" : "tiefes Wasser"
+    }
+    ,"TXT_MENU_CLEAR" : {
+         "de" : "Objekte löschen"
     }
     ,"DRIFT_S" : {
          "de" : "Strömung"
@@ -392,26 +428,29 @@
     ,"OBJ_WALL_DISSOLVE" : {
          "de" : "sich auflösende Mauer"
     }
-    ,"TXT_MENU_RESTART" : {
-         "de" : "Szenenanfang"
-    }
     ,"OBJ_QUESTION_MARK" : {
          "de" : "Fragezeichen"
+    }
+    ,"TXT_MENU_RESTART" : {
+         "de" : "Szenenanfang"
     }
     ,"OBJ_WALL_BLACK_SE" : {
          "de" : "Mauer (schwarz)"
     }
-    ,"DRIFT_W" : {
-         "de" : "Strömung"
+    ,"OBJ_SHOES" : {
+         "de" : "Wanderschuhe"
     }
-    ,"TXT_INVENTORY_DROP" : {
-         "de" : "Ablegen"
+    ,"OBJ_WATER_DEADLY" : {
+         "de" : "tödliches Wasser"
     }
     ,"TXT_STATUS_POINTS" : {
          "de" : "Punkte"
     }
-    ,"OBJ_WATER_DEADLY" : {
-         "de" : "tödliches Wasser"
+    ,"TXT_INVENTORY_DROP" : {
+         "de" : "Ablegen"
+    }
+    ,"DRIFT_W" : {
+         "de" : "Strömung"
     }
     ,"TXT_DIALOG_CANCEL" : {
          "de" : "Nein"
@@ -425,11 +464,11 @@
     ,"OBJ_BANK" : {
          "de" : "Bank"
     }
-    ,"TXT_MENU_PLAY" : {
-         "de" : "Spielen"
-    }
     ,"OBJ_ACID" : {
          "de" : "Säure"
+    }
+    ,"TXT_MENU_PLAY" : {
+         "de" : "Spielen"
     }
     ,"OBJ_ELECTRIC_FENCE_OFF" : {
          "de" : "elektrischer Zaun (AUS)"
@@ -437,59 +476,62 @@
     ,"OBJ_WATER_NE" : {
          "de" : "Wasser"
     }
+    ,"OBJ_GROUND_NEST" : {
+         "de" : "Roboternest"
+    }
     ,"TXT_STATUS_LIVES" : {
          "de" : "Leben"
     }
     ,"OBJ_CHARLIE" : {
          "de" : "Charlie (nur im Editor!)"
     }
-    ,"OBJ_GOAL_0" : {
-         "de" : "Ziel"
-    }
     ,"OBJ_DOOR#10" : {
          "de" : "Tür Nr. 11"
     }
-    ,"DRIFT_NE" : {
-         "de" : "Strömung"
+    ,"OBJ_GOAL_0" : {
+         "de" : "Ziel"
     }
     ,"TXT_MENU_OPTIONS" : {
          "de" : "Einstellungen"
     }
-    ,"OBJ_GOAL_1" : {
-         "de" : "Ziel"
+    ,"DRIFT_NE" : {
+         "de" : "Strömung"
     }
     ,"OBJ_DOOR#11" : {
          "de" : "Tür Nr. 12"
     }
-    ,"OBJ_GOAL_2" : {
+    ,"OBJ_GOAL_1" : {
          "de" : "Ziel"
     }
     ,"OBJ_DOOR#12" : {
          "de" : "Tür Nr. 13"
     }
-    ,"OBJ_BARRIER" : {
-         "de" : "Barriere"
-    }
-    ,"OBJ_GOAL_3" : {
+    ,"OBJ_GOAL_2" : {
          "de" : "Ziel"
     }
     ,"OBJ_DOOR#13" : {
          "de" : "Tür Nr. 14"
     }
+    ,"OBJ_GOAL_3" : {
+         "de" : "Ziel"
+    }
+    ,"OBJ_BARRIER" : {
+         "de" : "Barriere"
+    }
     ,"TXT_CREATE_NEW_EPISODE_IN_EDITOR" : {
          "de" : "Neue Episode im Editor erstellen"
-    }
-    ,"OBJ_DOOR#14" : {
-         "de" : "Tür Nr. 15"
     }
     ,"OBJ_GOAL_4" : {
          "de" : "Ziel"
     }
-    ,"OBJ_WALL_BLACK_SW" : {
-         "de" : "Mauer (schwarz)"
+    ,"OBJ_DOOR#14" : {
+         "de" : "Tür Nr. 15"
     }
     ,"TXT_MENU_BACKPACK" : {
          "de" : "Rucksack"
+    }
+    ,"OBJ_WALL_BLACK_SW" : {
+         "de" : "Mauer (schwarz)"
     }
     ,"OBJ_GOAL_5" : {
          "de" : "Ziel"
@@ -512,20 +554,20 @@
     ,"OBJ_TUNNEL#1" : {
          "de" : "Tunnel"
     }
-    ,"TXT_LOAD_WHICH_GAME" : {
-         "de" : "Welchen Spielstand möchtest Du laden?"
-    }
     ,"TXT_EDITOR_ROOM" : {
          "de" : "Raum"
     }
-    ,"OBJ_GRATE" : {
-         "de" : "Gitter"
+    ,"TXT_LOAD_WHICH_GAME" : {
+         "de" : "Welchen Spielstand möchtest Du laden?"
+    }
+    ,"DRIFT_NW" : {
+         "de" : "Strömung"
     }
     ,"OBJ_TUNNEL#2" : {
          "de" : "Tunnel"
     }
-    ,"DRIFT_NW" : {
-         "de" : "Strömung"
+    ,"OBJ_GRATE" : {
+         "de" : "Gitter"
     }
     ,"OBJ_MAGNET#0" : {
          "de" : "Magnet"

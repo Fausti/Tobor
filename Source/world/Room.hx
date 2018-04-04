@@ -18,6 +18,7 @@ import world.entities.std.Stairs;
 class Room {
 	public static inline var LAYER_FLOOR:Int = 0;
 	public static inline var LAYER_LEVEL_0:Int = 10;
+	public static inline var LAYER_OVERLAY:Int = 15;
 	public static inline var LAYER_LEVEL_1:Int = 20;
 	public static inline var LAYER_ROOF:Int = 30;
 	

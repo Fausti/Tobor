@@ -21,8 +21,11 @@ class ObjectFactory {
 		register("OBJ_START_POSITION", StartPosition, Gfx.getSprite(128, 156));
 		
 		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120), null, Room.LAYER_LEVEL_0 + 1);
+		register("OBJ_GROUND_NEST", GroundNest, Gfx.getSprite(240, 24));
+		register("OBJ_WATCHER", Watcher, Gfx.getSprite(80, 60), null, Room.LAYER_OVERLAY);
 		
 		register("OBJ_ISOLATOR", 	Isolator, 	Gfx.getSprite(240, 0));
+		register("OBJ_ISOLATOR_SOFT", 	SoftIsolator, 	Gfx.getSprite(128, 132));
 		
 		register("OBJ_ELECTRIC_FENCE", ElectricFence, Gfx.getSprite(64, 12), {type: 0});
 		register("OBJ_ELECTRIC_FENCE_OFF", ElectricFence, Gfx.getSprite(96, 156), {type: 1});
