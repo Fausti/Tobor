@@ -1,8 +1,26 @@
-# <p align="center">![](/docs/images/logo-tobor.png)</p>
+![](/docs/images/logo-tobor.png)
 
 ## Inhalt
 
+<!-- TOC -->
 
+- [Inhalt](#inhalt)
+- [Über](#über)
+- [Der Editor](#der-editor)
+    - [Eine neue Episode erstellen](#eine-neue-episode-erstellen)
+    - [Den Editor starten](#den-editor-starten)
+    - [Szenen eurer Episode bearbeiten](#szenen-eurer-episode-bearbeiten)
+                - [Anhang - Tastenkürzel im Editor](#anhang---tastenkürzel-im-editor)
+    - [Speichern eurer Episode](#speichern-eurer-episode)
+    - [Verteilen eurer Episode](#verteilen-eurer-episode)
+    - [Eigene Texte](#eigene-texte)
+                - [Anhang - weitere Tags für Texte](#anhang---weitere-tags-für-texte)
+    - [Markierungen](#markierungen)
+    - [Strömungen](#strömungen)
+    - [Teleporter](#teleporter)
+    - [Container (Säcke)](#container-säcke)
+
+<!-- /TOC -->
 
 ## Über
 
