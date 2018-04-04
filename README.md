@@ -65,15 +65,16 @@ Wenn ihr im *Editormodus* das [![Charlie](/docs/images/object-charlie.png)] Obje
 ###### Anhang - Tastenkürzel im Editor
 
 Hier noch eine Auflistung aller Tastenkombinationen des Editors:
+
 Tastenkürzel|Funktion 
 -------|----------
-< F5 > | Testen / Editieren
-< ENTER > | Objektauswahl anzeigen
-< TAB > | Szenenauswahl anzeigen
-< ESCAPE > | Menü aufrufen
-< linke Maustaste > | Objekt / Markierung / Strömung / Inhalt setzen
-< rechte Maustaste > | Objekt / Markierung / Strömung / Inahlt entfernen 
-< W >, < A >, < S >, < D > | schnelles wechseln der aktuellen Szene im *Editormodus*
+F5 | Testen / Editieren
+ENTER | Objektauswahl anzeigen
+TAB | Szenenauswahl anzeigen
+ESCAPE | Menü aufrufen
+linke Maustaste | Objekt / Markierung / Strömung / Inhalt setzen
+rechte Maustaste | Objekt / Markierung / Strömung / Inahlt entfernen 
+W, A, S, D | schnelles wechseln der aktuellen Szene im *Editormodus*
 
 ### Speichern eurer Episode
 
