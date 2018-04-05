@@ -85,7 +85,7 @@ class EpisodesScreen extends Screen {
 		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_EPISODE_NAME"));
 		
 		d.onOk = function () {
-			var ret:String = episoden[index].create(d.getInput());
+			var ret:String = episoden[index].create(d.getInput(true));
 			
 			if (ret != null) {
 				showError(ret);

@@ -72,7 +72,15 @@ class DialogInput extends DialogMessage {
 	}
 	
 	public function getInput(?isFileName:Bool = false):String {
-		if (!isFileName) return chars.compact();
+		if (isFileName) {
+			var removeChars = ["?", "!", "\\", '"', "'", "§", "$", "%", "&", "/", "<", ">", "{", "}", ",", ";", ":", "^"];
+			
+			for (char in removeChars) {
+				chars = chars.removeAll(char);
+			}
+			
+			return chars.compact();
+		}
 		
 		return chars.compact();
 	}
