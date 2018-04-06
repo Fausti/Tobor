@@ -121,6 +121,10 @@ class Entity {
 		return false;
 	}
 	
+	public function hasWeight():Bool {
+		return false;
+	}
+	
 	// darf betreten?
 	public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		return true;

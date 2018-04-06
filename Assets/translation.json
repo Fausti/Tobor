@@ -20,11 +20,11 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_WOOD_0" : {
-         "de" : "Wald"
-    }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
+    }
+    ,"OBJ_WOOD_0" : {
+         "de" : "Wald"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -254,11 +254,17 @@
     ,"TXT_EPISODE_NAME" : {
          "de" : "Episodenname"
     }
+    ,"OBJ_BUCKET#0" : {
+         "de" : "leerer Eimer"
+    }
     ,"OBJ_WALL_SE" : {
          "de" : "Mauer"
     }
     ,"OBJ_NOTICE" : {
          "de" : "Zettel"
+    }
+    ,"OBJ_BUCKET#1" : {
+         "de" : "gefüllter Eimer"
     }
     ,"OBJ_TELEPORT_END_0" : {
          "de" : "Negativ Teleporter Ziel"

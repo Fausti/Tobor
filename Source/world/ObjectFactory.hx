@@ -156,6 +156,9 @@ class ObjectFactory {
 			
 		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72));
 		
+		register("OBJ_BUCKET#0", Bucket, Gfx.getSprite(144, 156), {type: 0});
+		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1});
+		
 		for (i in 0 ... 7) {
 			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i});
 		}

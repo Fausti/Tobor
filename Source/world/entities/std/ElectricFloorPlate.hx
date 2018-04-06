@@ -40,7 +40,7 @@ class ElectricFloorPlate extends EntityStatic implements IElectric {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (this.flag != Marker.MARKER_NO) {
 			if (type == 0) {
-				var onMe = room.findEntityAt(x, y, IWeight);
+				var onMe = room.findHeavyEntitiesAt(x, y);
 				if (onMe.length > 0) {
 					type = 1;
 					room.switchStatus(this.flag, this);
@@ -52,7 +52,7 @@ class ElectricFloorPlate extends EntityStatic implements IElectric {
 	override public function onLeave(e:Entity, direction:Vector2) {
 		if (this.flag != Marker.MARKER_NO) {
 			if (type == 1) {
-				var onMe = room.findEntityAt(x, y, IWeight);
+				var onMe = room.findHeavyEntitiesAt(x, y);
 				onMe.remove(e); // e aus der Liste entfernen, Event kommt wenn e noch auf dem Feld steht!
 				if (onMe.length == 0) {
 					type = 0;

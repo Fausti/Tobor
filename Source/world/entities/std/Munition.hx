@@ -28,6 +28,10 @@ class Munition extends EntityItem {
 		super.render();
 	}
 	
+	override public function hasWeight():Bool {
+		return (type == 5);
+	}
+	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (Std.is(e, Charlie)) {
 			onPickup();

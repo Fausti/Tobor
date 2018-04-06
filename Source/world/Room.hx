@@ -231,6 +231,16 @@ class Room {
 		return listTarget;
 	}
 	
+	public function findHeavyEntitiesAt(x:Float, y:Float):Array<Entity> {
+		var listTarget:Array<Entity> = entities.getAll().filter(function(e):Bool {
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive && e.hasWeight();
+		});
+		
+		if (world.player.gridX == x && world.player.gridY == y) listTarget.push(world.player);
+				
+		return listTarget;
+	}
+	
 	public function findEntityAt(x:Float, y:Float, cl:Dynamic):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAll().filter(function(e):Bool {
 			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive && Std.is(e, cl);

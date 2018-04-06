@@ -134,6 +134,13 @@ class Inventory {
 		return retList;
 	}
 	
+	public function getCount(id:String):Int {
+		var item:InventoryItem = list.get(id);
+		
+		if (item == null) return 0;
+		return item.count;
+	}
+	
 	public function countMunition():Int {
 		var count:Int = 0;
 		

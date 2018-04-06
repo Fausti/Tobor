@@ -1,6 +1,7 @@
 package world.entities.std;
 
 import lime.math.Vector2;
+import world.ObjectFactory.ObjectTemplate;
 import world.entities.Entity;
 import world.entities.EntityStatic;
 import world.entities.interfaces.IElectric;
@@ -117,6 +118,15 @@ class Water extends EntityStatic implements IElectric {
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (Std.is(e, Charlie)) {
+			if (getInventory().hasItem("OBJ_BUCKET#0")) {
+				
+				var count:Int = getInventory().getCount("OBJ_BUCKET#0");
+				getInventory().remove("OBJ_BUCKET#0", count);
+				
+				var tmpl:ObjectTemplate = getFactory().findFromID("OBJ_BUCKET#1");
+				if (tmpl != null) getInventory().add("OBJ_BUCKET#1", tmpl.spr, count);
+			}
+			
 			var c:Charlie = cast e;
 			
 			var canMove:Bool = false;
