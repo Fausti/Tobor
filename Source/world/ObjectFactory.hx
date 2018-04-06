@@ -26,6 +26,7 @@ class ObjectFactory {
 		
 		register("OBJ_ISOLATOR", 	Isolator, 	Gfx.getSprite(240, 0));
 		register("OBJ_ISOLATOR_SOFT", 	SoftIsolator, 	Gfx.getSprite(128, 132));
+		register("OBJ_ISOLATOR_WATER", WaterIsolator, Gfx.getSprite(112, 156)).allowInEditor(false);
 		
 		register("OBJ_ELECTRIC_FENCE", ElectricFence, Gfx.getSprite(64, 12), {type: 0});
 		register("OBJ_ELECTRIC_FENCE_OFF", ElectricFence, Gfx.getSprite(96, 156), {type: 1});
@@ -76,7 +77,7 @@ class ObjectFactory {
 			register("OBJ_KEY#" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i});
 		}
 		
-		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0));
+		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0)).allowInEditor(false);
 		
 		register("OBJ_BARRIER", 	Barrier, 		Gfx.getSprite(240, 96));
 		
@@ -193,7 +194,7 @@ class ObjectFactory {
 		register("OBJ_ELECTRIC_FLOOR_PLATE_1", ElectricFloorPlate, Gfx.getSprite(48, 336), {type: 1});
 	}
 	
-	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0) {
+	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0):ObjectTemplate {
 		var _class:Class<Entity> = null;
 		
 		if (d == null) d = {};
@@ -208,8 +209,12 @@ class ObjectFactory {
 			_class = c;
 		}
 		
-		list.set(id, new ObjectTemplate(id, length, _class, d, spr, layer));
+		var ot:ObjectTemplate = new ObjectTemplate(id, length, _class, d, spr, layer);
+		
+		list.set(id, ot);
 		length++;
+		
+		return ot;
 	}
 	
 	public function get(index:Int):ObjectTemplate {
@@ -274,6 +279,8 @@ class ObjectFactory {
 }
 
 class ObjectTemplate {
+	public var canBePlaced:Bool = true;
+	
 	public var index:Int = -1;
 	public var name:String;
 	public var classPath:Class<Entity>;
@@ -295,6 +302,11 @@ class ObjectTemplate {
 		this.editorName = Text.get(id);
 		
 		var temp:String = Text.get(id + "_DESC");
+	}
+	
+	public function allowInEditor(v:Bool):ObjectTemplate {
+		this.canBePlaced = v;
+		return this;
 	}
 	
 	public function create():Entity {

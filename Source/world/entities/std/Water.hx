@@ -106,7 +106,13 @@ class Water extends EntityStatic implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		return Std.is(e, Charlie);
+		if (Std.is(e, Charlie)) return true;
+		
+		if (type == 0 || type == 1) {
+			if (Std.is(e, EntityPushable)) return true;
+		}
+		
+		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
@@ -147,6 +153,24 @@ class Water extends EntityStatic implements IElectric {
 			
 			while (!canMove) {
 				canMove = c.move(Direction.getRandom(), Charlie.PLAYER_SPEED / 4);
+			}
+		} else if (Std.is(e, EntityPushable)) {
+			if (Std.is(e, Isolator)) {
+				if (Std.is(e, SoftIsolator)) {
+					e.die();
+				} else {
+					if (type == 0) {
+						var waterIsolator:WaterIsolator = new WaterIsolator();
+						room.spawnEntity(x, y, waterIsolator);
+					
+						die();
+						e.die();
+					} else {
+						e.die();
+					}	
+				}
+			} else {
+				e.die();
 			}
 		}
 	}

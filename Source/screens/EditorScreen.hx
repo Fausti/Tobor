@@ -124,8 +124,10 @@ class EditorScreen extends PlayScreen {
 									le.setDrift(e.type);
 								}
 							} else {
-								e.setPosition(cursorX, cursorY - 1);
-								addEntity(e, template);
+								if (template.canBePlaced) {
+									e.setPosition(cursorX, cursorY - 1);
+									addEntity(e, template);
+								}
 							}
 						} else {
 							game.world.player.setPosition(cursorX, cursorY - 1);

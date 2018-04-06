@@ -124,10 +124,20 @@ class DialogTiles extends Dialog {
 			Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_NONE);
 			
 			if (editor.currentTile == i) {
-				Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr);
-				Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_SELECTOR);
+				if (t.canBePlaced) {
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr);
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_SELECTOR);
+				} else {
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_NONE, Color.RED);
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr, Color.RED);
+				}
 			} else {
-				Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr, Color.DARK_GREEN);
+				if (t.canBePlaced) {
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr, Color.DARK_GREEN);
+				} else {
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, SPR_NONE, Color.RED);
+					Gfx.drawSprite((4 + tX) * Tobor.TILE_WIDTH, tY * Tobor.TILE_HEIGHT, t.spr, Color.DARK_RED);
+				}
 			}
 			
 			tX++;

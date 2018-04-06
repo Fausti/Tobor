@@ -20,11 +20,11 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_CLOCK" : {
-         "de" : "Speicheruhr"
-    }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
+    }
+    ,"OBJ_CLOCK" : {
+         "de" : "Speicheruhr"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -550,6 +550,9 @@
     }
     ,"OBJ_TUNNEL#0" : {
          "de" : "Tunnel"
+    }
+    ,"OBJ_ISOLATOR_WATER" : {
+         "de" : "Isolator im Wasser (nicht platzierbar!)"
     }
     ,"OBJ_TUNNEL#1" : {
          "de" : "Tunnel"
