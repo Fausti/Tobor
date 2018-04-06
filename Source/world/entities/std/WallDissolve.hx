@@ -9,7 +9,7 @@ import world.entities.EntityDynamic;
  * @author Matthias Faust
  */
 class WallDissolve extends EntityDynamic {
-	var timeLeft:Float = 15.0;
+	var timeLeft:Float = 5.0;
 	
 	public function new() {
 		super();
