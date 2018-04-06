@@ -15,13 +15,19 @@ class WaterDeadly extends EntityDynamic {
 	}
 	
 	function initSprites() {
+		var arr:Array<Sprite> = [];
+		
+		for (i in 0 ... Std.random(4) + 1) {
+			arr.push(Gfx.getSprite(16, 72));
+		}
+		
+		arr.push(Gfx.getSprite(32, 72));
+		arr.push(Gfx.getSprite(48, 72));
+		arr.push(Gfx.getSprite(64, 72));
+				
+		
 		if (ANIM_WATER == null) {
-			ANIM_WATER = new Animation([
-				Gfx.getSprite(16, 72),
-				Gfx.getSprite(32, 72),
-				Gfx.getSprite(48, 72),
-				Gfx.getSprite(64, 72),
-			], 2.0);
+			ANIM_WATER = new Animation(arr, 2.0 + Math.random() * 2);
 		
 			ANIM_WATER.onAnimationEnd = function () {
 				ANIM_WATER.start(true);
