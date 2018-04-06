@@ -63,13 +63,6 @@ class Tobor extends LimeGame {
 		__framebuffer_h = SCREEN_HEIGHT;
 		
 		Tobor.locale = Locale.currentLocale.split8("_")[0];
-		
-		// Tests
-		
-		var p1:Position = new Position(0, 0, 0);
-		var p2:Position = new Position(0, 1, 0);
-		var p3:Position = new Position(0, 0, 0);
-		var p4:Position = new Position();
 	}
 	
 	override public function init() {
