@@ -1,5 +1,7 @@
 package world.entities;
 
+import lime.math.Vector2;
+
 /**
  * ...
  * @author Matthias Faust
@@ -31,5 +33,9 @@ class EntityRoof extends EntityStatic {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr, COLOR_TRANSPARENT);
 			}
 		}
+	}
+	
+	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		return true;
 	}
 }

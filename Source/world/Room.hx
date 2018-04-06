@@ -162,12 +162,6 @@ class Room {
 		}
 		
 		entities.add(e);
-		
-		entities.getAll().sort(function (a:Entity, b:Entity):Int {
-			if (a.z < b.z) return -1;
-			if (a.z > b.z) return 1;
-			return 0;
-		});
 	}
 	
 	public function removeEntity(e:Entity) {

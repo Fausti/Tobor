@@ -59,6 +59,12 @@ class EntityList {
 			}
 		}
 		
+		listAll.sort(function (a:Entity, b:Entity):Int {
+			if (a.z < b.z) return -1;
+			if (a.z > b.z) return 1;
+			return 0;
+		});
+		
 		e.room = room;
 		e.init();
 		e.onAddToRoom();
