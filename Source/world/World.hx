@@ -24,7 +24,7 @@ class World {
 	private var roomCurrent:Room;
 	public var room(get, null):Room;
 	
-	public var rooms:Array<Room> = [];
+	public var rooms:RoomList;
 	
 	public var player:Charlie;
 	public var playerName:String = null;
@@ -74,6 +74,8 @@ class World {
 		
 		factory = new ObjectFactory();
 		
+		rooms = new RoomList();
+		
 		highScore = new Highscore();
 		highScore.load(file.loadHighscore());
 	}
@@ -105,7 +107,7 @@ class World {
 		}
 		
 		if (content == null) { 
-			addRoom(createRoom(0, 0, 0));
+			rooms.add(createRoom(0, 0, 0));
 			switchRoom(0, 0, 0);
 		
 			var sp:StartPosition = cast factory.create("OBJ_START_POSITION");
@@ -142,7 +144,7 @@ class World {
 			
 					player.setPosition(oldPlayerX, oldPlayerY);
 				
-					switchRoom(r.x, r.y, r.z);
+					switchRoom(r.position.x, r.position.y, r.position.z);
 				}
 			}
 		}
@@ -187,7 +189,7 @@ class World {
 				var t = actionTeleportTarget;
 			
 				game.world.room.saveState();
-				switchRoom(t.room.x, t.room.y, t.room.z);
+				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
 				game.world.room.restoreState();
 			
 				player.setPosition(t.gridX, t.gridY);
@@ -205,7 +207,7 @@ class World {
 				var t = actionStairsTarget;
 			
 				game.world.room.saveState();
-				switchRoom(t.room.x, t.room.y, t.room.z);
+				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
 				game.world.room.restoreState();
 			
 				player.setPosition(t.gridX, t.gridY);
@@ -263,13 +265,13 @@ class World {
 	}
 	
 	public function createRoom(x:Int, y:Int, z:Int, ?data:Dynamic = null):Room {
-		var r:Room = findRoom(x, y, z);
+		var r:Room = rooms.find(x, y, z);
 		
 		if (r == null) {
 			r = new Room(this);
-			r.x = x;
-			r.y = y;
-			r.z = z;
+			r.position.x = x;
+			r.position.y = y;
+			r.position.z = z;
 			
 			r.getName();
 		}
@@ -277,24 +279,8 @@ class World {
 		return r;
 	}
 	
-	public function addRoom(r:Room) {
-		if (rooms.indexOf(r) == -1) {
-			rooms.push(r);
-		}
-	}
-	
-	public function findRoom(x:Int, y:Int, z:Int):Room {
-		for (r in rooms) {
-			if (r.x == x && r.y == y && r.z == z) {
-				return r;
-			}
-		}
-		
-		return null;
-	}
-	
 	public function switchRoom(x:Int, y:Int, z:Int) {
-		var r:Room = findRoom(x, y, z);
+		var r:Room = rooms.find(x, y, z);
 		
 		if (r != null) {
 			roomCurrent = r;
@@ -318,10 +304,10 @@ class World {
 		var target:Entity;
 		
 		for (r in rooms) {
-			if (r.x == room.x && r.y == room.y) {
-				if (e.type == 1 && r.z > room.z) { 
+			if (r.position.x == room.position.x && r.position.y == room.position.y) {
+				if (e.type == 1 && r.position.z > room.position.z) { 
 					target = r.findStairs(e.gridX, e.gridY, 0);
-				} else if (e.type == 0 && r.z < room.z) {
+				} else if (e.type == 0 && r.position.z < room.position.z) {
 					target = r.findStairs(e.gridX, e.gridY, 1);
 				} else {
 					target = null;
@@ -446,9 +432,9 @@ class World {
 		
 		var playerData:Map<String, Dynamic> = player.saveData();
 		
-		playerData.set("inRoomX", roomCurrent.x);
-		playerData.set("inRoomY", roomCurrent.y);
-		playerData.set("inRoomZ", roomCurrent.z);
+		playerData.set("inRoomX", roomCurrent.position.x);
+		playerData.set("inRoomY", roomCurrent.position.y);
+		playerData.set("inRoomZ", roomCurrent.position.z);
 		
 		data.set("player", playerData);
 		data.set("flags", flags);
@@ -456,9 +442,9 @@ class World {
 		for (r in rooms) {
 			var worldData:Map<String, Dynamic> = new Map();
 			
-			worldData.set("x", r.x);
-			worldData.set("y", r.y);
-			worldData.set("z", r.z);
+			worldData.set("x", r.position.x);
+			worldData.set("y", r.position.y);
+			worldData.set("z", r.position.z);
 			
 			worldData.set("data", r.save());
 			
@@ -470,7 +456,7 @@ class World {
 	
 	function loadData(fileData:String) {
 		roomCurrent = null;
-		rooms = [];
+		rooms = new RoomList();
 		
 		// player.reset();
 		
@@ -543,7 +529,7 @@ class World {
 		newRoom.load(rdata);
 		newRoom.getName();
 		
-		addRoom(newRoom);
+		rooms.add(newRoom);
 		switchRoom(rx, ry, rz);
 	}
 	

@@ -121,18 +121,18 @@ class PlayScreen extends Screen {
 			game.world.player.move(direction, speed);
 		} else {
 			if (!game.world.player.isMoving()) {
-				var nextRoom = game.world.findRoom(
-					Std.int(game.world.room.x + direction.x), 
-					Std.int(game.world.room.y + direction.y), 
-					game.world.room.z
+				var nextRoom = game.world.rooms.find(
+					Std.int(game.world.room.position.x + direction.x), 
+					Std.int(game.world.room.position.y + direction.y), 
+					game.world.room.position.z
 				);
 				
 				if (nextRoom != null) {
 					game.world.room.saveState();
 					game.world.switchRoom(
-						Std.int(game.world.room.x + direction.x), 
-						Std.int(game.world.room.y + direction.y), 
-						game.world.room.z
+						Std.int(game.world.room.position.x + direction.x), 
+						Std.int(game.world.room.position.y + direction.y), 
+						game.world.room.position.z
 					);
 					game.world.room.restoreState();
 					

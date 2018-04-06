@@ -60,12 +60,12 @@ class DialogRooms extends Dialog {
 	}
 	
 	override public function show() {
-		roomX = world.room.x;
-		roomY = world.room.y;
-		roomZ = world.room.z;
+		roomX = world.room.position.x;
+		roomY = world.room.position.y;
+		roomZ = world.room.position.z;
 		
 		for (r in world.rooms) {
-			rooms[r.z][r.x][r.y] = true;
+			rooms[r.position.z][r.position.x][r.position.y] = true;
 		}
 	}
 	
@@ -119,7 +119,7 @@ class DialogRooms extends Dialog {
 			Gfx.drawSprite((39 - _x) * Tobor.TILE_WIDTH, 0, SPR_NONE, Color.LIGHT_GREEN);
 		}
 		
-		var room:Room = world.findRoom(roomX, roomY, roomZ);
+		var room:Room = world.rooms.find(roomX, roomY, roomZ);
 		if (room == null) {
 			Tobor.fontSmall.drawString(9 * Tobor.TILE_WIDTH, 0, Text.get("TXT_EDITOR_NO_ROOM"), Color.BLACK);
 		} else {

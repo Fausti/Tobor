@@ -29,9 +29,7 @@ class Room {
 	public static inline var HEIGHT:Int = 28;
 	
 	public var world:World;
-	public var x:Int;
-	public var y:Int;
-	public var z:Int;
+	public var position:Position;
 	
 	// Objectlisten
 	private var entities:EntityList;
@@ -48,9 +46,7 @@ class Room {
 	
 	public function new(w:World, ?x:Int = 0, ?y:Int = 0, ?z:Int = 0) {
 		this.world = w;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.position = new Position(x, y, z);
 		
 		entities = new EntityList(this);
 	}
@@ -363,7 +359,7 @@ class Room {
 	}
 	
 	public function getID():String {
-		return "ROOM_" + x + "" + y + "" + z;
+		return "ROOM_" + position.id;
 	}
 	
 	public function getName():String {

@@ -169,9 +169,9 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function checkRoomSwitch() {
-		var rx:Int = game.world.room.x;
-		var ry:Int = game.world.room.y;
-		var rz:Int = game.world.room.z;
+		var rx:Int = game.world.room.position.x;
+		var ry:Int = game.world.room.position.y;
+		var rz:Int = game.world.room.position.z;
 		
 		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
 			switchRoom(rx - 1, ry, rz);
@@ -199,12 +199,12 @@ class EditorScreen extends PlayScreen {
 		if (y < 0 || y >= 10) return;
 		if (z < 0 || z >= 10) return;
 		
-		var nextRoom:Room = game.world.findRoom(x, y, z);
+		var nextRoom:Room = game.world.rooms.find(x, y, z);
 		
 		if (nextRoom == null) {
 			askNewRoom(function () {
 				nextRoom = new Room(game.world, x, y, z);
-				game.world.addRoom(nextRoom);
+				game.world.rooms.add(nextRoom);
 				game.world.switchRoom(x, y, z);
 				nextRoom.getName();
 				hideDialog();
@@ -237,6 +237,10 @@ class EditorScreen extends PlayScreen {
 	
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
+		
+		if (game.world.room == null) {
+			return;
+		}
 		
 		if (editMode) {
 			var template = game.world.factory.get(currentTile);
@@ -300,12 +304,14 @@ class EditorScreen extends PlayScreen {
 			
 			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, game.world.factory.get(currentTile).spr);
 			
-			var roomCoords:String = Text.get("TXT_EDITOR_ROOM") + " " 
-				+ Std.string(game.world.room.z) 
-				+ Std.string(game.world.room.x) 
-				+ Std.string(game.world.room.y);
+			if (game.world.room != null) {
+				var roomCoords:String = Text.get("TXT_EDITOR_ROOM") + " " 
+					+ Std.string(game.world.room.position.z) 
+					+ Std.string(game.world.room.position.x) 
+					+ Std.string(game.world.room.position.y);
 				
-			Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
+				Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
+			}
 			
 			// Cursor Koordinaten
 			if (cursorY > 0) {
@@ -318,6 +324,10 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function renderObjectCount() {
+		if (game.world.room == null) {
+			return;
+		}
+		
 		var countEntities:Int;
 		
 		countEntities = game.world.room.length;
