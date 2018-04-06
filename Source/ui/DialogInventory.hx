@@ -28,7 +28,7 @@ class DialogInventory extends Dialog {
 	
 	public var STRINGS:Array<String> = [];
 	
-	public var selectedItem:InventoryItem;
+	public var selectedItem:Array<InventoryItem>;
 	public var selectedAction:Int;
 	
 	public function new(screen:Screen, x:Int, y:Int) {
@@ -112,15 +112,27 @@ class DialogInventory extends Dialog {
 				rootIndex = index;
 				
 				if (!rootGroup.content[index].isSingle()) {
-					currentGroup = rootGroup.content[index];
-					index = 0;
+					if (rootGroup.content[index].group == "OBJ_MUNITION" && actions[actionIndex] == Inventory.ACTION_DROP) {
+						selectedAction = actions[actionIndex];
+						selectedItem = [];
 					
-					updateActions();
+						for (itm in rootGroup.content[index].content) {
+							selectedItem.push(itm.getItem());
+						}
+						
+						ok();
+					} else {
+						currentGroup = rootGroup.content[index];
+						index = 0;
+					
+						updateActions();
+					}
+					
 					Input.wait(0.25);
 					return;
 				} else {
 					selectedAction = actions[actionIndex];
-					selectedItem = currentGroup.content[index].getItem();
+					selectedItem = [currentGroup.content[index].getItem()];
 					
 					ok();
 					Input.wait(0.25);
@@ -128,7 +140,7 @@ class DialogInventory extends Dialog {
 				}
 			} else {
 				selectedAction = actions[actionIndex];
-				selectedItem = currentGroup.content[index].item;
+				selectedItem = [currentGroup.content[index].item];
 					
 				ok();
 				Input.wait(0.25);
@@ -239,6 +251,10 @@ class DialogInventory extends Dialog {
 				if (hasSign) actions.push(Inventory.ACTION_LOOK);
 			} else {
 				actions.push(Inventory.ACTION_CHOOSE);
+				
+				if (itm.group == "OBJ_MUNITION") {
+					actions.push(Inventory.ACTION_DROP);
+				}
 			}
 		} else {
 			if (itm.count() > 1) actions.push(Inventory.ACTION_COUNT);

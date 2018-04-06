@@ -193,32 +193,35 @@ class Inventory {
 		return Lambda.count(list);
 	}
 	
-	public function doItemAction(world:World, action:Int, item:InventoryItem) {
-		if (item == null) {
-			trace("Inventory item is NULL!");
+	public function doItemAction(world:World, action:Int, items:Array<InventoryItem>) {
+		if (items == null) {
 			return;
 		}
 		
-		var e:Entity = world.factory.create(item.id);
-		e.content = item.content;
-		e.setRoom(world.room);
+		for (item in items) {
+			if (item != null) {
+				var e:Entity = world.factory.create(item.id);
+				e.content = item.content;
+				e.setRoom(world.room);
 		
-		if (!Std.is(e, EntityItem)) {
-			trace("Item is not an item!");
-			return;
-		}
+				if (!Std.is(e, EntityItem)) {
+					trace("Item is not an item!");
+					return;
+				}
 		
-		var obj:EntityItem = cast e; 
+				var obj:EntityItem = cast e; 
 		
-		switch(action) {
-			case Inventory.ACTION_DROP:
-				obj.onDrop(item, world.player.x, world.player.y);
-			case Inventory.ACTION_LOOK:
-				obj.onLook(item);
-			case Inventory.ACTION_USE:
-				obj.onUse(item, world.player.x, world.player.y);
-			default:
-				trace("Unknown Item Action!");
+				switch(action) {
+					case Inventory.ACTION_DROP:
+						obj.onDrop(item, world.player.x, world.player.y);
+					case Inventory.ACTION_LOOK:
+						obj.onLook(item);
+					case Inventory.ACTION_USE:
+						obj.onUse(item, world.player.x, world.player.y);
+					default:
+						trace("Unknown Item Action!");
+				}
+			}
 		}
 	}
 }
