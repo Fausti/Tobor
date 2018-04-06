@@ -16,6 +16,7 @@ class DialogInventory extends Dialog {
 	var currentGroup:Entry;
 	
 	var index:Int = 0;
+	var rootIndex:Int = 0;
 
 	private var actions:Array<Int> = [];
 	private var actionsString:Array<String> = [];
@@ -46,7 +47,9 @@ class DialogInventory extends Dialog {
 	
 	override public function show() {
 		super.show();
-
+		
+		currentGroup = null;
+		
 		rootGroup = new Entry();
 		rootGroup.group = null;
 		
@@ -72,6 +75,26 @@ class DialogInventory extends Dialog {
 		
 		currentGroup = rootGroup;
 		
+		index = rootIndex;
+		if (index >= currentGroup.size) index = currentGroup.size - 1;
+		
+		actions = [];
+		actionsString = [];
+	
+		actionsSize = 0;
+		actionIndex = 0;
+		
+		selectedItem = null;
+		selectedAction = 0;
+	
+		// Sortieren!
+		rootGroup.content.sort(function(a, b) {
+			if (a.group > b.group) return 1;
+			else if (a.group < b.group) return -1;
+			
+			return 0;
+		});
+		
 		updateActions();
 	}
 	
@@ -86,6 +109,8 @@ class DialogInventory extends Dialog {
 	override public function update(deltaTime:Float) {
 		if (Input.isKeyDown(Tobor.KEY_ENTER)) {
 			if (currentGroup == rootGroup) {
+				rootIndex = index;
+				
 				if (!rootGroup.content[index].isSingle()) {
 					currentGroup = rootGroup.content[index];
 					index = 0;
@@ -110,6 +135,7 @@ class DialogInventory extends Dialog {
 				return;
 			}
 		} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
+			if (currentGroup == rootGroup) rootIndex = index;
 			exit();
 		} else if (Input.isKeyDown(Tobor.KEY_LEFT)) {
 			index--;

@@ -30,6 +30,8 @@ class PlayScreen extends Screen {
 	var TXT_STATUS_POINTS:String;
 	var TXT_STATUS_LIVES:String;
 	
+	var dialogInventory:DialogInventory;
+	
 	public function new(game:Tobor, ?loadFileName:String = null) {
 		super(game);
 		
@@ -260,19 +262,21 @@ class PlayScreen extends Screen {
 	function showInventory() {
 		if (game.world.inventory.size == 0) return;
 		
-		var menu = new DialogInventory(this, 0, 0);
+		if (dialogInventory == null) {
+			dialogInventory = new DialogInventory(this, 0, 0);
 		
-		menu.onOk = function () {
-			hideDialog();
+			dialogInventory.onOk = function () {
+				hideDialog();
 			
-			game.world.inventory.doItemAction(game.world, menu.selectedAction, menu.selectedItem);
+				game.world.inventory.doItemAction(game.world, dialogInventory.selectedAction, dialogInventory.selectedItem);
+			}
+		
+			dialogInventory.onCancel = function () {
+				hideDialog();
+			}
 		}
 		
-		menu.onCancel = function () {
-			hideDialog();
-		}
-		
-		showDialog(menu);
+		showDialog(dialogInventory);
 	}
 	
 	function askForName() {
