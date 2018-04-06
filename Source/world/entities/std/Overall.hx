@@ -16,7 +16,5 @@ class Overall extends EntityItem {
 	
 	override public function onDrop(item:InventoryItem, x:Float, y:Float) {
 		super.onDrop(item, x, y);
-		
-		getPlayer().checkForOverall();
 	}
 }

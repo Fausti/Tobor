@@ -14,10 +14,12 @@ class Charlie extends EntityMoveable {
 	public static var PLAYER_SPEED:Float = 8;
 	
 	var sprStanding:Sprite;
-	var sprWalking:Animation;
+	var sprWalking_0:Sprite;
+	var sprWalking_1:Sprite;
 	
 	var sprStandingOverall:Sprite;
-	var sprWalkingOverall:Animation;
+	var sprWalkingOverall_0:Sprite;
+	var sprWalkingOverall_1:Sprite;
 	
 	public var walkInTunnel:Bool = false;
 	var lastTunnelStep:Int = 0;
@@ -33,19 +35,15 @@ class Charlie extends EntityMoveable {
 		
 		sprStanding = Gfx.getSprite(16, 0);
 		
-		sprWalking = new Animation([
-			Gfx.getSprite(32, 0),
-			Gfx.getSprite(48, 0)
-		], 0.75);
+		sprWalking_0 = Gfx.getSprite(32, 0);
+		sprWalking_1 = Gfx.getSprite(48, 0);
 		
 		// Blaumann
 		
 		sprStandingOverall = Gfx.getSprite(0, 156);
 		
-		sprWalkingOverall = new Animation([
-			Gfx.getSprite(16, 156),
-			Gfx.getSprite(32, 156)
-		], 0.75);
+		sprWalkingOverall_0 = Gfx.getSprite(16, 156);
+		sprWalkingOverall_1 = Gfx.getSprite(32, 156);
 			
 		sprites[0] = sprStanding;
 		
@@ -67,6 +65,36 @@ class Charlie extends EntityMoveable {
 		}
 	}
 	
+	override public function render() {
+		var spr:Sprite = null;
+		
+		if (!isMoving()) {
+			if (hasOverall()) {
+				spr = sprStandingOverall;
+			} else {
+				spr = sprStanding;
+			}
+		} else {
+			var animPhase:Float = Math.fceil(moveData.distanceLeft) - moveData.distanceLeft;
+			
+			if (hasOverall()) {
+				if (animPhase <= 0.5) {
+					spr = sprWalkingOverall_0;
+				} else {
+					spr = sprWalkingOverall_1;
+				}
+			} else {
+				if (animPhase <= 0.5) {
+					spr = sprWalking_0;
+				} else {
+					spr = sprWalking_1;
+				}
+			}
+		}
+		
+		if (spr != null) Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr);
+	}
+	
 	override public function isMoving():Bool {
 		if (!visible) return true;
 		
@@ -82,14 +110,6 @@ class Charlie extends EntityMoveable {
 			lastY = y;
 		}
 		
-		if (room.world.inventory.containsOverall) {
-			sprites[0] = sprWalkingOverall;
-			sprWalkingOverall.start(false);
-		} else {
-			sprites[0] = sprWalking;
-			sprWalking.start(false);
-		}
-		
 		if (moveData.distanceLeft > 1.0) {
 			walkInTunnel = true;
 			lastTunnelStep = Math.floor(moveData.distanceLeft);
@@ -102,8 +122,6 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override function onStopMoving() {
-		checkForOverall();
-		
 		if (walkInTunnel) {
 			Sound.play(Sound.SND_TUNNEL_STEP);
 			walkInTunnel = false;
@@ -149,15 +167,7 @@ class Charlie extends EntityMoveable {
 		}
 	}
 	
-	public function hasOverall():Bool {
+	public inline function hasOverall():Bool {
 		return room.world.inventory.containsOverall;
-	}
-	
-	public function checkForOverall() {
-		if (hasOverall()) {
-			setSprite(sprStandingOverall);
-		} else {
-			setSprite(sprStanding);
-		}
 	}
 }

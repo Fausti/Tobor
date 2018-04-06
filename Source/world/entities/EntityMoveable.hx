@@ -42,10 +42,6 @@ class EntityMoveable extends EntityDynamic implements IWeight {
 		super.update(deltaTime);
 	}
 	
-	override public function render() {
-		super.render();
-	}
-	
 	override public function isMoving():Bool {
 		if (moveData.direction != Direction.NONE) {
 			return true;
