@@ -119,9 +119,10 @@ class PlayScreen extends Screen {
 	function movePlayer(direction:Vector2, speed:Float) {
 		var player = game.world.player;
 		
-		if (!Room.isOutsideMap(player.x + direction.x, player.y + direction.y)) {
-			game.world.player.move(direction, speed);
-		} else {
+		// if (!Room.isOutsideMap(player.x + direction.x, player.y + direction.y)) {
+		game.world.player.move(direction, speed);
+		//} else {
+			/*
 			if (!game.world.player.isMoving()) {
 				var nextRoom = game.world.rooms.find(
 					Std.int(game.world.room.position.x + direction.x), 
@@ -151,8 +152,8 @@ class PlayScreen extends Screen {
 					showRoomName();
 					Input.wait(0.25);
 				}
-			}
-		}
+			} */
+		// }
 	}
 	
 	override public function render() {

@@ -113,15 +113,40 @@ class Water extends EntityStatic implements IElectric {
 		if (Std.is(e, Charlie)) {
 			var c:Charlie = cast e;
 			
-			if (!room.getInventory().hasItem("OBJ_FLIPPERS")) {
-				var canMove:Bool = c.move(getDrift(0), Charlie.PLAYER_SPEED / 3);
+			var canMove:Bool = false;
 				
-				if (!canMove) canMove = c.move(getDrift(1), Charlie.PLAYER_SPEED / 3);
-				if (!canMove) canMove = c.move(getDrift(2), Charlie.PLAYER_SPEED / 3);
-			
-				while (!canMove) {
-					canMove = c.move(Direction.getRandom(), Charlie.PLAYER_SPEED / 3);
+			if (Std.random(4) != 0) {
+				if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
+					var d:Vector2 = Direction.NONE;
+					
+					if (Input.isKeyDown(Tobor.KEY_LEFT)) {
+						d = Direction.W;
+					} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
+						d = Direction.E;
+					} else if (Input.isKeyDown(Tobor.KEY_UP)) {
+						d = Direction.N;
+					} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
+						d = Direction.S;
+					}
+					
+					canMove = c.move(d, Charlie.PLAYER_SPEED / 4);
 				}
+			}
+				
+			if (!canMove) {
+				if (Std.random(2) == 0) {
+					// Chance weiter in die selbe Richtung zu treiben
+					if (direction != null) canMove = c.move(direction, Charlie.PLAYER_SPEED / 4);
+				}
+			}
+				
+			if (!canMove) canMove = c.move(getDrift(0), Charlie.PLAYER_SPEED / 4);
+				
+			if (!canMove) canMove = c.move(getDrift(1), Charlie.PLAYER_SPEED / 4);
+			if (!canMove) canMove = c.move(getDrift(2), Charlie.PLAYER_SPEED / 4);
+			
+			while (!canMove) {
+				canMove = c.move(Direction.getRandom(), Charlie.PLAYER_SPEED / 4);
 			}
 		}
 	}
@@ -130,7 +155,7 @@ class Water extends EntityStatic implements IElectric {
 		if (Std.is(e, Charlie)) {
 			if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 				var c:Charlie = cast e;
-				c.changeSpeed(Charlie.PLAYER_SPEED / 3);
+				c.changeSpeed(Charlie.PLAYER_SPEED / 4);
 			}
 		}
 	}
@@ -139,7 +164,7 @@ class Water extends EntityStatic implements IElectric {
 		if (Std.is(e, Charlie)) {
 			if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 				var c:Charlie = cast e;
-				c.changeSpeed(Charlie.PLAYER_SPEED / 3);
+				c.changeSpeed(Charlie.PLAYER_SPEED / 4);
 			}
 		}
 	}

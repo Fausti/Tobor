@@ -170,4 +170,60 @@ class Charlie extends EntityMoveable {
 	public inline function hasOverall():Bool {
 		return room.world.inventory.containsOverall;
 	}
+	
+	override public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
+		if (direction == Direction.NONE) return false;
+		
+		if (!isMoving()) {
+			if (isOutsideMap(x + direction.x, y + direction.y)) {
+				// kein diagonaler Raumwechsel!
+				if (Direction.isDiagonal(direction)) return false;
+				
+				var nextRoom = getWorld().rooms.find(
+					Std.int(room.position.x + direction.x), 
+					Std.int(room.position.y + direction.y), 
+					room.position.z
+				);
+				
+				if (nextRoom == null) {
+					return false;
+				} else {
+					getWorld().changeRoom(direction);
+					
+					return true;
+				}
+			}
+			
+			var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
+			
+			// kann Feld betreten werden?
+			if (dist == 1) { // Tunnel ignorieren dies hier...
+				for (e in atTarget) {
+					if (!e.canEnter(this, direction, speed)) return false;
+				}
+			}
+			
+			// dann bewegen wir uns mal...
+			moveData.direction = direction;
+			moveData.speedMovement = speed;
+			moveData.distanceLeft = dist;
+			
+			// informieren wir mal jeden auf dem Zielfeld das wir es demnächst betreten
+			for (e in atTarget) {
+				e.willEnter(this, direction, speed);
+			}
+			
+			// auf dem Startfeld auch alle Objekte informieren...
+			var atStart:Array<Entity> = room.getCollisionsAt(gridX, gridY, this);
+			for (e in atStart) {
+				e.onLeave(this, direction);
+			}
+			
+			onStartMoving();
+			
+			return true;
+		}
+		
+		return false;
+	}
 }

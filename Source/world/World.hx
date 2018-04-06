@@ -1,5 +1,6 @@
 package world;
 
+import lime.math.Vector2;
 import screens.PlayScreen;
 import ui.Dialog;
 import ui.DialogMessage;
@@ -64,6 +65,9 @@ class World {
 	
 	var actionStairs:Bool = false;
 	var actionStairsTarget:Entity = null;
+	
+	var actionChangeRoom:Bool = false;
+	var actionChangeRoomDirection:Vector2 = null;
 	
 	public var episodeWon:Bool = false;
 	public var episodeLost:Bool = false;
@@ -182,6 +186,47 @@ class World {
 		
 		// AFTER-UPDATE Aktionen durchführen
 		
+		if (actionChangeRoom) {
+			actionChangeRoom = false;
+
+			if (actionChangeRoomDirection != null) {
+			
+				var rx:Int = Std.int(room.position.x + actionChangeRoomDirection.x);
+				var ry:Int = Std.int(room.position.y + actionChangeRoomDirection.y);
+				var rz:Int = room.position.z;
+			
+				if (rooms.find(rx, ry, rz) != null) {
+					if (actionChangeRoomDirection.x < 0) {
+						player.x = Room.WIDTH - 1;
+					} else if (actionChangeRoomDirection.x > 0) {
+						player.x = 0;
+					}
+					
+					if (actionChangeRoomDirection.y < 0) {
+						player.y = Room.HEIGHT - 1;
+					} else if (actionChangeRoomDirection.y > 0) {
+						player.y = 0;
+					}
+				
+					if (!editing) game.world.room.saveState();
+					switchRoom(rx, ry, rz);
+					game.world.room.restoreState();
+				
+					var atTarget:Array<Entity> = room.getAllEntitiesAt(player.x, player.y, player);
+					for (e in atTarget) {
+						e.onEnter(player, actionChangeRoomDirection);
+					}
+				
+					var playScreen:PlayScreen = cast game.getScreen();
+					playScreen.showRoomName();
+				
+					Input.wait(0.25);
+				}
+			
+				actionChangeRoomDirection = null;
+			}
+		}
+		
 		if (actionTeleport) {
 			if (actionTeleportTarget != null) {
 				actionTeleport = false;
@@ -286,6 +331,11 @@ class World {
 			roomCurrent = r;
 			player.setRoom(roomCurrent);
 		}
+	}
+	
+	public function changeRoom(d:Vector2) {
+		actionChangeRoom = true;
+		actionChangeRoomDirection = d;
 	}
 	
 	public function markRoomVisited() {
