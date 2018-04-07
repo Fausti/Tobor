@@ -20,11 +20,11 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_WOOD_0" : {
-         "de" : "Wald"
-    }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
+    }
+    ,"OBJ_WOOD_0" : {
+         "de" : "Wald"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -89,17 +89,17 @@
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
     }
-    ,"TXT_MENU_BORDERS" : {
-         "de" : "Szenenrand einfügen"
-    }
     ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
          "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
     }
-    ,"TXT_EDITOR_NO_ROOM" : {
-         "de" : "keine Szene"
+    ,"TXT_MENU_BORDERS" : {
+         "de" : "Szenenrand einfügen"
     }
     ,"OBJ_WALL_BLACK_NW" : {
          "de" : "Mauer (schwarz)"
+    }
+    ,"TXT_EDITOR_NO_ROOM" : {
+         "de" : "keine Szene"
     }
     ,"OBJ_ELECTRIC_FENCE" : {
          "de" : "elektrischer Zaun (AN)"
@@ -133,6 +133,9 @@
     }
     ,"OBJ_SAND#4" : {
          "de" : "Sand"
+    }
+    ,"TXT_MENU_ROOM_NAME" : {
+         "de" : "Szenennamen ändern"
     }
     ,"OBJ_GRASS_0" : {
          "de" : "Pfad mit Beeren"
@@ -286,6 +289,9 @@
     }
     ,"TXT_MENU_STORY" : {
          "de" : "Story"
+    }
+    ,"TXT_ASK_FOR_ROOM_NAME" : {
+         "de" : "Szenennamen ändern\n\nWie soll die Szene genannt werden?"
     }
     ,"OBJ_KEY#0" : {
          "de" : "Schlüssel Nr. 1"
@@ -569,6 +575,9 @@
     ,"OBJ_TUNNEL#1" : {
          "de" : "Tunnel"
     }
+    ,"OBJ_ROBOT_FACTORY_0" : {
+         "de" : "Roboter Fabrikator (AUS)"
+    }
     ,"TXT_EDITOR_ROOM" : {
          "de" : "Raum"
     }
@@ -583,6 +592,9 @@
     }
     ,"OBJ_GRATE" : {
          "de" : "Gitter"
+    }
+    ,"OBJ_ROBOT_FACTORY_1" : {
+         "de" : "Roboter Fabrikator (AN)"
     }
     ,"OBJ_MAGNET#0" : {
          "de" : "Magnet"
