@@ -31,4 +31,8 @@ class EntityAI extends EntityMoveable {
 	function idle() {
 		
 	}
+	
+	override public function hasWeight():Bool {
+		return true;
+	}
 }

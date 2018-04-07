@@ -1,7 +1,6 @@
 package world.entities;
 
 import lime.math.Vector2;
-import world.entities.interfaces.IWeight;
 
 /**
  * ...
@@ -14,7 +13,7 @@ typedef MoveData = {
 	var speedMovement:Float; // Tiles per second
 }
 
-class EntityMoveable extends EntityDynamic implements IWeight {
+class EntityMoveable extends EntityDynamic {
 	var wasMoving:Bool = false;
 	var moveData:MoveData;
 	

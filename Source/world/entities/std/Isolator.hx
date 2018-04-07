@@ -30,4 +30,8 @@ class Isolator extends EntityPushable {
 		
 		return true;
 	}
+	
+	override public function hasWeight():Bool {
+		return (!Std.is(this, SoftIsolator));
+	}
 }
