@@ -22,7 +22,7 @@ class Entity {
 	
 	private var boundingBox:Rectangle;
 	
-	public var z:Int = Room.LAYER_LEVEL_0;
+	public var z(default, null):Int = Room.LAYER_LEVEL_0;
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	
@@ -230,7 +230,7 @@ class Entity {
 		
 		o.x = x;
 		o.y = y;
-		o.z = z;
+		// o.z = z;
 		
 		o.type = type;
 		o.flag = flag;
@@ -274,9 +274,11 @@ class Entity {
 			this.y = data.y;
 		}
 		
+		/*
 		if (hasData(data, "z")) {
 			this.z = data.z;
 		}
+		*/
 		
 		init();
 	}
@@ -293,7 +295,7 @@ class Entity {
 			if (Std.is(this, IElectric)) data.set("flag", flag);
 			data.set("x", gridX);
 			data.set("y", gridY);
-			data.set("z", z);
+			// data.set("z", z);
 			
 			data.set("drift", drift);
 		} else {
