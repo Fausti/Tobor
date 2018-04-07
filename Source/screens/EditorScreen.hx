@@ -201,6 +201,8 @@ class EditorScreen extends PlayScreen {
 		if (y < 0 || y >= 10) return;
 		if (z < 0 || z >= 10) return;
 		
+		game.world.room.saveState();
+		
 		var nextRoom:Room = game.world.rooms.find(x, y, z);
 		
 		if (nextRoom == null) {
@@ -217,6 +219,8 @@ class EditorScreen extends PlayScreen {
 			game.world.switchRoom(x, y, z);
 			hideDialog();
 		}
+		
+		game.world.room.restoreState();
 	}
 
 	function switchEditMode() {
