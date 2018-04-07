@@ -1,5 +1,6 @@
 package ui;
 
+import haxe.Utf8;
 /**
  * ...
  * @author Matthias Faust
@@ -79,7 +80,21 @@ class DialogInput extends DialogMessage {
 				chars = chars.removeAll(char);
 			}
 			
-			return chars.compact();
+			chars = chars.compact();
+			
+			chars = chars.replaceAll("ä", "ae");
+			chars = chars.replaceAll("ö", "oe");
+			chars = chars.replaceAll("ü", "ue");
+			
+			chars = chars.replaceAll("Ä", "Ae");
+			chars = chars.replaceAll("Ö", "Oe");
+			chars = chars.replaceAll("Ü", "Ue");
+			
+			chars = chars.replaceAll("ß", "ss");
+			
+			chars = Utf8.decode(chars);
+			
+			return chars;
 		}
 		
 		return chars.compact();

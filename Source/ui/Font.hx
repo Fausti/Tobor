@@ -50,8 +50,12 @@ class Font {
 		text = Utf8.decode(text);
 		
 		for (i in 0 ... text.length) {
-			drawChar(posX, posY, GLYPHS.indexOf(text.charAt(i)), fg, bg);
-			posX += glyphW;
+			var ci:Int = GLYPHS.indexOf(text.charAt(i));
+			
+			if (ci >= 0) {
+				drawChar(posX, posY, ci, fg, bg);
+				posX += glyphW;
+			}
 		}
 	}
 	

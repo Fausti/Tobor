@@ -171,7 +171,7 @@ class FileEpisode {
 			}
 			
 			if (entry != null) {
-				content = Utf8.encode(entry.data.toString());
+				content = entry.data.toString();
 			} else {
 				trace(fileName + " in " + root + " not found!");
 			}
@@ -180,7 +180,7 @@ class FileEpisode {
 			
 			if (FileSystem.exists(fileName)) {
 				var fin = File.read(fileName, false);
-				content = Utf8.encode(fin.readAll().toString());
+				content = fin.readAll().toString();
 				fin.close();
 			} else {
 				trace(fileName + " not found!");

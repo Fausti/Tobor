@@ -323,7 +323,7 @@ class PlayScreen extends Screen {
 		if (!game.world.roomVisited() || force) {
 			var roomName:String = game.world.room.getName();
 						
-			var d:DialogMessage = new DialogMessage(this, 0, 0, roomName, false);
+			var d:DialogMessage = new DialogMessage(this, 0, 0, "*** " + roomName + " ***", false);
 						
 			showDialog(d);
 						
