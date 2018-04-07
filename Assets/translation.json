@@ -20,11 +20,11 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_CLOCK" : {
-         "de" : "Speicheruhr"
-    }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
+    }
+    ,"OBJ_CLOCK" : {
+         "de" : "Speicheruhr"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -88,6 +88,12 @@
     }
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
+    }
+    ,"TXT_MENU_BORDERS" : {
+         "de" : "Szenenrand einfügen"
+    }
+    ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
+         "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
     }
     ,"TXT_EDITOR_NO_ROOM" : {
          "de" : "keine Szene"
@@ -222,7 +228,7 @@
          "de" : "Pfeil"
     }
     ,"TXT_EDITOR_ASK_CREATE_NEW_ROOM" : {
-         "de" : "Diese Szene erstellen?"
+         "de" : "Keine Szene vorhanden!\n\nDiese Szene erstellen?"
     }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
@@ -390,7 +396,7 @@
          "de" : "Mauer"
     }
     ,"TXT_EDITOR_ASK_REMOVE_OBJECTS_FROM_ROOM" : {
-         "de" : "Alle Objekte in der aktuellen Szene entfernen?"
+         "de" : "Szene leeren\n\nAlle Objekte in der aktuellen Szene entfernen?"
     }
     ,"OBJ_WATER_SW" : {
          "de" : "Wasser"

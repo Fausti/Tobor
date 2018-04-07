@@ -166,9 +166,11 @@ class Entity {
 		
 	}
 	
-	public function setPosition(x:Int, y:Int) {
+	public function setPosition(x:Int, y:Int):Entity {
 		this.x = x;
 		this.y = y;
+		
+		return this;
 	}
 	
 	public function getBoundingBox():Rectangle {

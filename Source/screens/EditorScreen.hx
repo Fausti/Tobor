@@ -366,6 +366,9 @@ class EditorScreen extends PlayScreen {
 			[Text.get("TXT_MENU_CLEAR"), "", function () {
 				askClearRoom();
 			}],
+			[Text.get("TXT_MENU_BORDERS"), "", function () {
+				askRoomTemplate();
+			}],
 			[Text.get("TXT_MENU_OPTIONS"), "", function () {
 				hideDialog();
 			}],
@@ -408,6 +411,29 @@ class EditorScreen extends PlayScreen {
 		
 		d.onOk = function () {
 			game.world.room.clear();
+			hideDialog();
+		}
+		
+		showDialog(d);
+	}
+	
+	function askRoomTemplate() {
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_CREATE_ROOM_BORDER"));
+		d.index = 0;
+		
+		d.onOk = function () {
+			var tmpl:ObjectTemplate = game.world.factory.findFromID("OBJ_WALL_HARD");
+			
+			if (tmpl != null) {
+				for (x in 0 ... Room.WIDTH) {
+					for (y in 0 ... Room.HEIGHT) {
+						if (x == 0 || x == Room.WIDTH - 1 || y == 0 || y == Room.HEIGHT - 1) {
+							addEntity(tmpl.create().setPosition(x, y), tmpl);
+						}
+					}
+				}
+			}
+			
 			hideDialog();
 		}
 		
