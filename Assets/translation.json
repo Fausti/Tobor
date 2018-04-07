@@ -107,6 +107,12 @@
     ,"TXT_MENU_LOAD" : {
          "de" : "Laden"
     }
+    ,"OBJ_MIRROR_0" : {
+         "de" : "Spiegel"
+    }
+    ,"OBJ_MIRROR_1" : {
+         "de" : "Spiegel"
+    }
     ,"OBJ_ELECTRIC_DOOR_0" : {
          "de" : "elektrische Tür (GESCHLOSSEN)"
     }
@@ -559,6 +565,9 @@
     }
     ,"OBJ_WALL_NW" : {
          "de" : "Mauer"
+    }
+    ,"OBJ_TARGET" : {
+         "de" : "Zielscheibe"
     }
     ,"OBJ_WATER_NW" : {
          "de" : "Wasser"
