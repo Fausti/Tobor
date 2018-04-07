@@ -416,7 +416,7 @@ class EditorScreen extends PlayScreen {
 	
 	function askNewRoom(cb:Dynamic) {
 		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_CREATE_NEW_ROOM"));
-		d.index = 1;
+		d.index = 0;
 		
 		d.onOk = cb;
 		
