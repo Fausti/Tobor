@@ -198,6 +198,11 @@ class ObjectFactory {
 		
 		register("OBJ_ROBOT_FACTORY_0", RobotFactory, Gfx.getSprite(0, 324), {type: 0});
 		register("OBJ_ROBOT_FACTORY_1", RobotFactory, Gfx.getSprite(16, 324), {type: 1});
+		
+		register("OBJ_TARGET", Target, Gfx.getSprite(64, 336));
+		
+		register("OBJ_MIRROR_0", Mirror, Gfx.getSprite(32, 324), {type: 0});
+		register("OBJ_MIRROR_1", Mirror, Gfx.getSprite(48, 324), {type: 1});
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0):ObjectTemplate {

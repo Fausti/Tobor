@@ -187,6 +187,28 @@ class Bullet extends EntityDynamic {
 			die();
 		} else if (Std.is(other, Munition) || Std.is(other, Explosion) || Std.is(other, Grate)) {
 			// Nüscht...
+		} else if (Std.is(other, Target)) {
+			if (other.flag != Marker.MARKER_NO) {
+				room.switchStatus(other.flag);
+			}
+			
+			die();
+		} else if (Std.is(other, Mirror)) {
+			var bullet:Bullet = new Bullet();
+			room.spawnEntity(x, y, bullet);
+			
+			var newDir:Vector2 = Direction.NONE;
+			
+			switch (other.type) {
+				case 0:
+					newDir = mirror(direction, false);
+				case 1:
+					newDir = mirror(direction, true);
+			}
+			
+			bullet.move(newDir, Bullet.BULLET_SPEED);
+				
+			die();
 		} else {
 			die();
 		}
@@ -201,5 +223,29 @@ class Bullet extends EntityDynamic {
 				room.spawnEntity(x, y, munition);
 			}
 		}
+	}
+	
+	public static function mirror(d:Vector2, ?clockwise:Bool = true):Vector2 {
+		if (d == Direction.N) {
+			if (clockwise) return Direction.W;
+			else return Direction.E;
+		}
+		
+		if (d == Direction.S) {
+			if (clockwise) return Direction.E;
+			else return Direction.W;
+		}
+		
+		if (d == Direction.W) {
+			if (clockwise) return Direction.N;
+			else return Direction.S;
+		}
+		
+		if (d == Direction.E) {
+			if (clockwise) return Direction.S;
+			else return Direction.N;
+		}
+		
+		return Direction.NONE;
 	}
 }
