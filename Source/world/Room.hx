@@ -140,12 +140,16 @@ class Room {
 		for (e in entities.getAll()) {
 			e.onRoomStart();
 		}
+		
+		getPlayer().onRoomStart();
 	}
 	
 	public function onRoomEnd() {
 		for (e in entities.getAll()) {
 			e.onRoomEnds();
 		}
+		
+		getPlayer().onRoomEnds();
 	}
 	
 	public function spawnEntity(x:Float, y:Float, e:Entity) {

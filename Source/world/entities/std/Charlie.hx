@@ -106,8 +106,6 @@ class Charlie extends EntityMoveable {
 			walkInWater = true;
 		} else {
 			walkInWater = false;
-			lastX = x;
-			lastY = y;
 		}
 		
 		if (moveData.distanceLeft > 1.0) {
@@ -139,6 +137,7 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override public function die() {
+		var p:Charlie = this;
 		var e:Explosion = new Explosion();
 		
 		e.onRemove = function() {
@@ -147,9 +146,10 @@ class Charlie extends EntityMoveable {
 			
 			if (walkInWater) {
 				walkInWater = false;
-				x = lastX;
-				y = lastY;
 			}
+			
+			p.x = lastX;
+			p.y = lastY;
 		}
 		
 		room.spawnEntity(x, y, e);
@@ -225,5 +225,10 @@ class Charlie extends EntityMoveable {
 		}
 		
 		return false;
+	}
+	
+	override public function onRoomStart() {
+		lastX = x;
+		lastY = y;
 	}
 }

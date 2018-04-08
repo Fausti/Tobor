@@ -328,8 +328,14 @@ class World {
 		var r:Room = rooms.find(x, y, z);
 		
 		if (r != null) {
+			if (roomCurrent != null) {
+				// aktuellen Raum beenden!
+				roomCurrent.onRoomEnd();
+			}
 			roomCurrent = r;
 			player.setRoom(roomCurrent);
+			
+			roomCurrent.onRoomStart();
 		}
 	}
 	
