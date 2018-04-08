@@ -266,12 +266,12 @@ class DialogInventory extends Dialog {
 			if (itm.isSingle()) {
 				if (itm.count() > 1) actions.push(Inventory.ACTION_COUNT);
 				
-				actions.push(Inventory.ACTION_USE);
-				actions.push(Inventory.ACTION_DROP);
-				
 				if (itm.group == "OBJ_MUNITION") {
 					if (itm.count() > 1) actions.push(Inventory.ACTION_DROP_ALL);
 				}
+				
+				actions.push(Inventory.ACTION_USE);
+				actions.push(Inventory.ACTION_DROP);
 			
 				if (hasClone) {
 					if (itm.getItem().id != "OBJ_CLONE") actions.push(Inventory.ACTION_CLONE);
@@ -279,11 +279,11 @@ class DialogInventory extends Dialog {
 				
 				if (hasSign) actions.push(Inventory.ACTION_LOOK);
 			} else {
-				actions.push(Inventory.ACTION_CHOOSE);
-				
 				if (itm.group == "OBJ_MUNITION") {
 					actions.push(Inventory.ACTION_DROP_ALL);
 				}
+				
+				actions.push(Inventory.ACTION_CHOOSE);
 			}
 		} else {
 			if (itm.count() > 1) actions.push(Inventory.ACTION_COUNT);
