@@ -167,7 +167,9 @@ class Bullet extends EntityDynamic {
 	}
 	
 	function onHit(other:Entity, direction:Vector2) {
-		if (Std.is(other, Isolator)) {
+		if (Std.is(other, Bullet)) {
+			
+		} else if (Std.is(other, Isolator)) {
 			other.canEnter(this, direction, BULLET_SPEED);
 			die();
 		} else if (Std.is(other, ElectricFence)) {

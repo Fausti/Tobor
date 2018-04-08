@@ -203,6 +203,10 @@ class ObjectFactory {
 		
 		register("OBJ_MIRROR_0", Mirror, Gfx.getSprite(32, 324), {type: 0});
 		register("OBJ_MIRROR_1", Mirror, Gfx.getSprite(48, 324), {type: 1});
+		
+		for (i in 0 ... 4) {
+			register("OBJ_SHOOTER_" + Std.string(i), Shooter, Gfx.getSprite(80 + (i * 16), 336), {type: i}, Room.LAYER_OVERLAY);
+		}
 	}
 	
 	public function register(id:String, c:Dynamic, spr:Sprite, ?d:Dynamic = null, ?layer:Int = Room.LAYER_LEVEL_0):ObjectTemplate {

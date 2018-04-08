@@ -20,11 +20,11 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_WOOD_0" : {
-         "de" : "Wald"
-    }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
+    }
+    ,"OBJ_WOOD_0" : {
+         "de" : "Wald"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -89,17 +89,17 @@
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
     }
-    ,"TXT_MENU_BORDERS" : {
-         "de" : "Szenenrand einfügen"
-    }
     ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
          "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
     }
-    ,"TXT_EDITOR_NO_ROOM" : {
-         "de" : "keine Szene"
+    ,"TXT_MENU_BORDERS" : {
+         "de" : "Szenenrand einfügen"
     }
     ,"OBJ_WALL_BLACK_NW" : {
          "de" : "Mauer (schwarz)"
+    }
+    ,"TXT_EDITOR_NO_ROOM" : {
+         "de" : "keine Szene"
     }
     ,"OBJ_ELECTRIC_FENCE" : {
          "de" : "elektrischer Zaun (AN)"
@@ -185,14 +185,14 @@
     ,"OBJ_ROOF_1" : {
          "de" : "Dach"
     }
-    ,"MARKER_3" : {
-         "de" : "Markierung"
-    }
     ,"TXT_MENU_SAVE" : {
          "de" : "Speichern"
     }
     ,"OBJ_START_POSITION" : {
          "de" : "Startposition"
+    }
+    ,"MARKER_3" : {
+         "de" : "Markierung"
     }
     ,"OBJ_ROOF_2" : {
          "de" : "Dach"
@@ -202,6 +202,9 @@
     }
     ,"OBJ_ROOF_3" : {
          "de" : "Dach"
+    }
+    ,"TXT_ASK_FOR_SAVEGAME_NAME" : {
+         "de" : "Unter welchem Namen möchtest Du speichern?"
     }
     ,"OBJ_ROOF_4" : {
          "de" : "Dach"
@@ -242,6 +245,9 @@
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
     }
+    ,"OBJ_SHOOTER_0" : {
+         "de" : "Geschütz"
+    }
     ,"TXT_INVENTORY_USE" : {
          "de" : "Benutzen"
     }
@@ -251,11 +257,20 @@
     ,"OBJ_SHADOW#0" : {
          "de" : "Schatten"
     }
+    ,"OBJ_SHOOTER_1" : {
+         "de" : "Geschütz"
+    }
     ,"OBJ_SHADOW#1" : {
          "de" : "Schatten"
     }
+    ,"OBJ_SHOOTER_2" : {
+         "de" : "Geschütz"
+    }
     ,"OBJ_SHADOW#2" : {
          "de" : "Schatten"
+    }
+    ,"OBJ_SHOOTER_3" : {
+         "de" : "Geschütz"
     }
     ,"TXT_ASK_FOR_EPISODE_NAME" : {
          "de" : "Wie möchtest Du deine Episode nennen?"

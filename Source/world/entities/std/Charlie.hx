@@ -1,6 +1,5 @@
 package world.entities.std;
 
-import gfx.Animation;
 import gfx.Sprite;
 import lime.math.Vector2;
 import world.entities.Entity;
