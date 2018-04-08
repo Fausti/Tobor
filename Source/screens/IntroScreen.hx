@@ -10,13 +10,44 @@ import ui.DialogMenu;
  */
 class IntroScreen extends Screen {
 	var bgSprite:Sprite;
+	var SPR_NONE:Sprite;
+	
+	var frameTopLeft:Sprite;
+	var frameBottomLeft:Sprite;
+	var frameTopRight:Sprite;
+	var frameBottomRight:Sprite;
+	
+	var frameTop:Sprite;
+	var frameBottom:Sprite;
+	
+	var frameLeft:Sprite;
+	var frameRight:Sprite;
+	
+	var episodeName:String;
+	var centerX:Int;
 	
 	public function new(game:Tobor) {
 		super(game);
 		
 		bgSprite = Gfx.getSprite(160, 12, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
 		
+		SPR_NONE = Gfx.getSprite(0, 0);
+		
+		frameTopLeft = Gfx.getSprite(0, 240);
+		frameBottomLeft = Gfx.getSprite(16, 240);
+		frameBottomRight = Gfx.getSprite(32, 240);
+		frameTopRight = Gfx.getSprite(48, 240);
+		
+		frameBottom = Gfx.getSprite(64, 240);
+		frameTop = Gfx.getSprite(80, 240);
+		
+		frameLeft = Gfx.getSprite(96, 240, 18, 12);
+		frameRight = Gfx.getSprite(126, 240, 18, 12);
+		
 		game.world.editing = false;
+		
+		episodeName = " " + game.world.getName() + " ";
+		centerX = Std.int(320 - (episodeName.length8() / 2) * 16);
 	}
 	
 	function showLoadgameDialog() {
@@ -65,7 +96,29 @@ class IntroScreen extends Screen {
 	}
 	
 	override public function renderUI() {
+		Tobor.fontBig.drawString(centerX, 36, episodeName, Color.BLACK, Color.WHITE);
+		
+		Gfx.drawTexture(32, 60 + 24, 592 - 32, 264 - 60 - 24, SPR_NONE.uv, Color.WHITE);
+		
 		game.world.highScore.draw(64, 132);
+		
+		Gfx.drawSprite(32, 60 + 24, frameTopLeft);
+		Gfx.drawSprite(32, 264, frameBottomLeft);
+		
+		Gfx.drawSprite(592, 60 + 24, frameTopRight);
+		Gfx.drawSprite(592, 264, frameBottomRight);
+		
+		for (i in 1 ... 15) {
+			Gfx.drawSprite(32, 60 + i * 12 + 24, frameLeft);
+			
+			Gfx.drawSprite(590, 60 + i * 12 + 24, frameRight);
+		}
+		
+		for (i in 1 ... 35) {
+			Gfx.drawSprite(32 + i * 16, 60 + 24, frameTop);
+			
+			Gfx.drawSprite(32 + i * 16, 264, frameBottom);
+		}
 		
 		super.renderUI();
 	}

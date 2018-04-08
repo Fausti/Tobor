@@ -616,4 +616,8 @@ class World {
 			}
 		}
 	}
+	
+	public function getName():String {
+		return file.getName();
+	}
 }
