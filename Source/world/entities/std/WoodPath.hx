@@ -27,6 +27,8 @@ class WoodPath extends EntityStatic {
 		
 		if (Std.is(e, Charlie) && getInventory().hasItem("OBJ_SHOES")) return true;
 		
+		if (Std.is(e, EntityCollectable)) return true;
+		
 		return false;
 	}
 }
