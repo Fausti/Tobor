@@ -18,11 +18,19 @@ class EntityItem extends EntityCollectable {
 	}
 	
 	public function onDrop(item:InventoryItem, x:Float, y:Float) {
-		room.spawnEntity(x, y, this);
+		var canDrop:Bool = true;
 		
-		this.content = item.content;
+		for (entity in room.getAllEntitiesAt(getPlayer().x, getPlayer().y, getPlayer())) {
+			if (!entity.canEnter(this, Direction.NONE, 0)) canDrop = false;
+		}
+						
+		if (canDrop) { 			
+			room.spawnEntity(x, y, this);
+		
+			this.content = item.content;
 
-		removeFromInventory();
+			removeFromInventory();
+		}
 	}
 	
 	public function onLook(item:InventoryItem) {

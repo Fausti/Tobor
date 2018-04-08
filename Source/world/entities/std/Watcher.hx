@@ -32,14 +32,14 @@ class Watcher extends EntityDynamic {
 			var distToPlayer:Float = Utils.distance(x, y, player.x, player.y);
 			
 			if (room.getAllEntitiesAt(x, y, this).length == 0) {
-				if (distToPlayer <= 3.0) {
+				if (distToPlayer <= 4.0) {
 					visible = true;
 				} else {
 					visible = false;
 				}
 			}
 			
-			if (distToPlayer <= 1.0) {
+			if (distToPlayer <= 1.5) {
 				var robot:Robot = new Robot();
 				robot.init();
 			

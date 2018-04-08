@@ -232,12 +232,7 @@ class Inventory {
 						
 						remove("OBJ_CLONE", 1);		
 					case Inventory.ACTION_DROP:
-						var canDrop:Bool = true;
-						for (entity in world.room.getAllEntitiesAt(world.player.x, world.player.y, world.player)) {
-							if (!entity.canEnter(e, Direction.NONE, 0)) canDrop = false;
-						}
-						
-						if (canDrop) obj.onDrop(item, world.player.x, world.player.y);
+						obj.onDrop(item, world.player.x, world.player.y);
 					case Inventory.ACTION_LOOK:
 						obj.onLook(item);
 					case Inventory.ACTION_USE:

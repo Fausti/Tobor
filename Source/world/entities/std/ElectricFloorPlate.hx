@@ -32,6 +32,7 @@ class ElectricFloorPlate extends EntityStatic implements IElectric {
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI) || Std.is(e, EntityMoveable)) return true;
+		if (Std.is(e, EntityCollectable)) return true;
 		
 		return false;
 	}
