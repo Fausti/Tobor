@@ -246,7 +246,7 @@ class PlayScreen extends Screen {
 	
 	function showInventory() {
 		// keine Inventarnutztung wenn sich der Spieler bewegt, unsichtbar/tot ist
-		if (getPlayer().isMoving() || !getPlayer().visible || !getPlayer().alive) return;
+		if (getPlayer().isMoving() || !getPlayer().visible) return;
 		
 		// oder wenn das inventar leer ist
 		if (getInventory().size == 0) return;
