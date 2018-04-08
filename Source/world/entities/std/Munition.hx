@@ -29,7 +29,8 @@ class Munition extends EntityItem {
 	}
 	
 	override public function hasWeight():Bool {
-		return (type == 5);
+		return false;
+		// return (type == 5);
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
