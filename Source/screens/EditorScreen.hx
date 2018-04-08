@@ -224,6 +224,9 @@ class EditorScreen extends PlayScreen {
 	}
 
 	function switchEditMode() {
+		// kein Umschalten während Spieler sich bewegt oder unsichtbar ist
+		if (getPlayer().isMoving() || !getPlayer().visible) return;
+		
 		if (editMode) {
 			// Savestate anlegen
 			game.world.room.saveState();
