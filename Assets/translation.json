@@ -20,14 +20,14 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_CLOCK" : {
-         "de" : "Speicheruhr"
+    ,"OBJ_TREE" : {
+         "de" : "Weihnachtsbaum"
     }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
     }
-    ,"OBJ_TREE" : {
-         "de" : "Weihnachtsbaum"
+    ,"OBJ_CLOCK" : {
+         "de" : "Speicheruhr"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -91,6 +91,9 @@
     }
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
+    }
+    ,"OBJ_CLONE" : {
+         "de" : "Verdoppler"
     }
     ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
          "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
@@ -385,6 +388,9 @@
     }
     ,"OBJ_FLIPPERS" : {
          "de" : "Schwimmflossen"
+    }
+    ,"TXT_INVENTORY_CLONE" : {
+         "de" : "Verdoppeln"
     }
     ,"OBJ_KEY#7" : {
          "de" : "Schlüssel Nr. 8"

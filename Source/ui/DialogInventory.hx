@@ -25,6 +25,7 @@ class DialogInventory extends Dialog {
 	private var actionIndex:Int = 0;
 	
 	var hasSign:Bool = false;
+	var hasClone:Bool = true;
 	
 	public var STRINGS:Array<String> = [];
 	
@@ -44,10 +45,13 @@ class DialogInventory extends Dialog {
 		STRINGS[Inventory.ACTION_LOOK] = Text.get("TXT_INVENTORY_LOOK");
 		STRINGS[Inventory.ACTION_CHOOSE] = Text.get("TXT_INVENTORY_CHOOSE");
 		STRINGS[Inventory.ACTION_DROP_ALL] = Text.get("TXT_INVENTORY_DROP_ALL");
+		STRINGS[Inventory.ACTION_CLONE] = Text.get("TXT_INVENTORY_CLONE");
 	}
 	
 	override public function show() {
 		super.show();
+		
+		hasClone = inventory.hasItem("OBJ_CLONE");
 		
 		currentGroup = null;
 		
@@ -269,6 +273,10 @@ class DialogInventory extends Dialog {
 					if (itm.count() > 1) actions.push(Inventory.ACTION_DROP_ALL);
 				}
 			
+				if (hasClone) {
+					if (itm.getItem().id != "OBJ_CLONE") actions.push(Inventory.ACTION_CLONE);
+				}
+				
 				if (hasSign) actions.push(Inventory.ACTION_LOOK);
 			} else {
 				actions.push(Inventory.ACTION_CHOOSE);
@@ -283,6 +291,9 @@ class DialogInventory extends Dialog {
 			actions.push(Inventory.ACTION_USE);
 			actions.push(Inventory.ACTION_DROP);
 			
+			if (hasClone) {
+				if (itm.getItem().id != "OBJ_CLONE") actions.push(Inventory.ACTION_CLONE);
+			}
 			if (hasSign) actions.push(Inventory.ACTION_LOOK);
 		}
 		

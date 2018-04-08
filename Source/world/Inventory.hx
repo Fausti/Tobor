@@ -15,6 +15,7 @@ class Inventory {
 	public static inline var ACTION_LOOK		= 3;
 	public static inline var ACTION_CHOOSE 		= 4;
 	public static inline var ACTION_DROP_ALL 	= 5;
+	public static inline var ACTION_CLONE		= 6;
 	
 	private var MAX_MUNITION:Int = 21;
 	private var SPR_MUNITION:Array<Sprite> = [];
@@ -224,6 +225,16 @@ class Inventory {
 				var obj:EntityItem = cast e; 
 		
 				switch(action) {
+					case Inventory.ACTION_CLONE:
+						if (item.id.contains("OBJ_MUNITION")) {
+							world.room.spawnEntity(world.player.x, world.player.y, e);
+							e.onEnter(world.player, Direction.NONE);
+						} else {
+							item.count++;
+						
+						}
+						
+						remove("OBJ_CLONE", 1);		
 					case Inventory.ACTION_DROP:
 						obj.onDrop(item, world.player.x, world.player.y);
 					case Inventory.ACTION_LOOK:
