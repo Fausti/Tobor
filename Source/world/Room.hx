@@ -38,6 +38,8 @@ class Room {
 	public var robots:Int = 0;
 	public var underRoof:Bool = false;
 	
+	public var treeTimer:Float = 0;
+	
 	var listRemove:Array<Entity>;
 	
 	function get_length():Int {
@@ -95,6 +97,11 @@ class Room {
 					return;
 				}
 			}
+		}
+		
+		if (treeTimer != 0.0) {
+			treeTimer = treeTimer - deltaTime;
+			if (treeTimer < 0) treeTimer = 0.0;
 		}
 	}
 	
@@ -267,6 +274,10 @@ class Room {
 	
 	public function getPlayer():Charlie {
 		return world.player;
+	}
+	
+	public function addTreeTimer(v:Float) {
+		treeTimer = v;
 	}
 	
 	// Save / Load

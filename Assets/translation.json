@@ -26,6 +26,9 @@
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
     }
+    ,"OBJ_TREE" : {
+         "de" : "Weihnachtsbaum"
+    }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
     }
@@ -495,7 +498,7 @@
          "de" : "Nein"
     }
     ,"TXT_INVENTORY_DROP_ALL" : {
-         "de" : "Ablegen (Alle)"
+         "de" : "Alles weg"
     }
     ,"TXT_MENU_OBJECTS" : {
          "de" : "Objektauswahl..."

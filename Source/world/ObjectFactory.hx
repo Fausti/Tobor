@@ -63,6 +63,8 @@ class ObjectFactory {
 		register("OBJ_MAGNET#0", Magnet, Gfx.getSprite(224, 12), {type: 0});
 		register("OBJ_MAGNET#1", Magnet, Gfx.getSprite(240, 12), {type: 1});
 		
+		register("OBJ_TREE", Tree, Gfx.getSprite(80, 24));
+		
 		register("OBJ_SLING", Sling, Gfx.getSprite(240, 60));
 		
 		for (i in 0 ... 6) {

@@ -498,6 +498,10 @@ class World {
 		for (r in rooms) {
 			var worldData:Map<String, Dynamic> = new Map();
 			
+			if (!editing) {
+				worldData.set("treeTimer", r.treeTimer);
+			}
+			
 			worldData.set("x", r.position.x);
 			worldData.set("y", r.position.y);
 			worldData.set("z", r.position.z);
@@ -566,9 +570,14 @@ class World {
 		var ry:Int = -1;
 		var rz:Int = -1;
 		var rdata = null;
+		var rtree:Float = 0;
 		
 		for (key in Reflect.fields(data)) {
 			switch(key) {
+			case "treeTimer":
+				if (!editing) {
+					rtree = Reflect.field(data, "treeTimer");
+				}
 			case "x":
 				rx = Reflect.field(data, "x");
 			case "y":

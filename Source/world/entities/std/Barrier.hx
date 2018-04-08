@@ -23,17 +23,20 @@ class Barrier extends EntityDynamic {
 		setSprite(spr_closed);
 	}
 	
-	override public function update(deltaTime:Float) {
-		super.update(deltaTime);
-		
-		if (room.robots != 0) {
-			setSprite(spr_closed);
+	override public function render() {
+		if (room.treeTimer > 0.0) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr_open);
 		} else {
-			setSprite(spr_open);
+			if (room.robots != 0) {
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr_closed);
+			} else {
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, spr_open);
+			}
 		}
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (room.treeTimer > 0.0) return true;
 		if (room.robots != 0) return false;
 		
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
