@@ -3,6 +3,8 @@ package screens;
 import lime.math.Vector2;
 import ui.DialogInput;
 import ui.DialogMessage;
+import world.Inventory;
+import world.World;
 import world.entities.Entity;
 import world.entities.std.Charlie;
 
@@ -51,8 +53,8 @@ class PlayScreen extends Screen {
 	}
 	
 	function init(?loadFileName:String = null) {
-		game.world.init(loadFileName);
-		game.world.start();
+		getWorld().init(loadFileName);
+		getWorld().start();
 
 		askForName();
 	}
@@ -73,35 +75,51 @@ class PlayScreen extends Screen {
 			checkPlayerMovement();
 		}
 		
-		game.world.update(deltaTime);
+		getWorld().update(deltaTime);
 		
 		if (!Std.is(this, EditorScreen)) {
-			if (game.world.lives <= 0) {
+			if (getWorld().lives <= 0) {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), true);
 				
 				d.onCancel = function () {
-					game.world.checkHighScore();
+					getWorld().checkHighScore();
 				}
 				
 				d.onOk = function () {
-					game.world.checkHighScore();
+					getWorld().checkHighScore();
 				}
 				
 				showDialog(d);
-			} else if (game.world.episodeWon) {
+			} else if (getWorld().episodeWon) {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), true);
 				
 				d.onCancel = function () {
-					game.world.checkHighScore();
+					getWorld().checkHighScore();
 				}
 				
 				d.onOk = function () {
-					game.world.checkHighScore();
+					getWorld().checkHighScore();
 				}
 				
 				showDialog(d);
 			}
 		}
+	}
+	
+	inline function getRoom():Room {
+		return game.world.room;
+	}
+	
+	inline function getWorld():World {
+		return game.world;
+	}
+	
+	inline function getPlayer():Charlie {
+		return game.world.player;
+	}
+	
+	inline function getInventory():Inventory {
+		return game.world.inventory;
 	}
 	
 	function checkPlayerMovement() {
@@ -117,48 +135,14 @@ class PlayScreen extends Screen {
 	}
 	
 	function movePlayer(direction:Vector2, speed:Float) {
-		var player = game.world.player;
-		
-		// if (!Room.isOutsideMap(player.x + direction.x, player.y + direction.y)) {
-		game.world.player.move(direction, speed);
-		//} else {
-			/*
-			if (!game.world.player.isMoving()) {
-				var nextRoom = game.world.rooms.find(
-					Std.int(game.world.room.position.x + direction.x), 
-					Std.int(game.world.room.position.y + direction.y), 
-					game.world.room.position.z
-				);
-				
-				if (nextRoom != null) {
-					game.world.room.saveState();
-					game.world.switchRoom(
-						Std.int(game.world.room.position.x + direction.x), 
-						Std.int(game.world.room.position.y + direction.y), 
-						game.world.room.position.z
-					);
-					game.world.room.restoreState();
-					
-					if (player.x == 0) player.x = Room.WIDTH - 1;
-					else if (player.x == Room.WIDTH - 1) player.x = 0;
-					else if (player.y == 0) player.y = Room.HEIGHT - 1;
-					else if (player.y == Room.HEIGHT - 1) player.y = 0;
-					
-					var atTarget:Array<Entity> = game.world.room.getAllEntitiesAt(player.x, player.y, player);
-					for (e in atTarget) {
-						e.onEnter(player, direction);
-					}
-					
-					showRoomName();
-					Input.wait(0.25);
-				}
-			} */
-		// }
+		if (!getPlayer().isMoving() && getPlayer().visible) {
+			getPlayer().move(direction, speed);
+		}
 	}
 	
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
-		game.world.render();
+		getWorld().render();
 	}
 	
 	override public function renderUI() {
@@ -178,19 +162,19 @@ class PlayScreen extends Screen {
 		}
 		
 		// TODO: Blaumann! Oder Charlieobjekt fragen?
-		if (game.world.player.walkInTunnel) {
+		if (getPlayer().walkInTunnel) {
 			Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_TUNNEL);
 		} else {
-			if (game.world.inventory.containsOverall) {
+			if (getInventory().containsOverall) {
 				Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE_OVERALL);
 			} else {
 				Gfx.drawSprite(8 * Tobor.TILE_WIDTH + Tobor.TILE_WIDTH / 2, 0, SPR_CHARLIE);
 			}
 		}
 		
-		var punkte = game.world.points; // game.world.player.points;
-		var leben = game.world.lives; // game.world.player.lives;
-		var garlic = Math.ceil(game.world.garlic);
+		var punkte = getWorld().points;
+		var leben = getWorld().lives;
+		var garlic = Math.ceil(getWorld().garlic);
 		
 		if (garlic > 0) {
 			if (garlic < 100) {
@@ -206,13 +190,13 @@ class PlayScreen extends Screen {
 		var strStatus:String = TXT_STATUS_POINTS + " " + StringTools.lpad(Std.string(punkte), "0", 8) + " " + TXT_STATUS_LIVES + " " + Std.string(leben);
 		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
 		
-		var gold = game.world.gold; // game.world.player.gold;
+		var gold = getWorld().gold; // game.world.player.gold;
 		if (gold > 0) {
 			Gfx.drawSprite(416, 0, SPR_GOLD);
 			Tobor.fontSmall.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
-		var weight = game.world.inventory.size; // game.world.player.inventory.length;
+		var weight = getInventory().size; // game.world.player.inventory.length;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawSprite(471, 0, SPR_BAG);
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
@@ -243,7 +227,7 @@ class PlayScreen extends Screen {
 				showLoadgameDialog();
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
-				game.world.checkHighScore();
+				getWorld().checkHighScore();
 			}],	
 		]);
 		
@@ -261,7 +245,11 @@ class PlayScreen extends Screen {
 	}
 	
 	function showInventory() {
-		if (game.world.inventory.size == 0) return;
+		// keine Inventarnutztung wenn sich der Spieler bewegt, unsichtbar/tot ist
+		if (getPlayer().isMoving() || !getPlayer().visible || !getPlayer().alive) return;
+		
+		// oder wenn das inventar leer ist
+		if (getInventory().size == 0) return;
 		
 		if (dialogInventory == null) {
 			dialogInventory = new DialogInventory(this, 0, 0);
@@ -269,7 +257,7 @@ class PlayScreen extends Screen {
 			dialogInventory.onOk = function () {
 				hideDialog();
 			
-				game.world.inventory.doItemAction(game.world, dialogInventory.selectedAction, dialogInventory.selectedItem);
+				getInventory().doItemAction(getWorld(), dialogInventory.selectedAction, dialogInventory.selectedItem);
 			}
 		
 			dialogInventory.onCancel = function () {
@@ -282,7 +270,7 @@ class PlayScreen extends Screen {
 	
 	function askForName() {
 		if (Std.is(this, EditorScreen)) return;
-		if (game.world.playerName != null) {
+		if (getWorld().playerName != null) {
 			showRoomName();
 			return;
 		}
@@ -294,7 +282,7 @@ class PlayScreen extends Screen {
 		}
 		
 		d.onOk = function () {
-			game.world.playerName = d.getInput();
+			getWorld().playerName = d.getInput();
 			showRoomName();
 		}
 		
@@ -302,7 +290,7 @@ class PlayScreen extends Screen {
 	}
 	
 	public function showLoadgameDialog() {
-		var files = game.world.file.getSavegames();
+		var files = getWorld().file.getSavegames();
 		
 		if (files.length > 0) {
 			var d:DialogFiles = new DialogFiles(this, 0, 0, Text.get("TXT_LOAD_WHICH_GAME"), files);
@@ -320,14 +308,14 @@ class PlayScreen extends Screen {
 	public function showRoomName(?force:Bool = false) {
 		if (Std.is(this, EditorScreen)) return;
 		
-		if (!game.world.roomVisited() || force) {
-			var roomName:String = game.world.room.getName();
+		if (!getWorld().roomVisited() || force) {
+			var roomName:String = getRoom().getName();
 						
 			var d:DialogMessage = new DialogMessage(this, 0, 0, "*** " + roomName + " ***", false);
 						
 			showDialog(d);
 						
-			game.world.markRoomVisited();
+			getWorld().markRoomVisited();
 		}
 	}
 }
