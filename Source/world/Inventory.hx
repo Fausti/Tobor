@@ -216,6 +216,10 @@ class Inventory {
 					trace("Item is not an item!");
 					return;
 				}
+				
+				for (entity in world.room.getAllEntitiesAt(world.player.x, world.player.y, world.player)) {
+					if (!entity.canEnter(e, Direction.NONE, 0)) return;
+				}
 		
 				var obj:EntityItem = cast e; 
 		
