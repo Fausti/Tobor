@@ -25,8 +25,14 @@ class Door extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		// Charlie nur mit Schlüssel
 		if (Std.is(e, Charlie)) {
 			return room.world.inventory.hasItem("OBJ_KEY#" + type);
+		}
+		
+		// Roboter nur wenn Charlie AUF der Tür steht
+		if (Std.is(e, Robot)) {
+			if (getPlayer().gridX == gridX && getPlayer().gridY == gridY) return true;
 		}
 		
 		return false;
