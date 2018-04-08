@@ -20,11 +20,11 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
-    ,"OBJ_CLOCK" : {
-         "de" : "Speicheruhr"
-    }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
+    }
+    ,"OBJ_CLOCK" : {
+         "de" : "Speicheruhr"
     }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
@@ -89,17 +89,17 @@
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
     }
-    ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
-         "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
-    }
     ,"TXT_MENU_BORDERS" : {
          "de" : "Szenenrand einfügen"
     }
-    ,"OBJ_WALL_BLACK_NW" : {
-         "de" : "Mauer (schwarz)"
+    ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
+         "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
     }
     ,"TXT_EDITOR_NO_ROOM" : {
          "de" : "keine Szene"
+    }
+    ,"OBJ_WALL_BLACK_NW" : {
+         "de" : "Mauer (schwarz)"
     }
     ,"OBJ_ELECTRIC_FENCE" : {
          "de" : "elektrischer Zaun (AN)"
@@ -478,6 +478,9 @@
     }
     ,"TXT_DIALOG_CANCEL" : {
          "de" : "Nein"
+    }
+    ,"TXT_INVENTORY_DROP_ALL" : {
+         "de" : "Ablegen (Alle)"
     }
     ,"TXT_MENU_OBJECTS" : {
          "de" : "Objektauswahl..."

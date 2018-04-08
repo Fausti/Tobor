@@ -9,11 +9,12 @@ import world.ObjectFactory.ObjectTemplate;
  * @author Matthias Faust
  */
 class Inventory {
-	public static inline var ACTION_COUNT 	= 0;
-	public static inline var ACTION_USE 	= 1;
-	public static inline var ACTION_DROP	= 2;
-	public static inline var ACTION_LOOK	= 3;
-	public static inline var ACTION_CHOOSE 	= 4;
+	public static inline var ACTION_COUNT 		= 0;
+	public static inline var ACTION_USE 		= 1;
+	public static inline var ACTION_DROP		= 2;
+	public static inline var ACTION_LOOK		= 3;
+	public static inline var ACTION_CHOOSE 		= 4;
+	public static inline var ACTION_DROP_ALL 	= 5;
 	
 	private var MAX_MUNITION:Int = 21;
 	private var SPR_MUNITION:Array<Sprite> = [];

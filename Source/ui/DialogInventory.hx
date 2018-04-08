@@ -43,6 +43,7 @@ class DialogInventory extends Dialog {
 		STRINGS[Inventory.ACTION_DROP] = Text.get("TXT_INVENTORY_DROP");
 		STRINGS[Inventory.ACTION_LOOK] = Text.get("TXT_INVENTORY_LOOK");
 		STRINGS[Inventory.ACTION_CHOOSE] = Text.get("TXT_INVENTORY_CHOOSE");
+		STRINGS[Inventory.ACTION_DROP_ALL] = Text.get("TXT_INVENTORY_DROP_ALL");
 	}
 	
 	override public function show() {
@@ -112,12 +113,16 @@ class DialogInventory extends Dialog {
 				rootIndex = index;
 				
 				if (!rootGroup.content[index].isSingle()) {
-					if (rootGroup.content[index].group == "OBJ_MUNITION" && actions[actionIndex] == Inventory.ACTION_DROP) {
-						selectedAction = actions[actionIndex];
+					if (rootGroup.content[index].group == "OBJ_MUNITION" && actions[actionIndex] == Inventory.ACTION_DROP_ALL) {
+						selectedAction = Inventory.ACTION_DROP; // actions[actionIndex];
 						selectedItem = [];
 					
 						for (itm in rootGroup.content[index].content) {
-							selectedItem.push(itm.getItem());
+							var itm2 = itm.getItem();
+							
+							for (i in 0 ... itm2.count) {
+								selectedItem.push(itm.getItem());
+							}
 						}
 						
 						ok();
@@ -132,7 +137,19 @@ class DialogInventory extends Dialog {
 					return;
 				} else {
 					selectedAction = actions[actionIndex];
-					selectedItem = [currentGroup.content[index].getItem()];
+					
+					if (selectedAction == Inventory.ACTION_DROP_ALL) {
+						selectedAction = Inventory.ACTION_DROP;
+						
+						selectedItem = [];
+						
+						var itm:InventoryItem = currentGroup.content[index].getItem();
+						for (i in 0 ... itm.count) {
+							selectedItem.push(itm);
+						}
+					} else {
+						selectedItem = [currentGroup.content[index].getItem()];
+					}
 					
 					ok();
 					Input.wait(0.25);
@@ -247,13 +264,17 @@ class DialogInventory extends Dialog {
 				
 				actions.push(Inventory.ACTION_USE);
 				actions.push(Inventory.ACTION_DROP);
+				
+				if (itm.group == "OBJ_MUNITION") {
+					if (itm.count() > 1) actions.push(Inventory.ACTION_DROP_ALL);
+				}
 			
 				if (hasSign) actions.push(Inventory.ACTION_LOOK);
 			} else {
 				actions.push(Inventory.ACTION_CHOOSE);
 				
 				if (itm.group == "OBJ_MUNITION") {
-					actions.push(Inventory.ACTION_DROP);
+					actions.push(Inventory.ACTION_DROP_ALL);
 				}
 			}
 		} else {
