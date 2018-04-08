@@ -47,7 +47,12 @@ class Inventory {
 			var template:ObjectTemplate = factory.findFromID(key);
 			
 			if (template != null) {
-				add(key, template.spr, Reflect.field(data, "count"), Reflect.field(data, "content"));
+				var dataItem = Reflect.field(data, key);
+				
+				var count:Int = Reflect.field(dataItem, "count");
+				var content:String = Reflect.field(dataItem, "content");
+				
+				add(key, template.spr, count, content);
 			} else {
 				trace("Couldn't find inventory item: " + key);
 			}
