@@ -345,7 +345,13 @@ class ObjectTemplate {
 		this.editorName = Text.get(id);
 		
 		var temp:String = Text.get(id + "_DESC");
-		temp = Text.get(id + "_PICKUP");
+		
+		var e = Type.createEmptyInstance(c);
+		if (e != null) {
+			if (Std.is(e, EntityItem)) {
+				temp = Text.get(id.split("#")[0] + "_PICKUP");
+			}
+		}
 	}
 	
 	public function allowInEditor(v:Bool):ObjectTemplate {

@@ -37,6 +37,8 @@ class Sound {
 	public static var SND_JINGLE_0:AudioBuffer;
 	public static var SND_JINGLE_1:AudioBuffer;
 	
+	public static var SND_USE_GARLIC:AudioBuffer;
+	
 	public static function init() {
 		MUS_CHOOSER = Assets.getAudioBuffer("assets/mus/chooser.ogg");
 		MUS_INTRO_DOS = Assets.getAudioBuffer("assets/mus/intro-dos.ogg");
@@ -50,6 +52,8 @@ class Sound {
 		SND_PICKUP_MISC = Assets.getAudioBuffer("assets/sfx/pickup-misc.wav");
 		SND_PICKUP_KEY = Assets.getAudioBuffer("assets/sfx/pickup-key.wav");
 		SND_PICKUP_GOLD = Assets.getAudioBuffer("assets/sfx/pickup-gold.wav");
+		
+		SND_USE_GARLIC = Assets.getAudioBuffer("assets/sfx/use-garlic.wav");
 		
 		SND_ROTATE_ARROW = Assets.getAudioBuffer("assets/sfx/drop-magnet.wav");
 		

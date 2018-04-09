@@ -74,11 +74,11 @@
     ,"OBJ_WOOD_PATH" : {
          "de" : "Waldpfad"
     }
-    ,"TXT_MENU_EXIT" : {
-         "de" : "Abbruch"
-    }
     ,"OBJ_STAIRS_DOWN" : {
          "de" : "Treppe (runter)"
+    }
+    ,"TXT_MENU_EXIT" : {
+         "de" : "Abbruch"
     }
     ,"OBJ_MUNITION#3" : {
          "de" : "Munition"
@@ -170,6 +170,9 @@
     ,"OBJ_ROBOT" : {
          "de" : "Roboter (zufällig)"
     }
+    ,"OBJ_KEY_PICKUP" : {
+         "de" : "Dies ist aber ein schöner Schlüssel! Vielleicht wirst Du einmal an der entsprechenden Tür vorbeikommen..."
+    }
     ,"OBJ_ISOLATOR_SOFT" : {
          "de" : "Isolator (betretbar)"
     }
@@ -191,10 +194,13 @@
     ,"TXT_NEW_EPISODE" : {
          "de" : ">> NEU <<"
     }
+    ,"OBJ_ROOF_0" : {
+         "de" : "Dach"
+    }
     ,"MARKER_2" : {
          "de" : "Markierung"
     }
-    ,"OBJ_ROOF_0" : {
+    ,"OBJ_ROOF_1" : {
          "de" : "Dach"
     }
     ,"TXT_MENU_SAVE" : {
@@ -203,17 +209,14 @@
     ,"MARKER_3" : {
          "de" : "Markierung"
     }
-    ,"OBJ_ROOF_1" : {
-         "de" : "Dach"
-    }
     ,"OBJ_START_POSITION" : {
          "de" : "Startposition"
     }
-    ,"MARKER_4" : {
-         "de" : "Markierung"
-    }
     ,"OBJ_ROOF_2" : {
          "de" : "Dach"
+    }
+    ,"MARKER_4" : {
+         "de" : "Markierung"
     }
     ,"OBJ_ROOF_3" : {
          "de" : "Dach"
@@ -221,17 +224,14 @@
     ,"TXT_ASK_FOR_SAVEGAME_NAME" : {
          "de" : "Unter welchem Namen möchtest Du speichern?"
     }
-    ,"TXT_EDITOR_OBJECTS" : {
-         "de" : "Objekte"
-    }
     ,"OBJ_ROOF_4" : {
          "de" : "Dach"
     }
+    ,"TXT_EDITOR_OBJECTS" : {
+         "de" : "Objekte"
+    }
     ,"OBJ_WALL" : {
          "de" : "Mauer"
-    }
-    ,"OBJ_ARROW_0" : {
-         "de" : "Pfeil"
     }
     ,"TXT_MENU_HELP" : {
          "de" : "Hilfe"
@@ -239,13 +239,13 @@
     ,"OBJ_ROOF_5" : {
          "de" : "Dach"
     }
-    ,"OBJ_ARROW_1" : {
+    ,"OBJ_ARROW_0" : {
          "de" : "Pfeil"
     }
     ,"OBJ_ROOF_6" : {
          "de" : "Dach"
     }
-    ,"OBJ_ARROW_2" : {
+    ,"OBJ_ARROW_1" : {
          "de" : "Pfeil"
     }
     ,"OBJ_WATCHER" : {
@@ -254,17 +254,20 @@
     ,"OBJ_ROOF_7" : {
          "de" : "Dach"
     }
+    ,"OBJ_ARROW_2" : {
+         "de" : "Pfeil"
+    }
     ,"TXT_EDITOR_ASK_CREATE_NEW_ROOM" : {
          "de" : "Keine Szene vorhanden!\n\nDiese Szene erstellen?"
+    }
+    ,"OBJ_ROOF_8" : {
+         "de" : "Dach"
     }
     ,"OBJ_ARROW_3" : {
          "de" : "Pfeil"
     }
     ,"OBJ_SHADOW#0" : {
          "de" : "Schatten"
-    }
-    ,"OBJ_ROOF_8" : {
-         "de" : "Dach"
     }
     ,"TXT_INVENTORY_USE" : {
          "de" : "Benutzen"
@@ -305,14 +308,14 @@
     ,"OBJ_BUCKET#0" : {
          "de" : "leerer Eimer"
     }
+    ,"OBJ_NOTICE" : {
+         "de" : "Zettel"
+    }
     ,"OBJ_BUCKET#1" : {
          "de" : "gefüllter Eimer"
     }
     ,"OBJ_TELEPORT_END_0" : {
          "de" : "Negativ Teleporter Ziel"
-    }
-    ,"OBJ_NOTICE" : {
-         "de" : "Zettel"
     }
     ,"OBJ_TELEPORT_END_1" : {
          "de" : "Positiv Teleporter Ziel"
@@ -323,6 +326,9 @@
     ,"OBJ_DOOR#0" : {
          "de" : "Tür Nr. 1"
     }
+    ,"TXT_MENU_STORY" : {
+         "de" : "Story"
+    }
     ,"TXT_ASK_FOR_ROOM_NAME" : {
          "de" : "Szenennamen ändern\n\nWie soll die Szene genannt werden?"
     }
@@ -331,9 +337,6 @@
     }
     ,"OBJ_DOOR#1" : {
          "de" : "Tür Nr. 2"
-    }
-    ,"TXT_MENU_STORY" : {
-         "de" : "Story"
     }
     ,"OBJ_KEY#1" : {
          "de" : "Schlüssel Nr. 2"
@@ -395,6 +398,12 @@
     ,"OBJ_DOOR#7" : {
          "de" : "Tür Nr. 8"
     }
+    ,"TXT_INVENTORY_CLONE" : {
+         "de" : "Verdoppeln"
+    }
+    ,"OBJ_FLIPPERS" : {
+         "de" : "Schwimmflossen"
+    }
     ,"OBJ_KEY#7" : {
          "de" : "Schlüssel Nr. 8"
     }
@@ -403,12 +412,6 @@
     }
     ,"OBJ_DOOR#8" : {
          "de" : "Tür Nr. 9"
-    }
-    ,"TXT_INVENTORY_CLONE" : {
-         "de" : "Verdoppeln"
-    }
-    ,"OBJ_FLIPPERS" : {
-         "de" : "Schwimmflossen"
     }
     ,"OBJ_KEY#8" : {
          "de" : "Schlüssel Nr. 9"
@@ -455,11 +458,11 @@
     ,"OBJ_CLOCK_PICKUP" : {
          "de" : "Eine solche Uhr benötigst Du unbedingt, wenn du nicht immer von vorne anfangen willst!"
     }
-    ,"TXT_SET_DESC_IN_INFO_FILE" : {
-         "de" : ""
-    }
     ,"OBJ_SKULL" : {
          "de" : "Totenkopf"
+    }
+    ,"TXT_SET_DESC_IN_INFO_FILE" : {
+         "de" : ""
     }
     ,"OBJ_GARLIC" : {
          "de" : "Knoblauch"
@@ -494,14 +497,14 @@
     ,"DRIFT_S" : {
          "de" : "Strömung"
     }
+    ,"OBJ_WALL_DISSOLVE" : {
+         "de" : "sich auflösende Mauer"
+    }
     ,"OBJ_QUESTION_MARK" : {
          "de" : "Fragezeichen"
     }
     ,"TXT_MENU_RESTART" : {
          "de" : "Szenenanfang"
-    }
-    ,"OBJ_WALL_DISSOLVE" : {
-         "de" : "sich auflösende Mauer"
     }
     ,"OBJ_WALL_BLACK_SE" : {
          "de" : "Mauer (schwarz)"
@@ -524,11 +527,11 @@
     ,"TXT_DIALOG_CANCEL" : {
          "de" : "Nein"
     }
-    ,"TXT_MENU_OBJECTS" : {
-         "de" : "Objektauswahl..."
-    }
     ,"TXT_INVENTORY_DROP_ALL" : {
          "de" : "Alles weg"
+    }
+    ,"TXT_MENU_OBJECTS" : {
+         "de" : "Objektauswahl..."
     }
     ,"OBJ_WALL_NE" : {
          "de" : "Mauer"
@@ -566,14 +569,14 @@
     ,"TXT_MENU_OPTIONS" : {
          "de" : "Einstellungen"
     }
+    ,"DRIFT_NE" : {
+         "de" : "Strömung"
+    }
     ,"OBJ_DOOR#11" : {
          "de" : "Tür Nr. 12"
     }
     ,"OBJ_GOAL_1" : {
          "de" : "Ziel"
-    }
-    ,"DRIFT_NE" : {
-         "de" : "Strömung"
     }
     ,"OBJ_DOOR#12" : {
          "de" : "Tür Nr. 13"
@@ -602,11 +605,11 @@
     ,"OBJ_WALL_BLACK_SW" : {
          "de" : "Mauer (schwarz)"
     }
-    ,"OBJ_GOAL_5" : {
-         "de" : "Ziel"
-    }
     ,"TXT_MENU_BACKPACK" : {
          "de" : "Rucksack"
+    }
+    ,"OBJ_GOAL_5" : {
+         "de" : "Ziel"
     }
     ,"TXT_POINTS" : {
          "de" : "Punkte"
@@ -638,20 +641,20 @@
     ,"OBJ_TUNNEL#1" : {
          "de" : "Tunnel"
     }
+    ,"OBJ_ROBOT_FACTORY_0" : {
+         "de" : "Roboter Fabrikator (AUS)"
+    }
+    ,"OBJ_GARLIC_USE" : {
+         "de" : "Puuh! So eine Knoblauchknolle schmeckt - pur genossen - zwar etwas streng, hält Dir dafür aber allerlei ungebetene Gäste vom Leib!"
+    }
     ,"TXT_EDITOR_ROOM" : {
          "de" : "Raum"
     }
     ,"TXT_LOAD_WHICH_GAME" : {
          "de" : "Welchen Spielstand möchtest Du laden?"
     }
-    ,"OBJ_ROBOT_FACTORY_0" : {
-         "de" : "Roboter Fabrikator (AUS)"
-    }
     ,"OBJ_TUNNEL#2" : {
          "de" : "Tunnel"
-    }
-    ,"OBJ_MAGNET#0" : {
-         "de" : "Magnet"
     }
     ,"OBJ_ROBOT_FACTORY_1" : {
          "de" : "Roboter Fabrikator (AN)"
@@ -661,5 +664,11 @@
     }
     ,"DRIFT_NW" : {
          "de" : "Strömung"
+    }
+    ,"OBJ_KEY_USE" : {
+         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
+    }
+    ,"OBJ_MAGNET#0" : {
+         "de" : "Magnet"
     }
 }

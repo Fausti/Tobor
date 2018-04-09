@@ -335,6 +335,10 @@ class Entity {
 		return "ERROR";
 	}
 	
+	function getGroupID():String {
+		return getID().split("#")[0];
+	}
+	
 	// Water
 	
 	public function setDrift(f:Int) {

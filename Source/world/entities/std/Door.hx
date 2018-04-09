@@ -41,6 +41,14 @@ class Door extends EntityStatic {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (Std.is(e, Charlie)) {
 			Sound.play(Sound.SND_OPEN_DOOR);
+			
+			if (!getWorld().checkFirstUse("USED_KEY")) {
+				getWorld().markFirstUse("USED_KEY");
+				getWorld().showPickupMessage("OBJ_KEY_USE", false, function () {
+					getWorld().addPoints(2500);
+					getWorld().hideDialog();
+				}, 2500);
+			}
 		}
 		
 		super.onEnter(e, direction);

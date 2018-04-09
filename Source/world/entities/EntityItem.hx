@@ -50,9 +50,9 @@ class EntityItem extends EntityCollectable {
 		var template = getTemplate();
 			
 		if (template != null) {
-			if (!getInventory().hasSeen(template.name)) {
+			if (!getInventory().hasSeen(getGroupID())) {
 				firstTime = true;
-				getWorld().showPickupMessage(template.name.split("#")[0] + "_PICKUP", false, function() {
+				getWorld().showPickupMessage(getGroupID() + "_PICKUP", false, function() {
 					var points:Int = template.points;
 					if (points > 0) getWorld().addPoints(points);
 					getWorld().hideDialog();

@@ -17,6 +17,17 @@ class Garlic extends EntityItem {
 	override public function onUse(item:InventoryItem, x:Float, y:Float) {
 		room.world.garlic = room.world.garlic + 60;
 		
-		removeFromInventory();
+		Sound.play(Sound.SND_USE_GARLIC);
+		
+		if (getWorld().checkFirstUse("USED_GARLIC")) {
+			removeFromInventory();
+		} else {
+			getWorld().markFirstUse("USED_GARLIC");
+			getWorld().showPickupMessage("OBJ_GARLIC_USE", false, function () {
+				getWorld().addPoints(1000);
+				removeFromInventory();
+				getWorld().hideDialog();
+			}, 1000);
+		}
 	}
 }
