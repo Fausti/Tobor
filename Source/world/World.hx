@@ -51,6 +51,7 @@ class World {
 	public var game:Tobor;
 	
 	private var visitedRooms:Map<String, Bool>;
+	private var firstUse:Map<String, Bool>;
 	
 	public var highScore:Highscore;
 	
@@ -86,6 +87,7 @@ class World {
 	
 	public function init(?fileName:String = null) {
 		visitedRooms = new Map<String, Bool>();
+		firstUse = new Map<String, Bool>();
 		
 		player = cast factory.create("OBJ_CHARLIE");
 		player.setPosition(0, 0);
@@ -344,6 +346,18 @@ class World {
 		actionChangeRoomDirection = d;
 	}
 	
+	public function markFirstUse(id:String) {
+		firstUse.set(id, true);
+	}
+	
+	public function checkFirstUse(id:String) {
+		if (firstUse.exists(id)) {
+			return firstUse.get(id);
+		} else {
+			return false;
+		}
+	}
+	
 	public function markRoomVisited() {
 		visitedRooms.set(room.getID(), true);
 	}
@@ -404,15 +418,46 @@ class World {
 		}
 	}
 	
+	public function addPoints(p:Int) {
+		points = points + p;
+	}
+	
 	public function showDialog(dialog:Dialog) {
 		game.showDialog(dialog);
 	}
 	
-	public function showMessage(key:String) {
+	public function hideDialog() {
+		game.getScreen().hideDialog();
+	}
+	
+	public function showMessage(key:String, ?smallFont:Bool = true, ?cb:Dynamic = null) {
 		var msg:String = Text.getFromWorld(key);
 		if (msg != "") {
-			var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, msg, true);
+			var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, msg, smallFont);
 		
+			if (cb != null) {
+				messageBox.onOk = cb;
+				messageBox.onCancel = cb;
+			}
+			
+			showDialog(messageBox);
+		}
+	}
+	
+	public function showPickupMessage(key:String, ?smallFont:Bool = true, ?cb:Dynamic = null, ?p:Int = 0) {
+		var msg:String = Text.getFromWorld(key);
+		if (p > 0) {
+			msg = msg + "\n\n" + Text.get("TXT_BONUS") + " : " + Std.string(p) + " " + Text.get("TXT_POINTS") + " !";
+		}
+		
+		if (msg != "") {
+			var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, msg, smallFont);
+		
+			if (cb != null) {
+				messageBox.onOk = cb;
+				messageBox.onCancel = cb;
+			}
+			
 			showDialog(messageBox);
 		}
 	}
@@ -475,6 +520,18 @@ class World {
 				data.set("playerName", playerName);
 			}
 			
+			// firstUse
+			
+			var firstUseData:Array<String> = [];
+		
+			for (vr in firstUse.keys()) {
+				firstUseData.push(vr);
+			}
+		
+			data.set("firstUse", firstUseData);
+			
+			// besuchte Räume
+			
 			var visitedData:Array<String> = [];
 		
 			for (vr in visitedRooms.keys()) {
@@ -536,6 +593,15 @@ class World {
 				if (!editing) inventory.load(factory, Reflect.field(data, "inventory"));
 			case "playerName":
 				if (!editing) playerName = cast Reflect.field(data, "playerName");
+			case "firstUse":
+				if (!editing) {
+					firstUse = new Map<String, Bool>();
+				
+					var vrs:Array<String> = Reflect.field(data, "firstUse");
+					for (vr in vrs) {
+						firstUse.set(vr, true);
+					}
+				}
 			case "visited":
 				if (!editing) {
 					visitedRooms = new Map<String, Bool>();

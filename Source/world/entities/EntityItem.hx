@@ -50,7 +50,11 @@ class EntityItem extends EntityCollectable {
 			
 		if (template != null) {
 			if (!getInventory().hasSeen(template.name)) {
-				getWorld().showMessage(template.name.split("#")[0] + "_DESC");
+				getWorld().showPickupMessage(template.name.split("#")[0] + "_PICKUP", false, function() {
+					var points:Int = template.points;
+					if (points > 0) getWorld().addPoints(points);
+					getWorld().hideDialog();
+				}, template.points);
 			}
 			
 			getInventory().add(template.name, template.spr, num, content);

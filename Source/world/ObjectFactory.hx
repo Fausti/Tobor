@@ -60,8 +60,8 @@ class ObjectFactory {
 		register("OBJ_PLATIN", Platin, Gfx.getSprite(128, 12));
 		// register("OBJ_QUESTION_MARK", QuestionMark, Gfx.getSprite(144, 12));
 		
-		register("OBJ_CLOCK", Clock, Gfx.getSprite(176, 12));
-		// register("OBJ_EXCLAMATION_MARK", ExclamationMark, Gfx.getSprite(192, 12));
+		register("OBJ_CLOCK", Clock, Gfx.getSprite(176, 12))
+			.setPoints(200);
 		
 		register("OBJ_NOTICE", Notice, Gfx.getSprite(208, 12));
 		
@@ -89,9 +89,11 @@ class ObjectFactory {
 		
 		register("OBJ_BARRIER", 	Barrier, 		Gfx.getSprite(240, 96));
 		
-		register("OBJ_ELEXIR",		Elexir,			Gfx.getSprite(224, 24));
+		register("OBJ_ELEXIR",		Elexir,			Gfx.getSprite(224, 24))
+			.setPoints(100);
 		
-		register("OBJ_GARLIC",		Garlic,			Gfx.getSprite(192, 24));
+		register("OBJ_GARLIC",		Garlic,			Gfx.getSprite(192, 24))
+			.setPoints(100);
 		
 		// register("OBJ_BRIDGE_NS",		Bridge,			Gfx.getSprite(176,156), {type: 0});
 		// register("OBJ_BRIDGE_WE",		Bridge,			Gfx.getSprite(192,156), {type: 1});
@@ -129,7 +131,9 @@ class ObjectFactory {
 		register("OBJ_STAIRS_UP", Stairs, Gfx.getSprite(224, 108), {type: 0});
 		register("OBJ_STAIRS_DOWN", Stairs, Gfx.getSprite(240, 108), {type: 1});
 		
-		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24));
+		register("OBJ_ACID", Acid, Gfx.getSprite(208, 24))
+			.setPoints(200);
+		
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
 		
 		for (i in 0 ... 4) {
@@ -137,6 +141,9 @@ class ObjectFactory {
 		}
 		
 		register("OBJ_GRATE", Grate, Gfx.getSprite(240, 84));
+		
+		register("OBJ_EXCLAMATION_MARK", ExclamationMark, Gfx.getSprite(192, 12))
+			.setPoints(1500);
 		
 		register("OBJ_OVERALL", Overall, Gfx.getSprite(176, 132));
 		
@@ -320,6 +327,8 @@ class ObjectTemplate {
 	public var data:Dynamic;
 	public var spr:Sprite;
 	
+	public var points:Int;
+	
 	public var layer:Int;
 	
 	public var editorName:String;
@@ -335,10 +344,17 @@ class ObjectTemplate {
 		this.editorName = Text.get(id);
 		
 		var temp:String = Text.get(id + "_DESC");
+		temp = Text.get(id + "_PICKUP");
 	}
 	
 	public function allowInEditor(v:Bool):ObjectTemplate {
 		this.canBePlaced = v;
+		return this;
+	}
+	
+	public function setPoints(p:Int):ObjectTemplate {
+		this.points = p;
+		
 		return this;
 	}
 	
