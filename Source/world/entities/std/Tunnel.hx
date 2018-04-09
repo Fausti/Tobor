@@ -51,7 +51,7 @@ class Tunnel extends EntityStatic {
 					var dist:Int = 1000;
 					
 					for (t in room.findAll(Tunnel)) {
-						if (t.type == 1) {
+						if (t.type == 1 && t.x == this.x) {
 							if (target == null) {
 								dist = Std.int(Math.abs(y - t.y));
 								target = t;
@@ -79,7 +79,7 @@ class Tunnel extends EntityStatic {
 					var dist:Int = 1000;
 					
 					for (t in room.findAll(Tunnel)) {
-						if (t.type == 0) {
+						if (t.type == 0 && t.x == this.x) {
 							if (target == null) {
 								dist = Std.int(Math.abs(y - t.y));
 								target = t;
@@ -108,7 +108,7 @@ class Tunnel extends EntityStatic {
 					
 					for (t in room.findAll(Tunnel)) {
 						
-						if (t.type == 3) {
+						if (t.type == 3 && t.y == this.y) {
 														
 							if (target == null) {
 								dist = Std.int(Math.abs(x - t.x));
@@ -137,7 +137,7 @@ class Tunnel extends EntityStatic {
 					var dist:Int = 1000;
 					
 					for (t in room.findAll(Tunnel)) {
-						if (t.type == 2) {
+						if (t.type == 2 && t.y == this.y) {
 							if (target == null) {
 								dist = Std.int(Math.abs(x - t.x));
 								target = t;
