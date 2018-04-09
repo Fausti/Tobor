@@ -23,8 +23,10 @@ class Key extends EntityItem {
 	}
 	
 	override public function onPickup() {
-		addToInventory();
-		
-		Sound.play(Sound.SND_PICKUP_KEY);
+		if (addToInventory()) {
+			Sound.play(Sound.SND_JINGLE_1);
+		} else {
+			Sound.play(Sound.SND_PICKUP_KEY);
+		}
 	}
 }

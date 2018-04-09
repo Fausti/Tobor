@@ -34,6 +34,9 @@ class Sound {
 	
 	public static var SND_SHOOT_BULLET:AudioBuffer;
 	
+	public static var SND_JINGLE_0:AudioBuffer;
+	public static var SND_JINGLE_1:AudioBuffer;
+	
 	public static function init() {
 		MUS_CHOOSER = Assets.getAudioBuffer("assets/mus/chooser.ogg");
 		MUS_INTRO_DOS = Assets.getAudioBuffer("assets/mus/intro-dos.ogg");
@@ -51,6 +54,9 @@ class Sound {
 		SND_ROTATE_ARROW = Assets.getAudioBuffer("assets/sfx/drop-magnet.wav");
 		
 		SND_OPEN_DOOR = Assets.getAudioBuffer("assets/sfx/open-door.wav");
+		
+		SND_JINGLE_0 = Assets.getAudioBuffer("assets/sfx/jingle-0.wav");
+		SND_JINGLE_1 = Assets.getAudioBuffer("assets/sfx/jingle-1.wav");
 		
 		SND_EXPLOSION_CHARLIE = Assets.getAudioBuffer("assets/sfx/explosion.wav");
 		SND_EXPLOSION_ROBOT = Assets.getAudioBuffer("assets/sfx/explosion-short.wav");

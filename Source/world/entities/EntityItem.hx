@@ -45,11 +45,13 @@ class EntityItem extends EntityCollectable {
 		getInventory().remove(getID());
 	}
 	
-	public function addToInventory(?num:Int = 1) {
+	public function addToInventory(?num:Int = 1):Bool {
+		var firstTime:Bool = false;
 		var template = getTemplate();
 			
 		if (template != null) {
 			if (!getInventory().hasSeen(template.name)) {
+				firstTime = true;
 				getWorld().showPickupMessage(template.name.split("#")[0] + "_PICKUP", false, function() {
 					var points:Int = template.points;
 					if (points > 0) getWorld().addPoints(points);
@@ -59,6 +61,8 @@ class EntityItem extends EntityCollectable {
 			
 			getInventory().add(template.name, template.spr, num, content);
 		}
+		
+		return firstTime; 
 	}
 	
 }

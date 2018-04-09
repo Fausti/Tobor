@@ -82,7 +82,8 @@ class ObjectFactory {
 		}
 		
 		for (i in 0 ... 15) {
-			register("OBJ_KEY#" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i});
+			register("OBJ_KEY#" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i})
+				.setPoints(500);
 		}
 		
 		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0)).allowInEditor(false);
