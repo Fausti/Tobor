@@ -29,14 +29,13 @@ class Acid extends EntityItem {
 		}
 		
 		if (list.length > 0) {
+			Sound.play(Sound.SND_DISSOLVE_WALL);
 			if (getWorld().checkFirstUse("USED_ACID")) {
-				Sound.play(Sound.SND_DISSOLVE_WALL);
 				removeFromInventory();
 			} else {
 				getWorld().markFirstUse("USED_ACID");
 				getWorld().showPickupMessage("OBJ_ACID_USE", false, function () {
 					getWorld().addPoints(1500);
-					Sound.play(Sound.SND_DISSOLVE_WALL);
 					removeFromInventory();
 					getWorld().hideDialog();
 				}, 1500);
