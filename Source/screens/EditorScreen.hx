@@ -4,6 +4,8 @@ import ui.DialogQuestion;
 import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
+import ui.DialogInventoryTemplate;
+import world.Inventory;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.EntityItem;
 import world.entities.Marker;
@@ -34,6 +36,9 @@ class EditorScreen extends PlayScreen {
 	
 	var dialogTiles:DialogTiles;
 	var dialogRooms:DialogRooms;
+	
+	var inventoryTemplate:Inventory;
+	var dialogInventoryTemplate:DialogInventoryTemplate;
 	
 	public function new(game:Tobor) {
 		SPR_EFENCE = Gfx.getSprite(64, 12);
@@ -237,7 +242,8 @@ class EditorScreen extends PlayScreen {
 		Input.clearKeys();
 		
 		if (!editMode) {
-			game.world.inventory.clear();
+			//game.world.inventory.clear();
+			game.world.inventory.fillFrom(inventoryTemplate);
 		} else {
 			game.world.room.restoreState();
 			game.world.player.setPosition(game.world.oldPlayerX, game.world.oldPlayerY);
@@ -381,6 +387,9 @@ class EditorScreen extends PlayScreen {
 			[Text.get("TXT_MENU_OBJECTS"), "ENTER", function () {
 				showDialog(dialogTiles);
 			}],
+			[Text.get("TXT_MENU_EDIT_INVENTORY"), "", function () {
+				showInventoryTemplate();
+			}],
 			[Text.get("TXT_MENU_HELP"), ""],
 			[Text.get("TXT_MENU_SAVE"), "", function () {
 				game.world.save();
@@ -477,5 +486,30 @@ class EditorScreen extends PlayScreen {
 		}
 		
 		game.world.room.addEntity(e);
+	}
+	
+	function showInventoryTemplate() {
+		if (!editMode) return;
+		
+		if (dialogInventoryTemplate == null) {
+			inventoryTemplate = new Inventory();
+			
+			for (item in game.world.factory.listItems) {
+				// inventoryTemplate.add(item.name, item.spr, 1);
+				inventoryTemplate.set(item.name, item.spr, 0);
+			}
+			
+			dialogInventoryTemplate = new DialogInventoryTemplate(this, 0, 0, inventoryTemplate);
+		
+			dialogInventoryTemplate.onOk = function () {
+				hideDialog();
+			}
+		
+			dialogInventoryTemplate.onCancel = function () {
+				hideDialog();
+			}
+		}
+		
+		showDialog(dialogInventoryTemplate);
 	}
 }

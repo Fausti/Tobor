@@ -1,6 +1,8 @@
 package world;
 import world.entities.Drift;
 import world.entities.Entity;
+import world.entities.EntityFloor;
+import world.entities.EntityItem;
 import world.entities.Marker;
 import world.entities.std.*;
 
@@ -12,6 +14,9 @@ class ObjectFactory {
 	public var length(default, null):Int = 0;
 	
 	private var list:Map<String, ObjectTemplate> = new Map<String, ObjectTemplate>();
+	
+	public var listItems:Array<ObjectTemplate> = [];
+	public var listFloors:Array<ObjectTemplate> = [];
 	
 	public function new() {
 		// OBJECT_NAME # OBJECT_TYPE
@@ -231,6 +236,16 @@ class ObjectFactory {
 		
 		list.set(id, ot);
 		length++;
+
+		// Objekte nach Typ filtern...
+		var e = Type.createEmptyInstance(_class);
+		if (e != null) {
+			if (Std.is(e, EntityItem)) {
+				listItems.push(ot);
+			} else if (Std.is(e, EntityFloor)) {
+				listFloors.push(ot);
+			}
+		}
 		
 		return ot;
 	}

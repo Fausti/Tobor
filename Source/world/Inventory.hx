@@ -16,6 +16,8 @@ class Inventory {
 	public static inline var ACTION_CHOOSE 		= 4;
 	public static inline var ACTION_DROP_ALL 	= 5;
 	public static inline var ACTION_CLONE		= 6;
+	//
+	public static inline var ACTION_MOD			= 7;
 	
 	private var MAX_MUNITION:Int = 21;
 	private var SPR_MUNITION:Array<Sprite> = [];
@@ -38,6 +40,19 @@ class Inventory {
 		seen = new Map<String, Bool>();
 		
 		containsOverall = false;
+	}
+	
+	public function fillFrom(inv:Inventory) {
+		clear();
+		
+		if (inv == null) return;
+		
+		for (key in inv.list.keys()) {
+			var itm = inv.list.get(key);
+			if (itm.count > 0) {
+				add(itm.id, itm.spr, itm.count, itm.content);
+			}
+		}
 	}
 	
 	public function load(factory:ObjectFactory, data) {
@@ -79,6 +94,17 @@ class Inventory {
 	public function hasSeen(id:String):Bool {
 		if (seen.get(id.split("#")[0]) == true) return true;
 		return false;
+	}
+	
+	public function set(id:String, spr:Sprite, ?count:Int = 1, ?content:String = null):Int {
+		seen.set(id.split("#")[0], true);
+		
+		var item:InventoryItem = new InventoryItem(id, spr, content);
+		list.set(id, item);
+		
+		item.add(count);
+		
+		return 0;
 	}
 	
 	public function add(id:String, spr:Sprite, ?count:Int = 1, ?content:String = null):Int {
