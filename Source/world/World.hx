@@ -246,6 +246,8 @@ class World {
 				
 				var playScreen:PlayScreen = cast game.getScreen();
 				playScreen.showRoomName();
+				
+				Input.wait(0.25);
 			}
 		}
 		
@@ -264,6 +266,8 @@ class World {
 				
 				var playScreen:PlayScreen = cast game.getScreen();
 				playScreen.showRoomName();
+				
+				Input.wait(0.25);
 			}
 		}
 		
