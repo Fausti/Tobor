@@ -353,11 +353,13 @@ class EditorScreen extends PlayScreen {
 	
 	override function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
-			[Text.get("TXT_MENU_OPTIONS"), ""],
+			[Text.get("TXT_MENU_OPTIONS"), "", function () {
+				showOptionMenu();
+			}],
 			[Text.get("TXT_MENU_HELP"), ""],
 		]);
 		
-		menu.select(2);
+		menu.select(0);
 		
 		menu.onCancel = function () {
 			hideDialog();

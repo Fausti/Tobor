@@ -61,7 +61,7 @@ class Bullet extends EntityDynamic {
 		}
 		
 		if (!isMoving()) {
-			move(travelDirection, BULLET_SPEED);
+			move(travelDirection, (BULLET_SPEED));
 		}
 		
 		super.update(deltaTime);
@@ -87,6 +87,8 @@ class Bullet extends EntityDynamic {
 		if (direction == Direction.NONE) return false;
 		
 		if (!isMoving()) {
+			speed = Config.getSpeed(speed);
+			
 			// dann bewegen wir uns mal...
 			moveData.direction = direction;
 			moveData.speedMovement = speed;
@@ -170,7 +172,7 @@ class Bullet extends EntityDynamic {
 		if (Std.is(other, Bullet)) {
 			
 		} else if (Std.is(other, Isolator)) {
-			other.canEnter(this, direction, BULLET_SPEED);
+			other.canEnter(this, direction, (BULLET_SPEED));
 			die();
 		} else if (Std.is(other, ElectricFence)) {
 			other.die();
@@ -208,7 +210,7 @@ class Bullet extends EntityDynamic {
 					newDir = mirror(direction, true);
 			}
 			
-			bullet.move(newDir, Bullet.BULLET_SPEED);
+			bullet.move(newDir, (Bullet.BULLET_SPEED));
 				
 			die();
 		} else {

@@ -193,6 +193,9 @@ class Charlie extends EntityMoveable {
 				}
 			}
 			
+			// Geschwindigkeit anpassen
+			speed = Config.getSpeed(speed);
+			
 			var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
 			
 			// kann Feld betreten werden?

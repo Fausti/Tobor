@@ -78,10 +78,10 @@ class Robot extends EntityAI {
 		}
 		
 		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
-		if (!move(Direction.get(playerDirectionX, playerDirectionY), SPEED)) {
+		if (!move(Direction.get(playerDirectionX, playerDirectionY), (SPEED))) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
 			
-			if (!move(Direction.getRandomAll(), SPEED)) {
+			if (!move(Direction.getRandomAll(), (SPEED))) {
 				stress++;
 			} else {
 				stress--;

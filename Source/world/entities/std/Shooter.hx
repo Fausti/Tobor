@@ -48,17 +48,17 @@ class Shooter extends EntityDynamic implements IElectric {
 		
 		switch(type) {
 			case 0:
-				bullet.move(Direction.S, Bullet.BULLET_SPEED);
+				bullet.move(Direction.S, (Bullet.BULLET_SPEED));
 			case 1:
-				bullet.move(Direction.W, Bullet.BULLET_SPEED);
+				bullet.move(Direction.W, (Bullet.BULLET_SPEED));
 			case 2:
-				bullet.move(Direction.N, Bullet.BULLET_SPEED);
+				bullet.move(Direction.N, (Bullet.BULLET_SPEED));
 			case 3:
-				bullet.move(Direction.E, Bullet.BULLET_SPEED);
+				bullet.move(Direction.E, (Bullet.BULLET_SPEED));
 		}
 				
 		Sound.play(Sound.SND_SHOOT_BULLET);
 		
-		reloadTime = Charlie.PLAYER_SPEED / 15.0;
+		reloadTime = (Charlie.PLAYER_SPEED) / 15.0;
 	}
 }

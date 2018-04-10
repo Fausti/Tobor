@@ -40,7 +40,7 @@ class Munition extends EntityItem {
 			// if (!Direction.isDiagonal(direction)) {
 				var bullet:Bullet = new Bullet();
 				room.spawnEntity(x, y, bullet);
-				bullet.move(direction, Robot.SPEED * 2);
+				bullet.move(direction, (Robot.SPEED) * 2);
 			
 				Sound.play(Sound.SND_SHOOT_BULLET);
 				

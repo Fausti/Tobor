@@ -66,6 +66,8 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function init() {
+		Config.init();
+		
 		Text.init();
 		
 		Text.load(Files.loadFromFile("translation.json"));

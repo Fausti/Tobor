@@ -23,7 +23,7 @@ class Sling extends EntityItem {
 				
 				var bullet:Bullet = new Bullet();
 				room.spawnEntity(x, y, bullet);
-				bullet.move(direction, Bullet.BULLET_SPEED);
+				bullet.move(direction, (Bullet.BULLET_SPEED));
 				
 				Sound.play(Sound.SND_SHOOT_BULLET);
 			} else {

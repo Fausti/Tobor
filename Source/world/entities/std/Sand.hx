@@ -40,9 +40,9 @@ class Sand extends EntityFloor {
 	}
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
-		super.willEnter(e, direction, Charlie.PLAYER_SPEED);
+		super.willEnter(e, direction, (Charlie.PLAYER_SPEED));
 		
 		var ee:EntityMoveable = cast e;
-		ee.changeSpeed(Charlie.PLAYER_SPEED / 4);
+		ee.changeSpeed((Charlie.PLAYER_SPEED) / 3);
 	}
 }

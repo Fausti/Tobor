@@ -124,13 +124,13 @@ class PlayScreen extends Screen {
 	
 	function checkPlayerMovement() {
 		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
-			movePlayer(Direction.W, Charlie.PLAYER_SPEED);
+			movePlayer(Direction.W, (Charlie.PLAYER_SPEED));
 		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
-			movePlayer(Direction.E, Charlie.PLAYER_SPEED);
+			movePlayer(Direction.E, (Charlie.PLAYER_SPEED));
 		} else if (Input.isKeyDown(Tobor.KEY_UP)) {
-			movePlayer(Direction.N, Charlie.PLAYER_SPEED);
+			movePlayer(Direction.N, (Charlie.PLAYER_SPEED));
 		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
-			movePlayer(Direction.S, Charlie.PLAYER_SPEED);
+			movePlayer(Direction.S, (Charlie.PLAYER_SPEED));
 		}
 	}
 	
@@ -202,10 +202,67 @@ class PlayScreen extends Screen {
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
 	}
 	
+	function showSpeedMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_MENU_SPEED_SLOWEST"), "", function () {
+				Config.setSpeed(0);
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_SPEED_SLOW"), "", function () {
+				Config.setSpeed(1);
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_SPEED_NORMAL"), "", function () {
+				Config.setSpeed(2);
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_SPEED_FAST"), "", function () {
+				Config.setSpeed(3);
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_SPEED_FASTEST"), "", function () {
+				Config.setSpeed(4);
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(Config.speed);
+		
+		menu.onCancel = function () {
+			showOptionMenu();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
+	function showOptionMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_MENU_SPEED"), "", function () {
+				showSpeedMenu();
+			}],
+		]);
+		
+		menu.select(0);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showMainMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("TXT_MENU_OPTIONS"), "", function () {
-				hideDialog();
+				showOptionMenu();
 			}],
 			[Text.get("TXT_MENU_SCENE_TEXT"), "", function() {
 				showRoomName(true);

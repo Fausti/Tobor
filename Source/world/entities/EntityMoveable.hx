@@ -50,7 +50,7 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	public function changeSpeed(spd:Float) {
-		moveData.speedMovement = spd;
+		moveData.speedMovement = Config.getSpeed(spd);
 	}
 	
 	public function changeDirection(dir:Vector2) {
@@ -62,6 +62,9 @@ class EntityMoveable extends EntityDynamic {
 		
 		if (!isMoving()) {
 			if (isOutsideMap(x + direction.x, y + direction.y)) return false;
+			
+			// Geschwindigkeit anpassen
+			speed = Config.getSpeed(speed);
 			
 			var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
 			
