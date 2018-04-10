@@ -17,6 +17,5 @@ class Clock extends EntityItem {
 	
 	override public function onUse(item:InventoryItem, x:Float, y:Float) {
 		getWorld().doSaveGame();
-		removeFromInventory();
 	}
 }

@@ -57,6 +57,7 @@ class World {
 	
 	// AFTER_UPDATE Aktionen
 	var actionSaveGame:Bool = false;
+	
 	var actionLoadGame:Bool = false;
 	
 	var actionResetRoom:Bool = false;
@@ -279,16 +280,19 @@ class World {
 			actionSaveGame = false;
 			
 			if (!editing) {
-				room.onRoomEnd();
-				room.saveState();
-				
 				var d:DialogInput = new DialogInput(game.getScreen(), 0, 0, Text.get("TXT_ASK_FOR_SAVEGAME_NAME"));
 		
 				d.onOk = function () {
 					var fileName:String = d.getInput(true);
 					
 					if (fileName != "" && fileName != null) {
+						room.onRoomEnd();
+						room.saveState();
+						
 						saveGame(fileName);
+						
+						inventory.remove("OBJ_CLOCK", 1);
+						
 						game.getScreen().hideDialog();
 					}
 				};
