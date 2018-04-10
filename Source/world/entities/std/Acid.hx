@@ -20,15 +20,17 @@ class Acid extends EntityItem {
 	
 	override public function onUse(item:InventoryItem, x:Float, y:Float) {
 		var list = room.findEntityAround(x, y, Wall);
-		
+		var count:Int = 0;
+
 		for (e in list) {
 			if (e.type == 0) {
 				room.spawnEntity(e.x, e.y, new WallDissolve());
 				e.die();
+				count++;
 			}
 		}
 		
-		if (list.length > 0) {
+		if (count > 0) {
 			Sound.play(Sound.SND_DISSOLVE_WALL);
 			if (getWorld().checkFirstUse("USED_ACID")) {
 				removeFromInventory();
