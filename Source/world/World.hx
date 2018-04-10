@@ -157,6 +157,8 @@ class World {
 
 		if (room != null) {
 			room.start();
+		} else {
+			trace("World.start: no room!");
 		}
 	}
 	

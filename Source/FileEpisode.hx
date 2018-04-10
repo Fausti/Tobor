@@ -2,6 +2,8 @@ package;
 
 import haxe.Utf8;
 import haxe.io.Path;
+import haxe.zip.Tools;
+import haxe.zip.Uncompress;
 import sys.io.File;
 import sys.FileSystem;
 import sys.io.FileInput;
@@ -144,6 +146,9 @@ class FileEpisode {
 	}
 	
 	public function saveFile(fileName:String, content:String) {
+		// können nicht in ZIP Archive speichern
+		if (isZIP) return;
+		
 		fileName = root + "/" + fileName;
 		
 		try {
@@ -171,7 +176,11 @@ class FileEpisode {
 			}
 			
 			if (entry != null) {
-				content = entry.data.toString();
+				if (entry.compressed) {
+					content = Reader.unzip(entry).toString();
+				} else {
+					content = entry.data.toString();
+				}
 			} else {
 				trace(fileName + " in " + root + " not found!");
 			}
