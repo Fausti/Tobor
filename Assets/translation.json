@@ -23,11 +23,11 @@
     ,"OBJ_GARLIC_PICKUP" : {
          "de" : "Sieh an, eine Knoblauchknolle! Wenn Du so eine gegessen hast, wird Dir vorläufig keiner mehr zu nahe treten."
     }
-    ,"OBJ_TREE" : {
-         "de" : "Weihnachtsbaum"
-    }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
+    }
+    ,"OBJ_TREE" : {
+         "de" : "Weihnachtsbaum"
     }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
@@ -89,11 +89,11 @@
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
     }
-    ,"TXT_MENU_SCENE_TEXT" : {
-         "de" : "Szenen-Text"
-    }
     ,"TXT_INVENTORY_LOOK" : {
          "de" : "Anschauen"
+    }
+    ,"TXT_MENU_SCENE_TEXT" : {
+         "de" : "Szenen-Text"
     }
     ,"OBJ_MUNITION#5" : {
          "de" : "Munition"
@@ -151,6 +151,9 @@
     }
     ,"OBJ_SAND#3" : {
          "de" : "Sand"
+    }
+    ,"TXT_MENU_SPEED_SLOWEST" : {
+         "de" : "Langsam"
     }
     ,"OBJ_SAND#4" : {
          "de" : "Sand"
@@ -223,6 +226,9 @@
     }
     ,"TXT_ASK_FOR_SAVEGAME_NAME" : {
          "de" : "Unter welchem Namen möchtest Du speichern?"
+    }
+    ,"TXT_MENU_SPEED_NORMAL" : {
+         "de" : "Normal"
     }
     ,"OBJ_ROOF_4" : {
          "de" : "Dach"
@@ -365,12 +371,6 @@
     ,"OBJ_BAGPACK#2" : {
          "de" : "Beutel"
     }
-    ,"OBJ_STAIRS_UP" : {
-         "de" : "Treppe (hoch)"
-    }
-    ,"OBJ_GOLD" : {
-         "de" : "Gold"
-    }
     ,"DRIFT_SE" : {
          "de" : "Strömung"
     }
@@ -379,6 +379,12 @@
     }
     ,"OBJ_DOOR#5" : {
          "de" : "Tür Nr. 6"
+    }
+    ,"OBJ_STAIRS_UP" : {
+         "de" : "Treppe (hoch)"
+    }
+    ,"OBJ_GOLD" : {
+         "de" : "Gold"
     }
     ,"OBJ_BAGPACK#3" : {
          "de" : "Beutel"
@@ -391,6 +397,9 @@
     }
     ,"OBJ_BAGPACK#4" : {
          "de" : "Beutel"
+    }
+    ,"TXT_MENU_SPEED_SLOW" : {
+         "de" : "Langsamer"
     }
     ,"OBJ_KEY#6" : {
          "de" : "Schlüssel Nr. 7"
@@ -470,6 +479,9 @@
     ,"OBJ_ACID_PICKUP" : {
          "de" : "In diesen kleinen Flaschen befindet sich eine ätzende Flüssigkeit, die imstande ist, Mauerkalk aufzulösen. Dies funktioniert aber nur bei bestimmten Mauern."
     }
+    ,"TXT_MENU_SPEED" : {
+         "de" : "Geschwindigkeit"
+    }
     ,"TXT_ASK_FOR_NAME" : {
          "de" : "Willkommen!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:"
     }
@@ -512,6 +524,9 @@
     ,"OBJ_SHOES" : {
          "de" : "Wanderschuhe"
     }
+    ,"TXT_MENU_SPEED_FASTEST" : {
+         "de" : "Schnell"
+    }
     ,"OBJ_WATER_DEADLY" : {
          "de" : "tödliches Wasser"
     }
@@ -544,6 +559,9 @@
     }
     ,"OBJ_ACID" : {
          "de" : "Säure"
+    }
+    ,"TXT_MENU_SPEED_FAST" : {
+         "de" : "Schneller"
     }
     ,"OBJ_ELECTRIC_FENCE_OFF" : {
          "de" : "elektrischer Zaun (AUS)"
@@ -665,10 +683,10 @@
     ,"DRIFT_NW" : {
          "de" : "Strömung"
     }
-    ,"OBJ_KEY_USE" : {
-         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
-    }
     ,"OBJ_MAGNET#0" : {
          "de" : "Magnet"
+    }
+    ,"OBJ_KEY_USE" : {
+         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
     }
 }
