@@ -674,11 +674,11 @@ class World {
 		
 		for (key in Reflect.fields(data)) {
 			switch(key) {
-			case "x":
+			case "inRoomX":
 				inRoomX = Reflect.field(data, "inRoomX");
-			case "y":
+			case "inRoomY":
 				inRoomY = Reflect.field(data, "inRoomY");
-			case "z":
+			case "inRoomZ":
 				inRoomZ = Reflect.field(data, "inRoomZ");
 			default:
 			}
