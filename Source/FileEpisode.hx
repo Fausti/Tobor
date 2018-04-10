@@ -169,10 +169,10 @@ class FileEpisode {
 			var file:FileInput = File.read(root);
 			var unzip:Reader = new Reader(file);
 			var files = unzip.read();
-			
+
 			var entry = null;
 			for (e in files) {
-				if (e.fileName == fileName) entry = e;
+				if (e.fileName.endsWithIgnoreCase(fileName)) entry = e;
 			}
 			
 			if (entry != null) {
@@ -212,5 +212,63 @@ class FileEpisode {
 	public function getDesc(l:Int):String {
 		if (isEditor) return StringTools.rpad(Text.get("TXT_CREATE_NEW_EPISODE_IN_EDITOR"), ".", l);
 		return desc.rpad(l, ".", false);
+	}
+	
+	public static function getFiles(path:Path):Array<String> {
+		var arr:Array<String> = [];
+		
+		if (isZipFile(path)) {
+			var file:FileInput = File.read(path.toString());
+			var unzip:Reader = new Reader(file);
+			var files = unzip.read();
+			
+			for (e in files) {
+				arr.push(e.fileName);
+			}
+		} else if (isDirectory(path)) {
+			for (e in FileSystem.readDirectory(path.toString())) {
+				arr.push(e);
+			}
+		}
+		
+		return arr;
+	}
+	
+	public static function isDirectory(path:Path):Bool {
+		if (FileSystem.isDirectory(path.toString())) return true;
+		return false;
+	}
+	public static function isZipFile(path:Path):Bool {
+		if (path.ext.toLowerCase() == "zip") return true;
+		return false;
+	}
+	
+	public static function isEpisodeFile(fileName:String):Bool {
+		var path:Path = new Path(fileName);
+		
+		if (isZipFile(path)) {
+			var hasRooms:Bool = false;
+			var content:Array<String> = getFiles(path);
+
+			for (file in content) {
+				if (file.endsWithIgnoreCase("rooms.json")) {
+					hasRooms = true;
+				}
+			}
+			
+			return (hasRooms);
+		}
+		
+		return false;
+	}
+	
+	public static function install(fileName:String) {
+		var path:Path = new Path(fileName);
+		
+		try {
+			File.copy(fileName, Files.DIR_EPISODES + '/' + path.file + '.' + path.ext);
+		} catch (err:Dynamic) {
+			trace(err);
+		}
 	}
 }

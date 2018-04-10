@@ -65,4 +65,8 @@ class Screen {
 			this.dialog.onTextInput(text);
 		}
 	}
+	
+	public function onDropFile(fileName:String) {
+		
+	}
 }

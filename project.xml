@@ -18,4 +18,6 @@
 	
 	<icon path="icon-1024.png" size="1024" embed="true" />
 	<icon path="icon-16.png" size="16" embed="true" />
+	
+	<template path="Include/games/Prototyp Alpha.zip" rename="games/Prototyp Alpha.zip" />
 </project>

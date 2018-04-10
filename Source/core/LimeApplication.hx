@@ -185,4 +185,12 @@ class LimeApplication extends Application {
 		
 		super.onWindowClose(window);
 	}
+	
+	// Drag N Drop
+	
+	override public function onWindowDropFile(window:Window, file:String):Void {
+		super.onWindowDropFile(window, file);
+		
+		if (game != null) game.onDropFile(file);
+	}
 }

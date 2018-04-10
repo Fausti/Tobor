@@ -171,6 +171,10 @@ class Tobor extends LimeGame {
 		return screen;
 	}
 	
+	override public function onDropFile(fileName:String) {
+		if (screen != null) screen.onDropFile(fileName);
+	}
+	
 	// Tasten...
 	
 	public static var KEY_LEFT = [Input.key.A, Input.key.LEFT];

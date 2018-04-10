@@ -56,10 +56,18 @@ class EpisodesScreen extends Screen {
 		scrollingText = scrollingText + scrollingText;
 		scrollingTime = scrollingSpeed;
 		
+		updateFileList();
+	}
+	
+	function updateFileList() {
+		episoden = [];
+		
 		var files = Files.getDirsAndFiles(Files.DIR_EPISODES);
 		for (path in files) {
-			var fe:FileEpisode = new FileEpisode(path);
-			if (fe.isOK) episoden.push(fe);
+			if (FileEpisode.isZipFile(path) || FileEpisode.isDirectory(path)) {
+				var fe:FileEpisode = new FileEpisode(path);
+				if (fe.isOK) episoden.push(fe);
+			}
 		}
 		
 		// Editor - Episode xD
@@ -79,6 +87,22 @@ class EpisodesScreen extends Screen {
 		var d:DialogMessage = new DialogMessage(this, 0, 0, str);
 		
 		showDialog(d);
+	}
+	
+	function showEpisodeInstalled(fileName:String) {
+		var msg:String = Text.get("TXT_NEW_EPISODE_INSTALLED") + "\n\n" + fileName;
+		
+		var d:DialogMessage = new DialogMessage(this, 0, 0, msg, true);
+		
+		showDialog(d);
+	}
+	
+	override public function onDropFile(fileName:String) {
+		if (FileEpisode.isEpisodeFile(fileName)) {
+			FileEpisode.install(fileName);
+			updateFileList();
+			showEpisodeInstalled(fileName);
+		}
 	}
 	
 	function createEpisode() {

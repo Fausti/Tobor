@@ -118,4 +118,8 @@ class LimeGame {
 	public function onTextInput(text:String) {
 		
 	}
+	
+	public function onDropFile(fileName:String) {
+		
+	}
 }
