@@ -43,6 +43,6 @@ class Sand extends EntityFloor {
 		super.willEnter(e, direction, (Charlie.PLAYER_SPEED));
 		
 		var ee:EntityMoveable = cast e;
-		ee.changeSpeed((Charlie.PLAYER_SPEED) / 3);
+		ee.changeSpeed((Charlie.PLAYER_SPEED) / 2);
 	}
 }

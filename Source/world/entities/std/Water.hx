@@ -145,24 +145,24 @@ class Water extends EntityStatic implements IElectric {
 						d = Direction.S;
 					}
 					
-					canMove = c.move(d, Charlie.PLAYER_SPEED / 4);
+					canMove = c.move(d, Charlie.PLAYER_SPEED / 2);
 				}
 			}
 				
 			if (!canMove) {
 				if (Std.random(2) == 0) {
 					// Chance weiter in die selbe Richtung zu treiben
-					if (direction != null) canMove = c.move(direction, Charlie.PLAYER_SPEED / 4);
+					if (direction != null) canMove = c.move(direction, Charlie.PLAYER_SPEED / 2);
 				}
 			}
 				
-			if (!canMove) canMove = c.move(getDrift(0), Charlie.PLAYER_SPEED / 4);
+			if (!canMove) canMove = c.move(getDrift(0), Charlie.PLAYER_SPEED / 2);
 				
-			if (!canMove) canMove = c.move(getDrift(1), Charlie.PLAYER_SPEED / 4);
-			if (!canMove) canMove = c.move(getDrift(2), Charlie.PLAYER_SPEED / 4);
+			if (!canMove) canMove = c.move(getDrift(1), Charlie.PLAYER_SPEED / 2);
+			if (!canMove) canMove = c.move(getDrift(2), Charlie.PLAYER_SPEED / 2);
 			
 			while (!canMove) {
-				canMove = c.move(Direction.getRandom(), Charlie.PLAYER_SPEED / 4);
+				canMove = c.move(Direction.getRandom(), Charlie.PLAYER_SPEED / 2);
 			}
 		} else if (Std.is(e, EntityPushable)) {
 			if (Std.is(e, Isolator)) {
@@ -189,7 +189,7 @@ class Water extends EntityStatic implements IElectric {
 		if (Std.is(e, Charlie)) {
 			if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 				var c:Charlie = cast e;
-				c.changeSpeed(Charlie.PLAYER_SPEED / 4);
+				c.changeSpeed(Charlie.PLAYER_SPEED / 2);
 			}
 		}
 	}
@@ -198,7 +198,7 @@ class Water extends EntityStatic implements IElectric {
 		if (Std.is(e, Charlie)) {
 			if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 				var c:Charlie = cast e;
-				c.changeSpeed(Charlie.PLAYER_SPEED / 4);
+				c.changeSpeed(Charlie.PLAYER_SPEED / 2);
 			}
 		}
 	}
