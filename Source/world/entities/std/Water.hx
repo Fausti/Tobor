@@ -113,6 +113,8 @@ class Water extends EntityStatic implements IElectric {
 			if (Std.is(e, EntityPushable)) return true;
 		}
 		
+		if (Std.is(e, Bullet)) return true;
+		
 		return false;
 	}
 	

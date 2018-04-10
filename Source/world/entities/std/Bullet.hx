@@ -191,6 +191,10 @@ class Bullet extends EntityDynamic {
 			die();
 		} else if (Std.is(other, Munition) || Std.is(other, Explosion) || Std.is(other, Grate)) {
 			// Nüscht...
+		} else if (Std.is(other, Water) || Std.is(other, WaterDeadly) || Std.is(other, WaterIsolator)) {
+			// Nüscht...
+		} else if (Std.is(other, EntityFloor)) {
+			// Nüscht...
 		} else if (Std.is(other, Target)) {
 			if (other.flag != Marker.MARKER_NO) {
 				room.switchStatus(other.flag);
