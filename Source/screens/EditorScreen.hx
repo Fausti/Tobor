@@ -321,9 +321,9 @@ class EditorScreen extends PlayScreen {
 			
 			if (game.world.room != null) {
 				var roomCoords:String = Text.get("TXT_EDITOR_ROOM") + " " 
-					+ Std.string(game.world.room.position.z) 
 					+ Std.string(game.world.room.position.x) 
-					+ Std.string(game.world.room.position.y);
+					+ Std.string(game.world.room.position.y) 
+					+ Std.string(game.world.room.position.z);
 				
 				Tobor.fontSmall.drawString(224, 0, roomCoords, Color.BLACK);
 			}

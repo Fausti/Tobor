@@ -168,7 +168,7 @@ class DialogRooms extends Dialog {
 		Gfx.drawSprite(offsetX + 0 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_SELECTOR_ROOM_SW, active?Color.GREEN:Color.WHITE);
 		Gfx.drawSprite(offsetX + 1 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_SELECTOR_ROOM_SE, active?Color.GREEN:Color.WHITE);
 		
-		Tobor.fontSmall.drawString(offsetX + 4, offsetY + 7, roomZ + "" + rx + "" + ry, Color.BLACK, Color.NONE);
+		Tobor.fontSmall.drawString(offsetX + 4, offsetY + 7, rx + "" + ry + "" + roomZ, Color.BLACK, Color.NONE);
 	}
 	
 	function drawEmpty(offsetX:Int, offsetY:Int, rx:Int, ry:Int) {
