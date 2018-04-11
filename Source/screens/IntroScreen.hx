@@ -1,5 +1,6 @@
 package screens;
 
+import lime.graphics.Image;
 import ui.DialogFiles;
 import ui.Screen;
 import ui.DialogMenu;
@@ -28,6 +29,19 @@ class IntroScreen extends Screen {
 	
 	public function new(game:Tobor) {
 		super(game);
+		
+		if (game.world != null) {
+			if (game.world.file.hasTexture()) {
+				var bytes = game.world.file.loadFileAsBytes("tileset.png");
+				var image:Image = Image.fromBytes(bytes);
+				
+				if (image != null) {
+					if (image.width == 256 && image.height == 512) {
+						Gfx.loadTextureFrom(image);
+					}
+				}
+			}
+		}
 		
 		bgSprite = Gfx.getSprite(160, 12, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
 		

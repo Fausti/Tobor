@@ -1,6 +1,7 @@
 package gfx;
 
 import lime.Assets;
+import lime.graphics.Image;
 import lime.graphics.opengl.GL;
 import lime.math.Matrix4;
 import lime.math.Rectangle;
@@ -13,7 +14,10 @@ import gfx.Color;
  */
 class Gfx {
 	private static var _shader:Shader;
-	private static var _texture:Texture;
+	
+	public static var _texture:Texture;
+	private static var _textureDefault:Texture;
+	
 	private static var _matrix:Matrix4;
 	private static var _batch:Batch;
 	private static var _color:Color = Color.WHITE;
@@ -44,11 +48,34 @@ class Gfx {
 		_color = color;
 	}
 	
-	public static inline function loadTexture(fileName:String) {
+	public static function resetTexture() {
+		if (_textureDefault != null) _texture = _textureDefault;
+	}
+	
+	public static function loadTexture(fileName:String) {
 		var texture:Texture = new Texture();
 		texture.createFromImage(Assets.getImage(fileName));
 		
-		_texture = texture;
+		if (texture != null) {
+			_texture = texture;
+			_textureDefault = texture;
+		}
+		
+		return texture;
+	}
+	
+	public static function loadTextureFrom(image:Image) {
+		var texture:Texture = new Texture();
+		
+		if (image != null) {
+			texture.createFromImage(image);
+		
+			if (texture != null) {
+				_texture = texture;
+			}
+		} else {
+			trace("image is null!");
+		}
 		
 		return texture;
 	}

@@ -1,6 +1,7 @@
 package;
 
 import haxe.Utf8;
+import haxe.io.Bytes;
 import haxe.io.Path;
 import haxe.zip.Tools;
 import haxe.zip.Uncompress;
@@ -145,6 +146,24 @@ class FileEpisode {
 		Files.saveToFile(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav', data);
 	}
 	
+	public function hasTexture():Bool {
+		if (isZIP) {
+			var file:FileInput = File.read(root);
+			var unzip:Reader = new Reader(file);
+			var files = unzip.read();
+
+			for (e in files) {
+				if (e.fileName.endsWithIgnoreCase("tileset.png")) return true;
+			}
+		} else {
+			var fileName = root + "/" + "tileset.png";
+			
+			if (FileSystem.exists(fileName)) return true;
+		}
+		
+		return false;
+	}
+	
 	public function saveFile(fileName:String, content:String) {
 		// können nicht in ZIP Archive speichern
 		if (isZIP) return;
@@ -190,6 +209,43 @@ class FileEpisode {
 			if (FileSystem.exists(fileName)) {
 				var fin = File.read(fileName, false);
 				content = fin.readAll().toString();
+				fin.close();
+			} else {
+				trace(fileName + " not found!");
+			}
+		}
+		
+		return content;
+	}
+	
+	public function loadFileAsBytes(fileName:String):Bytes {
+		var content:Bytes = null;
+		
+		if (isZIP) {
+			var file:FileInput = File.read(root);
+			var unzip:Reader = new Reader(file);
+			var files = unzip.read();
+
+			var entry = null;
+			for (e in files) {
+				if (e.fileName.endsWithIgnoreCase(fileName)) entry = e;
+			}
+			
+			if (entry != null) {
+				if (entry.compressed) {
+					content = Reader.unzip(entry);
+				} else {
+					content = entry.data;
+				}
+			} else {
+				trace(fileName + " in " + root + " not found!");
+			}
+		} else {
+			fileName = root + "/" + fileName;
+			
+			if (FileSystem.exists(fileName)) {
+				var fin = File.read(fileName, true);
+				content = fin.readAll();
 				fin.close();
 			} else {
 				trace(fileName + " not found!");

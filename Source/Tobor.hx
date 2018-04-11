@@ -130,7 +130,7 @@ class Tobor extends LimeGame {
 	
 	override public function render() {
 		Gfx.setShader(shader);
-		Gfx.setTexture(texture);
+		Gfx.setTexture(Gfx._texture); // texture
 		
 		Gfx.clear(Color.WHITE);
 		Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
