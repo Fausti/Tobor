@@ -172,7 +172,7 @@ class PlayScreen extends Screen {
 			}
 		}
 		
-		var punkte = getWorld().points;
+		var punkte = getWorld().pointsAnim;
 		var leben = getWorld().lives;
 		var garlic = Math.ceil(getWorld().garlic);
 		

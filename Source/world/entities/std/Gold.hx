@@ -16,7 +16,6 @@ class Gold extends EntityCollectable {
 	
 	override public function onPickup() {
 		room.world.gold++;
-		room.world.points++;
 		Sound.play(Sound.SND_PICKUP_GOLD);
 	}
 }

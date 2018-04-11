@@ -45,6 +45,8 @@ class World {
 	public var points:Int = 0;
 	public var gold:Int = 0;
 	
+	public var pointsAnim:Int = 0;
+	
 	public var garlic:Float = 0;
 	
 	public var flags:Array<Bool> = [false, false, false, false, false];
@@ -134,6 +136,8 @@ class World {
 		
 		episodeWon = false;
 		episodeLost = false;
+		
+		pointsAnim = points;
 	}
 	
 	public function start() {
@@ -184,6 +188,11 @@ class World {
 	}
 	
 	public function update(deltaTime:Float) {
+		if (pointsAnim < points) {
+			pointsAnim = pointsAnim + 50;
+			if (pointsAnim > points) pointsAnim = points;
+		}
+		
 		if (garlic > 0) {
 			garlic = garlic - deltaTime;
 			if (garlic < 0) garlic = 0;
