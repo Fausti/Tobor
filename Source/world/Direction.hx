@@ -29,6 +29,27 @@ class Direction {
 		return NONE;
 	}
 	
+	public static function normalize(d:Vector2):Vector2 {
+		return get(d.x, d.y);
+	}
+	
+	public static function getParts(d:Vector2):Array<Vector2> {
+		// nicht diagonal!
+		if (!isDiagonal(d)) return [];
+		
+		if (d == NW) {
+			return [N, W];
+		} else if (d == NE) {
+			return [N, E];
+		} else if (d == SW) {
+			return [S, W];
+		} else if (d == SE) {
+			return [S, E];
+		}
+		
+		return [];
+	}
+	
 	public static function isDiagonal(d:Vector2):Bool {
 		if (d == NW || d == NE || d == SW || d == SE) return true;
 		return false;

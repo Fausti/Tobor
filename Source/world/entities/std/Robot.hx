@@ -76,15 +76,48 @@ class Robot extends EntityAI {
 			}
 		}
 		
-		return targetDirection;
+		return Direction.normalize(targetDirection);
+	}
+	
+	function isFree(direction:Vector2):Bool {
+		// nicht ausserhalb des Raumes!
+		if (isOutsideMap(x, y)) return false;
+		
+		// alle Objekte auf dem Zielfeld fragen
+		var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
+			
+		for (e in atTarget) {
+			// wenn eines davon nicht betreten werden kann, sind die restlichen uninteressant
+			// das Feld ist somit blockiert
+			if (!e.canEnter(this, direction, SPEED)) return false;
+		}
+		
+		return true;
 	}
 	
 	override function idle() {
 		var player = room.getPlayer();
 		var playerDirection = getDirectionToPlayer();
 		
+		// Sonderfall bei diagonaler Bewegung
+		if (Direction.isDiagonal(playerDirection)) {
+			// freie Nachbarfelder suchen
+			var free:Array<Vector2> = [];
+			
+			for (d in Direction.getParts(playerDirection)) {
+				if (isFree(d)) free.push(d);
+			}
+			
+			// ist EIN Feld blockiert, horizontal | vertikal gehen
+			if (free.length == 1) {
+				playerDirection = free[0];
+			}
+			
+			// bei ZWEI oder KEINEM freien Nachbarfeld diagonal gehen
+		}
+		
 		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
-		if (!move(Direction.get(playerDirection.x, playerDirection.y), (SPEED))) {
+		if (!move(playerDirection, SPEED)) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
 			
 			if (!move(Direction.getRandomAll(), (SPEED))) {
