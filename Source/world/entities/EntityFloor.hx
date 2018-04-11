@@ -22,4 +22,5 @@ class EntityFloor extends EntityStatic {
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		return true;
 	}
+	
 }

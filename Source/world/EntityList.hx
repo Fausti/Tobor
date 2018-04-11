@@ -34,6 +34,13 @@ class EntityList {
 		listAI = [];
 	}
 	
+	public function addState(e:Entity) {
+		listState.push(e);
+		
+		e.room = room;
+		e.init();
+	}
+	
 	public function add(e:Entity) {
 		if (e == null) return;
 		

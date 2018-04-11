@@ -1,5 +1,6 @@
 package world;
 
+import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
 import ui.Dialog;
@@ -125,6 +126,7 @@ class World {
 			loadData(content);
 			
 			switchRoom(inRoomX, inRoomY, inRoomZ);
+			room.restoreState();
 			player.setRoom(roomCurrent);
 		}
 		
@@ -152,6 +154,7 @@ class World {
 					player.setPosition(oldPlayerX, oldPlayerY);
 				
 					switchRoom(r.position.x, r.position.y, r.position.z);
+					room.restoreState();
 				}
 			}
 		}
@@ -584,13 +587,21 @@ class World {
 	function loadData(fileData:String) {
 		roomCurrent = null;
 		rooms = new RoomList();
-		
-		// player.reset();
-		
+
 		var data = TJSON.parse(fileData);
 		
+		var fields = Reflect.fields(data).length;
+		var current = 0;
+		
 		for (key in Reflect.fields(data)) {
-			switch(key) {
+			// trace((current * 100) / fields);
+			parseKey(key, data);
+			current++;
+		}
+	}
+	
+	function parseKey(key, data) {
+		switch(key) {
 			case "garlic":
 				if (!editing) garlic = Reflect.field(data, "garlic");
 			case "gold":
@@ -632,13 +643,6 @@ class World {
 					// Debug.error(this, "Unknown key '" + key + "' in WorldData!");
 				}
 			}
-		}
-		
-		/*
-		for (roomData in data.data) {
-			
-		}
-		*/
 	}
 	
 	function parseRoom(data) {

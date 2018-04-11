@@ -179,6 +179,15 @@ class Room {
 		entities.remove(e);
 	}
 	
+	public function addEntityState(e:Entity) {
+		if (Std.is(e, Charlie)) {
+			trace("Player shouldn't added to rooms!");
+			return;
+		}
+		
+		entities.addState(e);
+	}
+	
 	public function getCollisionsAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAll().filter(function(e):Bool {
 			return e.collisionAt(x, y);
@@ -298,13 +307,11 @@ class Room {
 				var obj = template.create();
 				obj.parseData(entry);
 			
-				addEntity(obj);
+				addEntityState(obj);
 			} else {
 				trace("There is no Entity with ID of: " + entry.id);
 			}
 		}
-		
-		saveState();
 	}
 	
 	public function save():Array<Map<String, Dynamic>> {
