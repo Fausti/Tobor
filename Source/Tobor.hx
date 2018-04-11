@@ -9,8 +9,7 @@ import ui.Font;
 import ui.Frame;
 import ui.Screen;
 import ui.Dialog;
-import world.Position;
-import world.RoomList;
+import lime.graphics.Image;
 
 import core.LimeGame;
 import gfx.Shader;
@@ -92,7 +91,20 @@ class Tobor extends LimeGame {
 		
 		Gfx.setup(SCREEN_WIDTH, SCREEN_HEIGHT);
 		
-		texture = Gfx.loadTexture("assets/tileset.png");
+		var bytes = Files.loadFileAsBytes("tileset.png");
+		
+		if (bytes != null) {
+			var image:Image = Image.fromBytes(bytes);
+				
+			if (image != null) {
+				if (image.width == 256 && image.height == 512) {
+					texture = Gfx.loadTextureFrom(image);
+				}
+			}
+		}
+		
+		if (texture == null) texture = Gfx.loadTexture("assets/tileset.png");
+		
 		shader = Shader.createDefaultShader();
 		
 		Tobor.fontSmall = new Font(8, 10, 430);

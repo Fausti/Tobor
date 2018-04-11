@@ -5,6 +5,7 @@ import sys.FileSystem;
 import haxe.io.Path;
 import sys.io.File;
 import sys.io.FileInput;
+import haxe.io.Bytes;
 
 /**
  * ...
@@ -96,6 +97,20 @@ class Files {
 		fin.close();
 		
 		return header;
+	}
+	
+	public static function loadFileAsBytes(fileName:String):Bytes {
+		var content:Bytes = null;
+			
+		if (FileSystem.exists(fileName)) {
+			var fin = File.read(fileName, true);
+			content = fin.readAll();
+			fin.close();
+		} else {
+			trace(fileName + " not found!");
+		}
+				
+		return content;
 	}
 	
 	public static function loadFromFile(fileName:String):String {
