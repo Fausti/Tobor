@@ -49,6 +49,60 @@ class Robot extends EntityAI {
 		cast(sprites[2], Animation).start();
 	}
 	
+	function getDirectionToPlayer():Vector2 {
+		var targetDirection:Vector2 = new Vector2();
+		
+		var player = room.getPlayer();
+		
+		if (player.visible) {
+			if (player.gridX < gridX) {
+				targetDirection.x = -1;
+			} else if (player.gridX > gridX) {
+				targetDirection.x = 1;
+			}
+		
+			if (player.gridY < gridY) {
+				targetDirection.y = -1;
+			} else if (player.gridY > gridY) {
+				targetDirection.y = 1;
+			}
+		
+			if (room.world.garlic > 0) {
+				if (Utils.distance(x, y, player.x, player.y) < 4) { 
+					// Richtung umkehren wenn Knoblauch aktiv
+					targetDirection.x = -targetDirection.x;
+					targetDirection.y = -targetDirection.y;
+				}
+			}
+		}
+		
+		return targetDirection;
+	}
+	
+	override function idle() {
+		var player = room.getPlayer();
+		var playerDirection = getDirectionToPlayer();
+		
+		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
+		if (!move(Direction.get(playerDirection.x, playerDirection.y), (SPEED))) {
+			// ... soll er versuchen in eine zufällige Richtung zu gehen
+			
+			if (!move(Direction.getRandomAll(), (SPEED))) {
+				stress++;
+			} else {
+				stress--;
+			}
+			
+		} else {
+			
+		}
+		
+		if (stress > maxStress) {
+			die();
+		}
+	}
+	
+	/*
 	override function idle() {
 		var playerDirectionX = 0;
 		var playerDirectionY = 0;
@@ -95,6 +149,7 @@ class Robot extends EntityAI {
 			die();
 		}
 	}
+	*/
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie)) return true;
