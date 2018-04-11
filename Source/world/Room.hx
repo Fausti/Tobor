@@ -315,7 +315,7 @@ class Room {
 	}
 	
 	public function save():Array<Map<String, Dynamic>> {
-		entities.saveState();
+		if (entities.length > 0) entities.saveState();
 		
 		var data:Array<Map<String, Dynamic>> = [];
 		

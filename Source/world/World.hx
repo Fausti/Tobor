@@ -599,13 +599,8 @@ class World {
 
 		var data = TJSON.parse(fileData);
 		
-		var fields = Reflect.fields(data).length;
-		var current = 0;
-		
 		for (key in Reflect.fields(data)) {
-			// trace((current * 100) / fields);
 			parseKey(key, data);
-			current++;
 		}
 	}
 	
