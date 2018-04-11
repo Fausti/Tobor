@@ -54,7 +54,7 @@ class Robot extends EntityAI {
 		
 		var player = room.getPlayer();
 		
-		if (player.visible) {
+		// if (player.visible) {
 			if (player.gridX < gridX) {
 				targetDirection.x = -1;
 			} else if (player.gridX > gridX) {
@@ -74,9 +74,13 @@ class Robot extends EntityAI {
 					targetDirection.y = -targetDirection.y;
 				}
 			}
-		}
+		// }
 		
-		return Direction.normalize(targetDirection);
+		targetDirection = Direction.normalize(targetDirection);
+		
+		if (targetDirection == Direction.NONE) targetDirection = Direction.getRandom();
+		
+		return targetDirection;
 	}
 	
 	function isFree(direction:Vector2):Bool {
@@ -95,44 +99,144 @@ class Robot extends EntityAI {
 		return true;
 	}
 	
+	function calcStress() {
+		// Spieler ist tot...
+		if (!room.getPlayer().visible) {
+			stress = 0;
+			return;
+		}
+		
+		var freeTiles:Int = 0;
+		
+		for (d in Direction.STAR) {
+			if (isFree(d)) freeTiles++;
+		}
+		
+		var chance:Float = Utils.random(0, 100);
+		
+		
+	}
+	
 	override function idle() {
 		var player = room.getPlayer();
-		var playerDirection = getDirectionToPlayer();
+		
+		// Stresslevel, weil falls Roboter stirbt brauchen wir hier nichts weiter machen
+		// calcStress();
+		
+		// Bewegungen...
+		if (!alive) return;
+		
+		var targetDirection = getDirectionToPlayer();
 		
 		// Sonderfall bei diagonaler Bewegung
-		if (Direction.isDiagonal(playerDirection)) {
+		if (Direction.isDiagonal(targetDirection)) {
 			// freie Nachbarfelder suchen
 			var free:Array<Vector2> = [];
 			
-			for (d in Direction.getParts(playerDirection)) {
+			for (d in Direction.getParts(targetDirection)) {
 				if (isFree(d)) free.push(d);
 			}
 			
 			// ist EIN Feld blockiert, horizontal | vertikal gehen
 			if (free.length == 1) {
-				playerDirection = free[0];
+				targetDirection = free[0];
 			}
 			
 			// bei ZWEI oder KEINEM freien Nachbarfeld diagonal gehen
 		}
 		
-		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
-		if (!move(playerDirection, SPEED)) {
-			// ... soll er versuchen in eine zufällige Richtung zu gehen
+		// Können wir uns aufs Zielfeld begeben?
+		var canMove:Bool = move(targetDirection, SPEED);
+		
+		// Solange Zielrichtung blockiert
+		while (!canMove) {
+			stress++;
 			
-			if (!move(Direction.getRandomAll(), (SPEED))) {
-				stress++;
+			if (!alive) break;
+			
+			var chance:Float = Utils.random(0, 100);
+			var dodgeDirection:Vector2 = Direction.NONE;
+			
+			if (Direction.isDiagonal(targetDirection)) {
+				// freie Nachbarfelder suchen
+				var free:Array<Vector2> = [];
+			
+				for (d in Direction.getParts(targetDirection)) {
+					if (isFree(d)) free.push(d);
+				}
+			
+				if (free.length == 2) {
+					// 3.1
+					if (chance < 50) {
+						dodgeDirection = free[0];
+					} else {
+						dodgeDirection = free[1];
+					}
+				} else if (free.length == 1) {
+					// 3.2
+					dodgeDirection = free[0];
+				} else {
+					if (isFree(Direction.rotate(targetDirection, 4))) {
+						// 3.3
+						if (chance < 70) {
+							dodgeDirection = Direction.rotate(targetDirection, 4);
+						} else if (chance < 85) {
+							dodgeDirection = Direction.rotate(targetDirection, 2);
+						} else {
+							dodgeDirection = Direction.rotate(targetDirection, -2);
+						}
+					} else {
+						// 3.4
+						if (chance < 35) {
+							dodgeDirection = Direction.rotate(targetDirection, 2);
+						} else if (chance < 70) {
+							dodgeDirection = Direction.rotate(targetDirection, -2);
+						} else if (chance < 85) {
+							dodgeDirection = Direction.rotate(targetDirection, 3);
+						} else {
+							dodgeDirection = Direction.rotate(targetDirection, -3);
+						}
+					}
+				}
 			} else {
-				stress--;
+				var rotation:Int = 0;
+				
+				if (chance < 70) {
+					rotation = 4;
+				} else if (chance < 78) {
+					rotation = 3;
+				} else if (chance < 86) {
+					rotation = -3;
+				} else if (chance < 88) {
+					rotation = 2;
+				} else if (chance < 90) {
+					rotation = -2;
+				} else if (chance < 95) {
+					rotation = 1;
+				} else if (chance < 100) {
+					rotation = -1;
+				} else {
+					trace("Nanu?! Fausti, du bist ein Trottel!");
+				}
+				
+				dodgeDirection = Direction.rotate(targetDirection, rotation);
 			}
 			
-		} else {
+			canMove = move(dodgeDirection, SPEED);
 			
+			if (canMove) stress--;
+			
+			if (stress > maxStress) {
+				die();
+			}
 		}
+	}
+	
+	override public function render() {
+		super.render();
 		
-		if (stress > maxStress) {
-			die();
-		}
+		var strStress:String = Std.string(stress).lpad(3, " ");
+		Tobor.fontSmall.drawString(x * Tobor.TILE_WIDTH - 4, y * Tobor.TILE_HEIGHT + 1, strStress, Color.ORANGE, new Color(0, 0, 0, 0.75));
 	}
 	
 	/*

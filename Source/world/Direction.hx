@@ -20,6 +20,7 @@ class Direction {
 	public static var SE(default, null):Vector2 = S.add(E);
 	
 	public static var ALL:Array<Vector2> = [NONE, S, N, W, E, NW, NE, SW, SE];
+	public static var STAR:Array<Vector2> = [N, NE, E, SE, S, SW, W, NW];
 	
 	public static function get(x:Float, y:Float):Vector2 {
 		for (dir in ALL) {
@@ -63,7 +64,26 @@ class Direction {
 		return Direction.ALL[Std.random(Direction.ALL.length - 1) + 1];
 	}
 	
-	public static function rotate(d:Vector2, ?clockwise:Bool = true):Vector2 {
+	public static function rotate(d:Vector2, step:Int):Vector2 {
+		// der Mittelpunkt wird nicht rotiert
+		if (d == NONE) return NONE;
+		
+		// index der Richtung holen
+		var index = STAR.indexOf(d);
+		
+		// wenn keiner unserer Richtungsvektoren dann raus hier!
+		if (index == -1) return NONE;
+		
+		// unsere Richtung rotieren
+		index = index + step;
+		while (index < 0) index = index + 8;
+		while (index >= 8) index = index - 8;
+		
+		return STAR[index];
+	}
+	
+	/*
+	public static function rotateOneStep(d:Vector2, ?clockwise:Bool = true):Vector2 {
 		if (d == N) {
 			if (clockwise) return NE;
 			else return NW;
@@ -106,4 +126,5 @@ class Direction {
 		
 		return NONE;
 	}
+	*/
 }
