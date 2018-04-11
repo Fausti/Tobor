@@ -23,7 +23,7 @@ class Notice extends EntityCollectable implements IElectric {
 	override public function onPickup() {
 		if (getWorld().editing) return;
 		
-		if (flag != Marker.MARKER_NO) getWorld().showMessage(getTextID());
+		if (flag != Marker.MARKER_NO) getWorld().showMessage(getTextID(), false);
 	}
 	
 	override public function onSetMarker(f:Int) {
