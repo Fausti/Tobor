@@ -28,6 +28,13 @@ class Arrow extends EntityStatic {
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+			var player = getPlayer();
+			
+			// steht Charlie auf dem Pfeil, gelten die Richtungen nicht mehr für Roboter!
+			if (Std.is(e, Robot)) {
+				if (player.x == x && player.y == y) return true;
+			}
+			
 			if (type == 0 && direction == Direction.E) return true;
 			else if (type == 1 && direction == Direction.N) return true;
 			else if (type == 2 && direction == Direction.W) return true;
