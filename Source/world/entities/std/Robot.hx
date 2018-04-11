@@ -118,6 +118,12 @@ class Robot extends EntityAI {
 	}
 	
 	override function idle() {
+		// altes Verhalten?
+		if (Config.robotBehavior == 1) {
+			idleOld();
+			return;
+		}
+		
 		var player = room.getPlayer();
 		
 		// Stresslevel, weil falls Roboter stirbt brauchen wir hier nichts weiter machen
@@ -235,12 +241,13 @@ class Robot extends EntityAI {
 	override public function render() {
 		super.render();
 		
-		var strStress:String = Std.string(stress).lpad(3, " ");
-		Tobor.fontSmall.drawString(x * Tobor.TILE_WIDTH - 4, y * Tobor.TILE_HEIGHT + 1, strStress, Color.ORANGE, new Color(0, 0, 0, 0.75));
+		if (Config.robotStress) {
+			var strStress:String = Std.string(stress).lpad(3, " ");
+			Tobor.fontSmall.drawString(x * Tobor.TILE_WIDTH - 4, y * Tobor.TILE_HEIGHT + 1, strStress, Color.ORANGE, new Color(0, 0, 0, 0.75));
+		}
 	}
 	
-	/*
-	override function idle() {
+	function idleOld() {
 		var playerDirectionX = 0;
 		var playerDirectionY = 0;
 		
@@ -286,7 +293,6 @@ class Robot extends EntityAI {
 			die();
 		}
 	}
-	*/
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie)) return true;

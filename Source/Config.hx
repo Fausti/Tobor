@@ -10,6 +10,9 @@ class Config {
 	public static var speed:Int = 2;
 	static var _speeds:Array<Float> = [0.5, 0.75, 1, 1.25, 1.5];
 	
+	public static var robotStress:Bool = false;
+	public static var robotBehavior:Int = 0;
+	
 	public static function init() {
 		load();
 	}
@@ -24,6 +27,10 @@ class Config {
 			switch(key) {
 			case "speed":
 				speed = Reflect.field(data, "speed");
+			case "robotStress":
+				robotStress = Reflect.field(data, "robotStress");
+			case "robotBehavior":
+				robotBehavior = Reflect.field(data, "robotBehavior");
 			}
 		}
 	}
@@ -32,6 +39,8 @@ class Config {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		data.set("speed", speed);
+		data.set("robotStress", robotStress);
+		data.set("robotBehavior", robotBehavior);
 		
 		Files.saveToFile("config.json", TJSON.encode(data, 'fancy'));
 	}
@@ -41,6 +50,20 @@ class Config {
 		if (index >= _speeds.length) index = _speeds.length - 1;
 		
 		speed = index;
+		
+		save();
+	}
+	
+	public static function setRobotBehavior(index:Int) {
+		if (index < 0 || index > 1) return;
+		
+		robotBehavior = index;
+		
+		save();
+	}
+	
+	public static function setRobotStress(value:Bool) {
+		robotStress = value;
 		
 		save();
 	}

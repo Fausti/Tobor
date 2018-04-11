@@ -23,11 +23,11 @@
     ,"OBJ_GARLIC_PICKUP" : {
          "de" : "Sieh an, eine Knoblauchknolle! Wenn Du so eine gegessen hast, wird Dir vorläufig keiner mehr zu nahe treten."
     }
-    ,"OBJ_WOOD_0" : {
-         "de" : "Wald"
-    }
     ,"OBJ_TREE" : {
          "de" : "Weihnachtsbaum"
+    }
+    ,"OBJ_WOOD_0" : {
+         "de" : "Wald"
     }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
@@ -89,11 +89,11 @@
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
     }
-    ,"TXT_INVENTORY_LOOK" : {
-         "de" : "Anschauen"
-    }
     ,"TXT_MENU_SCENE_TEXT" : {
          "de" : "Szenen-Text"
+    }
+    ,"TXT_INVENTORY_LOOK" : {
+         "de" : "Anschauen"
     }
     ,"OBJ_MUNITION#5" : {
          "de" : "Munition"
@@ -124,6 +124,9 @@
     }
     ,"OBJ_MIRROR_0" : {
          "de" : "Spiegel"
+    }
+    ,"TXT_MENU_ROBOT_BEHAVIOR" : {
+         "de" : "Roboter Verhalten"
     }
     ,"OBJ_ELECTRIC_DOOR_0" : {
          "de" : "elektrische Tür (GESCHLOSSEN)"
@@ -166,6 +169,12 @@
     }
     ,"OBJ_GRASS_1" : {
          "de" : "Pfad"
+    }
+    ,"TXT_OFF" : {
+         "de" : "Aus"
+    }
+    ,"TXT_MENU_ROBOT_BEHAVIOR_OLD" : {
+         "de" : "Tobor"
     }
     ,"OBJ_SLING" : {
          "de" : "Schleuder"
@@ -299,6 +308,9 @@
     ,"TXT_ASK_FOR_EPISODE_NAME" : {
          "de" : "Wie möchtest Du deine Episode nennen?"
     }
+    ,"TXT_MENU_ROBOT_STRESS" : {
+         "de" : "Stressanzeige"
+    }
     ,"OBJ_PLATIN" : {
          "de" : "Platin"
     }
@@ -380,11 +392,11 @@
     ,"OBJ_DOOR#5" : {
          "de" : "Tür Nr. 6"
     }
-    ,"OBJ_STAIRS_UP" : {
-         "de" : "Treppe (hoch)"
-    }
     ,"OBJ_GOLD" : {
          "de" : "Gold"
+    }
+    ,"OBJ_STAIRS_UP" : {
+         "de" : "Treppe (hoch)"
     }
     ,"OBJ_BAGPACK#3" : {
          "de" : "Beutel"
@@ -494,6 +506,9 @@
     ,"DRIFT_N" : {
          "de" : "Strömung"
     }
+    ,"TXT_MENU_ROBOT_BEHAVIOR_NEW" : {
+         "de" : "Original"
+    }
     ,"OBJ_ROOM_EXIT" : {
          "de" : "Raumausgang"
     }
@@ -596,6 +611,9 @@
     ,"OBJ_GOAL_1" : {
          "de" : "Ziel"
     }
+    ,"TXT_ON" : {
+         "de" : "An"
+    }
     ,"OBJ_DOOR#12" : {
          "de" : "Tür Nr. 13"
     }
@@ -683,10 +701,10 @@
     ,"DRIFT_NW" : {
          "de" : "Strömung"
     }
-    ,"OBJ_MAGNET#0" : {
-         "de" : "Magnet"
-    }
     ,"OBJ_KEY_USE" : {
          "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
+    }
+    ,"OBJ_MAGNET#0" : {
+         "de" : "Magnet"
     }
 }

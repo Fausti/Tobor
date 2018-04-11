@@ -239,10 +239,66 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
+	function showRobotBehaviorMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_MENU_ROBOT_BEHAVIOR_NEW"), "", function () {
+				Config.setRobotBehavior(0);
+				hideDialog();
+			}],
+			[Text.get("TXT_MENU_ROBOT_BEHAVIOR_OLD"), "", function () {
+				Config.setRobotBehavior(1);
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(Config.robotBehavior);
+		
+		menu.onCancel = function () {
+			showOptionMenu();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
+	function showRobotStressMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_OFF"), "", function () {
+				Config.setRobotStress(false);
+				hideDialog();
+			}],
+			[Text.get("TXT_ON"), "", function () {
+				Config.setRobotStress(true);
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(Config.robotStress?1:0);
+		
+		menu.onCancel = function () {
+			showOptionMenu();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showOptionMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("TXT_MENU_SPEED"), "", function () {
 				showSpeedMenu();
+			}],
+			[Text.get("TXT_MENU_ROBOT_STRESS"), "", function () {
+				showRobotStressMenu();
+			}],
+			[Text.get("TXT_MENU_ROBOT_BEHAVIOR"), "", function () {
+				showRobotBehaviorMenu();
 			}],
 		]);
 		
