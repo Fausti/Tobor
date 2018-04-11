@@ -298,12 +298,12 @@ class World {
 					var fileName:String = d.getInput(true);
 					
 					if (fileName != "" && fileName != null) {
+						inventory.remove("OBJ_CLOCK", 1);
+						
 						room.onRoomEnd();
 						room.saveState();
 						
 						saveGame(fileName);
-						
-						inventory.remove("OBJ_CLOCK", 1);
 						
 						game.getScreen().hideDialog();
 					}
