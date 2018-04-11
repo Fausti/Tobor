@@ -329,4 +329,11 @@ class Robot extends EntityAI {
 		var r = boundingBox.intersects(new Rectangle(cx, cy, 1, 1));
 		return r;
 	}
+	
+	override public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
+		// Geschwindigkeit anpassen
+		speed = Config.getSpeed(speed);
+		
+		return super.move(direction, speed, dist);
+	}
 }
