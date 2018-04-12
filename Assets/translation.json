@@ -23,11 +23,11 @@
     ,"OBJ_GARLIC_PICKUP" : {
          "de" : "Sieh an, eine Knoblauchknolle! Wenn Du so eine gegessen hast, wird Dir vorläufig keiner mehr zu nahe treten."
     }
-    ,"OBJ_TREE" : {
-         "de" : "Weihnachtsbaum"
-    }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
+    }
+    ,"OBJ_TREE" : {
+         "de" : "Weihnachtsbaum"
     }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
@@ -89,11 +89,11 @@
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
     }
-    ,"TXT_MENU_SCENE_TEXT" : {
-         "de" : "Szenen-Text"
-    }
     ,"TXT_INVENTORY_LOOK" : {
          "de" : "Anschauen"
+    }
+    ,"TXT_MENU_SCENE_TEXT" : {
+         "de" : "Szenen-Text"
     }
     ,"OBJ_MUNITION#5" : {
          "de" : "Munition"
@@ -269,6 +269,9 @@
     ,"OBJ_ROOF_7" : {
          "de" : "Dach"
     }
+    ,"OBJ_ICE_0" : {
+         "de" : "Eisfläche"
+    }
     ,"OBJ_ARROW_2" : {
          "de" : "Pfeil"
     }
@@ -277,6 +280,9 @@
     }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
+    }
+    ,"OBJ_ICE_1" : {
+         "de" : "Eisfläche"
     }
     ,"OBJ_ARROW_3" : {
          "de" : "Pfeil"
@@ -290,17 +296,26 @@
     ,"OBJ_SHOOTER_0" : {
          "de" : "Geschütz"
     }
+    ,"OBJ_ICE_2" : {
+         "de" : "Eisfläche"
+    }
     ,"OBJ_SHADOW#1" : {
          "de" : "Schatten"
     }
     ,"OBJ_SHOOTER_1" : {
          "de" : "Geschütz"
     }
+    ,"OBJ_ICE_3" : {
+         "de" : "Eisfläche"
+    }
     ,"OBJ_SHADOW#2" : {
          "de" : "Schatten"
     }
     ,"OBJ_SHOOTER_2" : {
          "de" : "Geschütz"
+    }
+    ,"OBJ_ICE_4" : {
+         "de" : "Eisfläche"
     }
     ,"OBJ_SHOOTER_3" : {
          "de" : "Geschütz"
@@ -412,6 +427,9 @@
     }
     ,"TXT_MENU_SPEED_SLOW" : {
          "de" : "Langsamer"
+    }
+    ,"OBJ_COMPASS" : {
+         "de" : "Kompass"
     }
     ,"OBJ_KEY#6" : {
          "de" : "Schlüssel Nr. 7"
@@ -683,11 +701,11 @@
     ,"OBJ_GARLIC_USE" : {
          "de" : "Puuh! So eine Knoblauchknolle schmeckt - pur genossen - zwar etwas streng, hält Dir dafür aber allerlei ungebetene Gäste vom Leib!"
     }
-    ,"TXT_EDITOR_ROOM" : {
-         "de" : "Raum"
-    }
     ,"TXT_LOAD_WHICH_GAME" : {
          "de" : "Welchen Spielstand möchtest Du laden?"
+    }
+    ,"TXT_EDITOR_ROOM" : {
+         "de" : "Raum"
     }
     ,"OBJ_TUNNEL#2" : {
          "de" : "Tunnel"
@@ -701,10 +719,10 @@
     ,"DRIFT_NW" : {
          "de" : "Strömung"
     }
-    ,"OBJ_KEY_USE" : {
-         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
-    }
     ,"OBJ_MAGNET#0" : {
          "de" : "Magnet"
+    }
+    ,"OBJ_KEY_USE" : {
+         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
     }
 }
