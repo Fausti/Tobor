@@ -189,7 +189,7 @@ class World {
 	
 	public function update(deltaTime:Float) {
 		if (pointsAnim < points) {
-			pointsAnim = pointsAnim + 50;
+			pointsAnim = pointsAnim + 100;
 			if (pointsAnim > points) pointsAnim = points;
 		}
 		

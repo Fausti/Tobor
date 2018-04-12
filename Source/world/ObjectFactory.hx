@@ -71,6 +71,11 @@ class ObjectFactory {
 		register("OBJ_TREE", Tree, Gfx.getSprite(80, 24));
 		register("OBJ_CLONE", Clone, Gfx.getSprite(128, 60));
 		
+		register("OBJ_DIAMOND#0", Diamond, Gfx.getSprite(160, 24), {type: 0})
+			.setPoints(1000);
+		register("OBJ_DIAMOND#1", Diamond, Gfx.getSprite(176, 24), {type: 1})
+			.setPoints(1000);
+		
 		register("OBJ_SLING", Sling, Gfx.getSprite(240, 60));
 		
 		for (i in 0 ... 6) {
