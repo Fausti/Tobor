@@ -183,6 +183,7 @@ class ObjectFactory {
 		
 		register("OBJ_THERMOPLATE_0", ThermoPlate, Gfx.getSprite(160, 324), {type: 0});
 		register("OBJ_THERMOPLATE_1", ThermoPlate, Gfx.getSprite(176, 324), {type: 1});
+		register("OBJ_THERMOPLATE_2", ThermoPlate, Gfx.getSprite(192, 324), {type: 2});
 		
 		for (i in 0 ... 7) {
 			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i});

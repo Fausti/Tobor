@@ -1,5 +1,7 @@
 package world.entities.std;
 
+import world.entities.Entity;
+import world.entities.EntityFloor;
 import world.entities.EntityStatic;
 import world.entities.interfaces.IElectric;
 import lime.math.Vector2;
@@ -8,15 +10,17 @@ import lime.math.Vector2;
  * ...
  * @author Matthias Faust
  */
-class ThermoPlate extends EntityStatic implements IElectric {
+class ThermoPlate extends EntityFloor implements IElectric {
 	var SPR_HEAT:Sprite;
 	var SPR_FROST:Sprite;
+	var SPR_DISABLED:Sprite;
 	
 	public function new() {
 		super();
 		
 		SPR_HEAT = Gfx.getSprite(160, 324);
 		SPR_FROST = Gfx.getSprite(176, 324);
+		SPR_DISABLED = Gfx.getSprite(192, 324);
 	}
 	
 	override public function render() {
@@ -25,30 +29,39 @@ class ThermoPlate extends EntityStatic implements IElectric {
 				setSprite(SPR_HEAT);
 			case 1:
 				setSprite(SPR_FROST);
+			case 2:
+				setSprite(SPR_DISABLED);
 		}
 		
 		super.render();
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI) || Std.is(e, EntityMoveable)) return true;
+		if (Std.is(e, Charlie)) {
+			if (type == 0) return false;
+			return true;
+		}
+		
+		if (Std.is(e, Robot) || Std.is(e, IceBlock)) return true;
 		if (Std.is(e, EntityCollectable)) return true;
 		
 		return false;
+	}
+	
+	override public function onEnter(e:Entity, direction:Vector2) {
+		if (Std.is(e, IceBlock)) {
+			if (type == 0) {
+				e.die();
+			}
+		}
 	}
 	
 	override public function switchStatus() {
 		if (type == 0) {
 			type = 1;
 			
-			if (room.getAllEntitiesAt(x, y, this).length == 0) {
-				var iceBlock:IceBlock = new IceBlock();
-				iceBlock.flag = flag;
-				
-				room.spawnEntity(x, y, iceBlock);
-			}
-			
-		} else {
+			spawnIce();
+		} else if (type == 1 || type == 2) {
 			type = 0;
 			
 			for (iceBlock in room.findAll(IceBlock)) {
@@ -56,6 +69,19 @@ class ThermoPlate extends EntityStatic implements IElectric {
 					iceBlock.die();
 				}
 			}
+			
+			for (iceBlock in room.findEntityAt(x, y, IceBlock)) {
+				iceBlock.die();
+			}
+		}
+	}
+	
+	public function spawnIce() {
+		if (room.getAllEntitiesAt(x, y, this).length == 0) {
+			var iceBlock:IceBlock = new IceBlock();
+			iceBlock.flag = flag;
+				
+			room.spawnEntity(x, y, iceBlock);
 		}
 	}
 }

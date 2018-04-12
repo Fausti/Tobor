@@ -3,6 +3,7 @@ package world.entities.std;
 import lime.math.Vector2;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.Entity;
+import world.entities.EntityFloor;
 import world.entities.EntityMoveable;
 import world.entities.EntityStatic;
 
@@ -10,7 +11,7 @@ import world.entities.EntityStatic;
  * ...
  * @author Matthias Faust
  */
-class Ice extends EntityStatic {
+class Ice extends EntityFloor {
 	var SPR_ICE:Array<Sprite>;
 	
 	public function new() {
