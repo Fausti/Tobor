@@ -77,11 +77,14 @@
     ,"OBJ_STAIRS_DOWN" : {
          "de" : "Treppe (runter)"
     }
-    ,"TXT_MENU_EXIT" : {
-         "de" : "Abbruch"
-    }
     ,"OBJ_MUNITION#3" : {
          "de" : "Munition"
+    }
+    ,"OBJ_DIAMOND_PICKUP" : {
+         "de" : "Dein erster Diamant! Hier liegen noch mehr herum..."
+    }
+    ,"TXT_MENU_EXIT" : {
+         "de" : "Abbruch"
     }
     ,"TXT_BONUS" : {
          "de" : "Bonus"
@@ -650,11 +653,11 @@
     ,"OBJ_GOAL_2" : {
          "de" : "Ziel"
     }
-    ,"OBJ_BARRIER" : {
-         "de" : "Barriere"
-    }
     ,"OBJ_DOOR#13" : {
          "de" : "Tür Nr. 14"
+    }
+    ,"OBJ_BARRIER" : {
+         "de" : "Barriere"
     }
     ,"OBJ_GOAL_3" : {
          "de" : "Ziel"
