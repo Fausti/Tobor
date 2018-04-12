@@ -13,6 +13,8 @@ class WaterDeadly extends EntityDynamic {
 		super();
 		
 		initSprites();
+		
+		z = Room.LAYER_FLOOR;
 	}
 	
 	function initSprites() {
@@ -46,6 +48,8 @@ class WaterDeadly extends EntityDynamic {
 		super.init();
 		
 		initSprites();
+		
+		z = Room.LAYER_FLOOR;
 	}
 	
 	override public function render_editor() {

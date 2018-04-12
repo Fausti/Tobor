@@ -133,7 +133,8 @@ class Water extends EntityFloor implements IElectric {
 			
 			var canMove:Bool = false;
 				
-			if (Std.random(4) != 0) {
+			// 90% Chance das man mit Schwimmflossen in die gewünschte Richtung schwimmt
+			if (Utils.chance(90)) {
 				if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 					var d:Vector2 = Direction.NONE;
 					
@@ -152,8 +153,8 @@ class Water extends EntityFloor implements IElectric {
 			}
 				
 			if (!canMove) {
-				if (Std.random(2) == 0) {
-					// Chance weiter in die selbe Richtung zu treiben
+				// 75% Chance in die Richtung zu treiben in die man gerade geschwommen/getrieben ist
+				if (Utils.chance(75)) {
 					if (direction != null) canMove = c.move(direction, Charlie.PLAYER_SPEED / 2);
 				}
 			}

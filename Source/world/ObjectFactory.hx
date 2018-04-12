@@ -170,7 +170,7 @@ class ObjectFactory {
 		register("OBJ_WATER_NE", Water, Gfx.getSprite(112, 72), {type: 4}, Room.LAYER_FLOOR);
 		register("OBJ_WATER_SE", Water, Gfx.getSprite(128, 72), {type: 5}, Room.LAYER_FLOOR);
 			
-		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72));
+		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72), null, Room.LAYER_FLOOR);
 		
 		register("OBJ_BUCKET#0", Bucket, Gfx.getSprite(144, 156), {type: 0});
 		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1});
@@ -189,7 +189,7 @@ class ObjectFactory {
 			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i}, Room.LAYER_FLOOR);
 		}
 		
-		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252), Room.LAYER_FLOOR);
+		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252), null, Room.LAYER_FLOOR);
 		
 		for (i in 0 ... 2) {
 			register("OBJ_GRASS_" + Std.string(i), Grass, Gfx.getSprite(128 + 16 * i, 252), {type: i}, Room.LAYER_FLOOR);
