@@ -174,6 +174,10 @@ class ObjectFactory {
 		
 		register("OBJ_BUCKET#0", Bucket, Gfx.getSprite(144, 156), {type: 0});
 		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1});
+
+		for (i in 0 ... 5) {
+			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i});
+		}
 		
 		for (i in 0 ... 7) {
 			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i});
@@ -345,11 +349,10 @@ class ObjectTemplate {
 		
 		this.editorName = Text.get(id);
 		
-		var temp:String = Text.get(id + "_DESC");
-		
 		var e = Type.createEmptyInstance(c);
 		if (e != null) {
 			if (Std.is(e, EntityItem)) {
+				var temp:String = Text.get(id + "_DESC");
 				temp = Text.get(id.split("#")[0] + "_PICKUP");
 			}
 		}
