@@ -8,7 +8,7 @@ import lime.math.Vector2;
  * ...
  * @author Matthias Faust
  */
-class Grass extends EntityStatic {
+class Grass extends EntityFloor {
 
 	public function new() {
 		super();

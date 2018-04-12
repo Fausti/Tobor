@@ -162,13 +162,13 @@ class ObjectFactory {
 		
 		register("OBJ_FLIPPERS", Flippers, Gfx.getSprite(96, 144));
 		
-		register("OBJ_WATER_SHALLOW", Water, Gfx.getSprite(0, 72), {type: 0});
-		register("OBJ_WATER_DEEP", Water, Gfx.getSprite(16, 72), {type: 1});
+		register("OBJ_WATER_SHALLOW", Water, Gfx.getSprite(0, 72), {type: 0}, Room.LAYER_FLOOR);
+		register("OBJ_WATER_DEEP", Water, Gfx.getSprite(16, 72), {type: 1}, Room.LAYER_FLOOR);
 			
-		register("OBJ_WATER_NW", Water, Gfx.getSprite(80, 72), {type: 2});
-		register("OBJ_WATER_SW", Water, Gfx.getSprite(96, 72), {type: 3});
-		register("OBJ_WATER_NE", Water, Gfx.getSprite(112, 72), {type: 4});
-		register("OBJ_WATER_SE", Water, Gfx.getSprite(128, 72), {type: 5});
+		register("OBJ_WATER_NW", Water, Gfx.getSprite(80, 72), {type: 2}, Room.LAYER_FLOOR);
+		register("OBJ_WATER_SW", Water, Gfx.getSprite(96, 72), {type: 3}, Room.LAYER_FLOOR);
+		register("OBJ_WATER_NE", Water, Gfx.getSprite(112, 72), {type: 4}, Room.LAYER_FLOOR);
+		register("OBJ_WATER_SE", Water, Gfx.getSprite(128, 72), {type: 5}, Room.LAYER_FLOOR);
 			
 		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72));
 		
@@ -176,23 +176,23 @@ class ObjectFactory {
 		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1});
 
 		for (i in 0 ... 5) {
-			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i});
+			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR);
 		}
 		
 		register("OBJ_ICE_BLOCK", IceBlock, Gfx.getSprite(144, 324));
 		
-		register("OBJ_THERMOPLATE_0", ThermoPlate, Gfx.getSprite(160, 324), {type: 0});
-		register("OBJ_THERMOPLATE_1", ThermoPlate, Gfx.getSprite(176, 324), {type: 1});
-		register("OBJ_THERMOPLATE_2", ThermoPlate, Gfx.getSprite(192, 324), {type: 2});
+		register("OBJ_THERMOPLATE_0", ThermoPlate, Gfx.getSprite(160, 324), {type: 0}, Room.LAYER_FLOOR);
+		register("OBJ_THERMOPLATE_1", ThermoPlate, Gfx.getSprite(176, 324), {type: 1}, Room.LAYER_FLOOR);
+		register("OBJ_THERMOPLATE_2", ThermoPlate, Gfx.getSprite(192, 324), {type: 2}, Room.LAYER_FLOOR);
 		
 		for (i in 0 ... 7) {
-			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i});
+			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i}, Room.LAYER_FLOOR);
 		}
 		
-		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252));
+		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252), Room.LAYER_FLOOR);
 		
 		for (i in 0 ... 2) {
-			register("OBJ_GRASS_" + Std.string(i), Grass, Gfx.getSprite(128 + 16 * i, 252), {type: i});
+			register("OBJ_GRASS_" + Std.string(i), Grass, Gfx.getSprite(128 + 16 * i, 252), {type: i}, Room.LAYER_FLOOR);
 		}
 		
 		register("OBJ_SHOES", Shoes, Gfx.getSprite(112, 144));

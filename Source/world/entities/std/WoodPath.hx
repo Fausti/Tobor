@@ -7,7 +7,7 @@ import lime.math.Vector2;
  * ...
  * @author Matthias Faust
  */
-class WoodPath extends EntityStatic {
+class WoodPath extends EntityFloor {
 	var SPR_WOODPATH:Sprite;
 	var SPR_WOODPATH_EDITOR:Sprite;
 	

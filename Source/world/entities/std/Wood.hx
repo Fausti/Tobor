@@ -7,7 +7,7 @@ import world.entities.EntityStatic;
  * ...
  * @author Matthias Faust
  */
-class Wood extends EntityStatic {
+class Wood extends EntityFloor {
 
 	public function new() {
 		super();
