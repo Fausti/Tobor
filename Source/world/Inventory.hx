@@ -26,6 +26,7 @@ class Inventory {
 	public var seen:Map<String, Bool>;
 	
 	public var containsOverall:Bool = false;
+	public var containsCompass:Bool = false;
 	
 	public function new() {
 		for (i in 0 ... 6) {
@@ -40,6 +41,7 @@ class Inventory {
 		seen = new Map<String, Bool>();
 		
 		containsOverall = false;
+		containsCompass = false;
 	}
 	
 	public function fillFrom(inv:Inventory) {
@@ -120,6 +122,7 @@ class Inventory {
 		item.add(count);
 		
 		if (id == "OBJ_OVERALL") containsOverall = true;
+		if (id == "OBJ_COMPASS") containsCompass = true;
 		
 		if (id.contains("OBJ_MUNITION")) {
 			return sortMunition(countMunition());
@@ -140,6 +143,10 @@ class Inventory {
 		
 		if (id == "OBJ_OVERALL") {
 			containsOverall = hasItem(id);
+		}
+		
+		if (id == "OBJ_COMPASS") {
+			containsCompass = hasItem(id);
 		}
 	}
 	

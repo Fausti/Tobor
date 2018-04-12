@@ -186,6 +186,7 @@ class ObjectFactory {
 		}
 		
 		register("OBJ_SHOES", Shoes, Gfx.getSprite(112, 144));
+		register("OBJ_COMPASS", Compass, Gfx.getSprite(176, 252));
 		
 		// Drift
 		

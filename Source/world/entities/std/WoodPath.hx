@@ -8,14 +8,22 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class WoodPath extends EntityStatic {
+	var SPR_WOODPATH:Sprite;
 	var SPR_WOODPATH_EDITOR:Sprite;
 	
 	public function new() {
 		super();
 		
-		setSprite(Gfx.getSprite(112, 252));
-		
+		SPR_WOODPATH = Gfx.getSprite(112, 252);
 		SPR_WOODPATH_EDITOR = Gfx.getSprite(160, 252);
+	}
+	
+	override public function render() {
+		if (getInventory().containsCompass) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WOODPATH_EDITOR);
+		} else {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WOODPATH);
+		}
 	}
 	
 	override public function render_editor() {
