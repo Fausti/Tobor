@@ -11,7 +11,7 @@ class Config {
 	static var _speeds:Array<Float> = [0.5, 0.75, 1, 1.25, 1.5];
 	
 	public static var robotStress:Bool = false;
-	public static var robotBehavior:Int = 0;
+	public static var robotBehavior:Int = 1;
 	
 	public static function init() {
 		load();
