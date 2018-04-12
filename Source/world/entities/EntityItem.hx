@@ -34,7 +34,7 @@ class EntityItem extends EntityCollectable {
 	}
 	
 	public function onLook(item:InventoryItem) {
-
+		getWorld().showMessage(getGroupID() + "_DESC", false);
 	}
 	
 	public function onUse(item:InventoryItem, x:Float, y:Float) {

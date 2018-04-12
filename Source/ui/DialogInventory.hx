@@ -52,6 +52,7 @@ class DialogInventory extends Dialog {
 		super.show();
 		
 		hasClone = inventory.hasItem("OBJ_CLONE");
+		hasSign = inventory.hasItem("OBJ_EXCLAMATION_MARK");
 		
 		currentGroup = null;
 		
