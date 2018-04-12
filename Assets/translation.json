@@ -23,11 +23,11 @@
     ,"OBJ_GARLIC_PICKUP" : {
          "de" : "Sieh an, eine Knoblauchknolle! Wenn Du so eine gegessen hast, wird Dir vorläufig keiner mehr zu nahe treten."
     }
-    ,"OBJ_WOOD_0" : {
-         "de" : "Wald"
-    }
     ,"OBJ_TREE" : {
          "de" : "Weihnachtsbaum"
+    }
+    ,"OBJ_WOOD_0" : {
+         "de" : "Wald"
     }
     ,"OBJ_CLOCK" : {
          "de" : "Speicheruhr"
@@ -89,11 +89,11 @@
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
     }
-    ,"TXT_INVENTORY_LOOK" : {
-         "de" : "Anschauen"
-    }
     ,"TXT_MENU_SCENE_TEXT" : {
          "de" : "Szenen-Text"
+    }
+    ,"TXT_INVENTORY_LOOK" : {
+         "de" : "Anschauen"
     }
     ,"OBJ_MUNITION#5" : {
          "de" : "Munition"
@@ -158,8 +158,14 @@
     ,"TXT_MENU_SPEED_SLOWEST" : {
          "de" : "Langsam"
     }
+    ,"OBJ_THERMOPLATE_0" : {
+         "de" : "Thermoplatte (heiß)"
+    }
     ,"OBJ_SAND#4" : {
          "de" : "Sand"
+    }
+    ,"OBJ_THERMOPLATE_1" : {
+         "de" : "Thermoplatte (kalt)"
     }
     ,"TXT_MENU_ROOM_NAME" : {
          "de" : "Szenennamen ändern"
@@ -241,6 +247,9 @@
     }
     ,"OBJ_ROOF_4" : {
          "de" : "Dach"
+    }
+    ,"OBJ_ICE_BLOCK" : {
+         "de" : "Eisblock"
     }
     ,"TXT_EDITOR_OBJECTS" : {
          "de" : "Objekte"
@@ -650,11 +659,11 @@
     ,"TXT_CREATE_NEW_EPISODE_IN_EDITOR" : {
          "de" : "Neue Episode im Editor erstellen"
     }
-    ,"OBJ_GOAL_4" : {
-         "de" : "Ziel"
-    }
     ,"OBJ_DOOR#14" : {
          "de" : "Tür Nr. 15"
+    }
+    ,"OBJ_GOAL_4" : {
+         "de" : "Ziel"
     }
     ,"OBJ_WALL_BLACK_SW" : {
          "de" : "Mauer (schwarz)"
@@ -701,11 +710,11 @@
     ,"OBJ_GARLIC_USE" : {
          "de" : "Puuh! So eine Knoblauchknolle schmeckt - pur genossen - zwar etwas streng, hält Dir dafür aber allerlei ungebetene Gäste vom Leib!"
     }
-    ,"TXT_LOAD_WHICH_GAME" : {
-         "de" : "Welchen Spielstand möchtest Du laden?"
-    }
     ,"TXT_EDITOR_ROOM" : {
          "de" : "Raum"
+    }
+    ,"TXT_LOAD_WHICH_GAME" : {
+         "de" : "Welchen Spielstand möchtest Du laden?"
     }
     ,"OBJ_TUNNEL#2" : {
          "de" : "Tunnel"
@@ -719,10 +728,10 @@
     ,"DRIFT_NW" : {
          "de" : "Strömung"
     }
-    ,"OBJ_MAGNET#0" : {
-         "de" : "Magnet"
-    }
     ,"OBJ_KEY_USE" : {
          "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
+    }
+    ,"OBJ_MAGNET#0" : {
+         "de" : "Magnet"
     }
 }
