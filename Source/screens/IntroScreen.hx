@@ -153,6 +153,8 @@ class IntroScreen extends Screen {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
 			]);
+			
+			menu.select(1);
 		} else {
 			menu = new DialogMenu(this, 320, 166, [
 				[Text.get("TXT_MENU_STORY"), ""],
@@ -169,9 +171,9 @@ class IntroScreen extends Screen {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
 			]);
+			
+			menu.select(2);
 		}
-		
-		menu.select(2);
 		
 		menu.onCancel = function () {
 			hideDialog();
