@@ -542,6 +542,16 @@ class World {
 				data.set("playerName", playerName);
 			}
 			
+			// itemSeen
+			
+			var itemSeenData:Array<String> = [];
+		
+			for (vr in inventory.seen.keys()) {
+				itemSeenData.push(vr);
+			}
+		
+			data.set("itemSeen", itemSeenData);
+			
 			// firstUse
 			
 			var firstUseData:Array<String> = [];
@@ -625,6 +635,15 @@ class World {
 					var vrs:Array<String> = Reflect.field(data, "firstUse");
 					for (vr in vrs) {
 						firstUse.set(vr, true);
+					}
+				}
+			case "itemSeen":
+				if (!editing) {
+					inventory.clearSeen();
+				
+					var vrs:Array<String> = Reflect.field(data, "itemSeen");
+					for (vr in vrs) {
+						inventory.seen.set(vr, true);
 					}
 				}
 			case "visited":

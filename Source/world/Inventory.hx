@@ -34,18 +34,23 @@ class Inventory {
 		}
 		
 		clear();
+		clearSeen();
 	}
 	
 	public function clear() {
 		list = new Map<String, InventoryItem>();
-		seen = new Map<String, Bool>();
 		
 		containsOverall = false;
 		containsCompass = false;
 	}
 	
+	public function clearSeen() {
+		seen = new Map<String, Bool>();
+	}
+	
 	public function fillFrom(inv:Inventory) {
 		clear();
+		clearSeen();
 		
 		if (inv == null) return;
 		
