@@ -2,13 +2,14 @@ package world.entities.std;
 
 import lime.math.Vector2;
 import world.entities.Entity;
+import world.entities.EntityFloor;
 import world.entities.EntityStatic;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class WaterIsolator extends EntityStatic {
+class WaterIsolator extends EntityFloor {
 
 	public function new() {
 		super();

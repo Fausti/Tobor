@@ -10,7 +10,7 @@ import world.entities.interfaces.IElectric;
  * ...
  * @author Matthias Faust
  */
-class Water extends EntityStatic implements IElectric {
+class Water extends EntityFloor implements IElectric {
 	var SPR_WATER:Array<Sprite>;
 	
 	public function new() {
