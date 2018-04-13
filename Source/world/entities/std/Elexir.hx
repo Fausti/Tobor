@@ -19,6 +19,16 @@ class Elexir extends EntityItem {
 			room.world.lives++;
 			
 			removeFromInventory();
+			
+			if (getWorld().checkFirstUse("USED_ELEXIR")) {
+					
+			} else {
+				getWorld().markFirstUse("USED_ELEXIR");
+				getWorld().showPickupMessage("OBJ_ELEXIR_USE", false, function () {
+					getWorld().addPoints(4500);
+					getWorld().hideDialog();
+				}, 4500);
+			}
 		}
 	}
 }

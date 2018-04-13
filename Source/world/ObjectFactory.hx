@@ -71,7 +71,9 @@ class ObjectFactory {
 			.setPoints(500);
 		
 		register("OBJ_TREE", Tree, Gfx.getSprite(80, 24));
-		register("OBJ_CLONE", Clone, Gfx.getSprite(128, 60));
+		
+		register("OBJ_CLONE", Clone, Gfx.getSprite(128, 60))
+			.setPoints(100);
 		
 		register("OBJ_DIAMOND#0", Diamond, Gfx.getSprite(160, 24), {type: 0})
 			.setPoints(1000);
@@ -85,6 +87,24 @@ class ObjectFactory {
 			register("OBJ_MUNITION#" + Std.string(i), Munition, Gfx.getSprite(144 + i * 16, 60), {type: i})
 				.setPoints(100);
 		}
+		
+		// Berge
+		
+		register("OBJ_MOUNTAIN_PATH", MountainPath, Gfx.getSprite(144, 264), null, Room.LAYER_FLOOR);
+		
+		for (i in 0 ... 4) {
+			register("OBJ_MOUNTAIN_" + Std.string(i), Mountain, Gfx.getSprite(176 + i * 16, 264), {type: i}, Room.LAYER_FLOOR);
+		}
+		
+		for (i in 0 ... 8) {
+			register("OBJ_MOUNTAIN_" + Std.string(i + 4), Mountain, Gfx.getSprite(128 + i * 16, 288), {type: i + 4}, Room.LAYER_FLOOR);
+		}
+		
+		for (i in 0 ... 8) {
+			register("OBJ_MOUNTAIN_" + Std.string(i + 12), Mountain, Gfx.getSprite(128 + i * 16, 300), {type: i + 12}, Room.LAYER_FLOOR);
+		}
+		
+		// Türen
 		
 		for (i in 0 ... 15) {
 			register("OBJ_DOOR#" + Std.string(i), Door, Gfx.getSprite(i * 16, 36), {type: i});
@@ -155,7 +175,8 @@ class ObjectFactory {
 		register("OBJ_EXCLAMATION_MARK", ExclamationMark, Gfx.getSprite(192, 12))
 			.setPoints(1500);
 		
-		register("OBJ_OVERALL", Overall, Gfx.getSprite(176, 132));
+		register("OBJ_OVERALL", Overall, Gfx.getSprite(176, 132))
+			.setPoints(1500);
 		
 		for (i in 0 ... 5) {
 			register("OBJ_BAGPACK#" + i, Bagpack, Gfx.getSprite(128 + i * 16, 144), {type: i});
@@ -204,8 +225,11 @@ class ObjectFactory {
 			register("OBJ_GRASS_" + Std.string(i), Grass, Gfx.getSprite(128 + 16 * i, 252), {type: i}, Room.LAYER_FLOOR);
 		}
 		
-		register("OBJ_SHOES", Shoes, Gfx.getSprite(112, 144));
-		register("OBJ_COMPASS", Compass, Gfx.getSprite(176, 252));
+		register("OBJ_SHOES", Shoes, Gfx.getSprite(112, 144))
+			.setPoints(1500);
+		
+		register("OBJ_COMPASS", Compass, Gfx.getSprite(176, 252))
+			.setPoints(1500);
 		
 		// Drift
 		

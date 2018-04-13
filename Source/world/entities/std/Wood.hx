@@ -1,7 +1,6 @@
 package world.entities.std;
 
 import lime.math.Vector2;
-import world.entities.EntityStatic;
 
 /**
  * ...
@@ -16,9 +15,7 @@ class Wood extends EntityFloor {
 	override public function init() {
 		var spr:Sprite = null;
 		
-		for (i in 0 ... 7) {
-			spr = Gfx.getSprite(0 + 16 * type, 252);
-		}
+		spr = Gfx.getSprite(0 + 16 * type, 252);
 		
 		if (spr != null) {
 			setSprite(spr);
