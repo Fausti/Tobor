@@ -65,8 +65,10 @@ class ThermoPlate extends EntityFloor implements IElectric {
 			type = 0;
 			
 			for (iceBlock in room.findAll(IceBlock)) {
-				if (iceBlock.flag == flag) {
-					iceBlock.die();
+				var ib:IceBlock = cast iceBlock;
+				
+				if (ib.flag == flag) {
+					if (ib.timeStamp != getWorld().timeStamp) iceBlock.die();
 				}
 			}
 			
@@ -80,6 +82,7 @@ class ThermoPlate extends EntityFloor implements IElectric {
 		if (room.getAllEntitiesAt(x, y, this).length == 0) {
 			var iceBlock:IceBlock = new IceBlock();
 			iceBlock.flag = flag;
+			iceBlock.timeStamp = getWorld().timeStamp;
 				
 			room.spawnEntity(x, y, iceBlock);
 		}

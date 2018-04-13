@@ -17,6 +17,8 @@ import ui.DialogInput;
  * @author Matthias Faust
  */
 class World {
+	public var timeStamp:Float = Timer.stamp();
+	
 	public var editing:Bool = false;
 	
 	public var file:FileEpisode;
@@ -188,6 +190,8 @@ class World {
 	}
 	
 	public function update(deltaTime:Float) {
+		timeStamp = Timer.stamp();
+		
 		if (pointsAnim < points) {
 			pointsAnim = pointsAnim + 100;
 			if (pointsAnim > points) pointsAnim = points;

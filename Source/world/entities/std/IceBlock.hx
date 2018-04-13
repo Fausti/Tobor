@@ -9,7 +9,8 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class IceBlock extends EntityPushable implements IElectric {
-
+	public var timeStamp:Float = 0;
+	
 	public function new() {
 		super();
 		
