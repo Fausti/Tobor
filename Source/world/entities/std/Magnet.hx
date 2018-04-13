@@ -54,7 +54,20 @@ class Magnet extends EntityItem {
 			}
 		
 			super.onDrop(item, x, y);
-			if (rotated > 0) Sound.play(Sound.SND_ROTATE_ARROW);
+			
+			if (rotated > 0) {
+				Sound.play(Sound.SND_ROTATE_ARROW);
+				
+				if (getWorld().checkFirstUse("USED_MAGNET")) {
+					
+				} else {
+					getWorld().markFirstUse("USED_MAGNET");
+					getWorld().showPickupMessage("OBJ_MAGNET_USE", false, function () {
+						getWorld().addPoints(5000);
+						getWorld().hideDialog();
+					}, 5000);
+				}
+			}
 		}
 	}
 	

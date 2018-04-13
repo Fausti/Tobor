@@ -65,8 +65,10 @@ class ObjectFactory {
 		
 		register("OBJ_NOTICE", Notice, Gfx.getSprite(208, 12));
 		
-		register("OBJ_MAGNET#0", Magnet, Gfx.getSprite(224, 12), {type: 0});
-		register("OBJ_MAGNET#1", Magnet, Gfx.getSprite(240, 12), {type: 1});
+		register("OBJ_MAGNET#0", Magnet, Gfx.getSprite(224, 12), {type: 0})
+			.setPoints(500);
+		register("OBJ_MAGNET#1", Magnet, Gfx.getSprite(240, 12), {type: 1})
+			.setPoints(500);
 		
 		register("OBJ_TREE", Tree, Gfx.getSprite(80, 24));
 		register("OBJ_CLONE", Clone, Gfx.getSprite(128, 60));
@@ -76,10 +78,12 @@ class ObjectFactory {
 		register("OBJ_DIAMOND#1", Diamond, Gfx.getSprite(176, 24), {type: 1})
 			.setPoints(1000);
 		
-		register("OBJ_SLING", Sling, Gfx.getSprite(240, 60));
+		register("OBJ_SLING", Sling, Gfx.getSprite(240, 60))
+			.setPoints(1500);
 		
 		for (i in 0 ... 6) {
-			register("OBJ_MUNITION#" + Std.string(i), Munition, Gfx.getSprite(144 + i * 16, 60), {type: i});
+			register("OBJ_MUNITION#" + Std.string(i), Munition, Gfx.getSprite(144 + i * 16, 60), {type: i})
+				.setPoints(100);
 		}
 		
 		for (i in 0 ... 15) {

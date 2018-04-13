@@ -54,6 +54,15 @@ class Munition extends EntityItem {
 		var template = getTemplate();
 			
 		if (template != null) {
+			// firstPickup Meldung
+			if (!getInventory().hasSeen(getGroupID())) {
+				getWorld().showPickupMessage(getGroupID() + "_PICKUP", false, function() {
+					var points:Int = template.points;
+					if (points > 0) getWorld().addPoints(points);
+					getWorld().hideDialog();
+				}, template.points);
+			}
+			
 			var rest:Int = room.world.inventory.add(template.name, template.spr);
 			
 			if (rest != 0) {

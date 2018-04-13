@@ -53,6 +53,16 @@ class ElectricFence extends EntityPushable implements IElectric {
 				die();
 			} else if (Std.is(e, Charlie)) {
 				if (!getPlayer().hasOverall()) {
+					
+					if (getWorld().checkFirstUse("KILLED_BY_EFENCE")) {
+					
+					} else {
+						getWorld().markFirstUse("KILLED_BY_EFENCE");
+						getWorld().showPickupMessage("KILLED_BY_EFENCE", false, function () {
+							getWorld().hideDialog();
+						});
+					}
+					
 					e.die();
 					die();
 				}

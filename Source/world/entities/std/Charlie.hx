@@ -163,6 +163,15 @@ class Charlie extends EntityMoveable {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (visible && Std.is(e, Robot)) {
 			die();
+			
+			if (getWorld().checkFirstUse("KILLED_BY_ROBOT")) {
+					
+			} else {
+				getWorld().markFirstUse("KILLED_BY_ROBOT");
+				getWorld().showPickupMessage("KILLED_BY_ROBOT", false, function () {
+					getWorld().hideDialog();
+				});
+			}
 		}
 	}
 	

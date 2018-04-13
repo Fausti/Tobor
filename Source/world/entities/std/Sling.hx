@@ -26,6 +26,16 @@ class Sling extends EntityItem {
 				bullet.move(direction, (Bullet.BULLET_SPEED));
 				
 				Sound.play(Sound.SND_SHOOT_BULLET);
+				
+				if (getWorld().checkFirstUse("USED_SLING")) {
+					
+				} else {
+					getWorld().markFirstUse("USED_SLING");
+					getWorld().showPickupMessage("OBJ_SLING_USE", false, function () {
+						getWorld().addPoints(3000);
+						getWorld().hideDialog();
+					}, 3000);
+				}
 			} else {
 				super.onEnter(e, direction);
 			}
