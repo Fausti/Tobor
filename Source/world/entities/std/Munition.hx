@@ -69,6 +69,11 @@ class Munition extends EntityItem {
 				if (type != (rest - 1)) {
 					type = rest - 1;
 					Sound.play(Sound.SND_PICKUP_MISC);
+					
+					if (!getWorld().checkFirstUse("TOO_MUCH_MUNITION")) {
+						getWorld().markFirstUse("TOO_MUCH_MUNITION");
+						getWorld().showMessage("TXT_TOO_MUCH_MUNITION", false);
+					}
 				}
 			} else {
 				die();

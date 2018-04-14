@@ -190,7 +190,8 @@ class ObjectFactory {
 		
 		// Water
 		
-		register("OBJ_FLIPPERS", Flippers, Gfx.getSprite(96, 144));
+		register("OBJ_FLIPPERS", Flippers, Gfx.getSprite(96, 144))
+			.setPoints(3000);
 		
 		register("OBJ_WATER_SHALLOW", Water, Gfx.getSprite(0, 72), {type: 0}, Room.LAYER_FLOOR);
 		register("OBJ_WATER_DEEP", Water, Gfx.getSprite(16, 72), {type: 1}, Room.LAYER_FLOOR);
