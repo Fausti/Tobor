@@ -10,14 +10,18 @@ import lime.math.Rectangle;
  * @author Matthias Faust
  */
 class Robot extends EntityAI {
-	public static var SPEED:Float = 2.0;
+	public static var SPEED:Float = 1.5;
 	
 	var stress:Int = 0;
 	var maxStress:Int = 150;
 	
+	var robotSpeed:Float = 0;
+	
 	public function new() {
 		super();
 	
+		robotSpeed = SPEED + (Math.random());
+		
 		type = Std.random(7);
 		
 		var c0:Color = Color.palette[Std.random(Color.palette.length - 1)];
@@ -152,7 +156,7 @@ class Robot extends EntityAI {
 		}
 		
 		// Können wir uns aufs Zielfeld begeben?
-		var canMove:Bool = move(targetDirection, SPEED);
+		var canMove:Bool = move(targetDirection, robotSpeed);
 		
 		// Solange Zielrichtung blockiert
 		while (!canMove) {
@@ -228,7 +232,7 @@ class Robot extends EntityAI {
 				dodgeDirection = Direction.rotate(targetDirection, rotation);
 			}
 			
-			canMove = move(dodgeDirection, SPEED);
+			canMove = move(dodgeDirection, robotSpeed);
 			
 			if (canMove) stress--;
 			
@@ -236,6 +240,33 @@ class Robot extends EntityAI {
 				die();
 			}
 		}
+	}
+	
+	function getRandomDirection(targetDirection:Vector2):Vector2 {
+		var rotation:Int = 0;
+		var chance:Float = Utils.random(0, 100);
+		
+		if (chance < 40) {
+			rotation = 4;
+		} else if (chance < 50) {
+			rotation = 3;
+		} else if (chance < 60) {
+			rotation = -3;
+		} else if (chance < 70) {
+			rotation = 2;
+		} else if (chance < 80) {
+			rotation = -2;
+		} else if (chance < 90) {
+			rotation = 1;
+		} else if (chance < 100) {
+			rotation = -1;
+		} else {
+			trace("Nanu?! Fausti, du bist ein Trottel!");
+		}
+				
+		targetDirection = Direction.rotate(targetDirection, rotation);
+		
+		return targetDirection;
 	}
 	
 	override public function render() {
@@ -248,38 +279,39 @@ class Robot extends EntityAI {
 	}
 	
 	function idleOld() {
-		var playerDirectionX = 0;
-		var playerDirectionY = 0;
-		
 		var player = room.getPlayer();
 		
-		if (player.visible) {
-			if (player.gridX < gridX) {
-				playerDirectionX = -1;
-			} else if (player.gridX > gridX) {
-				playerDirectionX = 1;
-			}
+		// Stresslevel, weil falls Roboter stirbt brauchen wir hier nichts weiter machen
+		// calcStress();
 		
-			if (player.gridY < gridY) {
-				playerDirectionY = -1;
-			} else if (player.gridY > gridY) {
-				playerDirectionY = 1;
-			}
+		// Bewegungen...
+		if (!alive) return;
 		
-			if (room.world.garlic > 0) {
-				if (Utils.distance(x, y, player.x, player.y) < 4) { 
-					// Richtung umkehren wenn Knoblauch aktiv
-					playerDirectionX = -playerDirectionX;
-					playerDirectionY = -playerDirectionY;
-				}
+		var targetDirection = getDirectionToPlayer();
+		
+		// Sonderfall bei diagonaler Bewegung
+		if (Direction.isDiagonal(targetDirection)) {
+			// freie Nachbarfelder suchen
+			var free:Array<Vector2> = [];
+			
+			for (d in Direction.getParts(targetDirection)) {
+				if (isFree(d)) free.push(d);
 			}
+			
+			// ist EIN Feld blockiert, horizontal | vertikal gehen
+			if (free.length == 1) {
+				targetDirection = free[0];
+			}
+			
+			// bei ZWEI oder KEINEM freien Nachbarfeld diagonal gehen
 		}
 		
 		// Wenn sich der Roboter nicht DIREKT in Spielerrichtung bewegen kann...
-		if (!move(Direction.get(playerDirectionX, playerDirectionY), (SPEED))) {
+		if (!move(targetDirection, (robotSpeed))) {
 			// ... soll er versuchen in eine zufällige Richtung zu gehen
 			
-			if (!move(Direction.getRandomAll(), (SPEED))) {
+			// if (!move(Direction.getRandomAll(), (robotSpeed))) {
+			if (!move(getRandomDirection(targetDirection), (robotSpeed))) {
 				stress++;
 			} else {
 				stress--;
@@ -298,14 +330,20 @@ class Robot extends EntityAI {
 		if (Std.is(e, Charlie)) return true;
 		if (Std.is(e, ElectricFence)) return true;
 		
+		if (Std.is(e, Robot)) {
+			if (Utils.chance(10)) return true;
+		}
+		
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (isMoving()) return;
+		// if (isMoving()) return;
 		
 		if (Std.is(e, Robot)) {
-			e.die();
+			// e.die();
+			if (Utils.chance(5)) stress = stress + 1;
+			
 		}
 	}
 	
