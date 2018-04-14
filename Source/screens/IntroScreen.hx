@@ -30,6 +30,8 @@ class IntroScreen extends Screen {
 	public function new(game:Tobor) {
 		super(game);
 		
+		Sound.stopMusicAll();
+		
 		if (game.world != null) {
 			if (game.world.file.hasTexture()) {
 				var bytes = game.world.file.loadFileAsBytes("tileset.png");

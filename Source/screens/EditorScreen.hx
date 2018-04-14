@@ -372,6 +372,55 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
+	function showEditOptionsMusic() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_ROOM_MUSIC_NONE"), "", function () {
+				game.world.room.config.music = "";
+				hideDialog();
+			}],
+			[Text.get("TXT_ROOM_MUSIC_NATURE"), "", function () {
+				game.world.room.config.music = "MUS_NATURE";
+				hideDialog();
+			}],
+		]);
+		
+		if (game.world.room.config.music == "MUS_NATURE") {
+			menu.select(1);
+		} else {
+			menu.select(0);
+		}
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
+	function showEditOptions() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), "", function () {
+				showEditOptionsMusic();
+			}],
+		]);
+		
+		menu.select(0);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showEditMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("TXT_MENU_CLEAR"), "", function () {
@@ -381,7 +430,7 @@ class EditorScreen extends PlayScreen {
 				askRoomTemplate();
 			}],
 			[Text.get("TXT_MENU_OPTIONS"), "", function () {
-				hideDialog();
+				showEditOptions();
 			}],
 			[Text.get("TXT_MENU_CHOOSE_SCENE"), "TAB", function() {
 				showDialog(dialogRooms);

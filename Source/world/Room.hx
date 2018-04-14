@@ -28,6 +28,10 @@ class Room {
 	public static inline var WIDTH:Int = 40;
 	public static inline var HEIGHT:Int = 28;
 	
+	public var config = {
+		"music": "",
+	};
+	
 	public var world:World;
 	public var position:Position;
 	
@@ -56,7 +60,6 @@ class Room {
 	public function start() {
 		for (e in entities.getAll()) {
 			e.onGameStart();
-			e.onRoomStart();
 		}
 	}
 	
@@ -144,14 +147,29 @@ class Room {
 	}
 	
 	public function onRoomStart() {
+		if (world.isLoading) return;
+		
+		trace("onRoomStart");
+		
 		for (e in entities.getAll()) {
 			e.onRoomStart();
 		}
 		
 		getPlayer().onRoomStart();
+		
+		// Raummusik spielen
+		
+		Sound.playMusic(config.music);
 	}
 	
 	public function onRoomEnd() {
+		if (world.isLoading) return;
+		
+		trace("onRoomEnd");
+		
+		// Musik anhalten...
+		Sound.stopMusic(config.music);
+		
 		for (e in entities.getAll()) {
 			e.onRoomEnds();
 		}
@@ -239,6 +257,16 @@ class Room {
 		var listTarget:Array<Entity> = [];
 		
 		for (e in entities.getAll()) {
+			if (Std.is(e, cl)) listTarget.push(e);
+		}
+		
+		return listTarget;
+	}
+	
+	public function findAllInState(cl:Dynamic):Array<Entity> {
+		var listTarget:Array<Entity> = [];
+		
+		for (e in entities.getState()) {
 			if (Std.is(e, cl)) listTarget.push(e);
 		}
 		

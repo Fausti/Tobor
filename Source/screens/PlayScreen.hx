@@ -37,6 +37,8 @@ class PlayScreen extends Screen {
 	public function new(game:Tobor, ?loadFileName:String = null) {
 		super(game);
 		
+		Sound.stopMusicAll();
+		
 		TXT_STATUS_POINTS = Text.get("TXT_STATUS_POINTS");
 		TXT_STATUS_LIVES = Text.get("TXT_STATUS_LIVES");
 		

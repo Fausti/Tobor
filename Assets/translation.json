@@ -1,5 +1,8 @@
 {
-     "OBJ_TUNNEL#3" : {
+     "TXT_MENU_EDIT_OPTIONS_MUSIC" : {
+         "de" : "Raummusik wählen..."
+    }
+    ,"OBJ_TUNNEL#3" : {
          "de" : "Tunnel"
     }
     ,"OBJ_MUNITION#1_DESC" : {
@@ -14,14 +17,14 @@
     ,"OBJ_GARLIC_PICKUP" : {
          "de" : "Sieh an, eine Knoblauchknolle! Wenn Du so eine gegessen hast, wird Dir vorläufig keiner mehr zu nahe treten."
     }
+    ,"OBJ_CLOCK" : {
+         "de" : "Speicheruhr"
+    }
     ,"OBJ_WOOD_0" : {
          "de" : "Wald"
     }
     ,"OBJ_TREE" : {
          "de" : "Weihnachtsbaum"
-    }
-    ,"OBJ_CLOCK" : {
-         "de" : "Speicheruhr"
     }
     ,"OBJ_WOOD_1" : {
          "de" : "Wald"
@@ -79,6 +82,9 @@
     }
     ,"TXT_MENU_LOAD" : {
          "de" : "Laden"
+    }
+    ,"TXT_TOO_MUCH_GOLD" : {
+         "de" : "Soviele Goldbarren sind viel zu schwer für Dich."
     }
     ,"OBJ_SLING_PICKUP" : {
          "de" : "Ausgezeichnet! Du hast die Schleuder gefunden. Nun mußt Du nur noch herausfinden wie man damit schießt!"
@@ -185,14 +191,14 @@
     ,"OBJ_START_POSITION" : {
          "de" : "Startposition"
     }
-    ,"MARKER_4" : {
-         "de" : "Markierung"
-    }
     ,"OBJ_MOUNTAIN_9" : {
          "de" : "Gebirge"
     }
     ,"OBJ_MOUNTAIN_16" : {
          "de" : "Gebirge"
+    }
+    ,"MARKER_4" : {
+         "de" : "Markierung"
     }
     ,"OBJ_MOUNTAIN_17" : {
          "de" : "Gebirge"
@@ -347,6 +353,9 @@
     ,"OBJ_STAIRS_UP" : {
          "de" : "Treppe (hoch)"
     }
+    ,"OBJ_BUCKET_PICKUP" : {
+         "de" : "Schon wieder ein neues Objekt! Den Eimer gibt es nur selten, aber dafür bringt er auch nicht viel. Immerhin ein paar Bonuspunkte."
+    }
     ,"OBJ_KEY#5" : {
          "de" : "Schlüssel Nr. 6"
     }
@@ -368,14 +377,14 @@
     ,"OBJ_DOOR#8" : {
          "de" : "Tür Nr. 9"
     }
+    ,"OBJ_DOOR#9" : {
+         "de" : "Tür Nr. 10"
+    }
     ,"OBJ_KEY#8" : {
          "de" : "Schlüssel Nr. 9"
     }
     ,"OBJ_KEY#11" : {
          "de" : "Schlüssel Nr. 12"
-    }
-    ,"OBJ_DOOR#9" : {
-         "de" : "Tür Nr. 10"
     }
     ,"OBJ_KEY#9" : {
          "de" : "Schlüssel Nr. 10"
@@ -511,6 +520,9 @@
     }
     ,"OBJ_DOOR#12" : {
          "de" : "Tür Nr. 13"
+    }
+    ,"TXT_TOO_MUCH_MUNITION" : {
+         "de" : "Du kannst nicht soviel Munition mit Dir herumschleppen."
     }
     ,"OBJ_MOUNTAIN_PATH" : {
          "de" : "Gebirgspfad (betretbar)"
@@ -698,6 +710,9 @@
     ,"OBJ_KEY#6_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
+    ,"TXT_ROOM_MUSIC_NONE" : {
+         "de" : "Keine"
+    }
     ,"OBJ_EXCLAMATION_MARK" : {
          "de" : "Ausrufezeichen"
     }
@@ -718,6 +733,9 @@
     }
     ,"OBJ_ROOF_2" : {
          "de" : "Dach"
+    }
+    ,"OBJ_FLIPPERS_PICKUP" : {
+         "de" : "Endlich hast Du die Schwimmflossen gefunden! Jetzt kannst Du endlich selbst bestimmen, wohin Dich die Flüsse treiben."
     }
     ,"OBJ_MAGNET#1_DESC" : {
          "de" : "Magnetische Objekte können einen Kompass irritieren, aber sie sind nutzlos, solange Du sie mit Dir herumträgst. Sie sind ganz nützlich in Verbindung mit Objekten, die Dich nicht auf den rechten Weg lassen."
@@ -788,6 +806,9 @@
     ,"OBJ_BAGPACK#2" : {
          "de" : "Beutel"
     }
+    ,"TXT_NEW_EPISODE_INSTALLED" : {
+         "de" : "Neue Episode installiert: "
+    }
     ,"OBJ_SLING_USE" : {
          "de" : "Ja! Mit der Schleuder kannst Du Dich endlich des lästigen Ungeziefers erwehren!"
     }
@@ -826,6 +847,12 @@
     }
     ,"OBJ_CLOCK_PICKUP" : {
          "de" : "Eine solche Uhr benötigst Du unbedingt, wenn du nicht immer von vorne anfangen willst!"
+    }
+    ,"OBJ_TREE_PICKUP" : {
+         "de" : "Du hast einen Tannenbaum gefunden! Er kann Dich befreien, wenn Du in Bedrängnis geraten solltest."
+    }
+    ,"TXT_ROOM_MUSIC_NATURE" : {
+         "de" : "Naturgeräusche"
     }
     ,"OBJ_ACID_PICKUP" : {
          "de" : "In diesen kleinen Flaschen befindet sich eine ätzende Flüssigkeit, die imstande ist, Mauerkalk aufzulösen. Dies funktioniert aber nur bei bestimmten Mauern."

@@ -11,6 +11,7 @@ import tjson.TJSON;
 import world.entities.std.StartPosition;
 import screens.IntroScreen;
 import ui.DialogInput;
+import world.entities.std.Wood;
 
 /**
  * ...
@@ -60,6 +61,8 @@ class World {
 	
 	public var highScore:Highscore;
 	
+	public var isLoading:Bool = false;
+	
 	// AFTER_UPDATE Aktionen
 	var actionSaveGame:Bool = false;
 	
@@ -92,6 +95,8 @@ class World {
 	}
 	
 	public function init(?fileName:String = null) {
+		isLoading = true;
+		
 		visitedRooms = new Map<String, Bool>();
 		firstUse = new Map<String, Bool>();
 		
@@ -118,7 +123,7 @@ class World {
 			content = file.loadSavegame(fileName);
 		}
 		
-		if (content == null) { 
+		if (content == null) {
 			rooms.add(createRoom(0, 0, 0));
 			switchRoom(0, 0, 0);
 		
@@ -128,7 +133,7 @@ class World {
 			player.setRoom(roomCurrent);
 		} else {
 			loadData(content);
-			
+						
 			switchRoom(inRoomX, inRoomY, inRoomZ);
 			room.restoreState();
 			player.setRoom(roomCurrent);
@@ -140,6 +145,8 @@ class World {
 		episodeLost = false;
 		
 		pointsAnim = points;
+		
+		isLoading = false;
 	}
 	
 	public function start() {
@@ -158,8 +165,11 @@ class World {
 					oldPlayerY = Std.int(sp.y);
 			
 					player.setPosition(oldPlayerX, oldPlayerY);
-				
+					
+					isLoading = true;
 					switchRoom(r.position.x, r.position.y, r.position.z);
+					isLoading = false;
+					
 					room.restoreState();
 				}
 			}
@@ -167,6 +177,7 @@ class World {
 
 		if (room != null) {
 			room.start();
+			room.onRoomStart();
 		} else {
 			trace("World.start: no room!");
 		}
@@ -595,6 +606,8 @@ class World {
 				worldData.set("treeTimer", r.treeTimer);
 			}
 			
+			worldData.set("music", r.config.music);
+			
 			worldData.set("x", r.position.x);
 			worldData.set("y", r.position.y);
 			worldData.set("z", r.position.z);
@@ -679,12 +692,16 @@ class World {
 		var rdata = null;
 		var rtree:Float = 0;
 		
+		var rmusic:String = null;
+		
 		for (key in Reflect.fields(data)) {
 			switch(key) {
 			case "treeTimer":
 				if (!editing) {
 					rtree = Reflect.field(data, "treeTimer");
 				}
+			case "music":
+				rmusic = Reflect.field(data, "music");
 			case "x":
 				rx = Reflect.field(data, "x");
 			case "y":
@@ -700,6 +717,12 @@ class World {
 		var newRoom:Room = new Room(this, rx, ry, rz);
 		newRoom.load(rdata);
 		newRoom.getName();
+		
+		if (rmusic == null) {
+			if (newRoom.findAllInState(Wood).length > 0) rmusic = "MUS_NATURE";
+		}
+		
+		newRoom.config.music = rmusic;
 		
 		rooms.add(newRoom);
 		switchRoom(rx, ry, rz);

@@ -15,6 +15,8 @@ class Sound {
 	public static var MUS_CHOOSER:AudioBuffer;
 	public static var MUS_INTRO_DOS:AudioBuffer;
 	
+	public static var MUS_NATURE:AudioBuffer;
+	
 	public static var SND_CHARLIE_STEP:AudioBuffer;
 	public static var SND_TUNNEL_STEP:AudioBuffer;
 	public static var SND_ROBOT_STEP:AudioBuffer;
@@ -39,9 +41,16 @@ class Sound {
 	
 	public static var SND_USE_GARLIC:AudioBuffer;
 	
+	public static var listMusic:Map<String, AudioBuffer>;
+	
 	public static function init() {
+		listMusic = new Map<String, AudioBuffer>();
+		
 		MUS_CHOOSER = Assets.getAudioBuffer("assets/mus/chooser.ogg");
 		MUS_INTRO_DOS = Assets.getAudioBuffer("assets/mus/intro-dos.ogg");
+		
+		MUS_NATURE = Assets.getAudioBuffer("assets/mus/nature.ogg");
+		listMusic.set("MUS_NATURE", MUS_NATURE);
 		
 		SND_CHARLIE_STEP = Assets.getAudioBuffer("assets/sfx/step-charlie.wav");
 		SND_TUNNEL_STEP = Assets.getAudioBuffer("assets/sfx/step-tunnel.wav");
@@ -66,6 +75,28 @@ class Sound {
 		SND_EXPLOSION_ROBOT = Assets.getAudioBuffer("assets/sfx/explosion-short.wav");
 		
 		SND_SHOOT_BULLET = Assets.getAudioBuffer("assets/sfx/shoot-bullet.wav");
+	}
+	
+	public static function stopMusicAll() {
+		for (key in listMusic.keys()) {
+			stopMusic(key);
+		}
+	}
+	
+	public static function stopMusic(key:String) {
+		if (key == null || key == "") return;
+		
+		var m = listMusic.get(key);
+		
+		if (m != null) stop(m);
+	}
+	
+	public static function playMusic(key:String) {
+		if (key == null || key == "") return;
+		
+		var m = listMusic.get(key);
+		
+		if (m != null) play(m, true);
 	}
 	
 	private static function findPlaying(sound:AudioBuffer):Array <AudioSource> {

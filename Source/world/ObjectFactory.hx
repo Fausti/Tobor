@@ -70,7 +70,8 @@ class ObjectFactory {
 		register("OBJ_MAGNET#1", Magnet, Gfx.getSprite(240, 12), {type: 1})
 			.setPoints(500);
 		
-		register("OBJ_TREE", Tree, Gfx.getSprite(80, 24));
+		register("OBJ_TREE", Tree, Gfx.getSprite(80, 24))
+			.setPoints(100);
 		
 		register("OBJ_CLONE", Clone, Gfx.getSprite(128, 60))
 			.setPoints(100);
@@ -203,8 +204,10 @@ class ObjectFactory {
 			
 		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72), null, Room.LAYER_FLOOR);
 		
-		register("OBJ_BUCKET#0", Bucket, Gfx.getSprite(144, 156), {type: 0});
-		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1});
+		register("OBJ_BUCKET#0", Bucket, Gfx.getSprite(144, 156), {type: 0})
+			.setPoints(1000);
+		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1})
+			.setPoints(1000);
 
 		for (i in 0 ... 5) {
 			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR);
