@@ -156,7 +156,7 @@ class ObjectFactory {
 		}
 		
 		for (i in 0 ... 4) {
-			register("OBJ_TUNNEL#" + Std.string(i), Tunnel, Gfx.getSprite(192 + i * 16, 72), {type: i});
+			register("OBJ_TUNNEL#" + Std.string(i), Tunnel, Gfx.getSprite(192 + i * 16, 72), {type: i}, Room.LAYER_FLOOR);
 		}
 		
 		register("OBJ_STAIRS_UP", Stairs, Gfx.getSprite(224, 108), {type: 0});
