@@ -37,7 +37,7 @@ class ElectricFence extends EntityPushable implements IElectric {
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
 			if (Std.is(e, Robot)) {
 				// Roboter haben Hemmungen in den Zaun zu laufen!
-				if (Utils.chance(5)) return false;
+				if (Utils.chance(85)) return false;
 			}
 			
 			return true;
