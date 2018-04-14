@@ -296,6 +296,8 @@ class Robot extends EntityAI {
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie)) return true;
+		if (Std.is(e, ElectricFence)) return true;
+		
 		return false;
 	}
 	

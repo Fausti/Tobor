@@ -37,7 +37,7 @@ class Skull extends EntityStatic {
 	function spawnFence(fx:Float, fy:Float) {
 		if (Room.isOutsideMap(fx, fy)) return;
 		
-		if (room.getEntitiesAt(fx, fy).length == 0) {
+		if (room.getEntitiesAt(fx, fy, null, EntityAI).length == 0) {
 			var fence:ElectricFence = new ElectricFence();
 			room.spawnEntity(fx, fy, fence);
 		}

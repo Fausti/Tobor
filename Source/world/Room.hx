@@ -215,8 +215,8 @@ class Room {
 		return listTarget;
 	}
 	
-	public function getEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
-		var listTarget:Array<Entity> = entities.getAt(x, y, without);
+	public function getEntitiesAt(x:Float, y:Float, ?without:Entity = null, ?withoutType:Dynamic = null):Array<Entity> {
+		var listTarget:Array<Entity> = entities.getAt(x, y, without, withoutType);
 		
 		var remTarget:Array<Entity> = listTarget.filter(function (e) {
 			if (!Std.is(e, EntityRoof)) return true; return false;

@@ -102,10 +102,18 @@ class EntityList {
 		}
 	}
 	
-	public function getAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
-		var listTarget:Array<Entity> = listAll.filter(function(e):Bool {
-			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
-		});
+	public function getAt(x:Float, y:Float, ?without:Entity = null, ?withoutType:Dynamic = null):Array<Entity> {
+		var listTarget:Array<Entity>;
+		
+		if (withoutType == null) {
+			listTarget = listAll.filter(function(e):Bool {
+				return e.gridX == Std.int(x) && e.gridY == Std.int(y);
+			});
+		} else {
+			listTarget = listAll.filter(function(e):Bool {
+				return e.gridX == Std.int(x) && e.gridY == Std.int(y) && !Std.is(e, withoutType);
+			});
+		}
 		
 		if (without != null) listTarget.remove(without);
 		
