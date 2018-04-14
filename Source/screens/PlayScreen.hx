@@ -291,10 +291,42 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
+	function showShaderMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("Normal"), "", function () {
+				Config.setShader(-1);
+				hideDialog();
+			}],
+			[Text.get("HQ2X"), "", function () {
+				Config.setShader(0);
+				hideDialog();
+			}],
+			[Text.get("HQ4X"), "", function () {
+				Config.setShader(1);
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(Config.shader + 1);
+		
+		menu.onCancel = function () {
+			showOptionMenu();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showOptionMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("TXT_MENU_SPEED"), "", function () {
 				showSpeedMenu();
+			}],
+			[Text.get("TXT_MENU_SHADER"), "", function () {
+				showShaderMenu();
 			}],
 			[Text.get("TXT_MENU_ROBOT_STRESS"), "", function () {
 				showRobotStressMenu();

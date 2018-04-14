@@ -428,6 +428,9 @@
     ,"TXT_ASK_FOR_NAME" : {
          "de" : "Willkommen!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:"
     }
+    ,"TXT_MENU_SHADER" : {
+         "de" : "Shader"
+    }
     ,"DRIFT_N" : {
          "de" : "Strömung"
     }
@@ -761,11 +764,11 @@
     ,"OBJ_ROOF_6" : {
          "de" : "Dach"
     }
-    ,"OBJ_ROOF_7" : {
-         "de" : "Dach"
-    }
     ,"OBJ_WATCHER" : {
          "de" : "Wächter (auf dem Boden versteckt / auf Objekten immer sichtbar)"
+    }
+    ,"OBJ_ROOF_7" : {
+         "de" : "Dach"
     }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"

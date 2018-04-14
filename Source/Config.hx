@@ -13,6 +13,8 @@ class Config {
 	public static var robotStress:Bool = false;
 	public static var robotBehavior:Int = 1;
 	
+	public static var shader:Int = -1;
+	
 	public static function init() {
 		load();
 	}
@@ -27,6 +29,8 @@ class Config {
 			switch(key) {
 			case "speed":
 				speed = Reflect.field(data, "speed");
+			case "shader":
+				shader = Reflect.field(data, "shader");
 			case "robotStress":
 				robotStress = Reflect.field(data, "robotStress");
 			case "robotBehavior":
@@ -39,10 +43,16 @@ class Config {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		data.set("speed", speed);
+		data.set("shader", shader);
 		data.set("robotStress", robotStress);
 		data.set("robotBehavior", robotBehavior);
 		
 		Files.saveToFile("config.json", TJSON.encode(data, 'fancy'));
+	}
+	
+	public static function setShader(index:Int) {
+		shader = index;
+		save();
 	}
 	
 	public static function setSpeed(index:Int) {

@@ -1,6 +1,8 @@
 package core;
 
+import lime.Assets;
 import lime.graphics.opengl.GL;
+import lime.graphics.opengl.GLUniformLocation;
 
 import gfx.Framebuffer;
 import gfx.Shader;
@@ -11,6 +13,13 @@ import gfx.Shader;
  */
 class LimeGame {
 	private var __defaultShader:Shader;
+	
+	private var __shaders:Array<String> = ["hq2x", "hq4x"];
+	private var __upscaleShader:Array<Shader>;
+	private var __u_Scale:Array<GLUniformLocation>;
+	private var __u_InputSize:Array<GLUniformLocation>;
+	private var __u_OutputSize:Array<GLUniformLocation>;
+	
 	private var __frameBuffer:Framebuffer;
 	private var __framebuffer_w:Int = 0;
 	private var __framebuffer_h:Int = 0;
@@ -29,6 +38,23 @@ class LimeGame {
 		__application = app;
 		
 		__defaultShader = Shader.createDefaultShader();
+		
+		__upscaleShader = [];
+		__u_Scale = [];
+		__u_InputSize = [];
+		__u_OutputSize = [];
+		
+		var index:Int = 0;
+		for (fileName in __shaders) {
+			__upscaleShader[index] = Shader.createShaderFrom(Assets.getText("assets/"+fileName+".vert"), Assets.getText("assets/"+fileName+".frag"));
+		
+			__u_Scale[index] = __upscaleShader[index].getUniformLocation("u_Scale");
+			__u_InputSize[index] = __upscaleShader[index].getUniformLocation("u_InputSize");
+			__u_OutputSize[index] = __upscaleShader[index].getUniformLocation("u_OutputSize");
+			
+			index++;
+		}
+		
 		__frameBuffer = new Framebuffer(__framebuffer_w, __framebuffer_h);
 		
 		// falls das Spielfenster initial nicht der originalen Spielgröße entspricht
@@ -44,6 +70,8 @@ class LimeGame {
 	
 	@:final	@:noCompletion @:allow(core.LimeApplication)
 	private function __render() {
+		__defaultShader.use();
+		
 		__frameBuffer.bind();
 		
 		render();
@@ -54,7 +82,15 @@ class LimeGame {
 		GL.clearColor(1, 1, 1, 1.0);
 		GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 		
-		__defaultShader.use();
+		if (Config.shader == -1) {
+			__defaultShader.use();
+		} else {
+			__upscaleShader[Config.shader].use();
+			GL.uniform2f(__u_Scale[Config.shader], __scaleX, __scaleY);
+			GL.uniform2f(__u_OutputSize[Config.shader], __application.window.width, __application.window.height);
+			GL.uniform2f(__u_InputSize[Config.shader], __framebuffer_w, __framebuffer_h);
+		}
+		
 		__frameBuffer.draw(__application.window.width, __application.window.height);
 	}
 	

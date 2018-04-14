@@ -37,6 +37,10 @@ class Shader {
 		
 	}
 	
+	public function getUniformLocation(key:String):GLUniformLocation {
+		return GL.getUniformLocation(program, key);
+	}
+	
 	function loadShader(type:Int, source:String):GLShader {
 		var shader = GL.createShader(type);
 		
@@ -87,6 +91,10 @@ class Shader {
 	
 	public static function createDefaultShader():Shader {
 		return new Shader(VERT_SPRITE_RAW, FRAG_SPRITE_RAW);
+	}
+	
+	public static function createShaderFrom(vertIn:String, fragIn:String):Shader {
+		return new Shader(vertIn, fragIn);
 	}
 	
 	public static inline var VERT_SPRITE_RAW:String =

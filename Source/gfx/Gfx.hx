@@ -117,7 +117,7 @@ class Gfx {
 		GL.viewport(x, y, w, h);
 	}
 	
-	public static inline function clear(color:Color) {
+	public static function clear(color:Color) {
 		GL.clearColor(color.r, color.g, color.b, 1.0);
 		GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 	}
