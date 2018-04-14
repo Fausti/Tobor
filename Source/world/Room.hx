@@ -149,8 +149,6 @@ class Room {
 	public function onRoomStart() {
 		if (world.isLoading) return;
 		
-		trace("onRoomStart");
-		
 		for (e in entities.getAll()) {
 			e.onRoomStart();
 		}
@@ -164,8 +162,6 @@ class Room {
 	
 	public function onRoomEnd() {
 		if (world.isLoading) return;
-		
-		trace("onRoomEnd");
 		
 		// Musik anhalten...
 		Sound.stopMusic(config.music);
