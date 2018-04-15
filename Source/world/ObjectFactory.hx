@@ -257,8 +257,8 @@ class ObjectFactory {
 		register("OBJ_ELECTRIC_DOOR_0", ElectricDoor, Gfx.getSprite(0, 336), {type: 0});
 		register("OBJ_ELECTRIC_DOOR_1", ElectricDoor, Gfx.getSprite(16, 336), {type: 1});
 		
-		register("OBJ_ELECTRIC_FLOOR_PLATE_0", ElectricFloorPlate, Gfx.getSprite(32, 336), {type: 0});
-		register("OBJ_ELECTRIC_FLOOR_PLATE_1", ElectricFloorPlate, Gfx.getSprite(48, 336), {type: 1});
+		register("OBJ_ELECTRIC_FLOOR_PLATE_0", ElectricFloorPlate, Gfx.getSprite(32, 336), {type: 0}, Room.LAYER_FLOOR);
+		register("OBJ_ELECTRIC_FLOOR_PLATE_1", ElectricFloorPlate, Gfx.getSprite(48, 336), {type: 1}, Room.LAYER_FLOOR);
 		
 		register("OBJ_ROBOT_FACTORY_0", RobotFactory, Gfx.getSprite(0, 324), {type: 0});
 		register("OBJ_ROBOT_FACTORY_1", RobotFactory, Gfx.getSprite(16, 324), {type: 1});

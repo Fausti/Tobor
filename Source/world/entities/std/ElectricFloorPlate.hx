@@ -2,13 +2,14 @@ package world.entities.std;
 
 import lime.math.Vector2;
 import world.entities.Entity;
+import world.entities.EntityFloor;
 import world.entities.interfaces.IElectric;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class ElectricFloorPlate extends EntityStatic implements IElectric {
+class ElectricFloorPlate extends EntityFloor implements IElectric {
 	var SPR_DISABLED:Sprite;
 	var SPR_ENABLED:Sprite;
 	
