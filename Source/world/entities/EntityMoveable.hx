@@ -1,6 +1,7 @@
 package world.entities;
 
 import lime.math.Vector2;
+import world.entities.std.Sling;
 
 /**
  * ...
@@ -119,6 +120,13 @@ class EntityMoveable extends EntityDynamic {
 			
 			var oldDirection = moveData.direction;
 			moveData.direction = Direction.NONE;
+			
+			// Sortieren, damit Schleuder als erstes eingesammelt wird!
+			atTarget.sort(function (a, b) {
+				if (Std.is(a, Sling) && !Std.is(b, Sling)) return -1;
+				if (Std.is(b, Sling) && !Std.is(a, Sling)) return 1;
+				return 0;
+			});
 			
 			for (e in atTarget) {
 				e.onEnter(this, oldDirection);
