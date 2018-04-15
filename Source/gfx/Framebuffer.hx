@@ -28,6 +28,8 @@ class Framebuffer {
 	
 	public var ready:Bool = false;
 	
+	public var data:UInt8Array = null;
+	
 	public function new(width:Int, height:Int) {
 		// gewünschte Größe merken
 		

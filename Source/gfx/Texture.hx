@@ -27,7 +27,7 @@ class Texture {
 		return _height;
 	}
 	
-	private var data:UInt8Array = null;
+	public var data:UInt8Array = null;
 	
 	public function new() {
 		handle = GL.createTexture();

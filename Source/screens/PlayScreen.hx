@@ -375,6 +375,10 @@ class PlayScreen extends Screen {
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				getWorld().checkHighScore();
+			}],
+			[Text.get("TXT_MENU_SCREENSHOT"), "", function() {
+				game.takeScreenShot();
+				hideDialog();
 			}],	
 		]);
 		

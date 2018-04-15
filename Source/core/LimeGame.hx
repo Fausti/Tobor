@@ -1,5 +1,11 @@
 package core;
 
+import haxe.Timer;
+import lime.graphics.Image;
+import lime.graphics.ImageBuffer;
+import lime.graphics.PixelFormat;
+import lime.utils.UInt8Array;
+import haxe.io.Bytes;
 import lime.Assets;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLUniformLocation;
@@ -30,6 +36,33 @@ class LimeGame {
 	private var __scaleY:Float = 1;
 	
 	public function new() {
+		
+	}
+	
+	public function takeScreenShot() {
+		var pixelsIn = new UInt8Array(4 * __application.window.width * __application.window.height);
+		var pixelsOut = new UInt8Array(4 * __application.window.width * __application.window.height);
+		
+		GL.readPixels(0, 0, __application.window.width, __application.window.height, GL.RGBA, GL.UNSIGNED_BYTE, pixelsIn);
+		
+		// Bild spiegeln
+		for (x in 0 ... __application.window.width) {
+			for (y in 0 ... __application.window.height) {
+				var offsetSrc:Int = (x + (y * __application.window.width)) * 4;
+				var offsetDst:Int = (x + ((__application.window.height - y - 1) * __application.window.width)) * 4;
+				
+				pixelsOut[offsetDst] = pixelsIn[offsetSrc];
+				pixelsOut[offsetDst + 1] = pixelsIn[offsetSrc + 1];
+				pixelsOut[offsetDst + 2] = pixelsIn[offsetSrc + 2];
+				pixelsOut[offsetDst + 3] = pixelsIn[offsetSrc + 3];
+			}
+		}
+		
+		var imgBuffer:ImageBuffer = new ImageBuffer(pixelsOut, __application.window.width, __application.window.height, 32, PixelFormat.RGBA32);
+		var img:Image = new Image(imgBuffer);
+			
+		Files.saveToFileAsBinary("screenshot_" + DateTools.format(Date.now(),"%Y%m%d-%H%M%S") + ".png", img.encode("png", 100));
+
 		
 	}
 	

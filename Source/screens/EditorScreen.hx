@@ -359,6 +359,10 @@ class EditorScreen extends PlayScreen {
 				showOptionMenu();
 			}],
 			[Text.get("TXT_MENU_HELP"), ""],
+			[Text.get("TXT_MENU_SCREENSHOT"), "", function() {
+				game.takeScreenShot();
+				hideDialog();
+			}],
 		]);
 		
 		menu.select(0);
@@ -454,7 +458,11 @@ class EditorScreen extends PlayScreen {
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
-			}],	
+			}],
+			[Text.get("TXT_MENU_SCREENSHOT"), "", function() {
+				game.takeScreenShot();
+				hideDialog();
+			}],
 		]);
 		
 		menu.select(2);

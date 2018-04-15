@@ -77,6 +77,9 @@
     ,"OBJ_WALL_BLACK" : {
          "de" : "Mauer (schwarz)"
     }
+    ,"TXT_MENU_SCREENSHOT" : {
+         "de" : "Screenshot"
+    }
     ,"OBJ_ELECTRIC_FENCE" : {
          "de" : "elektrischer Zaun (AN)"
     }
@@ -176,6 +179,9 @@
     ,"MARKER_2" : {
          "de" : "Markierung"
     }
+    ,"OBJ_START_POSITION" : {
+         "de" : "Startposition"
+    }
     ,"OBJ_MOUNTAIN_8" : {
          "de" : "Gebirge"
     }
@@ -187,9 +193,6 @@
     }
     ,"MARKER_3" : {
          "de" : "Markierung"
-    }
-    ,"OBJ_START_POSITION" : {
-         "de" : "Startposition"
     }
     ,"MARKER_4" : {
          "de" : "Markierung"
@@ -380,11 +383,11 @@
     ,"OBJ_DOOR#9" : {
          "de" : "Tür Nr. 10"
     }
-    ,"OBJ_KEY#8" : {
-         "de" : "Schlüssel Nr. 9"
-    }
     ,"OBJ_KEY#11" : {
          "de" : "Schlüssel Nr. 12"
+    }
+    ,"OBJ_KEY#8" : {
+         "de" : "Schlüssel Nr. 9"
     }
     ,"OBJ_KEY#12" : {
          "de" : "Schlüssel Nr. 13"

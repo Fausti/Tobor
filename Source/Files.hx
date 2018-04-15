@@ -151,4 +151,16 @@ class Files {
 			trace(err);
 		}
 	}
+	
+	public static function saveToFileAsBinary(fileName:String, data:Bytes) {
+		try {
+			var fout = File.write(fileName, true);
+			fout.write(data);
+			fout.close();
+		}
+		catch (err:Dynamic)
+		{
+			trace(err);
+		}
+	}
 }
