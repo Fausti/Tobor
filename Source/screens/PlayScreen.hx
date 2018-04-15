@@ -368,6 +368,7 @@ class PlayScreen extends Screen {
 				hideDialog();
 			}],
 			[Text.get("TXT_MENU_RESTART"), "", function () {
+				getWorld().player.die();
 				hideDialog();
 			}],
 			[Text.get("TXT_MENU_LOAD"), "", function () {
