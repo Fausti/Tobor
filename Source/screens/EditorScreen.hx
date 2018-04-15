@@ -162,7 +162,9 @@ class EditorScreen extends PlayScreen {
 							} else if (template.layer == Room.LAYER_DRIFT) {
 								e.setDrift( -1);
 							} else {
-								if (e.z == template.layer) game.world.room.removeEntity(e);
+								// if (e.z == template.layer) {
+									game.world.room.removeEntity(e);
+								// }
 							}
 						}
 						
