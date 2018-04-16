@@ -204,6 +204,18 @@ class ObjectFactory {
 			
 		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72), null, Room.LAYER_FLOOR);
 		
+		// Drift
+		
+		register("DRIFT_S", Drift, Gfx.getSprite(0, 300), {type: 0}, Room.LAYER_DRIFT);
+		register("DRIFT_N", Drift, Gfx.getSprite(16, 300), {type: 1}, Room.LAYER_DRIFT);
+		register("DRIFT_W", Drift, Gfx.getSprite(32, 300), {type: 2}, Room.LAYER_DRIFT);
+		register("DRIFT_E", Drift, Gfx.getSprite(48, 300), {type: 3}, Room.LAYER_DRIFT);
+		
+		register("DRIFT_NW", Drift, Gfx.getSprite(64, 300), {type: 4}, Room.LAYER_DRIFT);
+		register("DRIFT_NE", Drift, Gfx.getSprite(80, 300), {type: 5}, Room.LAYER_DRIFT);
+		register("DRIFT_SW", Drift, Gfx.getSprite(96, 300), {type: 6}, Room.LAYER_DRIFT);
+		register("DRIFT_SE", Drift, Gfx.getSprite(112, 300), {type: 7}, Room.LAYER_DRIFT);
+		
 		register("OBJ_BUCKET#0", Bucket, Gfx.getSprite(144, 156), {type: 0})
 			.setPoints(1000);
 		register("OBJ_BUCKET#1", Bucket, Gfx.getSprite(160, 156), {type: 1})
@@ -234,18 +246,12 @@ class ObjectFactory {
 		
 		register("OBJ_COMPASS", Compass, Gfx.getSprite(176, 252))
 			.setPoints(1500);
+			
+		// Höhle
 		
-		// Drift
-		
-		register("DRIFT_S", Drift, Gfx.getSprite(0, 300), {type: 0}, Room.LAYER_DRIFT);
-		register("DRIFT_N", Drift, Gfx.getSprite(16, 300), {type: 1}, Room.LAYER_DRIFT);
-		register("DRIFT_W", Drift, Gfx.getSprite(32, 300), {type: 2}, Room.LAYER_DRIFT);
-		register("DRIFT_E", Drift, Gfx.getSprite(48, 300), {type: 3}, Room.LAYER_DRIFT);
-		
-		register("DRIFT_NW", Drift, Gfx.getSprite(64, 300), {type: 4}, Room.LAYER_DRIFT);
-		register("DRIFT_NE", Drift, Gfx.getSprite(80, 300), {type: 5}, Room.LAYER_DRIFT);
-		register("DRIFT_SW", Drift, Gfx.getSprite(96, 300), {type: 6}, Room.LAYER_DRIFT);
-		register("DRIFT_SE", Drift, Gfx.getSprite(112, 300), {type: 7}, Room.LAYER_DRIFT);
+		for (i in 0 ... 13) {
+			register("OBJ_CAVE_" + Std.string(i), Cave, Gfx.getSprite(32 + (i * 16), 180), {type: i}, Room.LAYER_FLOOR);
+		}
 		
 		// Electric Stuff
 		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER);
