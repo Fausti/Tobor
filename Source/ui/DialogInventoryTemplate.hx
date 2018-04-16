@@ -391,6 +391,10 @@ class DialogInventoryTemplate extends Dialog {
 			}
 		}
 		
+		for (i in 0 ... actionsString.length) {
+			actionsString[i] = actionsString[i].rpad(actionsSize, " ", false);
+		}
+		
 		actionIndex = 0;
 		if (actions[actionIndex] == Inventory.ACTION_COUNT) actionIndex++;
 		
