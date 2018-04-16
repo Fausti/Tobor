@@ -7,6 +7,7 @@ import ui.DialogMenu;
 import ui.DialogInventoryTemplate;
 import world.Inventory;
 import world.ObjectFactory.ObjectTemplate;
+import world.World;
 import world.entities.EntityItem;
 import world.entities.Marker;
 import world.entities.interfaces.IContainer;
@@ -453,8 +454,10 @@ class EditorScreen extends PlayScreen {
 				hideDialog();
 			}],
 			[Text.get("TXT_MENU_LOAD"), "", function () {
-				game.world.load();
-				hideDialog();
+				// game.world.load();
+				game.world = new World(game, game.world.file);
+				game.setScreen(new EditorScreen(game));
+				// hideDialog();
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
