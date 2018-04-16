@@ -253,6 +253,19 @@ class ObjectFactory {
 			register("OBJ_CAVE_" + Std.string(i), Cave, Gfx.getSprite(32 + (i * 16), 180), {type: i}, Room.LAYER_FLOOR);
 		}
 		
+		// Fels
+		
+		for (i in 0 ... 9) {
+			register("OBJ_BEDROCK_" + Std.string(i), Bedrock, Gfx.getSprite(0 + (i * 16), 264), {type: i}, Room.LAYER_FLOOR);
+		}
+		
+		register("OBJ_BEDROCK_9", Bedrock, Gfx.getSprite(240, 264), {type: 9}, Room.LAYER_FLOOR);
+		
+		// Pfade
+		
+		register("OBJ_BEDROCK_PATH", BedrockPath, Gfx.getSprite(240, 180), null, Room.LAYER_FLOOR);
+		register("OBJ_PATH", Path, Gfx.getSprite(224, 120), null, Room.LAYER_FLOOR);
+		
 		// Electric Stuff
 		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER);
 		register("MARKER_1", Marker, Gfx.getSprite(16, 348), {type:1}, Room.LAYER_MARKER);
