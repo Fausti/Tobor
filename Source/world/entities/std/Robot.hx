@@ -4,12 +4,13 @@ import lime.math.Vector2;
 import world.entities.Entity;
 import world.entities.EntityAI;
 import lime.math.Rectangle;
+import world.entities.interfaces.IEnemy;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class Robot extends EntityAI {
+class Robot extends EntityAI implements IEnemy {
 	public static var SPEED:Float = 1.5;
 	
 	var stress:Int = 0;
