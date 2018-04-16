@@ -67,4 +67,30 @@ class Utils {
 	public static inline function chance(Chance:Float = 50):Bool {
 		return random(0, 100) < Chance;
 	}
+	
+	// Step Iterator
+	
+	public static function range(start:Int, end:Int, step:Int):StepIterator {
+		return new StepIterator(start, end, step);
+	}
+}
+
+class StepIterator {
+	var end:Int;
+	var step:Int;
+	var index:Int;
+
+	public inline function new(start:Int, end:Int, step:Int) {
+		this.index = start;
+		this.end = end;
+		this.step = step;
+	}
+
+	public inline function hasNext() {
+        if (this.step > 0) 
+        	return index < end;
+        else return index > end;
+    }
+	
+	public inline function next() return (index += step) - step;
 }

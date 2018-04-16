@@ -4,6 +4,7 @@ import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
 import ui.Dialog;
+import ui.DialogFade;
 import ui.DialogMessage;
 import world.entities.Entity;
 import world.entities.std.Charlie;
@@ -18,6 +19,7 @@ import world.entities.std.Wood;
  * @author Matthias Faust
  */
 class World {
+	var SPR_BLACK:Sprite;
 	public var timeStamp:Float = Timer.stamp();
 	
 	public var editing:Bool = false;
@@ -92,6 +94,8 @@ class World {
 		
 		highScore = new Highscore();
 		highScore.load(file.loadHighscore());
+		
+		SPR_BLACK = Gfx.getSprite(48, 156);
 	}
 	
 	public function init(?fileName:String = null) {
@@ -222,7 +226,6 @@ class World {
 			actionChangeRoom = false;
 
 			if (actionChangeRoomDirection != null) {
-			
 				var rx:Int = Std.int(room.position.x + actionChangeRoomDirection.x);
 				var ry:Int = Std.int(room.position.y + actionChangeRoomDirection.y);
 				var rz:Int = room.position.z;
@@ -254,8 +257,11 @@ class World {
 				
 					Input.wait(0.25);
 				}
-			
+				
 				actionChangeRoomDirection = null;
+				
+				// var d:DialogFade = new DialogFade(game.getScreen(), 1);
+				// game.showDialog(d);
 			}
 		}
 		
@@ -341,6 +347,16 @@ class World {
 	}
 	
 	public function render(?editMode:Bool = false) {
+		if (actionChangeRoom) {
+			for (_x in 0 ... Room.WIDTH) {
+				for (_y in 0 ... Room.HEIGHT) {
+					Gfx.drawSprite(_x * Tobor.TILE_WIDTH, _y * Tobor.TILE_HEIGHT, SPR_BLACK);
+				}
+			}
+			
+			return;
+		}
+		
 		if (roomCurrent != null) roomCurrent.render(editMode);
 	}
 	
@@ -379,8 +395,12 @@ class World {
 	}
 	
 	public function changeRoom(d:Vector2) {
-		actionChangeRoom = true;
-		actionChangeRoomDirection = d;
+		// var d:DialogFade = new DialogFade(game.getScreen(), 0, function() {
+			actionChangeRoom = true;
+			actionChangeRoomDirection = d;
+		// });
+		
+		// game.showDialog(d);
 	}
 	
 	public function markFirstUse(id:String) {
