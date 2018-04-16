@@ -9,6 +9,9 @@ import world.InventoryItem;
  */
 class DialogInventory extends Dialog {
 	var SPR_NONE:Sprite;
+	var SPR_GROUP_MUNITION:Sprite;
+	var SPR_GROUP_KEY:Sprite;
+		
 	
 	var inventory:Inventory;
 	
@@ -36,6 +39,8 @@ class DialogInventory extends Dialog {
 		super(screen, x, y);
 		
 		SPR_NONE = Gfx.getSprite(0, 0);
+		SPR_GROUP_KEY = Gfx.getSprite(224, 48);
+		SPR_GROUP_MUNITION = Gfx.getSprite(224, 60);
 		
 		inventory = screen.game.world.inventory;
 		
@@ -223,7 +228,17 @@ class DialogInventory extends Dialog {
 					Gfx.drawSprite(iconX, 0, SPR_NONE, Color.WHITE);
 				}
 				
-				Gfx.drawSprite(iconX, 0, i.getSprite());
+				if (currentGroup == rootGroup && !i.isSingle()) {
+					if (i.group == "OBJ_MUNITION") {
+						Gfx.drawSprite(iconX, 0, SPR_GROUP_MUNITION);
+					} else if (i.group == "OBJ_KEY") {
+						Gfx.drawSprite(iconX, 0, SPR_GROUP_KEY);
+					} else {
+						Gfx.drawSprite(iconX, 0, i.getSprite());
+					}
+				} else {
+					Gfx.drawSprite(iconX, 0, i.getSprite());
+				}
 			
 				iconX = iconX + 16;
 				pos++;
