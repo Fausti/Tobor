@@ -486,7 +486,7 @@ class EditorScreen extends PlayScreen {
 		d.index = 1;
 		
 		d.onOk = function () {
-			game.world.room.clear();
+			game.world.room.clear(true);
 			hideDialog();
 		}
 		

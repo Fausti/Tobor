@@ -27,11 +27,15 @@ class EntityList {
 		clear();
 	}
 	
-	public function clear() {
+	public function clear(?clearState:Bool = false) {
 		listAll = [];
 		listTicking = [];
 		listElectric = [];
 		listAI = [];
+		
+		if (clearState) {
+			listState = [];
+		}
 	}
 	
 	public function addState(e:Entity) {

@@ -63,8 +63,8 @@ class Room {
 		}
 	}
 	
-	public function clear() {
-		entities.clear();
+	public function clear(?clearState:Bool = false) {
+		entities.clear(clearState);
 	}
 	
 	public function update(deltaTime:Float) {
