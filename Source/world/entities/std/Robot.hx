@@ -18,6 +18,9 @@ class Robot extends EntityAI implements IEnemy {
 	
 	var robotSpeed:Float = 0;
 	
+	var sprLayer0:Array<Sprite>;
+	var sprLayer1:Array<Sprite>;
+	
 	public function new() {
 		super();
 	
@@ -25,33 +28,21 @@ class Robot extends EntityAI implements IEnemy {
 		
 		type = Std.random(7);
 		
-		var c0:Color = Color.palette[Std.random(Color.palette.length - 1)];
-		var c1:Color = Color.palette[Std.random(Color.palette.length - 1)];
-		var c2:Color = Color.palette[Std.random(Color.palette.length - 1)];
-		
+		var c:Array<Color> = [
+			Color.palette[Std.random(Color.palette.length - 1)],
+			Color.palette[Std.random(Color.palette.length - 1)],
+			Color.palette[Std.random(Color.palette.length - 1)]
+		];
+			
 		var mx:Int = 32 * type;
 		
-		sprites[0] = new Animation([
-			Gfx.getSprite(mx + 0, 84),
-			Gfx.getSprite(mx + 16, 84)
-		], 0.75);
+		sprLayer0 = [Gfx.getSprite(mx + 0, 84), Gfx.getSprite(mx + 0, 96), Gfx.getSprite(mx + 0, 108)];
+		sprLayer1 = [Gfx.getSprite(mx + 16, 84), Gfx.getSprite(mx + 16, 96), Gfx.getSprite(mx + 16, 108)];
 		
-		sprites[1] = new Animation([
-			Gfx.getSprite(mx + 0, 96),
-			Gfx.getSprite(mx + 16, 96)
-		], 0.75);
-		
-		sprites[2] = new Animation([
-			Gfx.getSprite(mx + 0, 108),
-			Gfx.getSprite(mx + 16, 108)
-		], 0.75);
-		
-		sprites[0].color = c0;
-		cast(sprites[0], Animation).start();
-		sprites[1].color = c1;
-		cast(sprites[1], Animation).start();
-		sprites[2].color = c2;
-		cast(sprites[2], Animation).start();
+		for (i in 0 ... 3) {
+			sprLayer0[i].color = c[i];
+			sprLayer1[i].color = c[i];
+		}
 	}
 	
 	function calcStress() {
@@ -221,7 +212,19 @@ class Robot extends EntityAI implements IEnemy {
 	}
 	
 	override public function render() {
-		super.render();
+		// super.render();
+		
+		var animPhase:Float = Math.fceil(moveData.distanceLeft) - moveData.distanceLeft;
+		
+		if (animPhase <= 0.5) {
+			for (i in 0 ... 3) {
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, sprLayer0[i]);
+			}
+		} else {
+			for (i in 0 ... 3) {
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, sprLayer1[i]);
+			}
+		}
 		
 		if (Config.robotStress) {
 			var strStress:String = Std.string(stress).lpad(3, " ");
