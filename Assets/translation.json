@@ -128,6 +128,9 @@
     ,"OBJ_THERMOPLATE_1" : {
          "de" : "Thermoplatte (kalt)"
     }
+    ,"OBJ_SHARK" : {
+         "de" : "Hai"
+    }
     ,"OBJ_THERMOPLATE_2" : {
          "de" : "Thermoplatte (aus)"
     }
@@ -173,6 +176,9 @@
     ,"OBJ_MOUNTAIN_2" : {
          "de" : "Gebirge"
     }
+    ,"OBJ_EXCLAMATION_MARK_DESC" : {
+         "de" : "Es handelt sich hier um ein wirklich hübsches Ausrufezeichen. Aber ich denke Du weißt schon, wozu es gut ist."
+    }
     ,"KILLED_BY_ANDROID" : {
          "de" : "Androiden sind meist schlauer als sie aussehen..."
     }
@@ -187,9 +193,6 @@
     }
     ,"OBJ_MOUNTAIN_10" : {
          "de" : "Gebirge"
-    }
-    ,"OBJ_EXCLAMATION_MARK_DESC" : {
-         "de" : "Es handelt sich hier um ein wirklich hübsches Ausrufezeichen. Aber ich denke Du weißt schon, wozu es gut ist."
     }
     ,"OBJ_CAVE_4" : {
          "de" : "Höhlenwand"
@@ -539,6 +542,9 @@
     ,"TXT_MENU_RESTART" : {
          "de" : "Szenenanfang"
     }
+    ,"KILLED_BY_SHARK" : {
+         "de" : "Da muss aber jemand großen Hunger gehabt haben..."
+    }
     ,"OBJ_SHOES" : {
          "de" : "Wanderschuhe"
     }
@@ -761,11 +767,11 @@
     ,"OBJ_ELECTRIC_DOOR_1" : {
          "de" : "elektrische Tür (OFFEN)"
     }
-    ,"OBJ_ELECTRIC_FLOOR_PLATE_1" : {
-         "de" : "elektrische Bodenplatte (AN)"
-    }
     ,"OBJ_SAND#2" : {
          "de" : "Sand"
+    }
+    ,"OBJ_ELECTRIC_FLOOR_PLATE_1" : {
+         "de" : "elektrische Bodenplatte (AN)"
     }
     ,"OBJ_SAND#3" : {
          "de" : "Sand"

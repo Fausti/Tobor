@@ -57,6 +57,8 @@ class WaterDeadly extends EntityDynamic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (Std.is(e, Shark)) return true;
+		
 		return Std.is(e, Charlie);
 	}
 	

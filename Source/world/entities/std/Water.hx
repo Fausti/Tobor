@@ -107,6 +107,7 @@ class Water extends EntityFloor implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (Std.is(e, Shark)) return true;
 		if (Std.is(e, Charlie)) return true;
 		
 		if (type == 0 || type == 1) {
@@ -119,7 +120,8 @@ class Water extends EntityFloor implements IElectric {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		// Wasser reagiert nur auf Charlie wenn er sichtbar ist!
+		if (Std.is(e, Charlie) && e.visible) {
 			if (getInventory().hasItem("OBJ_BUCKET#0")) {
 				
 				var count:Int = getInventory().getCount("OBJ_BUCKET#0");
