@@ -174,6 +174,11 @@ class Bullet extends EntityDynamic {
 		} else if (Std.is(other, Isolator)) {
 			other.canEnter(this, direction, (BULLET_SPEED));
 			die();
+		} else if (Std.is(other, IceBlock)) {
+			other.canEnter(this, direction, (BULLET_SPEED));
+			die();
+		} else if (Std.is(other, Tunnel)) {
+			die();
 		} else if (Std.is(other, ElectricFence)) {
 			other.die();
 			die();

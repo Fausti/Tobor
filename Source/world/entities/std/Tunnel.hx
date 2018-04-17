@@ -37,6 +37,8 @@ class Tunnel extends EntityFloor {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
+		if (!Std.is(e, Charlie)) return;
+		
 		var walkSpeed:Float = 4;
 		
 		if (!e.visible) {

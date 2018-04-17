@@ -2,6 +2,7 @@ package world.entities;
 
 import lime.math.Vector2;
 import world.entities.std.Charlie;
+import world.entities.std.IceBlock;
 
 /**
  * ...
@@ -14,6 +15,8 @@ class EntityPushable extends EntityMoveable {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (Std.is(e, IceBlock)) return false;
+		
 		if (!(Std.is(e, Charlie) || Std.is(e, EntityPushable))) return false;
 		if (isOutsideMap(x + direction.x, y + direction.y)) return false;
 		
