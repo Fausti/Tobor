@@ -149,7 +149,6 @@ class ObjectFactory {
 		register("OBJ_ROOF_5", Roof, Gfx.getSprite(32, 144), {type: 5}, Room.LAYER_ROOF);
 		register("OBJ_ROOF_6", Roof, Gfx.getSprite(48, 144), {type: 6}, Room.LAYER_ROOF);
 		register("OBJ_ROOF_7", Roof, Gfx.getSprite(64, 144), {type: 7}, Room.LAYER_ROOF);
-		register("OBJ_ROOF_8", Roof, Gfx.getSprite(80, 144), {type: 8}, Room.LAYER_ROOF);
 		
 		for (i in 0 ... 3) {
 			register("OBJ_SHADOW#" + Std.string(i), Shadow, Gfx.getSprite(48 + (i * 16), 156), {type: i}, Room.LAYER_FLOOR);

@@ -163,9 +163,13 @@ class EditorScreen extends PlayScreen {
 							} else if (template.layer == Room.LAYER_DRIFT) {
 								e.setDrift( -1);
 							} else {
-								// if (e.z == template.layer) {
+								if (template.layer == Room.LAYER_ROOF) {
+									if (e.z == Room.LAYER_ROOF) {
+										game.world.room.removeEntity(e);
+									}
+								} else {
 									game.world.room.removeEntity(e);
-								// }
+								}
 							}
 						}
 						
