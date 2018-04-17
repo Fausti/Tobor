@@ -35,6 +35,9 @@ class Roof extends EntityRoof {
 				spr = Gfx.getSprite(48, 144);
 			case 7: // Mitten Süden
 				spr = Gfx.getSprite(64, 144);
+				
+			case 8: // Schornstein
+				spr = Gfx.getSprite(80, 144);
 		}
 		
 		if (spr != null) {
