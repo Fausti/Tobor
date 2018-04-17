@@ -1,9 +1,9 @@
 {
-     "TXT_MENU_EDIT_OPTIONS_MUSIC" : {
-         "de" : "Raummusik wählen..."
-    }
-    ,"OBJ_TUNNEL#3" : {
+     "OBJ_TUNNEL#3" : {
          "de" : "Tunnel"
+    }
+    ,"TXT_MENU_EDIT_OPTIONS_MUSIC" : {
+         "de" : "Raummusik wählen..."
     }
     ,"OBJ_MUNITION#1_DESC" : {
          "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
@@ -44,11 +44,11 @@
     ,"OBJ_WOOD_5" : {
          "de" : "Wald"
     }
-    ,"OBJ_WOOD_6" : {
-         "de" : "Wald"
-    }
     ,"OBJ_MUNITION#0" : {
          "de" : "Munition"
+    }
+    ,"OBJ_WOOD_6" : {
+         "de" : "Wald"
     }
     ,"OBJ_MUNITION#1" : {
          "de" : "Munition"
@@ -56,17 +56,17 @@
     ,"OBJ_MUNITION#2" : {
          "de" : "Munition"
     }
-    ,"OBJ_BEDROCK_0" : {
-         "de" : "Felsgestein"
-    }
-    ,"OBJ_MUNITION#3" : {
-         "de" : "Munition"
+    ,"OBJ_DIAMOND_PICKUP" : {
+         "de" : "Dein erster Diamant! Hier liegen noch mehr herum..."
     }
     ,"TXT_MENU_EXIT" : {
          "de" : "Abbruch"
     }
-    ,"OBJ_DIAMOND_PICKUP" : {
-         "de" : "Dein erster Diamant! Hier liegen noch mehr herum..."
+    ,"OBJ_MUNITION#3" : {
+         "de" : "Munition"
+    }
+    ,"OBJ_BEDROCK_0" : {
+         "de" : "Felsgestein"
     }
     ,"OBJ_BEDROCK_1" : {
          "de" : "Felsgestein"
@@ -101,23 +101,23 @@
     ,"OBJ_BEDROCK_7" : {
          "de" : "Felsgestein"
     }
-    ,"OBJ_BEDROCK_8" : {
-         "de" : "Felsgestein"
-    }
-    ,"TXT_MENU_SCREENSHOT" : {
-         "de" : "Screenshot"
+    ,"TXT_MENU_LOAD" : {
+         "de" : "Laden"
     }
     ,"OBJ_ELECTRIC_FENCE" : {
          "de" : "elektrischer Zaun (AN)"
     }
-    ,"TXT_MENU_LOAD" : {
-         "de" : "Laden"
+    ,"TXT_MENU_SCREENSHOT" : {
+         "de" : "Screenshot"
     }
-    ,"OBJ_BEDROCK_9" : {
+    ,"OBJ_BEDROCK_8" : {
          "de" : "Felsgestein"
     }
     ,"TXT_TOO_MUCH_GOLD" : {
          "de" : "Soviele Goldbarren sind viel zu schwer für Dich."
+    }
+    ,"OBJ_BEDROCK_9" : {
+         "de" : "Felsgestein"
     }
     ,"OBJ_SLING_PICKUP" : {
          "de" : "Ausgezeichnet! Du hast die Schleuder gefunden. Nun mußt Du nur noch herausfinden wie man damit schießt!"
@@ -125,11 +125,11 @@
     ,"OBJ_THERMOPLATE_0" : {
          "de" : "Thermoplatte (heiß)"
     }
-    ,"OBJ_THERMOPLATE_1" : {
-         "de" : "Thermoplatte (kalt)"
-    }
     ,"OBJ_SHARK" : {
          "de" : "Hai"
+    }
+    ,"OBJ_THERMOPLATE_1" : {
+         "de" : "Thermoplatte (kalt)"
     }
     ,"OBJ_THERMOPLATE_2" : {
          "de" : "Thermoplatte (aus)"
@@ -176,15 +176,6 @@
     ,"OBJ_MOUNTAIN_2" : {
          "de" : "Gebirge"
     }
-    ,"OBJ_EXCLAMATION_MARK_DESC" : {
-         "de" : "Es handelt sich hier um ein wirklich hübsches Ausrufezeichen. Aber ich denke Du weißt schon, wozu es gut ist."
-    }
-    ,"KILLED_BY_ANDROID" : {
-         "de" : "Androiden sind meist schlauer als sie aussehen..."
-    }
-    ,"OBJ_CAVE_10" : {
-         "de" : "Höhlenwand"
-    }
     ,"OBJ_CAVE_3" : {
          "de" : "Höhlenwand"
     }
@@ -194,167 +185,176 @@
     ,"OBJ_MOUNTAIN_10" : {
          "de" : "Gebirge"
     }
-    ,"OBJ_CAVE_4" : {
+    ,"OBJ_EXCLAMATION_MARK_DESC" : {
+         "de" : "Es handelt sich hier um ein wirklich hübsches Ausrufezeichen. Aber ich denke Du weißt schon, wozu es gut ist."
+    }
+    ,"KILLED_BY_ANDROID" : {
+         "de" : "Androiden sind meist schlauer als sie aussehen..."
+    }
+    ,"OBJ_CAVE_10" : {
          "de" : "Höhlenwand"
     }
-    ,"OBJ_CAVE_11" : {
-         "de" : "Höhlenwand"
-    }
-    ,"OBJ_MOUNTAIN_11" : {
+    ,"OBJ_MOUNTAIN_4" : {
          "de" : "Gebirge"
     }
     ,"OBJ_KEY#2_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"OBJ_MOUNTAIN_4" : {
+    ,"OBJ_MOUNTAIN_11" : {
          "de" : "Gebirge"
     }
-    ,"OBJ_CAVE_12" : {
+    ,"OBJ_CAVE_11" : {
          "de" : "Höhlenwand"
     }
-    ,"OBJ_CAVE_5" : {
+    ,"OBJ_CAVE_4" : {
          "de" : "Höhlenwand"
-    }
-    ,"OBJ_MOUNTAIN_12" : {
-         "de" : "Gebirge"
-    }
-    ,"OBJ_MOUNTAIN_5" : {
-         "de" : "Gebirge"
-    }
-    ,"OBJ_ACID_DESC" : {
-         "de" : "Diese Flasche enthält ätzende Flüssigkeit. Du solltest sie nicht trinken, aber benutzen."
     }
     ,"MARKER_0" : {
          "de" : "Markierung"
     }
-    ,"OBJ_MOUNTAIN_6" : {
+    ,"OBJ_ACID_DESC" : {
+         "de" : "Diese Flasche enthält ätzende Flüssigkeit. Du solltest sie nicht trinken, aber benutzen."
+    }
+    ,"OBJ_MOUNTAIN_5" : {
+         "de" : "Gebirge"
+    }
+    ,"OBJ_MOUNTAIN_12" : {
+         "de" : "Gebirge"
+    }
+    ,"OBJ_CAVE_5" : {
+         "de" : "Höhlenwand"
+    }
+    ,"OBJ_CAVE_12" : {
+         "de" : "Höhlenwand"
+    }
+    ,"OBJ_CAVE_6" : {
+         "de" : "Höhlenwand"
+    }
+    ,"OBJ_MOUNTAIN_13" : {
          "de" : "Gebirge"
     }
     ,"MARKER_1" : {
          "de" : "Markierung"
     }
-    ,"OBJ_MOUNTAIN_13" : {
-         "de" : "Gebirge"
-    }
-    ,"OBJ_CAVE_6" : {
-         "de" : "Höhlenwand"
-    }
-    ,"MARKER_2" : {
-         "de" : "Markierung"
-    }
-    ,"OBJ_MOUNTAIN_14" : {
-         "de" : "Gebirge"
-    }
-    ,"OBJ_MOUNTAIN_7" : {
+    ,"OBJ_MOUNTAIN_6" : {
          "de" : "Gebirge"
     }
     ,"OBJ_CAVE_7" : {
          "de" : "Höhlenwand"
     }
-    ,"TXT_MENU_SAVE" : {
-         "de" : "Speichern"
-    }
-    ,"OBJ_MOUNTAIN_15" : {
+    ,"OBJ_MOUNTAIN_7" : {
          "de" : "Gebirge"
     }
-    ,"OBJ_MOUNTAIN_8" : {
+    ,"OBJ_MOUNTAIN_14" : {
          "de" : "Gebirge"
     }
-    ,"OBJ_START_POSITION" : {
-         "de" : "Startposition"
-    }
-    ,"MARKER_3" : {
+    ,"MARKER_2" : {
          "de" : "Markierung"
     }
     ,"OBJ_CAVE_8" : {
          "de" : "Höhlenwand"
     }
-    ,"OBJ_MOUNTAIN_9" : {
-         "de" : "Gebirge"
-    }
-    ,"OBJ_MOUNTAIN_16" : {
-         "de" : "Gebirge"
-    }
-    ,"MARKER_4" : {
+    ,"MARKER_3" : {
          "de" : "Markierung"
+    }
+    ,"OBJ_START_POSITION" : {
+         "de" : "Startposition"
+    }
+    ,"OBJ_MOUNTAIN_8" : {
+         "de" : "Gebirge"
+    }
+    ,"OBJ_MOUNTAIN_15" : {
+         "de" : "Gebirge"
+    }
+    ,"TXT_MENU_SAVE" : {
+         "de" : "Speichern"
     }
     ,"OBJ_CAVE_9" : {
          "de" : "Höhlenwand"
     }
-    ,"OBJ_MOUNTAIN_17" : {
+    ,"MARKER_4" : {
+         "de" : "Markierung"
+    }
+    ,"OBJ_MOUNTAIN_16" : {
+         "de" : "Gebirge"
+    }
+    ,"OBJ_MOUNTAIN_9" : {
          "de" : "Gebirge"
     }
     ,"TXT_MENU_SPEED_NORMAL" : {
          "de" : "Normal"
     }
-    ,"OBJ_MOUNTAIN_18" : {
+    ,"OBJ_MOUNTAIN_17" : {
          "de" : "Gebirge"
-    }
-    ,"OBJ_ICE_BLOCK" : {
-         "de" : "Eisblock"
     }
     ,"TXT_EDITOR_OBJECTS" : {
          "de" : "Objekte"
     }
-    ,"OBJ_MOUNTAIN_19" : {
+    ,"OBJ_ICE_BLOCK" : {
+         "de" : "Eisblock"
+    }
+    ,"OBJ_MOUNTAIN_18" : {
          "de" : "Gebirge"
     }
     ,"OBJ_ARROW_0" : {
          "de" : "Pfeil"
     }
+    ,"OBJ_MOUNTAIN_19" : {
+         "de" : "Gebirge"
+    }
     ,"OBJ_ARROW_1" : {
-         "de" : "Pfeil"
-    }
-    ,"OBJ_ICE_0" : {
-         "de" : "Eisfläche"
-    }
-    ,"OBJ_ARROW_2" : {
          "de" : "Pfeil"
     }
     ,"TXT_EDITOR_ASK_CREATE_NEW_ROOM" : {
          "de" : "Keine Szene vorhanden!\n\nDiese Szene erstellen?"
     }
-    ,"OBJ_ICE_1" : {
-         "de" : "Eisfläche"
-    }
-    ,"OBJ_ARROW_3" : {
+    ,"OBJ_ARROW_2" : {
          "de" : "Pfeil"
     }
-    ,"OBJ_SHADOW#0" : {
-         "de" : "Schatten"
-    }
-    ,"TXT_INVENTORY_USE" : {
-         "de" : "Benutzen"
+    ,"OBJ_ICE_0" : {
+         "de" : "Eisfläche"
     }
     ,"OBJ_SHOOTER_0" : {
          "de" : "Geschütz"
     }
-    ,"OBJ_ICE_2" : {
-         "de" : "Eisfläche"
+    ,"TXT_INVENTORY_USE" : {
+         "de" : "Benutzen"
     }
-    ,"OBJ_SHADOW#1" : {
+    ,"OBJ_SHADOW#0" : {
          "de" : "Schatten"
     }
-    ,"OBJ_SHOOTER_1" : {
-         "de" : "Geschütz"
+    ,"OBJ_ARROW_3" : {
+         "de" : "Pfeil"
+    }
+    ,"OBJ_ICE_1" : {
+         "de" : "Eisfläche"
     }
     ,"OBJ_OVERALL_PICKUP" : {
          "de" : "Gut siehst Du aus, in diesem blauen Anzug! Diese Kleidungsstücke schützen Dich ausgezeichnet vor diesen gemeinen Elektrozäunen."
     }
-    ,"OBJ_SHOOTER_2" : {
+    ,"OBJ_SHOOTER_1" : {
          "de" : "Geschütz"
     }
-    ,"OBJ_SHADOW#2" : {
+    ,"OBJ_SHADOW#1" : {
          "de" : "Schatten"
+    }
+    ,"OBJ_ICE_2" : {
+         "de" : "Eisfläche"
     }
     ,"OBJ_ICE_3" : {
          "de" : "Eisfläche"
     }
-    ,"OBJ_SHOOTER_3" : {
+    ,"OBJ_SHADOW#2" : {
+         "de" : "Schatten"
+    }
+    ,"OBJ_SHOOTER_2" : {
          "de" : "Geschütz"
     }
     ,"OBJ_ICE_4" : {
          "de" : "Eisfläche"
+    }
+    ,"OBJ_SHOOTER_3" : {
+         "de" : "Geschütz"
     }
     ,"OBJ_DIAMOND#0" : {
          "de" : "Diamant"
@@ -371,11 +371,11 @@
     ,"TXT_EPISODE_NAME" : {
          "de" : "Episodenname"
     }
-    ,"OBJ_BUCKET#0" : {
-         "de" : "leerer Eimer"
-    }
     ,"OBJ_WALL_SE" : {
          "de" : "Mauer"
+    }
+    ,"OBJ_BUCKET#0" : {
+         "de" : "leerer Eimer"
     }
     ,"OBJ_BUCKET#1" : {
          "de" : "gefüllter Eimer"
@@ -389,116 +389,116 @@
     ,"OBJ_DOOR#0" : {
          "de" : "Tür Nr. 1"
     }
-    ,"TXT_ASK_FOR_ROOM_NAME" : {
-         "de" : "Szenennamen ändern\n\nWie soll die Szene genannt werden?"
+    ,"OBJ_DOOR#1" : {
+         "de" : "Tür Nr. 2"
     }
     ,"OBJ_KEY#0" : {
          "de" : "Schlüssel Nr. 1"
     }
-    ,"OBJ_DOOR#1" : {
-         "de" : "Tür Nr. 2"
-    }
-    ,"OBJ_KEY#1" : {
-         "de" : "Schlüssel Nr. 2"
+    ,"TXT_ASK_FOR_ROOM_NAME" : {
+         "de" : "Szenennamen ändern\n\nWie soll die Szene genannt werden?"
     }
     ,"OBJ_DOOR#2" : {
          "de" : "Tür Nr. 3"
     }
-    ,"OBJ_KEY#2" : {
-         "de" : "Schlüssel Nr. 3"
+    ,"OBJ_KEY#1" : {
+         "de" : "Schlüssel Nr. 2"
     }
     ,"OBJ_DOOR#3" : {
          "de" : "Tür Nr. 4"
     }
-    ,"OBJ_KEY#5_DESC" : {
-         "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
-    }
-    ,"OBJ_KEY#3" : {
-         "de" : "Schlüssel Nr. 4"
+    ,"OBJ_KEY#2" : {
+         "de" : "Schlüssel Nr. 3"
     }
     ,"OBJ_DOOR#4" : {
          "de" : "Tür Nr. 5"
     }
-    ,"OBJ_GOLD" : {
-         "de" : "Gold"
+    ,"OBJ_KEY#3" : {
+         "de" : "Schlüssel Nr. 4"
     }
-    ,"OBJ_STAIRS_UP" : {
-         "de" : "Treppe (hoch)"
-    }
-    ,"OBJ_DOOR#5" : {
-         "de" : "Tür Nr. 6"
-    }
-    ,"OBJ_KEY#4" : {
-         "de" : "Schlüssel Nr. 5"
+    ,"OBJ_KEY#5_DESC" : {
+         "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
     ,"DRIFT_SE" : {
          "de" : "Strömung"
     }
-    ,"OBJ_DOOR#6" : {
-         "de" : "Tür Nr. 7"
+    ,"OBJ_KEY#4" : {
+         "de" : "Schlüssel Nr. 5"
     }
-    ,"OBJ_KEY#5" : {
-         "de" : "Schlüssel Nr. 6"
+    ,"OBJ_DOOR#5" : {
+         "de" : "Tür Nr. 6"
+    }
+    ,"OBJ_STAIRS_UP" : {
+         "de" : "Treppe (hoch)"
+    }
+    ,"OBJ_GOLD" : {
+         "de" : "Gold"
     }
     ,"OBJ_BUCKET_PICKUP" : {
          "de" : "Schon wieder ein neues Objekt! Den Eimer gibt es nur selten, aber dafür bringt er auch nicht viel. Immerhin ein paar Bonuspunkte."
     }
-    ,"OBJ_DOOR#7" : {
-         "de" : "Tür Nr. 8"
+    ,"OBJ_KEY#5" : {
+         "de" : "Schlüssel Nr. 6"
+    }
+    ,"OBJ_DOOR#6" : {
+         "de" : "Tür Nr. 7"
     }
     ,"OBJ_KEY#6" : {
          "de" : "Schlüssel Nr. 7"
     }
-    ,"OBJ_DOOR#8" : {
-         "de" : "Tür Nr. 9"
-    }
-    ,"OBJ_KEY#10" : {
-         "de" : "Schlüssel Nr. 11"
+    ,"OBJ_DOOR#7" : {
+         "de" : "Tür Nr. 8"
     }
     ,"OBJ_KEY#7" : {
          "de" : "Schlüssel Nr. 8"
     }
-    ,"OBJ_KEY#8" : {
-         "de" : "Schlüssel Nr. 9"
+    ,"OBJ_KEY#10" : {
+         "de" : "Schlüssel Nr. 11"
     }
-    ,"OBJ_KEY#11" : {
-         "de" : "Schlüssel Nr. 12"
+    ,"OBJ_DOOR#8" : {
+         "de" : "Tür Nr. 9"
     }
     ,"OBJ_DOOR#9" : {
          "de" : "Tür Nr. 10"
     }
-    ,"OBJ_PATH" : {
-         "de" : "Weg"
+    ,"OBJ_KEY#11" : {
+         "de" : "Schlüssel Nr. 12"
     }
-    ,"OBJ_KEY#9" : {
-         "de" : "Schlüssel Nr. 10"
+    ,"OBJ_KEY#8" : {
+         "de" : "Schlüssel Nr. 9"
     }
     ,"OBJ_KEY#12" : {
          "de" : "Schlüssel Nr. 13"
     }
+    ,"OBJ_KEY#9" : {
+         "de" : "Schlüssel Nr. 10"
+    }
+    ,"OBJ_PATH" : {
+         "de" : "Weg"
+    }
     ,"OBJ_KEY#13" : {
          "de" : "Schlüssel Nr. 14"
-    }
-    ,"OBJ_KEY#14" : {
-         "de" : "Schlüssel Nr. 15"
     }
     ,"DRIFT_E" : {
          "de" : "Strömung"
     }
-    ,"OBJ_MAGNET#0_DESC" : {
-         "de" : "Magnetische Objekte können einen Kompass irritieren, aber sie sind nutzlos, solange Du sie mit Dir herumträgst. Sie sind ganz nützlich in Verbindung mit Objekten, die Dich nicht auf den rechten Weg lassen."
+    ,"OBJ_KEY#14" : {
+         "de" : "Schlüssel Nr. 15"
     }
     ,"OBJ_WALL_SW" : {
          "de" : "Mauer"
     }
+    ,"OBJ_MAGNET#0_DESC" : {
+         "de" : "Magnetische Objekte können einen Kompass irritieren, aber sie sind nutzlos, solange Du sie mit Dir herumträgst. Sie sind ganz nützlich in Verbindung mit Objekten, die Dich nicht auf den rechten Weg lassen."
+    }
     ,"KILLED_BY_EFENCE" : {
          "de" : "Diese Elektrozäune sind ziemlich gefährlich für Dich."
     }
-    ,"OBJ_ELEXIR_USE" : {
-         "de" : "Hmmmm, das tut gut! Nach dem Genuß dieses Lebenselixiers fühlst Du Dich quasi wie neugeboren!"
-    }
     ,"TXT_EDITOR_ASK_REMOVE_OBJECTS_FROM_ROOM" : {
          "de" : "Szene leeren\n\nAlle Objekte in der aktuellen Szene entfernen?"
+    }
+    ,"OBJ_ELEXIR_USE" : {
+         "de" : "Hmmmm, das tut gut! Nach dem Genuß dieses Lebenselixiers fühlst Du Dich quasi wie neugeboren!"
     }
     ,"OBJ_EXCLAMATION_MARK_PICKUP" : {
          "de" : "Das Ausrufezeichen ist so eine Art Ratgeber. Für alles, was Dir so begegnet, hat es ein paar Hinweise. Du kannst es leider nicht anwenden, wenn Du Dich in einem sehr dunklen Raum befindest."
@@ -506,41 +506,41 @@
     ,"TXT_SET_DESC_IN_INFO_FILE" : {
          "de" : ""
     }
-    ,"TXT_MENU_SPEED" : {
-         "de" : "Geschwindigkeit"
+    ,"TXT_MENU_SHADER" : {
+         "de" : "Shader"
     }
     ,"TXT_ASK_FOR_NAME" : {
          "de" : "Willkommen!\n\nDu hast ein neues Abenteuer mit\nneuen Leben begonnen.\nBitte sag´ mir Deinen Namen:"
     }
-    ,"TXT_MENU_SHADER" : {
-         "de" : "Shader"
+    ,"TXT_MENU_SPEED" : {
+         "de" : "Geschwindigkeit"
     }
     ,"DRIFT_N" : {
+         "de" : "Strömung"
+    }
+    ,"DRIFT_SW" : {
          "de" : "Strömung"
     }
     ,"OBJ_ROOM_EXIT" : {
          "de" : "Raumausgang"
     }
-    ,"DRIFT_SW" : {
-         "de" : "Strömung"
-    }
-    ,"OBJ_MUNITION_PICKUP" : {
-         "de" : "Ja, es ist bestimmt nicht von Nachteil, wenn Du ein paar Steine in die Tasche steckst. Du wirst sie bestimmt noch brauchen können."
+    ,"TXT_MENU_CLEAR" : {
+         "de" : "Objekte löschen"
     }
     ,"OBJ_WATER_DEEP" : {
          "de" : "tiefes Wasser"
     }
-    ,"TXT_MENU_CLEAR" : {
-         "de" : "Objekte löschen"
+    ,"OBJ_MUNITION_PICKUP" : {
+         "de" : "Ja, es ist bestimmt nicht von Nachteil, wenn Du ein paar Steine in die Tasche steckst. Du wirst sie bestimmt noch brauchen können."
     }
     ,"DRIFT_S" : {
          "de" : "Strömung"
     }
-    ,"OBJ_QUESTION_MARK" : {
-         "de" : "Fragezeichen"
-    }
     ,"TXT_MENU_RESTART" : {
          "de" : "Szenenanfang"
+    }
+    ,"OBJ_QUESTION_MARK" : {
+         "de" : "Fragezeichen"
     }
     ,"KILLED_BY_SHARK" : {
          "de" : "Da muss aber jemand großen Hunger gehabt haben..."
@@ -548,17 +548,17 @@
     ,"OBJ_SHOES" : {
          "de" : "Wanderschuhe"
     }
-    ,"OBJ_WATER_DEADLY" : {
-         "de" : "tödliches Wasser"
-    }
-    ,"TXT_STATUS_POINTS" : {
-         "de" : "Punkte"
+    ,"DRIFT_W" : {
+         "de" : "Strömung"
     }
     ,"TXT_INVENTORY_DROP" : {
          "de" : "Ablegen"
     }
-    ,"DRIFT_W" : {
-         "de" : "Strömung"
+    ,"TXT_STATUS_POINTS" : {
+         "de" : "Punkte"
+    }
+    ,"OBJ_WATER_DEADLY" : {
+         "de" : "tödliches Wasser"
     }
     ,"OBJ_MUNITION#2_DESC" : {
          "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
@@ -566,77 +566,77 @@
     ,"TXT_MENU_OBJECTS" : {
          "de" : "Objektauswahl..."
     }
-    ,"OBJ_BANK" : {
-         "de" : "Bank"
+    ,"OBJ_KEY#8_DESC" : {
+         "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
     ,"OBJ_KEY#11_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"OBJ_KEY#8_DESC" : {
-         "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
+    ,"OBJ_BANK" : {
+         "de" : "Bank"
     }
     ,"TXT_MENU_SPEED_FAST" : {
          "de" : "Schneller"
     }
-    ,"OBJ_WATER_NE" : {
-         "de" : "Wasser"
-    }
     ,"OBJ_ANDROID" : {
          "de" : "Android"
+    }
+    ,"OBJ_WATER_NE" : {
+         "de" : "Wasser"
     }
     ,"TXT_STATUS_LIVES" : {
          "de" : "Leben"
     }
-    ,"OBJ_CHARLIE" : {
-         "de" : "Charlie (nur im Editor!)"
-    }
     ,"OBJ_CLOCK_DESC" : {
          "de" : "Jene Uhr dient der \"Erinnerung\"..."
     }
-    ,"OBJ_GOAL_0" : {
-         "de" : "Ziel"
-    }
-    ,"OBJ_DOOR#10" : {
-         "de" : "Tür Nr. 11"
+    ,"OBJ_CHARLIE" : {
+         "de" : "Charlie (nur im Editor!)"
     }
     ,"OBJ_KEY#0_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"OBJ_GOAL_1" : {
+    ,"OBJ_DOOR#10" : {
+         "de" : "Tür Nr. 11"
+    }
+    ,"OBJ_GOAL_0" : {
          "de" : "Ziel"
     }
     ,"OBJ_DOOR#11" : {
          "de" : "Tür Nr. 12"
     }
-    ,"OBJ_GOAL_2" : {
+    ,"OBJ_GOAL_1" : {
          "de" : "Ziel"
     }
     ,"OBJ_DOOR#12" : {
          "de" : "Tür Nr. 13"
     }
-    ,"TXT_TOO_MUCH_MUNITION" : {
-         "de" : "Du kannst nicht soviel Munition mit Dir herumschleppen."
-    }
-    ,"OBJ_MOUNTAIN_PATH" : {
-         "de" : "Gebirgspfad (betretbar)"
-    }
-    ,"OBJ_GOAL_3" : {
+    ,"OBJ_GOAL_2" : {
          "de" : "Ziel"
-    }
-    ,"OBJ_BARRIER" : {
-         "de" : "Barriere"
-    }
-    ,"OBJ_DOOR#13" : {
-         "de" : "Tür Nr. 14"
     }
     ,"OBJ_SLING_DESC" : {
          "de" : "Diese Schleuder ist recht nützlich, wenn Du ein wenig Munition besitzt. Du kannst viele Sachen damit zerstören."
     }
-    ,"OBJ_DOOR#14" : {
-         "de" : "Tür Nr. 15"
+    ,"OBJ_DOOR#13" : {
+         "de" : "Tür Nr. 14"
+    }
+    ,"OBJ_BARRIER" : {
+         "de" : "Barriere"
+    }
+    ,"OBJ_GOAL_3" : {
+         "de" : "Ziel"
+    }
+    ,"OBJ_MOUNTAIN_PATH" : {
+         "de" : "Gebirgspfad (betretbar)"
+    }
+    ,"TXT_TOO_MUCH_MUNITION" : {
+         "de" : "Du kannst nicht soviel Munition mit Dir herumschleppen."
     }
     ,"OBJ_GOAL_4" : {
          "de" : "Ziel"
+    }
+    ,"OBJ_DOOR#14" : {
+         "de" : "Tür Nr. 15"
     }
     ,"OBJ_GOAL_5" : {
          "de" : "Ziel"
@@ -656,20 +656,20 @@
     ,"OBJ_ISOLATOR_WATER" : {
          "de" : "Isolator im Wasser (nicht platzierbar!)"
     }
-    ,"TXT_EDITOR_ROOM" : {
-         "de" : "Raum"
-    }
     ,"TXT_LOAD_WHICH_GAME" : {
          "de" : "Welchen Spielstand möchtest Du laden?"
     }
-    ,"OBJ_KEY_USE" : {
-         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
+    ,"TXT_EDITOR_ROOM" : {
+         "de" : "Raum"
+    }
+    ,"OBJ_MUNITION#5_DESC" : {
+         "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
     }
     ,"OBJ_MAGNET#0" : {
          "de" : "Magnet"
     }
-    ,"OBJ_MUNITION#5_DESC" : {
-         "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
+    ,"OBJ_KEY_USE" : {
+         "de" : "Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!"
     }
     ,"OBJ_MAGNET#1" : {
          "de" : "Magnet"
@@ -767,17 +767,17 @@
     ,"OBJ_ELECTRIC_DOOR_1" : {
          "de" : "elektrische Tür (OFFEN)"
     }
-    ,"OBJ_SAND#2" : {
-         "de" : "Sand"
-    }
     ,"OBJ_ELECTRIC_FLOOR_PLATE_1" : {
          "de" : "elektrische Bodenplatte (AN)"
     }
-    ,"OBJ_SAND#3" : {
+    ,"OBJ_SAND#2" : {
          "de" : "Sand"
     }
     ,"TXT_MENU_SPEED_SLOWEST" : {
          "de" : "Langsam"
+    }
+    ,"OBJ_SAND#3" : {
+         "de" : "Sand"
     }
     ,"OBJ_SAND#4" : {
          "de" : "Sand"
@@ -788,41 +788,65 @@
     ,"OBJ_GRASS_0" : {
          "de" : "Pfad mit Beeren"
     }
+    ,"OBJ_GRASS_1" : {
+         "de" : "Pfad"
+    }
     ,"TXT_OFF" : {
          "de" : "Aus"
     }
-    ,"OBJ_GRASS_1" : {
-         "de" : "Pfad"
+    ,"OBJ_HARD_SAND_0" : {
+         "de" : "Dünen"
     }
     ,"OBJ_ROBOT" : {
          "de" : "Roboter (zufällig)"
     }
+    ,"OBJ_HARD_SAND_1" : {
+         "de" : "Dünen"
+    }
+    ,"OBJ_HARD_SAND_2" : {
+         "de" : "Dünen"
+    }
     ,"OBJ_MUNITION#0_DESC" : {
          "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
+    }
+    ,"OBJ_HARD_SAND_3" : {
+         "de" : "Dünen"
     }
     ,"OBJ_ELEXIR_DESC" : {
          "de" : "Dieses Getränk ist gut für Deine Gesundheit."
     }
+    ,"OBJ_HARD_SAND_4" : {
+         "de" : "Dünen"
+    }
     ,"OBJ_KEY#6_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"TXT_ROOM_MUSIC_NONE" : {
-         "de" : "Keine"
+    ,"OBJ_HARD_SAND_5" : {
+         "de" : "Dünen"
     }
     ,"OBJ_EXCLAMATION_MARK" : {
          "de" : "Ausrufezeichen"
     }
-    ,"TXT_MENU_CANCEL" : {
-         "de" : "Abbruch"
+    ,"TXT_ROOM_MUSIC_NONE" : {
+         "de" : "Keine"
+    }
+    ,"OBJ_HARD_SAND_6" : {
+         "de" : "Dünen"
+    }
+    ,"OBJ_HARD_SAND_7" : {
+         "de" : "Dünen"
     }
     ,"OBJ_ELEXIR" : {
          "de" : "Lebenselexier"
     }
-    ,"TXT_NEW_EPISODE" : {
-         "de" : ">> NEU <<"
+    ,"TXT_MENU_CANCEL" : {
+         "de" : "Abbruch"
     }
     ,"OBJ_ROOF_0" : {
          "de" : "Dach"
+    }
+    ,"TXT_NEW_EPISODE" : {
+         "de" : ">> NEU <<"
     }
     ,"OBJ_ROOF_1" : {
          "de" : "Dach"
@@ -830,47 +854,47 @@
     ,"OBJ_ROOF_2" : {
          "de" : "Dach"
     }
-    ,"OBJ_ROOF_3" : {
-         "de" : "Dach"
-    }
-    ,"TXT_ASK_FOR_SAVEGAME_NAME" : {
-         "de" : "Unter welchem Namen möchtest Du speichern?"
+    ,"OBJ_FLIPPERS_PICKUP" : {
+         "de" : "Endlich hast Du die Schwimmflossen gefunden! Jetzt kannst Du endlich selbst bestimmen, wohin Dich die Flüsse treiben."
     }
     ,"OBJ_MAGNET#1_DESC" : {
          "de" : "Magnetische Objekte können einen Kompass irritieren, aber sie sind nutzlos, solange Du sie mit Dir herumträgst. Sie sind ganz nützlich in Verbindung mit Objekten, die Dich nicht auf den rechten Weg lassen."
     }
-    ,"OBJ_FLIPPERS_PICKUP" : {
-         "de" : "Endlich hast Du die Schwimmflossen gefunden! Jetzt kannst Du endlich selbst bestimmen, wohin Dich die Flüsse treiben."
+    ,"TXT_ASK_FOR_SAVEGAME_NAME" : {
+         "de" : "Unter welchem Namen möchtest Du speichern?"
+    }
+    ,"OBJ_ROOF_3" : {
+         "de" : "Dach"
     }
     ,"OBJ_ROOF_4" : {
          "de" : "Dach"
     }
-    ,"OBJ_WALL" : {
-         "de" : "Mauer"
+    ,"OBJ_ROOF_5" : {
+         "de" : "Dach"
     }
     ,"TXT_MENU_HELP" : {
          "de" : "Hilfe"
     }
-    ,"OBJ_ROOF_5" : {
-         "de" : "Dach"
+    ,"OBJ_WALL" : {
+         "de" : "Mauer"
     }
     ,"OBJ_ROOF_6" : {
+         "de" : "Dach"
+    }
+    ,"OBJ_ROOF_7" : {
          "de" : "Dach"
     }
     ,"OBJ_WATCHER" : {
          "de" : "Wächter (auf dem Boden versteckt / auf Objekten immer sichtbar)"
     }
-    ,"OBJ_ROOF_7" : {
-         "de" : "Dach"
-    }
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
     }
-    ,"TXT_MENU_ROBOT_STRESS" : {
-         "de" : "Stressanzeige"
-    }
     ,"TXT_ASK_FOR_EPISODE_NAME" : {
          "de" : "Wie möchtest Du deine Episode nennen?"
+    }
+    ,"TXT_MENU_ROBOT_STRESS" : {
+         "de" : "Stressanzeige"
     }
     ,"OBJ_SHOES_PICKUP" : {
          "de" : "Endlich hast Du die braunen Wanderschuhe gefunden! Jetzt kannst Du auf bestimmten Wegen durch den Wald laufen."
@@ -884,10 +908,10 @@
     ,"OBJ_WATER_SE" : {
          "de" : "Wasser"
     }
-    ,"OBJ_KEY#12_DESC" : {
+    ,"OBJ_KEY#9_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"OBJ_KEY#9_DESC" : {
+    ,"OBJ_KEY#12_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
     ,"TXT_MENU_STORY" : {
@@ -899,35 +923,35 @@
     ,"OBJ_BAGPACK#1" : {
          "de" : "Beutel"
     }
-    ,"OBJ_BAGPACK#2" : {
-         "de" : "Beutel"
-    }
     ,"TXT_NEW_EPISODE_INSTALLED" : {
          "de" : "Neue Episode installiert: "
     }
-    ,"OBJ_SLING_USE" : {
-         "de" : "Ja! Mit der Schleuder kannst Du Dich endlich des lästigen Ungeziefers erwehren!"
+    ,"OBJ_BAGPACK#2" : {
+         "de" : "Beutel"
     }
     ,"OBJ_BAGPACK#3" : {
          "de" : "Beutel"
     }
-    ,"OBJ_COMPASS" : {
-         "de" : "Kompass"
-    }
-    ,"TXT_MENU_SPEED_SLOW" : {
-         "de" : "Langsamer"
+    ,"OBJ_SLING_USE" : {
+         "de" : "Ja! Mit der Schleuder kannst Du Dich endlich des lästigen Ungeziefers erwehren!"
     }
     ,"OBJ_BAGPACK#4" : {
          "de" : "Beutel"
     }
-    ,"OBJ_KEY#1_DESC" : {
-         "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
+    ,"TXT_MENU_SPEED_SLOW" : {
+         "de" : "Langsamer"
+    }
+    ,"OBJ_COMPASS" : {
+         "de" : "Kompass"
+    }
+    ,"TXT_INVENTORY_CLONE" : {
+         "de" : "Verdoppeln"
     }
     ,"OBJ_FLIPPERS" : {
          "de" : "Schwimmflossen"
     }
-    ,"TXT_INVENTORY_CLONE" : {
-         "de" : "Verdoppeln"
+    ,"OBJ_KEY#1_DESC" : {
+         "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
     ,"OBJ_EXPLOSION" : {
          "de" : "Explosion"
@@ -938,23 +962,23 @@
     ,"OBJ_WATER_SW" : {
          "de" : "Wasser"
     }
-    ,"OBJ_SKULL" : {
-         "de" : "Totenkopf"
+    ,"OBJ_TREE_PICKUP" : {
+         "de" : "Du hast einen Tannenbaum gefunden! Er kann Dich befreien, wenn Du in Bedrängnis geraten solltest."
     }
     ,"OBJ_CLOCK_PICKUP" : {
          "de" : "Eine solche Uhr benötigst Du unbedingt, wenn du nicht immer von vorne anfangen willst!"
     }
-    ,"OBJ_TREE_PICKUP" : {
-         "de" : "Du hast einen Tannenbaum gefunden! Er kann Dich befreien, wenn Du in Bedrängnis geraten solltest."
+    ,"OBJ_SKULL" : {
+         "de" : "Totenkopf"
     }
-    ,"TXT_ROOM_MUSIC_NATURE" : {
-         "de" : "Naturgeräusche"
+    ,"OBJ_GARLIC" : {
+         "de" : "Knoblauch"
     }
     ,"OBJ_ACID_PICKUP" : {
          "de" : "In diesen kleinen Flaschen befindet sich eine ätzende Flüssigkeit, die imstande ist, Mauerkalk aufzulösen. Dies funktioniert aber nur bei bestimmten Mauern."
     }
-    ,"OBJ_GARLIC" : {
-         "de" : "Knoblauch"
+    ,"TXT_ROOM_MUSIC_NATURE" : {
+         "de" : "Naturgeräusche"
     }
     ,"TXT_EPISODE_LOST" : {
          "de" : "Du hast es leider nicht geschafft. Viel Glück beim nächsten Mal!"
@@ -980,32 +1004,32 @@
     ,"TXT_INVENTORY_DROP_ALL" : {
          "de" : "Alles weg"
     }
-    ,"KILLED_BY_ROBOT" : {
-         "de" : "Dieses gemeine Monster hat Dich aber ziemlich übel zugerichtet."
-    }
     ,"OBJ_WALL_NE" : {
          "de" : "Mauer"
     }
-    ,"TXT_MENU_PLAY" : {
-         "de" : "Spielen"
+    ,"KILLED_BY_ROBOT" : {
+         "de" : "Dieses gemeine Monster hat Dich aber ziemlich übel zugerichtet."
     }
     ,"OBJ_ACID" : {
          "de" : "Säure"
     }
+    ,"TXT_MENU_PLAY" : {
+         "de" : "Spielen"
+    }
     ,"OBJ_ELECTRIC_FENCE_OFF" : {
          "de" : "elektrischer Zaun (AUS)"
-    }
-    ,"OBJ_GROUND_NEST" : {
-         "de" : "Roboternest"
     }
     ,"OBJ_KEY#4_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"TXT_MENU_OPTIONS" : {
-         "de" : "Einstellungen"
+    ,"OBJ_GROUND_NEST" : {
+         "de" : "Roboternest"
     }
     ,"DRIFT_NE" : {
          "de" : "Strömung"
+    }
+    ,"TXT_MENU_OPTIONS" : {
+         "de" : "Einstellungen"
     }
     ,"TXT_ON" : {
          "de" : "An"
@@ -1013,11 +1037,11 @@
     ,"TXT_CREATE_NEW_EPISODE_IN_EDITOR" : {
          "de" : "Neue Episode im Editor erstellen"
     }
-    ,"OBJ_WALL_BLACK_SW" : {
-         "de" : "Mauer (schwarz)"
-    }
     ,"TXT_MENU_BACKPACK" : {
          "de" : "Rucksack"
+    }
+    ,"OBJ_WALL_BLACK_SW" : {
+         "de" : "Mauer (schwarz)"
     }
     ,"OBJ_WALL_NW" : {
          "de" : "Mauer"
@@ -1034,25 +1058,25 @@
     ,"OBJ_TUNNEL#0" : {
          "de" : "Tunnel"
     }
-    ,"OBJ_TUNNEL#1" : {
-         "de" : "Tunnel"
+    ,"OBJ_GARLIC_USE" : {
+         "de" : "Puuh! So eine Knoblauchknolle schmeckt - pur genossen - zwar etwas streng, hält Dir dafür aber allerlei ungebetene Gäste vom Leib!"
     }
     ,"OBJ_ROBOT_FACTORY_0" : {
          "de" : "Roboter Fabrikator (AUS)"
     }
-    ,"OBJ_GARLIC_USE" : {
-         "de" : "Puuh! So eine Knoblauchknolle schmeckt - pur genossen - zwar etwas streng, hält Dir dafür aber allerlei ungebetene Gäste vom Leib!"
-    }
-    ,"OBJ_TUNNEL#2" : {
+    ,"OBJ_TUNNEL#1" : {
          "de" : "Tunnel"
     }
-    ,"OBJ_ROBOT_FACTORY_1" : {
-         "de" : "Roboter Fabrikator (AN)"
+    ,"DRIFT_NW" : {
+         "de" : "Strömung"
     }
     ,"OBJ_GRATE" : {
          "de" : "Gitter"
     }
-    ,"DRIFT_NW" : {
-         "de" : "Strömung"
+    ,"OBJ_ROBOT_FACTORY_1" : {
+         "de" : "Roboter Fabrikator (AN)"
+    }
+    ,"OBJ_TUNNEL#2" : {
+         "de" : "Tunnel"
     }
 }
