@@ -166,7 +166,7 @@ class Gfx {
 			if (spr.color != null) color = spr.color;
 		}
 		
-		drawTexture(x, y, spr.width, spr.height, spr.uv, color);
+		drawTexture(Std.int(x), Std.int(y), spr.width, spr.height, spr.uv, color);
 	}
 	
 	public static inline function getSprite(x:Int, y:Int, ?w:Int = -1, ?h:Int = -1):Sprite {
