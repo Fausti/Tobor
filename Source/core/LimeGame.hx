@@ -61,7 +61,7 @@ class LimeGame {
 		var imgBuffer:ImageBuffer = new ImageBuffer(pixelsOut, __application.window.width, __application.window.height, 32, PixelFormat.RGBA32);
 		var img:Image = new Image(imgBuffer);
 			
-		Files.saveToFileAsBinary("screenshot_" + DateTools.format(Date.now(),"%Y%m%d-%H%M%S") + ".png", img.encode("png", 100));
+		Files.saveToFileAsBinary("screenshot_" + DateTools.format(Date.now(),"%Y%m%d_%H%M%S") + ".png", img.encode("png", 100));
 
 		
 	}

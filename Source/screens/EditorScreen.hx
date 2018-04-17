@@ -360,7 +360,7 @@ class EditorScreen extends PlayScreen {
 				showOptionMenu();
 			}],
 			[Text.get("TXT_MENU_HELP"), ""],
-			[Text.get("TXT_MENU_SCREENSHOT"), "", function() {
+			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();
 				hideDialog();
 			}],
@@ -462,7 +462,7 @@ class EditorScreen extends PlayScreen {
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
 			}],
-			[Text.get("TXT_MENU_SCREENSHOT"), "", function() {
+			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();
 				hideDialog();
 			}],

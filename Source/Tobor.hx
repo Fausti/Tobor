@@ -137,6 +137,11 @@ class Tobor extends LimeGame {
 				blinkTime = blinkTime + 1;
 				blink = !blink;
 			}
+			
+			if (Input.isKeyDown([Input.key.PRINT_SCREEN, Input.key.F12])) {
+				takeScreenShot();
+				Input.clearKeys();
+			}
 		}
 	}
 	
