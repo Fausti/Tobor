@@ -54,56 +54,6 @@ class Robot extends EntityAI implements IEnemy {
 		cast(sprites[2], Animation).start();
 	}
 	
-	function getDirectionToPlayer():Vector2 {
-		var targetDirection:Vector2 = new Vector2();
-		
-		var player = room.getPlayer();
-		
-		// if (player.visible) {
-			if (player.gridX < gridX) {
-				targetDirection.x = -1;
-			} else if (player.gridX > gridX) {
-				targetDirection.x = 1;
-			}
-		
-			if (player.gridY < gridY) {
-				targetDirection.y = -1;
-			} else if (player.gridY > gridY) {
-				targetDirection.y = 1;
-			}
-		
-			if (room.world.garlic > 0) {
-				if (Utils.distance(x, y, player.x, player.y) < 4) { 
-					// Richtung umkehren wenn Knoblauch aktiv
-					targetDirection.x = -targetDirection.x;
-					targetDirection.y = -targetDirection.y;
-				}
-			}
-		// }
-		
-		targetDirection = Direction.normalize(targetDirection);
-		
-		if (targetDirection == Direction.NONE) targetDirection = Direction.getRandom();
-		
-		return targetDirection;
-	}
-	
-	function isFree(direction:Vector2):Bool {
-		// nicht ausserhalb des Raumes!
-		if (isOutsideMap(x, y)) return false;
-		
-		// alle Objekte auf dem Zielfeld fragen
-		var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
-			
-		for (e in atTarget) {
-			// wenn eines davon nicht betreten werden kann, sind die restlichen uninteressant
-			// das Feld ist somit blockiert
-			if (!e.canEnter(this, direction, SPEED)) return false;
-		}
-		
-		return true;
-	}
-	
 	function calcStress() {
 		// Spieler ist tot...
 		if (!room.getPlayer().visible) {
@@ -114,7 +64,7 @@ class Robot extends EntityAI implements IEnemy {
 		var freeTiles:Int = 0;
 		
 		for (d in Direction.STAR) {
-			if (isFree(d)) freeTiles++;
+			if (isFree(d, robotSpeed)) freeTiles++;
 		}
 		
 		var chance:Float = Utils.random(0, 100);
@@ -145,7 +95,7 @@ class Robot extends EntityAI implements IEnemy {
 			var free:Array<Vector2> = [];
 			
 			for (d in Direction.getParts(targetDirection)) {
-				if (isFree(d)) free.push(d);
+				if (isFree(d, robotSpeed)) free.push(d);
 			}
 			
 			// ist EIN Feld blockiert, horizontal | vertikal gehen
@@ -173,7 +123,7 @@ class Robot extends EntityAI implements IEnemy {
 				var free:Array<Vector2> = [];
 			
 				for (d in Direction.getParts(targetDirection)) {
-					if (isFree(d)) free.push(d);
+					if (isFree(d, robotSpeed)) free.push(d);
 				}
 			
 				if (free.length == 2) {
@@ -187,7 +137,7 @@ class Robot extends EntityAI implements IEnemy {
 					// 3.2
 					dodgeDirection = free[0];
 				} else {
-					if (isFree(Direction.rotate(targetDirection, 4))) {
+					if (isFree(Direction.rotate(targetDirection, 4), robotSpeed)) {
 						// 3.3
 						if (chance < 70) {
 							dodgeDirection = Direction.rotate(targetDirection, 4);
@@ -296,7 +246,7 @@ class Robot extends EntityAI implements IEnemy {
 			var free:Array<Vector2> = [];
 			
 			for (d in Direction.getParts(targetDirection)) {
-				if (isFree(d)) free.push(d);
+				if (isFree(d, robotSpeed)) free.push(d);
 			}
 			
 			// ist EIN Feld blockiert, horizontal | vertikal gehen
@@ -328,6 +278,7 @@ class Robot extends EntityAI implements IEnemy {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (Std.is(e, Android)) return true;
 		if (Std.is(e, Charlie)) return true;
 		if (Std.is(e, ElectricFence)) return true;
 		
@@ -341,10 +292,9 @@ class Robot extends EntityAI implements IEnemy {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Robot)) {
+		if (Std.is(e, Robot) || Std.is(e, Android)) {
 			// e.die();
 			if (Utils.chance(5)) stress = stress + 1;
-			
 		}
 	}
 	

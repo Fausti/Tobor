@@ -27,7 +27,7 @@ class ObjectFactory {
 		
 		register("OBJ_ROBOT",		Robot, 		Gfx.getSprite(0, 120), null, Room.LAYER_LEVEL_0 + 1);
 		register("OBJ_ANDROID_EGG", AndroidEgg, Gfx.getSprite(208, 216), null);
-		register("OBJ_ANDROID",		Android, 	Gfx.getSprite(208, 252), null, Room.LAYER_LEVEL_0 + 1);
+		register("OBJ_ANDROID",		Android, 	Gfx.getSprite(176, 120), null, Room.LAYER_LEVEL_0 + 1);
 		
 		register("OBJ_GROUND_NEST", GroundNest, Gfx.getSprite(240, 24));
 		register("OBJ_WATCHER", Watcher, Gfx.getSprite(80, 60), null, Room.LAYER_OVERLAY);

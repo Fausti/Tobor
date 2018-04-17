@@ -173,6 +173,9 @@
     ,"OBJ_MOUNTAIN_2" : {
          "de" : "Gebirge"
     }
+    ,"KILLED_BY_ANDROID" : {
+         "de" : "Androiden sind meist schlauer als sie aussehen..."
+    }
     ,"OBJ_CAVE_10" : {
          "de" : "Höhlenwand"
     }

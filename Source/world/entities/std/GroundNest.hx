@@ -16,6 +16,7 @@ class GroundNest extends EntityStatic {
 	}
 
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (Std.is(e, Android)) return false;
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
 		
 		return false;
@@ -23,6 +24,8 @@ class GroundNest extends EntityStatic {
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+			if (Std.is(e, Android)) return;
+			
 			var robot:Robot = new Robot();
 			robot.init();
 			

@@ -35,6 +35,8 @@ class Door extends EntityStatic {
 			if (getPlayer().gridX == gridX && getPlayer().gridY == gridY) return true;
 		}
 		
+		if (Std.is(e, Android)) return true;
+		
 		return false;
 	}
 	
@@ -49,6 +51,13 @@ class Door extends EntityStatic {
 					getWorld().hideDialog();
 				}, 2500);
 			}
+			
+			return;
+		}
+		
+		if (Std.is(e, Android)) {
+			Sound.play(Sound.SND_OPEN_DOOR);
+			return;
 		}
 		
 		super.onEnter(e, direction);

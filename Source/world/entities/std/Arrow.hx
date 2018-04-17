@@ -31,9 +31,12 @@ class Arrow extends EntityStatic {
 			var player = getPlayer();
 			
 			// steht Charlie auf dem Pfeil, gelten die Richtungen nicht mehr für Roboter!
-			if (Std.is(e, Robot)) {
+			if (Std.is(e, EntityAI)) {
 				if (player.x == x && player.y == y) return true;
 			}
+			
+			// ohne Charlie können Androiden keine Pfeile betreten
+			if (Std.is(e, Android)) return false;
 			
 			if (type == 0 && direction == Direction.E) return true;
 			else if (type == 1 && direction == Direction.N) return true;

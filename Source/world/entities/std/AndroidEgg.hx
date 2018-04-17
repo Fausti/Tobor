@@ -7,7 +7,7 @@ import world.entities.EntityDynamic;
  * @author Matthias Faust
  */
 class AndroidEgg extends EntityDynamic {
-	static var EGG_TIME:Int = 10; // 45
+	static var EGG_TIME:Int = 45; // 45
 	
 	var SPR_EGG:Array<Sprite>;
 	var SPR_EGG_FINAL:Array<Sprite>;
