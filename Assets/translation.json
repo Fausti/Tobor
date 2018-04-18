@@ -542,6 +542,9 @@
     ,"DRIFT_S" : {
          "de" : "Strömung"
     }
+    ,"OBJ_KNIFE" : {
+         "de" : "Messer"
+    }
     ,"OBJ_QUESTION_MARK" : {
          "de" : "Fragezeichen"
     }
@@ -593,11 +596,20 @@
     ,"TXT_STATUS_LIVES" : {
          "de" : "Leben"
     }
+    ,"OBJ_SAND_PLANT_0" : {
+         "de" : "Wüstenpflanze"
+    }
     ,"OBJ_CHARLIE" : {
          "de" : "Charlie (nur im Editor!)"
     }
     ,"OBJ_CLOCK_DESC" : {
          "de" : "Jene Uhr dient der \"Erinnerung\"..."
+    }
+    ,"OBJ_SAND_PLANT_1" : {
+         "de" : "Wüstenpflanze"
+    }
+    ,"OBJ_SAND_PLANT_2" : {
+         "de" : "Wüstenpflanze"
     }
     ,"OBJ_GOAL_0" : {
          "de" : "Ziel"
@@ -752,20 +764,20 @@
     ,"OBJ_MIRROR_0" : {
          "de" : "Spiegel"
     }
-    ,"OBJ_SAND#0" : {
-         "de" : "Sand"
+    ,"OBJ_ELECTRIC_DOOR_0" : {
+         "de" : "elektrische Tür (GESCHLOSSEN)"
     }
     ,"OBJ_MIRROR_1" : {
          "de" : "Spiegel"
     }
-    ,"OBJ_ELECTRIC_DOOR_0" : {
-         "de" : "elektrische Tür (GESCHLOSSEN)"
-    }
-    ,"OBJ_ELECTRIC_FLOOR_PLATE_0" : {
-         "de" : "elektrische Bodenplatte (AUS)"
+    ,"OBJ_SAND#0" : {
+         "de" : "Sand"
     }
     ,"OBJ_ELECTRIC_DOOR_1" : {
          "de" : "elektrische Tür (OFFEN)"
+    }
+    ,"OBJ_ELECTRIC_FLOOR_PLATE_0" : {
+         "de" : "elektrische Bodenplatte (AUS)"
     }
     ,"OBJ_SAND#1" : {
          "de" : "Sand"

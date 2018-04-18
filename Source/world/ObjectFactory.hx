@@ -186,6 +186,12 @@ class ObjectFactory {
 		
 		register("OBJ_SCORPION", Scorpion, Gfx.getSprite(176, 168), null, Room.LAYER_LEVEL_0 + 1);
 		
+		register("OBJ_KNIFE", Knife, Gfx.getSprite(48, 168));
+		
+		for (i in 0 ... 3) {
+			register("OBJ_SAND_PLANT_" + Std.string(i), SandPlant, Gfx.getSprite(0 + 16 * i, 168), {type: i});
+		}
+		
 		for (i in 0 ... 4) {
 			register("OBJ_ARROW_" +Std.string(i), Arrow, Gfx.getSprite(96 + 16 * i, 24), {type: i});
 		}
