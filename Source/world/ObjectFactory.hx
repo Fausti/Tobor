@@ -199,6 +199,13 @@ class ObjectFactory {
 		register("OBJ_SAND_WALL_SE", 	Wall, 		Gfx.getSprite(32 + 16 * 3, 120), 	{type: 14});
 		register("OBJ_SAND_WALL_NW", 	Wall, 		Gfx.getSprite(32 + 16 * 4, 120), 	{type: 15});
 		
+		register("OBJ_SICKLE", Sickle, Gfx.getSprite(240, 228));
+		register("OBJ_SEED", Seed, Gfx.getSprite(240, 216));
+		
+		register("OBJ_PLANT", Plant, Gfx.getSprite(96, 312));
+		register("OBJ_PLANT_GROWING", PlantGrowing, Gfx.getSprite(96, 312)).allowInEditor(false);
+		
+		
 		for (i in 0 ... 4) {
 			register("OBJ_ARROW_" +Std.string(i), Arrow, Gfx.getSprite(96 + 16 * i, 24), {type: i});
 		}

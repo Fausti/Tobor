@@ -244,7 +244,9 @@ class Room {
 	public function getAllEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAt(x, y, without);
 		
-		if (world.player.gridX == x && world.player.gridY == y) listTarget.push(world.player);
+		if (world.player.gridX == x && world.player.gridY == y) {
+			if (without != world.player) listTarget.push(world.player);
+		}
 		
 		return listTarget;
 	}
