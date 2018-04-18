@@ -1,5 +1,6 @@
 package screens;
 
+import lime.system.System;
 import ui.DialogQuestion;
 import ui.DialogRooms;
 import ui.DialogTiles;
@@ -452,7 +453,10 @@ class EditorScreen extends PlayScreen {
 			[Text.get("TXT_MENU_EDIT_INVENTORY"), "", function () {
 				showInventoryTemplate();
 			}],
-			[Text.get("TXT_MENU_HELP"), ""],
+			[Text.get("TXT_MENU_HELP"), "", function () {
+				System.openURL("https://github.com/Fausti/Tobor#inhalt");
+				hideDialog();
+			}],
 			[Text.get("TXT_MENU_SAVE"), "", function () {
 				game.world.save();
 				hideDialog();
