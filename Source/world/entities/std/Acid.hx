@@ -27,6 +27,10 @@ class Acid extends EntityItem {
 				room.spawnEntity(e.x, e.y, new WallDissolve());
 				e.die();
 				count++;
+			} else if (e.type == 11) {
+				room.spawnEntity(e.x, e.y, new SandWallDissolve());
+				e.die();
+				count++;
 			}
 		}
 		

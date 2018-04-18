@@ -43,6 +43,18 @@ class Wall extends EntityStatic {
 				
 			case 10: // feste rote Wand
 				spr = Gfx.getSprite(160, 12);
+				
+			case 11: // Sand Wand
+				spr = Gfx.getSprite(32, 120);
+			case 12:
+				spr = Gfx.getSprite(32 + 16 * 1, 120);
+			case 13:
+				spr = Gfx.getSprite(32 + 16 * 2, 120);
+			case 14:
+				spr = Gfx.getSprite(32 + 16 * 3, 120);
+			case 15:
+				spr = Gfx.getSprite(32 + 16 * 4, 120);
+				
 			default:
 				spr = Gfx.getSprite(160, 0);
 		}

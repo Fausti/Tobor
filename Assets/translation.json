@@ -41,6 +41,9 @@
     ,"OBJ_WOOD_4" : {
          "de" : "Wald"
     }
+    ,"OBJ_SAND_WALL_NW" : {
+         "de" : "Mauer aus Sandstein"
+    }
     ,"OBJ_WOOD_5" : {
          "de" : "Wald"
     }
@@ -179,6 +182,9 @@
     ,"OBJ_EXCLAMATION_MARK_DESC" : {
          "de" : "Es handelt sich hier um ein wirklich hübsches Ausrufezeichen. Aber ich denke Du weißt schon, wozu es gut ist."
     }
+    ,"OBJ_MOUNTAIN_10" : {
+         "de" : "Gebirge"
+    }
     ,"KILLED_BY_ANDROID" : {
          "de" : "Androiden sind meist schlauer als sie aussehen..."
     }
@@ -189,9 +195,6 @@
          "de" : "Höhlenwand"
     }
     ,"OBJ_MOUNTAIN_3" : {
-         "de" : "Gebirge"
-    }
-    ,"OBJ_MOUNTAIN_10" : {
          "de" : "Gebirge"
     }
     ,"OBJ_CAVE_4" : {
@@ -509,6 +512,9 @@
     ,"OBJ_EXCLAMATION_MARK_PICKUP" : {
          "de" : "Das Ausrufezeichen ist so eine Art Ratgeber. Für alles, was Dir so begegnet, hat es ein paar Hinweise. Du kannst es leider nicht anwenden, wenn Du Dich in einem sehr dunklen Raum befindest."
     }
+    ,"OBJ_SAND_WALL_SE" : {
+         "de" : "Mauer aus Sandstein"
+    }
     ,"TXT_SET_DESC_IN_INFO_FILE" : {
          "de" : ""
     }
@@ -586,6 +592,9 @@
     }
     ,"TXT_MENU_SPEED_FAST" : {
          "de" : "Schneller"
+    }
+    ,"OBJ_SAND_WALL_SW" : {
+         "de" : "Mauer aus Sandstein"
     }
     ,"OBJ_WATER_NE" : {
          "de" : "Wasser"
@@ -674,6 +683,9 @@
     ,"OBJ_ISOLATOR_WATER" : {
          "de" : "Isolator im Wasser (nicht platzierbar!)"
     }
+    ,"OBJ_SAND_WALL" : {
+         "de" : "Mauer aus Sandstein"
+    }
     ,"TXT_EDITOR_ROOM" : {
          "de" : "Raum"
     }
@@ -688,6 +700,9 @@
     }
     ,"OBJ_MUNITION#5_DESC" : {
          "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
+    }
+    ,"OBJ_WALL_SAND_DISSOLVE" : {
+         "de" : "Mauer aus Sandstein (Auflösend)"
     }
     ,"OBJ_MAGNET#1" : {
          "de" : "Magnet"
@@ -746,23 +761,23 @@
     ,"OBJ_CLONE" : {
          "de" : "Verdoppler"
     }
+    ,"OBJ_WALL_BLACK_NW" : {
+         "de" : "Mauer (schwarz)"
+    }
+    ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
+         "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
+    }
     ,"TXT_EDITOR_NO_ROOM" : {
          "de" : "keine Szene"
     }
     ,"TXT_MENU_BORDERS" : {
          "de" : "Szenenrand einfügen"
     }
-    ,"TXT_EDITOR_ASK_CREATE_ROOM_BORDER" : {
-         "de" : "Szenenrand einfügen\n\nSoll die Szene von festen Mauern umrandet werden?"
-    }
-    ,"OBJ_WALL_BLACK_NW" : {
-         "de" : "Mauer (schwarz)"
+    ,"OBJ_MIRROR_0" : {
+         "de" : "Spiegel"
     }
     ,"TXT_MENU_ROBOT_BEHAVIOR" : {
          "de" : "Roboter Verhalten"
-    }
-    ,"OBJ_MIRROR_0" : {
-         "de" : "Spiegel"
     }
     ,"OBJ_ELECTRIC_DOOR_0" : {
          "de" : "elektrische Tür (GESCHLOSSEN)"
@@ -1078,6 +1093,9 @@
     }
     ,"OBJ_TARGET" : {
          "de" : "Zielscheibe"
+    }
+    ,"OBJ_SAND_WALL_NE" : {
+         "de" : "Mauer aus Sandstein"
     }
     ,"TXT_MENU_EDIT" : {
          "de" : "Bearbeiten"

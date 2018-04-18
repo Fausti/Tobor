@@ -170,6 +170,7 @@ class ObjectFactory {
 			.setPoints(200);
 		
 		register("OBJ_WALL_DISSOLVE", WallDissolve, Gfx.getSprite(64, 60));
+		register("OBJ_WALL_SAND_DISSOLVE", SandWallDissolve, Gfx.getSprite(64 + 64, 168));
 		
 		register("OBJ_HARD_SAND_0", SandHard, Gfx.getSprite(208, 144), {type: 0}, Room.LAYER_FLOOR);
 		register("OBJ_HARD_SAND_1", SandHard, Gfx.getSprite(208 + 16, 144), {type: 1}, Room.LAYER_FLOOR);
@@ -191,6 +192,12 @@ class ObjectFactory {
 		for (i in 0 ... 3) {
 			register("OBJ_SAND_PLANT_" + Std.string(i), SandPlant, Gfx.getSprite(0 + 16 * i, 168), {type: i});
 		}
+		
+		register("OBJ_SAND_WALL", 		Wall, 		Gfx.getSprite(32, 120), 				{type: 11});
+		register("OBJ_SAND_WALL_NE", 	Wall, 		Gfx.getSprite(32 + 16 * 1, 120), 	{type: 12});
+		register("OBJ_SAND_WALL_SW", 	Wall, 		Gfx.getSprite(32 + 16 * 2, 120), 	{type: 13});
+		register("OBJ_SAND_WALL_SE", 	Wall, 		Gfx.getSprite(32 + 16 * 3, 120), 	{type: 14});
+		register("OBJ_SAND_WALL_NW", 	Wall, 		Gfx.getSprite(32 + 16 * 4, 120), 	{type: 15});
 		
 		for (i in 0 ... 4) {
 			register("OBJ_ARROW_" +Std.string(i), Arrow, Gfx.getSprite(96 + 16 * i, 24), {type: i});
