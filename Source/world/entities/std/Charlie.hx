@@ -194,6 +194,17 @@ class Charlie extends EntityMoveable {
 					getWorld().hideDialog();
 				});
 			}
+		} else if (visible && (Std.is(e, Scorpion))) {
+			die();
+			
+			if (getWorld().checkFirstUse("KILLED_BY_SCORPION")) {
+					
+			} else {
+				getWorld().markFirstUse("KILLED_BY_SCORPION");
+				getWorld().showPickupMessage("KILLED_BY_SCORPION", false, function () {
+					getWorld().hideDialog();
+				});
+			}
 		}
 	}
 	
