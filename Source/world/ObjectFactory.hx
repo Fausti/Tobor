@@ -180,6 +180,10 @@ class ObjectFactory {
 		register("OBJ_HARD_SAND_6", SandHard, Gfx.getSprite(208 + 16, 144 + 24), {type: 6}, Room.LAYER_FLOOR);
 		register("OBJ_HARD_SAND_7", SandHard, Gfx.getSprite(208 + 32, 144 + 24), {type: 7}, Room.LAYER_FLOOR);
 		
+		register("OBJ_SAND_DECO_0", SandDeco, Gfx.getSprite(208, 132), {type: 0}, Room.LAYER_FLOOR);
+		register("OBJ_SAND_DECO_1", SandDeco, Gfx.getSprite(208 + 16, 132), {type: 1}, Room.LAYER_FLOOR);
+		register("OBJ_SAND_DECO_2", SandDeco, Gfx.getSprite(208 + 32, 132), {type: 2}, Room.LAYER_FLOOR);
+		
 		register("OBJ_SCORPION", Scorpion, Gfx.getSprite(176, 168), null, Room.LAYER_LEVEL_0 + 1);
 		
 		for (i in 0 ... 4) {

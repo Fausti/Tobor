@@ -761,17 +761,17 @@
     ,"OBJ_ELECTRIC_DOOR_0" : {
          "de" : "elektrische Tür (GESCHLOSSEN)"
     }
-    ,"OBJ_ELECTRIC_DOOR_1" : {
-         "de" : "elektrische Tür (OFFEN)"
-    }
     ,"OBJ_ELECTRIC_FLOOR_PLATE_0" : {
          "de" : "elektrische Bodenplatte (AUS)"
     }
-    ,"OBJ_GARLIC_DESC" : {
-         "de" : "Diese Knoblauchknolle ist ganz normal. Solange Du sie mit Dir herumträgst, ist alles in Ordnung. Aber hast du sie gegessen, wird es eine Zeit lang schwierig sein, neue Freunde zu finden."
+    ,"OBJ_ELECTRIC_DOOR_1" : {
+         "de" : "elektrische Tür (OFFEN)"
     }
     ,"OBJ_SAND#1" : {
          "de" : "Sand"
+    }
+    ,"OBJ_GARLIC_DESC" : {
+         "de" : "Diese Knoblauchknolle ist ganz normal. Solange Du sie mit Dir herumträgst, ist alles in Ordnung. Aber hast du sie gegessen, wird es eine Zeit lang schwierig sein, neue Freunde zu finden."
     }
     ,"OBJ_SAND#2" : {
          "de" : "Sand"
@@ -964,6 +964,15 @@
     }
     ,"OBJ_ELEXIR_PICKUP" : {
          "de" : "In dieser merkwürdigen Flasche ist ein Lebenselixier. Du solltest es unbedingt trinken, wenn Du merkst, daß Dir langsam die Kräfte schwinden!"
+    }
+    ,"OBJ_SAND_DECO_0" : {
+         "de" : "Wüstendekoration"
+    }
+    ,"OBJ_SAND_DECO_1" : {
+         "de" : "Wüstendekoration"
+    }
+    ,"OBJ_SAND_DECO_2" : {
+         "de" : "Wüstendekoration"
     }
     ,"OBJ_WATER_SW" : {
          "de" : "Wasser"
