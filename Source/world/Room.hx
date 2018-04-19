@@ -40,7 +40,9 @@ class Room {
 	public var length(get, null):Int;
 	
 	public var robots:Int = 0;
+	
 	public var underRoof:Bool = false;
+	public var underRoofOld:Bool = false;
 	
 	public var treeTimer:Float = 0;
 	
@@ -89,6 +91,11 @@ class Room {
 		for (e in listRemove) {
 			removeEntity(e);
 		}
+		
+		if (treeTimer != 0.0) {
+			treeTimer = treeTimer - deltaTime;
+			if (treeTimer < 0) treeTimer = 0.0;
+		}
 
 		underRoof = false;
 		
@@ -97,15 +104,17 @@ class Room {
 			for (e in atPlayerPos) {
 				if (Std.is(e, EntityRoof)) {
 					underRoof = true;
+					underRoofOld = underRoof;
 					return;
 				}
 			}
+			
+			underRoofOld = false;
+		} else {
+			underRoof = underRoofOld;
 		}
 		
-		if (treeTimer != 0.0) {
-			treeTimer = treeTimer - deltaTime;
-			if (treeTimer < 0) treeTimer = 0.0;
-		}
+		
 	}
 	
 	public function render(?editMode:Bool = false) {
