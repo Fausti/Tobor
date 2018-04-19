@@ -277,6 +277,6 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override public function onRoomEnds() {
-		
+		return;
 	}
 }

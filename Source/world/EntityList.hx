@@ -4,6 +4,7 @@ import world.entities.Entity;
 import world.entities.EntityAI;
 import world.entities.EntityDynamic;
 import world.entities.interfaces.IElectric;
+import world.entities.std.Bullet;
 
 /**
  * ...
@@ -149,7 +150,7 @@ class EntityList {
 		
 		for (e in listAll) {
 			if (e != null) {
-				listState.push(e.clone());
+				if (!Std.is(e, Bullet)) listState.push(e.clone());
 			}
 		}
 	}

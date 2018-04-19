@@ -29,8 +29,8 @@ class EntityMoveable extends EntityDynamic {
 			speedMovement:0.0,
 			distanceLeft: 0.0,
 			
-			oldPositionX: 0,
-			oldPositionY: 0,
+			oldPositionX: -1,
+			oldPositionY: -1,
 		}
 	}
 	
@@ -157,8 +157,12 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	override public function onRoomEnds() {
+		if (moveData.oldPositionX == -1 || moveData.oldPositionY == -1) return;
+		
 		// alte Position wiederherstellen
 		x = moveData.oldPositionX;
 		y = moveData.oldPositionY;
+		
+		return;
 	}
 }

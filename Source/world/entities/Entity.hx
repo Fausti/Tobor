@@ -161,7 +161,7 @@ class Entity {
 	public function onRoomStart() {
 		
 	}
-	
+
 	public function onRoomEnds() {
 		
 	}

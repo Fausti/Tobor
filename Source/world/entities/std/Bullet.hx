@@ -12,6 +12,9 @@ typedef MoveData = {
 	var distanceLeft:Float;
 	var direction:Vector2;
 	var speedMovement:Float; // Tiles per second
+	
+	var oldPositionX:Int;
+	var oldPositionY:Int;
 }
 
 class Bullet extends EntityDynamic {
@@ -33,6 +36,9 @@ class Bullet extends EntityDynamic {
 			direction: Direction.NONE,
 			speedMovement:0.0,
 			distanceLeft: 0.0,
+			
+			oldPositionX: -1,
+			oldPositionY: -1,
 		}
 		
 		MAX_DISTANCE = Std.random(10) + 10;
@@ -42,6 +48,9 @@ class Bullet extends EntityDynamic {
 		if (!isMoving() && wasMoving) {
 			onStopMoving();
 			wasMoving = false;
+			
+			moveData.oldPositionX = Std.int(x);
+			moveData.oldPositionY = Std.int(y);
 		}
 		
 		if (isMoving()) {
@@ -95,6 +104,9 @@ class Bullet extends EntityDynamic {
 			moveData.distanceLeft = dist;
 			
 			travelDirection = direction;
+			
+			moveData.oldPositionX = Std.int(x);
+			moveData.oldPositionY = Std.int(y);
 			
 			onStartMoving();
 			
@@ -260,5 +272,17 @@ class Bullet extends EntityDynamic {
 		}
 		
 		return Direction.NONE;
+	}
+	
+	override public function onRoomEnds() {
+		if (moveData.oldPositionX == -1 || moveData.oldPositionY == -1) return;
+		
+		// alte Position wiederherstellen
+		x = moveData.oldPositionX;
+		y = moveData.oldPositionY;
+		
+		die();
+		
+		return;
 	}
 }
