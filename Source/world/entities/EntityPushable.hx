@@ -30,4 +30,11 @@ class EntityPushable extends EntityMoveable {
 		
 		return true;
 	}
+	
+	override public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
+		// kein diagonales Verschieben
+		if (Direction.isDiagonal(direction)) return false;
+		
+		return super.move(direction, speed, dist);
+	}
 }
