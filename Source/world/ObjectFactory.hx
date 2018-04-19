@@ -651,7 +651,7 @@ class ObjectTemplate {
 	public function createRandom():Entity {
 		var e:Entity = Type.createInstance(classPath, []);
 		
-		if (e != null) {
+		if (e != null && random != null) {
 			e.parseData(data);
 			e.type = random[Std.random(random.length)];
 		}

@@ -18,6 +18,8 @@ class DialogTiles extends Dialog {
 	var factory:ObjectFactory;
 	var editor:EditorScreen;
 	
+	var oldTile:Int = 0;
+	
 	public function new(screen:Screen, x:Int, y:Int) {
 		super(screen, x, y);
 		
@@ -68,14 +70,29 @@ class DialogTiles extends Dialog {
 					editor.currentTile = tile;
 					if (onOk != null) onOk();
 					screen.hideDialog();
+					return;
 				}
+			} else if (Input.mouseBtnRight) {
+				Input.clearKeys();
+				editor.currentTile = oldTile;
+				if (onCancel != null) onCancel();
+				screen.hideDialog();
+				return;
 			}
 		}
 		
 		if (Input.isKeyDown([Input.key.ESCAPE])) {
+			Input.clearKeys();
+			editor.currentTile = oldTile;
+			if (onCancel != null) onCancel();
 			screen.hideDialog();
+			return;
 		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			Input.clearKeys();
+			editor.currentTile = tile;
+			if (onOk != null) onOk();
 			screen.hideDialog();
+			return;
 		} else if (Input.isKeyDown(Tobor.KEY_LEFT)) {
 			tile--;
 			Input.wait(0.2);
@@ -154,5 +171,11 @@ class DialogTiles extends Dialog {
 		
 		Tobor.fontSmall.drawString(0, 28 * 12 + 1, "    " + c.editorName, Color.BLACK);
 		Gfx.drawSprite(0, 28 * 12, c.spr);
+	}
+	
+	override public function show() {
+		super.show();
+		
+		oldTile = editor.currentTile;
 	}
 }

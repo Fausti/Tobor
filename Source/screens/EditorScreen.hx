@@ -97,6 +97,10 @@ class EditorScreen extends PlayScreen {
 			var template = game.world.factory.get(currentTile);
 			if (!template.allowBrush) brush = 0;
 		}
+		dialogTiles.onCancel = function() {
+			var template = game.world.factory.get(currentTile);
+			if (!template.allowBrush) brush = 0;
+		}
 		
 		dialogRooms = new DialogRooms(this, 0, 0);
 		dialogRooms.onOk = function() {
