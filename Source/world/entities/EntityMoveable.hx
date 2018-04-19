@@ -12,6 +12,9 @@ typedef MoveData = {
 	var distanceLeft:Float;
 	var direction:Vector2;
 	var speedMovement:Float; // Tiles per second
+	
+	var oldPositionX:Int;
+	var oldPositionY:Int;
 }
 
 class EntityMoveable extends EntityDynamic {
@@ -25,11 +28,17 @@ class EntityMoveable extends EntityDynamic {
 			direction: Direction.NONE,
 			speedMovement:0.0,
 			distanceLeft: 0.0,
+			
+			oldPositionX: 0,
+			oldPositionY: 0,
 		}
 	}
 	
 	override public function update(deltaTime:Float) {
 		if (!isMoving() && wasMoving) {
+			moveData.oldPositionX = Std.int(x);
+			moveData.oldPositionY = Std.int(y);
+			
 			onStopMoving();
 			wasMoving = false;
 		}
@@ -89,6 +98,9 @@ class EntityMoveable extends EntityDynamic {
 				e.onLeave(this, direction);
 			}
 			
+			moveData.oldPositionX = Std.int(x);
+			moveData.oldPositionY = Std.int(y);
+			
 			onStartMoving();
 			
 			return true;
@@ -142,5 +154,11 @@ class EntityMoveable extends EntityDynamic {
 	
 	function onStopMoving() {
 		
+	}
+	
+	override public function onRoomEnds() {
+		// alte Position wiederherstellen
+		x = moveData.oldPositionX;
+		y = moveData.oldPositionY;
 	}
 }
