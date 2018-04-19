@@ -10,6 +10,7 @@ import world.Inventory;
 import world.ObjectFactory.ObjectTemplate;
 import world.World;
 import world.entities.EntityItem;
+import world.entities.EntityRoof;
 import world.entities.Marker;
 import world.entities.interfaces.IContainer;
 import world.entities.std.StartPosition;
@@ -22,6 +23,8 @@ import world.entities.Entity;
  * @author Matthias Faust
  */
 class EditorScreen extends PlayScreen {
+	public static var COLOR_TRANSPARENT:Color = new Color(1, 1, 1, 0.5);
+	
 	var editMode:Bool = true;
 	
 	public var cursorX:Int;
@@ -305,6 +308,7 @@ class EditorScreen extends PlayScreen {
 		} else {
 			if (editMode) {
 				if (cursorY > 0) {
+					Gfx.drawSprite(cursorX * Tobor.TILE_WIDTH, cursorY * Tobor.TILE_HEIGHT, game.world.factory.get(currentTile).spr, COLOR_TRANSPARENT);
 					Gfx.drawSprite(cursorX * Tobor.TILE_WIDTH, cursorY * Tobor.TILE_HEIGHT, SPR_CURSOR);
 				}
 			}

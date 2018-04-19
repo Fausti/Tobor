@@ -7,7 +7,7 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class EntityRoof extends EntityStatic {
-	static var COLOR_TRANSPARENT:Color = new Color(1, 1, 1, 0.25);
+	public static var COLOR_TRANSPARENT:Color = new Color(1, 1, 1, 0.25);
 	
 	public function new() {
 		super();
