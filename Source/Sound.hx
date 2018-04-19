@@ -52,29 +52,29 @@ class Sound {
 		MUS_NATURE = Assets.getAudioBuffer("assets/mus/nature.ogg");
 		listMusic.set("MUS_NATURE", MUS_NATURE);
 		
-		SND_CHARLIE_STEP = Assets.getAudioBuffer("assets/sfx/step-charlie.wav");
-		SND_TUNNEL_STEP = Assets.getAudioBuffer("assets/sfx/step-tunnel.wav");
-		SND_ROBOT_STEP = Assets.getAudioBuffer("assets/sfx/step-robot.wav");
+		SND_CHARLIE_STEP = Assets.getAudioBuffer("assets/sfx/step-charlie.ogg");
+		SND_TUNNEL_STEP = Assets.getAudioBuffer("assets/sfx/step-tunnel.ogg");
+		SND_ROBOT_STEP = Assets.getAudioBuffer("assets/sfx/step-robot.ogg");
 		
-		SND_DISSOLVE_WALL = Assets.getAudioBuffer("assets/sfx/dissolve-wall.wav");
+		SND_DISSOLVE_WALL = Assets.getAudioBuffer("assets/sfx/dissolve-wall.ogg");
 		
-		SND_PICKUP_MISC = Assets.getAudioBuffer("assets/sfx/pickup-misc.wav");
-		SND_PICKUP_KEY = Assets.getAudioBuffer("assets/sfx/pickup-key.wav");
-		SND_PICKUP_GOLD = Assets.getAudioBuffer("assets/sfx/pickup-gold.wav");
+		SND_PICKUP_MISC = Assets.getAudioBuffer("assets/sfx/pickup-misc.ogg");
+		SND_PICKUP_KEY = Assets.getAudioBuffer("assets/sfx/pickup-key.ogg");
+		SND_PICKUP_GOLD = Assets.getAudioBuffer("assets/sfx/pickup-gold.ogg");
 		
-		SND_USE_GARLIC = Assets.getAudioBuffer("assets/sfx/use-garlic.wav");
+		SND_USE_GARLIC = Assets.getAudioBuffer("assets/sfx/use-garlic.ogg");
 		
-		SND_ROTATE_ARROW = Assets.getAudioBuffer("assets/sfx/drop-magnet.wav");
+		SND_ROTATE_ARROW = Assets.getAudioBuffer("assets/sfx/drop-magnet.ogg");
 		
-		SND_OPEN_DOOR = Assets.getAudioBuffer("assets/sfx/open-door.wav");
+		SND_OPEN_DOOR = Assets.getAudioBuffer("assets/sfx/open-door.ogg");
 		
-		SND_JINGLE_0 = Assets.getAudioBuffer("assets/sfx/jingle-0.wav");
-		SND_JINGLE_1 = Assets.getAudioBuffer("assets/sfx/jingle-1.wav");
+		SND_JINGLE_0 = Assets.getAudioBuffer("assets/sfx/jingle-0.ogg");
+		SND_JINGLE_1 = Assets.getAudioBuffer("assets/sfx/jingle-1.ogg");
 		
-		SND_EXPLOSION_CHARLIE = Assets.getAudioBuffer("assets/sfx/explosion.wav");
-		SND_EXPLOSION_ROBOT = Assets.getAudioBuffer("assets/sfx/explosion-short.wav");
+		SND_EXPLOSION_CHARLIE = Assets.getAudioBuffer("assets/sfx/explosion.ogg");
+		SND_EXPLOSION_ROBOT = Assets.getAudioBuffer("assets/sfx/explosion-short.ogg");
 		
-		SND_SHOOT_BULLET = Assets.getAudioBuffer("assets/sfx/shoot-bullet.wav");
+		SND_SHOOT_BULLET = Assets.getAudioBuffer("assets/sfx/shoot-bullet.ogg");
 	}
 	
 	public static function stopMusicAll() {
