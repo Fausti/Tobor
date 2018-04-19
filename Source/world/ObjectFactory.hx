@@ -246,6 +246,11 @@ class ObjectFactory {
 		register("OBJ_SCORPION", Scorpion, Gfx.getSprite(176, 168), null, Room.LAYER_LEVEL_0 + 1)
 			.disableBrush();
 		
+		register("OBJ_SHOVEL", Shovel, Gfx.getSprite(192, 132))
+			.disableBrush();
+		register("OBJ_SPOT", Spot, Gfx.getSprite(224, 84))
+			.disableBrush();
+			
 		register("OBJ_KNIFE", Knife, Gfx.getSprite(48, 168))
 			.disableBrush();
 		
