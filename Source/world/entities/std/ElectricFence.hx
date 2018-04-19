@@ -36,7 +36,10 @@ class ElectricFence extends EntityPushable implements IElectric {
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
 			if (Std.is(e, Robot)) {
-				// Roboter haben Hemmungen in den Zaun zu laufen!
+				// steht Charlie auf dem Zaun?
+				if (getPlayer().gridX == x && getPlayer().gridY == y) return true;
+				
+				// ... Roboter haben Hemmungen in den Zaun zu laufen!
 				if (Utils.chance(85)) return false;
 			}
 			
