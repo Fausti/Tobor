@@ -51,6 +51,8 @@ class Stairs extends EntityStatic {
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (Std.is(e, Charlie)) {
+			if (!e.visible) return;
+			
 			switch(type) {
 				case 0:
 					getWorld().stairsFrom(this);
