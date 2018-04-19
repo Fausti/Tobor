@@ -66,6 +66,7 @@ class DialogTiles extends Dialog {
 				if (cursorY < boxH && cursorX >= 4 && cursorX < 36) {
 					Input.clearKeys();
 					editor.currentTile = tile;
+					if (onOk != null) onOk();
 					screen.hideDialog();
 				}
 			}

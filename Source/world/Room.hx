@@ -250,11 +250,19 @@ class Room {
 		return remTarget;
 	}
 	
-	public function getAllEntitiesAt(x:Float, y:Float, ?without:Entity = null):Array<Entity> {
+	public function getAllEntitiesAt(x:Float, y:Float, ?without:Entity = null, ?withType:Dynamic = null):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAt(x, y, without);
 		
 		if (world.player.gridX == x && world.player.gridY == y) {
 			if (without != world.player) listTarget.push(world.player);
+		}
+		
+		if (withType != null) {
+			var remTarget:Array<Entity> = listTarget.filter(function (e) {
+				if (Std.is(e, withType)) return true; return false;
+			});
+			
+			listTarget = remTarget;
 		}
 		
 		return listTarget;
