@@ -666,10 +666,14 @@ class EditorScreen extends PlayScreen {
 					var py:Int = cursorY + yy;
 								
 					if (px >= 0 && px < Room.WIDTH && py >= 1 && py <= Room.HEIGHT) {
-						var e:Entity = template.createRandom();
-						if (e != null) {
-							e.setPosition(px, py - 1);
-							addEntity(e, template);
+						var atPosition:Array<Entity> = game.world.room.getAllEntitiesAt(px, py - 1);
+						
+						if (atPosition.length == 0 || template.layer == Room.LAYER_ROOF) {
+							var e:Entity = template.createRandom();
+							if (e != null) {
+								e.setPosition(px, py - 1);
+								addEntity(e, template);
+							}
 						}
 					}
 				}
