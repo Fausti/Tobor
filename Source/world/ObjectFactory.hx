@@ -222,6 +222,11 @@ class ObjectFactory {
 			register("OBJ_BAGPACK#" + i, Bagpack, Gfx.getSprite(128 + i * 16, 144), {type: i});
 		}
 		
+		register("OBJ_FOOD#0", Food, Gfx.getSprite(192, 252), {type: 0})
+			.setPoints(500);
+		register("OBJ_FOOD#1", Food, Gfx.getSprite(192 + 16, 252), {type: 1})
+			.setPoints(500);
+		
 		register("OBJ_TELEPORT_START_0", TeleportStart, Gfx.getSprite(0, 312), {type: 0});
 		register("OBJ_TELEPORT_START_1", TeleportStart, Gfx.getSprite(48, 312), {type: 1});
 		

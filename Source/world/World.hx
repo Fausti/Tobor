@@ -53,6 +53,7 @@ class World {
 	public var pointsAnim:Int = 0;
 	
 	public var garlic:Float = 0;
+	public var food:Float = 0;
 	
 	public var flags:Array<Bool> = [false, false, false, false, false];
 	
@@ -115,6 +116,7 @@ class World {
 		lives = 3;
 		points = 0;
 		garlic = 0;
+		food = 0;
 		
 		Text.loadForWorld(file.loadFile('translation.json'));
 		
@@ -215,6 +217,11 @@ class World {
 		if (garlic > 0) {
 			garlic = garlic - deltaTime;
 			if (garlic < 0) garlic = 0;
+		}
+		
+		if (food > 0) {
+			food = food - deltaTime;
+			if (food < 0) food = 0;
 		}
 		
 		if (player != null) player.update(deltaTime);
@@ -568,6 +575,7 @@ class World {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		if (!editing) {
+			data.set("food", food);
 			data.set("garlic", garlic);
 			data.set("gold", gold);
 			data.set("points", points);
@@ -653,6 +661,8 @@ class World {
 	
 	function parseKey(key, data) {
 		switch(key) {
+			case "food":
+				if (!editing) food = Reflect.field(data, "food");
 			case "garlic":
 				if (!editing) garlic = Reflect.field(data, "garlic");
 			case "gold":

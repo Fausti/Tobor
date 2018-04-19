@@ -40,6 +40,8 @@ class Sand extends EntityFloor {
 	}
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
+		if (getWorld().food > 0 && Std.is(e, Charlie)) return;
+		
 		var ee:EntityMoveable = cast e;
 		ee.changeSpeed((speed) / 2);
 	}
