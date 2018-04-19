@@ -275,4 +275,8 @@ class Charlie extends EntityMoveable {
 		lastX = x;
 		lastY = y;
 	}
+	
+	override public function onRoomEnds() {
+		trace("onRoomEnds");
+	}
 }
