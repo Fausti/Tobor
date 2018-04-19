@@ -65,10 +65,10 @@ class Robot extends EntityAI implements IEnemy {
 	
 	override function idle() {
 		// altes Verhalten?
-		if (Config.robotBehavior == 1) {
+		// if (Config.robotBehavior == 1) {
 			idleOld();
 			return;
-		}
+		// }
 		
 		var player = room.getPlayer();
 		
