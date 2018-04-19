@@ -193,6 +193,16 @@ class ObjectFactory {
 		register("OBJ_ROOF_7", Roof, Gfx.getSprite(64, 144), {type: 7}, Room.LAYER_ROOF);
 		register("OBJ_ROOF_8", Roof, Gfx.getSprite(80, 144), {type: 8}, Room.LAYER_ROOF);
 		
+		register("OBJ_ROOF_9", Roof, Gfx.getSprite(208, 324), {type: 9}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_10", Roof, Gfx.getSprite(208 + 16, 324), {type: 10}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_11", Roof, Gfx.getSprite(208 + 32, 324), {type: 11}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_12", Roof, Gfx.getSprite(208, 324 + 12), {type: 12}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_13", Roof, Gfx.getSprite(208 + 16, 324 + 12), {type: 13}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_14", Roof, Gfx.getSprite(208 + 32, 324 + 12), {type: 14}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_15", Roof, Gfx.getSprite(208, 324 + 24), {type: 15}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_16", Roof, Gfx.getSprite(208 + 16, 324 + 24), {type: 16}, Room.LAYER_ROOF);
+		register("OBJ_ROOF_17", Roof, Gfx.getSprite(208 + 32, 324 + 24), {type: 17}, Room.LAYER_ROOF);
+		
 		for (i in 0 ... 3) {
 			register("OBJ_SHADOW#" + Std.string(i), Shadow, Gfx.getSprite(48 + (i * 16), 156), {type: i}, Room.LAYER_FLOOR)
 			.disableBrush();

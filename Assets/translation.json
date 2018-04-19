@@ -944,6 +944,9 @@
     ,"OBJ_ROOF_8" : {
          "de" : "Dach"
     }
+    ,"OBJ_ROOF_9" : {
+         "de" : "Dach"
+    }
     ,"TXT_MENU_ROBOT_STRESS" : {
          "de" : "Stressanzeige"
     }
@@ -959,8 +962,14 @@
     ,"OBJ_MUNITION#3_DESC" : {
          "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
     }
+    ,"OBJ_ROOF_10" : {
+         "de" : "Dach"
+    }
     ,"OBJ_WATER_SE" : {
          "de" : "Wasser"
+    }
+    ,"OBJ_ROOF_11" : {
+         "de" : "Dach"
     }
     ,"OBJ_KEY#12_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
@@ -968,20 +977,38 @@
     ,"OBJ_KEY#9_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
+    ,"OBJ_ROOF_12" : {
+         "de" : "Dach"
+    }
     ,"TXT_MENU_STORY" : {
          "de" : "Story"
+    }
+    ,"OBJ_ROOF_13" : {
+         "de" : "Dach"
+    }
+    ,"OBJ_ROOF_14" : {
+         "de" : "Dach"
     }
     ,"OBJ_BAGPACK#0" : {
          "de" : "Beutel"
     }
+    ,"OBJ_ROOF_15" : {
+         "de" : "Dach"
+    }
     ,"OBJ_BAGPACK#1" : {
          "de" : "Beutel"
+    }
+    ,"OBJ_ROOF_16" : {
+         "de" : "Dach"
     }
     ,"OBJ_BAGPACK#2" : {
          "de" : "Beutel"
     }
     ,"TXT_NEW_EPISODE_INSTALLED" : {
          "de" : "Neue Episode installiert: "
+    }
+    ,"OBJ_ROOF_17" : {
+         "de" : "Dach"
     }
     ,"OBJ_SLING_USE" : {
          "de" : "Ja! Mit der Schleuder kannst Du Dich endlich des lästigen Ungeziefers erwehren!"
