@@ -274,7 +274,12 @@ class ObjectFactory {
 		
 		for (i in 0 ... 3) {
 			register("OBJ_SAND_PLANT_" + Std.string(i), SandPlant, Gfx.getSprite(0 + 16 * i, 168), {type: i})
-			.disableBrush();
+				.disableBrush();
+		}
+		
+		for (i in 0 ... 4) {
+			register("OBJ_RING#" + Std.string(i), Ring, Gfx.getSprite(i * 16, 276), {type: i})
+				.disableBrush();
 		}
 		
 		register("OBJ_SAND_WALL", 		Wall, 		Gfx.getSprite(32, 120), 				{type: 11});
