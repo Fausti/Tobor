@@ -266,6 +266,9 @@ class ObjectFactory {
 		register("OBJ_SPOT", Spot, Gfx.getSprite(224, 84))
 			.disableBrush();
 			
+		register("OBJ_LAMP", Lamp, Gfx.getSprite(144, 132))
+			.disableBrush();
+			
 		register("OBJ_KNIFE", Knife, Gfx.getSprite(48, 168))
 			.disableBrush();
 		
