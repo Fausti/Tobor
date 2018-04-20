@@ -10,7 +10,7 @@ import lime.math.Vector2;
 class PlantGrowing extends EntityDynamic {
 	var SPR_PLANT_GROWING:Array<Sprite> = [];
 	var timeLeft:Float;
-	var growSpeed:Float = 1;
+	var growSpeed:Float = 2;
 	
 	public function new() {
 		super();
@@ -30,7 +30,7 @@ class PlantGrowing extends EntityDynamic {
 			Gfx.getSprite(96, 312),
 		];
 		
-		timeLeft = Config.getSpeed(growSpeed);
+		timeLeft = growSpeed - Config.getSpeed(1);
 	}
 	
 	override public function render() {
@@ -40,7 +40,7 @@ class PlantGrowing extends EntityDynamic {
 	override public function update(deltaTime:Float) {
 		timeLeft = timeLeft - deltaTime;
 		if (timeLeft <= 0) {
-			timeLeft = Config.getSpeed(growSpeed);
+			timeLeft = growSpeed - Config.getSpeed(1);
 				
 			switch(type) {
 				case 0:
