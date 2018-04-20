@@ -125,6 +125,9 @@
     ,"TXT_TOO_MUCH_GOLD" : {
          "de" : "Soviele Goldbarren sind viel zu schwer für Dich."
     }
+    ,"OBJ_NPC" : {
+         "de" : "NPC"
+    }
     ,"OBJ_SEED" : {
          "de" : "Samen"
     }
@@ -959,6 +962,9 @@
     ,"OBJ_NOTICE" : {
          "de" : "Zettel"
     }
+    ,"OBJ_DEALER" : {
+         "de" : "Händler"
+    }
     ,"OBJ_MUNITION#3_DESC" : {
          "de" : "Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen."
     }
@@ -1093,6 +1099,9 @@
     }
     ,"TXT_INVENTORY_DROP_ALL" : {
          "de" : "Alles weg"
+    }
+    ,"TXT_DIR_ALREADY_EXISTS" : {
+         "de" : "Verzeichnis existiert bereits!"
     }
     ,"KILLED_BY_ROBOT" : {
          "de" : "Dieses gemeine Monster hat Dich aber ziemlich übel zugerichtet."

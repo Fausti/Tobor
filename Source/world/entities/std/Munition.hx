@@ -37,16 +37,17 @@ class Munition extends EntityItem {
 		if (Std.is(e, Charlie)) {
 			onPickup();
 		} else if (Std.is(e, EntityAI)) {
-			// if (!Direction.isDiagonal(direction)) {
-				var bullet:Bullet = new Bullet();
-				room.spawnEntity(x, y, bullet);
-				bullet.move(direction, (Robot.SPEED) * 2);
+			// NPCs schießen nicht!
+			if (Std.is(e, NPC)) return;
 			
-				Sound.play(Sound.SND_SHOOT_BULLET);
+			var bullet:Bullet = new Bullet();
+			room.spawnEntity(x, y, bullet);
+			bullet.move(direction, (Robot.SPEED) * 2);
+			
+			Sound.play(Sound.SND_SHOOT_BULLET);
 				
-				type = type - 1;
-				if (type < 0) die();
-			// }
+			type = type - 1;
+			if (type < 0) die();
 		}
 	}
 	

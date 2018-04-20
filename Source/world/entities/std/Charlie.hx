@@ -205,6 +205,8 @@ class Charlie extends EntityMoveable {
 					getWorld().hideDialog();
 				});
 			}
+		} else if (visible && (Std.is(e, NPC))) {
+			e.onEnter(this, direction);
 		}
 	}
 	
