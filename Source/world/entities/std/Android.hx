@@ -35,6 +35,18 @@ class Android extends EntityAI implements IEnemy {
 		// Bewegungen...
 		if (!alive) return;
 		
+		var freeTile:Int = 0;
+		for (dd in Direction.ALL) {
+			if (dd != Direction.NONE) {
+				if (isFree(dd, mSpeed)) freeTile++;
+			}
+		}
+		
+		if (freeTile == 0) {
+			die();
+			return;
+		}
+		
 		var targetDirection:Vector2 = Direction.NONE;
 		
 		if (Utils.distance(x, y, player.x, player.y) <= 12) {
