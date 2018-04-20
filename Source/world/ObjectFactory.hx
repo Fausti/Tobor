@@ -183,8 +183,10 @@ class ObjectFactory {
 			}
 		}
 		
-		register("OBJ_NPC", NPC, Gfx.getSprite(128, 276), null, Room.LAYER_LEVEL_0 + 1);
-		register("OBJ_DEALER", Dealer, Gfx.getSprite(64, 276), null, Room.LAYER_LEVEL_0 + 1);
+		register("OBJ_NPC", NPC, Gfx.getSprite(128, 276), null, Room.LAYER_LEVEL_0 + 1)
+			.disableBrush();
+		register("OBJ_DEALER", Dealer, Gfx.getSprite(64, 276), null, Room.LAYER_LEVEL_0 + 1)
+			.disableBrush();
 		
 		register("OBJ_ROOF_0", Roof, Gfx.getSprite(0, 132), {type: 0}, Room.LAYER_ROOF);
 		register("OBJ_ROOF_1", Roof, Gfx.getSprite(0, 144), {type: 1}, Room.LAYER_ROOF);
