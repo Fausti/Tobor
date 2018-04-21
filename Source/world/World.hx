@@ -66,6 +66,16 @@ class World {
 	
 	public var isLoading:Bool = false;
 	
+	public static var WIN_FLAG_ONLY:Int = 0;
+	public static var WIN_RING_1:Int = 1;
+	public static var WIN_RING_2:Int = 2;
+	public static var WIN_RING_3:Int = 3;
+	public static var WIN_RING_4:Int = 4;
+	
+	public var config = {
+		"winType": World.WIN_FLAG_ONLY,
+	};
+	
 	// AFTER_UPDATE Aktionen
 	var actionSaveGame:Bool = false;
 	
@@ -153,6 +163,17 @@ class World {
 		pointsAnim = points;
 		
 		isLoading = false;
+	}
+	
+	public function checkWinCondition() {
+		var rings:Int = 0;
+			
+		if (inventory.hasItem("OBJ_RING#0")) rings++;
+		if (inventory.hasItem("OBJ_RING#1")) rings++;
+		if (inventory.hasItem("OBJ_RING#2")) rings++;
+		if (inventory.hasItem("OBJ_RING#3")) rings++;
+			
+		if (rings >= config.winType) episodeWon = true;
 	}
 	
 	public function start() {
@@ -645,6 +666,8 @@ class World {
 			data.set(r.getID(), worldData);
 		}
 		
+		data.set("winType", config.winType);
+		
 		return TJSON.encode(data, 'fancy');
 	}
 	
@@ -661,6 +684,8 @@ class World {
 	
 	function parseKey(key, data) {
 		switch(key) {
+			case "winType":
+				config.winType = Reflect.field(data, "winType");
 			case "food":
 				if (!editing) food = Reflect.field(data, "food");
 			case "garlic":

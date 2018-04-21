@@ -43,7 +43,7 @@ class Goal extends EntityStatic {
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (Std.is(e, Charlie)) {
-			getWorld().episodeWon = true;
+			getWorld().checkWinCondition();
 		}
 	}
 }

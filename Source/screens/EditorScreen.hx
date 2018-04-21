@@ -6,6 +6,7 @@ import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
 import ui.DialogInventoryTemplate;
+import world.Direction;
 import world.Inventory;
 import world.ObjectFactory.ObjectTemplate;
 import world.World;
@@ -506,8 +507,48 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
+	function showEditOptionsWinCondition() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_WIN_CONDITION_0"), "", function () {
+				game.world.config.winType = World.WIN_FLAG_ONLY;
+				hideDialog();
+			}],
+			[Text.get("TXT_WIN_CONDITION_1"), "", function () {
+				game.world.config.winType = World.WIN_RING_1;
+				hideDialog();
+			}],
+			[Text.get("TXT_WIN_CONDITION_2"), "", function () {
+				game.world.config.winType = World.WIN_RING_2;
+				hideDialog();
+			}],
+			[Text.get("TXT_WIN_CONDITION_3"), "", function () {
+				game.world.config.winType = World.WIN_RING_3;
+				hideDialog();
+			}],
+			[Text.get("TXT_WIN_CONDITION_4"), "", function () {
+				game.world.config.winType = World.WIN_RING_4;
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(game.world.config.winType);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showEditOptions() {
 		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), "", function () {
+				showEditOptionsWinCondition();
+			}],
 			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), "", function () {
 				showEditOptionsMusic();
 			}],
