@@ -89,7 +89,7 @@ class Gfx {
 		_texture = texture;
 		
 		texture.bind();
-		GL.uniform1i(_shader.u_Texture0, 0);
+		GL.uniform1i(_shader.u_Texture0, GL.TEXTURE0 + texture.textureUnit);
 	}
 	
 	public static inline function setShader(shader:Shader) {
@@ -118,7 +118,7 @@ class Gfx {
 	}
 	
 	public static function clear(color:Color) {
-		GL.clearColor(color.r, color.g, color.b, 1.0);
+		GL.clearColor(color.r, color.g, color.b, color.a);
 		GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 	}
 	

@@ -65,6 +65,8 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override public function render() {
+		if (getInventory().hasItem("OBJ_LAMP")) getWorld().game.addLight(x + 0.5, y + 0.5, 5);
+		
 		var spr:Sprite = null;
 		
 		if (!isMoving()) {

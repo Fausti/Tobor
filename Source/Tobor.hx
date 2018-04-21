@@ -1,8 +1,10 @@
 package;
 
+import gfx.Framebuffer;
 import lime.Assets;
 import lime.graphics.opengl.GL;
 import cpp.vm.Gc;
+import lime.math.Rectangle;
 import lime.system.Locale;
 import screens.EpisodesScreen;
 import ui.Font;
@@ -53,6 +55,13 @@ class Tobor extends LimeGame {
 	var blinkTime:Float = 1;
 	public var blink(default, null):Bool = true;
 	
+	// Lightmap
+	public var drawLight:Bool = false;
+	public var lightBuffer:Framebuffer;
+	var SPR_LIGHT_OVERLAY:Sprite;
+	public var lightColor:Color;
+	var listLights:Array<Rectangle>;
+	
 	public function new() {
 		super();
 		
@@ -62,6 +71,9 @@ class Tobor extends LimeGame {
 		__framebuffer_h = SCREEN_HEIGHT;
 		
 		Tobor.locale = Locale.currentLocale.split8("_")[0];
+		
+		// FrameBuffer für Lightmap erstellen
+		lightBuffer = new Framebuffer(Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 	}
 	
 	override public function init() {
@@ -121,6 +133,9 @@ class Tobor extends LimeGame {
 		
 		setScreen(new EpisodesScreen(this));
 		// setScreen(new EditorScreen(this));
+		
+		SPR_LIGHT_OVERLAY = Gfx.getSprite(176, 456, 64, 48);
+		lightColor = new Color(0, 0, 0, 1);
 	}
 	
 	function collectGarbage() {
@@ -129,6 +144,8 @@ class Tobor extends LimeGame {
 	}
 	
 	override public function update(deltaTime:Float) {
+		listLights = [];
+		
 		if (this.screen != null) {
 			this.screen.update(deltaTime);
 			
@@ -145,6 +162,17 @@ class Tobor extends LimeGame {
 		}
 	}
 	
+	public function addLight(x:Float, y:Float, radius:Float) {
+		listLights.push(
+			new Rectangle(
+				(x - radius) * Tobor.TILE_WIDTH, 
+				(y - radius) * Tobor.TILE_HEIGHT, 
+				radius * 2 * Tobor.TILE_WIDTH, 
+				radius * 2 * Tobor.TILE_HEIGHT
+			)
+		);
+	}
+	
 	override public function render() {
 		Gfx.setShader(shader);
 		Gfx.setTexture(Gfx._texture); // texture
@@ -152,9 +180,59 @@ class Tobor extends LimeGame {
 		Gfx.clear(Color.WHITE);
 		Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 		
+		// Spielfeld zeichnen
 		Gfx.begin(batch);
 		if (this.screen != null) {
 			this.screen.render();
+		}
+		Gfx.end();
+		
+		if (drawLight) {
+			// in lightBuffer zeichnen
+			lightBuffer.bind();
+			Gfx.setShader(shader);
+			GL.uniform1i(Shader.current.u_Texture0, Gfx._texture.textureUnit);
+			Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
+			
+			GL.blendFunc(GL.ONE, GL.ONE); // ONE_ONE
+		
+			Gfx.clear(lightColor);  // 0, 0, 0, 1
+			
+			Gfx.begin(batch);
+			
+			// Gfx.drawSprite(0, 0, SPR_LIGHT_OVERLAY);
+			// Gfx.drawSprite(24, 24, SPR_LIGHT_OVERLAY);
+			// Gfx.drawTexture(64, 64, 8 * 16, 8 * 12, SPR_LIGHT_OVERLAY.uv);
+			
+			if (listLights != null) {
+				for (rect in listLights) {
+					// Gfx.drawSprite(rect.x, rect.y, SPR_LIGHT_OVERLAY);
+					Gfx.drawTexture(rect.x, rect.y, rect.width, rect.height, SPR_LIGHT_OVERLAY.uv);
+				}
+			}
+			
+			Gfx.end();
+			
+			lightBuffer.unbind();
+		
+			// lightBuffer zeichnen
+			getFrameBuffer().bind();
+			GL.uniform1i(Shader.current.u_Texture0, lightBuffer.textureUnit);
+			
+			GL.blendFunc(GL.DST_COLOR, GL.ZERO);
+			lightBuffer.draw(Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
+		
+			GL.uniform1i(Shader.current.u_Texture0, Gfx._texture.textureUnit);
+			// Gfx.setShader(shader);
+			Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
+			Gfx.setTexture(Gfx._texture);
+		}
+		
+		GL.blendFunc(GL.SRC_ALPHA, GL.ONE_MINUS_SRC_ALPHA);
+		
+		// UI zeichnen
+		Gfx.begin(batch);
+		if (this.screen != null) {
 			this.screen.renderUI();
 		}
 		Gfx.end();

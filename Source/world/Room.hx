@@ -28,8 +28,13 @@ class Room {
 	public static inline var WIDTH:Int = 40;
 	public static inline var HEIGHT:Int = 28;
 	
+	public static inline var DARKNESS_OFF:Int = 0;
+	public static inline var DARKNESS_HALF:Int = 1;
+	public static inline var DARKNESS_FULL:Int = 2;
+	
 	public var config = {
 		"music": "",
+		"darkness": Room.DARKNESS_OFF,
 	};
 	
 	public var world:World;

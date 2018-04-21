@@ -101,6 +101,10 @@ class LimeGame {
 		update(deltaTime);
 	}
 	
+	public function getFrameBuffer():Framebuffer {
+		return __frameBuffer;
+	}
+	
 	@:final	@:noCompletion @:allow(core.LimeApplication)
 	private function __render() {
 		__defaultShader.use();

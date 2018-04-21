@@ -21,6 +21,9 @@ import world.Room;
  * @author Matthias Faust
  */
 class PlayScreen extends Screen {
+	var COLOR_DARKNESS_FULL:Color = new Color(0, 0, 0, 1);
+	var COLOR_DARKNESS_HALF:Color = new Color(0.25, 0.25, 0.25, 1);
+	
 	var SPR_ISOLATOR:Sprite;
 	var SPR_CHARLIE:Sprite;
 	var SPR_CHARLIE_OVERALL:Sprite;
@@ -28,6 +31,7 @@ class PlayScreen extends Screen {
 	var SPR_BAG:Sprite;
 	var SPR_GARLIC:Sprite;
 	var SPR_TUNNEL:Sprite;
+	var SPR_NONE:Sprite;
 	
 	var TXT_STATUS_POINTS:String;
 	var TXT_STATUS_LIVES:String;
@@ -48,6 +52,8 @@ class PlayScreen extends Screen {
 		SPR_GOLD = Gfx.getSprite(96, 12);
 		SPR_BAG = Gfx.getSprite(112, 12);
 		SPR_GARLIC = Gfx.getSprite(192, 24);
+		
+		SPR_NONE = Gfx.getSprite(0, 0);
 		
 		SPR_TUNNEL = Gfx.getSprite(240, 120);
 		
@@ -142,13 +148,32 @@ class PlayScreen extends Screen {
 		}
 	}
 	
+	function checkDarkness() {
+		switch (game.world.room.config.darkness) {
+			case Room.DARKNESS_OFF:
+				game.drawLight = false;
+			case Room.DARKNESS_HALF:
+				game.drawLight = true;
+				game.lightColor = COLOR_DARKNESS_HALF;
+			case Room.DARKNESS_FULL:
+				game.drawLight = true;
+				game.lightColor = COLOR_DARKNESS_FULL;
+			default:
+				game.drawLight = true;
+		}
+	}
+	
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
+		
+		checkDarkness();
+		
 		getWorld().render();
 	}
 	
 	override public function renderUI() {
 		Gfx.setOffset(0, 0);
+		Gfx.drawTexture(0, 0, 40 * Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT, SPR_NONE.uv, Color.WHITE);
 		
 		renderStatusLine();
 		

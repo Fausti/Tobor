@@ -673,6 +673,7 @@ class World {
 			}
 			
 			worldData.set("music", r.config.music);
+			worldData.set("darkness", r.config.darkness);
 			
 			worldData.set("x", r.position.x);
 			worldData.set("y", r.position.y);
@@ -766,6 +767,7 @@ class World {
 		var rz:Int = -1;
 		var rdata = null;
 		var rtree:Float = 0;
+		var rdarkness:Int = Room.DARKNESS_OFF;
 		
 		var rmusic:String = null;
 		
@@ -777,6 +779,8 @@ class World {
 				}
 			case "music":
 				rmusic = Reflect.field(data, "music");
+			case "darkness":
+				rdarkness = Reflect.field(data, "darkness");
 			case "x":
 				rx = Reflect.field(data, "x");
 			case "y":
@@ -798,6 +802,7 @@ class World {
 		}
 		
 		newRoom.config.music = rmusic;
+		newRoom.config.darkness = rdarkness;
 		
 		rooms.add(newRoom);
 		switchRoom(rx, ry, rz);

@@ -12,6 +12,7 @@ import lime.utils.UInt8Array;
  * @author Matthias Faust
  */
 class Texture {
+	public var textureUnit:Int;
 	public var handle:GLTexture;
 		
 	private var _width:Int;
@@ -29,12 +30,14 @@ class Texture {
 	
 	public var data:UInt8Array = null;
 	
-	public function new() {
+	public function new(?textureUnit:Int = 0) {
 		handle = GL.createTexture();
+		
+		this.textureUnit = textureUnit;
 	}
 	
 	public function bind() {
-		GL.activeTexture(GL.TEXTURE0);
+		GL.activeTexture(GL.TEXTURE0 + textureUnit);
 		GL.bindTexture(GL.TEXTURE_2D, handle);
 	}
 	

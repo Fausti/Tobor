@@ -339,8 +339,11 @@ class EditorScreen extends PlayScreen {
 		}
 		
 		if (editMode) {
+			game.drawLight = false;
 			var template = game.world.factory.get(currentTile);
 			game.world.room.underRoof = template.layer != Room.LAYER_ROOF;
+		} else {
+			checkDarkness();
 		}
 		
 		game.world.render(editMode);
@@ -364,6 +367,7 @@ class EditorScreen extends PlayScreen {
 	
 	override public function renderUI() {
 		Gfx.setOffset(0, 0);
+		Gfx.drawTexture(0, 0, 40 * Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT, SPR_NONE.uv, Color.WHITE);
 		
 		if (!editMode) {
 			renderStatusLine();
@@ -466,6 +470,35 @@ class EditorScreen extends PlayScreen {
 		]);
 		
 		menu.select(0);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
+	function showEditOptionsDarkness() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_ROOM_DARKNESS_NONE"), "", function () {
+				game.world.room.config.darkness = Room.DARKNESS_OFF;
+				hideDialog();
+			}],
+			[Text.get("TXT_ROOM_DARKNESS_HALF"), "", function () {
+				game.world.room.config.darkness = Room.DARKNESS_HALF;
+				hideDialog();
+			}],
+			[Text.get("TXT_ROOM_DARKNESS_FULL"), "", function () {
+				game.world.room.config.darkness = Room.DARKNESS_FULL;
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(game.world.room.config.darkness);
 		
 		menu.onCancel = function () {
 			hideDialog();
@@ -583,6 +616,9 @@ class EditorScreen extends PlayScreen {
 			}],
 			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), "", function () {
 				showEditOptionsMusic();
+			}],
+			[Text.get("TXT_MENU_EDIT_OPTIONS_DARKNESS"), "", function () {
+				showEditOptionsDarkness();
 			}],
 		]);
 		

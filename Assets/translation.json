@@ -344,6 +344,9 @@
     ,"TXT_EDITOR_ASK_CREATE_NEW_ROOM" : {
          "de" : "Keine Szene vorhanden!\n\nDiese Szene erstellen?"
     }
+    ,"OBJ_TORCH" : {
+         "de" : "Fackel"
+    }
     ,"OBJ_ICE_1" : {
          "de" : "Eisfläche"
     }
@@ -695,6 +698,9 @@
     ,"TXT_POINTS" : {
          "de" : "Punkte"
     }
+    ,"TXT_MENU_EDIT_OPTIONS_DARKNESS" : {
+         "de" : "Dunkelheit"
+    }
     ,"OBJ_FOOD#0" : {
          "de" : "Nahrung"
     }
@@ -836,6 +842,9 @@
     ,"OBJ_GARLIC_DESC" : {
          "de" : "Diese Knoblauchknolle ist ganz normal. Solange Du sie mit Dir herumträgst, ist alles in Ordnung. Aber hast du sie gegessen, wird es eine Zeit lang schwierig sein, neue Freunde zu finden."
     }
+    ,"USED_LAMP" : {
+         "de" : "Gratuliere! Du sprachst 'Licht!' ... und es ward Licht!"
+    }
     ,"OBJ_SAND#2" : {
          "de" : "Sand"
     }
@@ -916,6 +925,9 @@
     }
     ,"OBJ_ELEXIR" : {
          "de" : "Lebenselexier"
+    }
+    ,"TXT_ROOM_DARKNESS_FULL" : {
+         "de" : "100%"
     }
     ,"TXT_NEW_EPISODE" : {
          "de" : ">> NEU <<"
@@ -1073,6 +1085,9 @@
     ,"OBJ_ELEXIR_PICKUP" : {
          "de" : "In dieser merkwürdigen Flasche ist ein Lebenselixier. Du solltest es unbedingt trinken, wenn Du merkst, daß Dir langsam die Kräfte schwinden!"
     }
+    ,"TXT_ROOM_DARKNESS_HALF" : {
+         "de" : "50%"
+    }
     ,"OBJ_SAND_DECO_0" : {
          "de" : "Wüstendekoration"
     }
@@ -1093,6 +1108,9 @@
     }
     ,"OBJ_TREE_PICKUP" : {
          "de" : "Du hast einen Tannenbaum gefunden! Er kann Dich befreien, wenn Du in Bedrängnis geraten solltest."
+    }
+    ,"TXT_ROOM_DARKNESS_NONE" : {
+         "de" : "Aus"
     }
     ,"TXT_ROOM_MUSIC_NATURE" : {
          "de" : "Naturgeräusche"

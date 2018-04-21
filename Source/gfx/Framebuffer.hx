@@ -14,6 +14,8 @@ import lime.utils.UInt8Array;
  * @author Matthias Faust
  */
 class Framebuffer {
+	public var textureUnit:Int;
+	
 	public var width:Int;
 	public var height:Int;
 	
@@ -30,7 +32,11 @@ class Framebuffer {
 	
 	public var data:UInt8Array = null;
 	
-	public function new(width:Int, height:Int) {
+	var vertices:Array<Float>;
+	
+	public function new(width:Int, height:Int, ?textureUnit:Int = 1) {
+		this.textureUnit = textureUnit;
+		
 		// gewünschte Größe merken
 		
 		this.width = width;
@@ -59,7 +65,7 @@ class Framebuffer {
 		handle = GL.createFramebuffer();
 		
 		// color texture
-		GL.activeTexture(GL.TEXTURE1);
+		GL.activeTexture(GL.TEXTURE0 + textureUnit);
 		GL.bindTexture(GL.TEXTURE_2D, texture);
 		
 		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
@@ -103,7 +109,7 @@ class Framebuffer {
 		var y0 = 0;
 		var y1 = scaleH;
 		
-		var vertices:Array<Float> = [
+		vertices = [
 			x0, y0, 			
 			0, 0, 	
 			1, 1, 1, 1,
@@ -149,14 +155,25 @@ class Framebuffer {
 		GL.bindFramebuffer(GL.FRAMEBUFFER, null);
 	}
 	
-	public function draw(w:Int, h:Int) {
-		GL.activeTexture(GL.TEXTURE1);
-		// GL.bindTexture(GL.TEXTURE_2D, texture);
+	public function draw(w:Int, h:Int, ?c:Color = null) {
+		GL.activeTexture(GL.TEXTURE0 + textureUnit);
+		GL.bindTexture(GL.TEXTURE_2D, texture);
 		
-		GL.uniform1i(Shader.current.u_Texture0, 1);
+		GL.uniform1i(Shader.current.u_Texture0, textureUnit);
 		GL.uniformMatrix4fv(Shader.current.u_camMatrix, 1, false, matrix);
 		
 		GL.bindBuffer(GL.ARRAY_BUFFER, buffer);
+		
+		if (c != null) {
+			for (i in 0 ... 6) {
+				vertices[i * 8 + 4] = c.r;
+				vertices[i * 8 + 5] = c.g;
+				vertices[i * 8 + 6] = c.b;
+				vertices[i * 8 + 7] = c.a;
+			}
+			
+			GL.bufferData(GL.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), GL.STATIC_DRAW);
+		}
 		
 		Shader.current.setAttribute(Shader.current.a_Position, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
 		Shader.current.setAttribute(Shader.current.a_TexCoord0, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
@@ -165,6 +182,6 @@ class Framebuffer {
 		GL.drawArrays(GL.TRIANGLES, 0, 6);
 		
 		GL.bindBuffer(GL.ARRAY_BUFFER, null);
-		// GL.bindTexture(GL.TEXTURE_2D, null);
+		GL.bindTexture(GL.TEXTURE_2D, null);
 	}
 }
