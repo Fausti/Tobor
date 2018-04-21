@@ -29,11 +29,24 @@ class Robot extends EntityAI implements IEnemy {
 		type = Std.random(7);
 		
 		var c:Array<Color> = [
-			Color.palette[Std.random(Color.palette.length - 1)],
-			Color.palette[Std.random(Color.palette.length - 1)],
 			Color.palette[Std.random(Color.palette.length - 1)]
 		];
-			
+		
+		var cc:Color = Color.palette[Std.random(Color.palette.length - 1)];
+		while (cc == c[0]) {
+			cc = Color.palette[Std.random(Color.palette.length - 1)];
+		}
+		
+		c.push(cc);
+		
+		cc = Color.palette[Std.random(Color.palette.length - 1)];
+		while (cc == c[0] || cc == c[1]) {
+			cc = Color.palette[Std.random(Color.palette.length - 1)];
+		}
+		
+		c.push(cc);
+		
+				
 		var mx:Int = 32 * type;
 		
 		sprLayer0 = [Gfx.getSprite(mx + 0, 84), Gfx.getSprite(mx + 0, 96), Gfx.getSprite(mx + 0, 108)];
