@@ -5,6 +5,7 @@ import world.entities.EntityAI;
 import world.entities.EntityDynamic;
 import world.entities.interfaces.IElectric;
 import world.entities.std.Bullet;
+import world.entities.std.Explosion;
 
 /**
  * ...
@@ -150,7 +151,8 @@ class EntityList {
 		
 		for (e in listAll) {
 			if (e != null) {
-				if (!Std.is(e, Bullet)) listState.push(e.clone());
+				// Explosionen und Kugeln werden nicht gesichtert!
+				if (!Std.is(e, Bullet) && !Std.is(e, Explosion)) listState.push(e.clone());
 			}
 		}
 	}
