@@ -81,7 +81,7 @@ class PlayScreen extends Screen {
 		
 		if (!Std.is(this, EditorScreen)) {
 			if (getWorld().lives <= 0) {
-				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), true);
+				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), false);
 				
 				d.onCancel = function () {
 					getWorld().checkHighScore();
@@ -93,7 +93,7 @@ class PlayScreen extends Screen {
 				
 				showDialog(d);
 			} else if (getWorld().episodeWon) {
-				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), true);
+				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), false);
 				
 				d.onCancel = function () {
 					getWorld().checkHighScore();
