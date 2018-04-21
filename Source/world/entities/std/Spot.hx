@@ -19,7 +19,10 @@ class Spot extends EntityStatic implements IContainer {
 	}
 	
 	override public function render() {
-		
+		// "Schätzefinden" Effekt
+		if (getWorld().checkRingEffect(2)) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_X);
+		}
 	}
 	
 	override public function render_editor() {

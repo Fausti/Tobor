@@ -4,7 +4,6 @@ import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
 import ui.Dialog;
-import ui.DialogFade;
 import ui.DialogMessage;
 import world.entities.Entity;
 import world.entities.std.Charlie;
@@ -74,6 +73,7 @@ class World {
 	
 	public var config = {
 		"winType": World.WIN_FLAG_ONLY,
+		"ringEffects": true,
 	};
 	
 	// AFTER_UPDATE Aktionen
@@ -163,6 +163,23 @@ class World {
 		pointsAnim = points;
 		
 		isLoading = false;
+	}
+	
+	public function checkRingEffect(index:Int):Bool {
+		if (!config.ringEffects) return false;
+		
+		switch (index) {
+			case 0:
+				return inventory.hasItem("OBJ_RING#0");
+			case 1:
+				return inventory.hasItem("OBJ_RING#1");
+			case 2:
+				return inventory.hasItem("OBJ_RING#2");
+			case 3:
+				return inventory.hasItem("OBJ_RING#3");
+			default:
+				return false;
+		}
 	}
 	
 	public function checkWinCondition() {
@@ -667,6 +684,7 @@ class World {
 		}
 		
 		data.set("winType", config.winType);
+		data.set("ringEffects", config.ringEffects);
 		
 		return TJSON.encode(data, 'fancy');
 	}
@@ -684,6 +702,8 @@ class World {
 	
 	function parseKey(key, data) {
 		switch(key) {
+			case "ringEffects":
+				config.ringEffects = Reflect.field(data, "ringEffects");
 			case "winType":
 				config.winType = Reflect.field(data, "winType");
 			case "food":

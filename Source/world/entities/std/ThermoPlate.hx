@@ -38,7 +38,12 @@ class ThermoPlate extends EntityFloor implements IElectric {
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Charlie)) {
-			if (type == 0) return false;
+			if (type == 0) {
+				// "Hitzeschutz"
+				if (getWorld().checkRingEffect(0)) return true;
+				
+				return false;
+			}
 			return true;
 		}
 		

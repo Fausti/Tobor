@@ -507,6 +507,35 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
+	function showEditOptionsRingEffects() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("TXT_RINGS_OFF"), "", function () {
+				game.world.config.ringEffects = false;
+				hideDialog();
+			}],
+			[Text.get("TXT_RINGS_ON"), "", function () {
+				game.world.config.ringEffects = true;
+				hideDialog();
+			}],
+		]);
+		
+		if (game.world.config.ringEffects) {
+			menu.select(1);
+		} else {
+			menu.select(0);
+		}
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showEditOptionsWinCondition() {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("TXT_WIN_CONDITION_0"), "", function () {
@@ -548,6 +577,9 @@ class EditorScreen extends PlayScreen {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), "", function () {
 				showEditOptionsWinCondition();
+			}],
+			[Text.get("TXT_MENU_EDIT_OPTIONS_RING_EFFECTS"), "", function () {
+				showEditOptionsRingEffects();
 			}],
 			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), "", function () {
 				showEditOptionsMusic();

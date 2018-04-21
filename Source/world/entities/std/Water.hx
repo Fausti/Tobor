@@ -131,10 +131,13 @@ class Water extends EntityFloor implements IElectric {
 				if (tmpl != null) getInventory().add("OBJ_BUCKET#1", tmpl.spr, count);
 			}
 			
+			// "Wasserwandeln"
+			if (getWorld().checkRingEffect(1)) return;
+			
 			var c:Charlie = cast e;
 			
 			var canMove:Bool = false;
-				
+			
 			// 90% Chance das man mit Schwimmflossen in die gewünschte Richtung schwimmt
 			if (Utils.chance(90)) {
 				if (room.getInventory().hasItem("OBJ_FLIPPERS")) {

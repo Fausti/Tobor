@@ -40,6 +40,10 @@ class Sand extends EntityFloor {
 	}
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
+		// Wenn Ring#2 im Inventar und Ringeffekte aktiv, keine Verlangsamung
+		if (getWorld().checkRingEffect(3) && Std.is(e, Charlie)) return;
+		
+		// Wenn Nahrungstimer aktiv, keine Verlangsamung
 		if (getWorld().food > 0 && Std.is(e, Charlie)) return;
 		
 		var ee:EntityMoveable = cast e;

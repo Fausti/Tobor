@@ -740,6 +740,9 @@
     ,"OBJ_KEY#14_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
+    ,"TXT_RINGS_OFF" : {
+         "de" : "Aus"
+    }
     ,"OBJ_WATER_SHALLOW" : {
          "de" : "seichtes Wasser"
     }
@@ -761,11 +764,14 @@
     ,"OBJ_TELEPORT_START_1" : {
          "de" : "Positiv Teleporter Start"
     }
+    ,"TXT_INVENTORY_CHOOSE" : {
+         "de" : "Auswählen"
+    }
     ,"OBJ_KEY#3_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"TXT_INVENTORY_CHOOSE" : {
-         "de" : "Auswählen"
+    ,"TXT_RINGS_ON" : {
+         "de" : "An"
     }
     ,"OBJ_ANDROID_EGG" : {
          "de" : "Androiden Ei"
@@ -964,6 +970,9 @@
     }
     ,"OBJ_ROOF_9" : {
          "de" : "Dach"
+    }
+    ,"TXT_MENU_EDIT_OPTIONS_RING_EFFECTS" : {
+         "de" : "Ringeffekte"
     }
     ,"TXT_MENU_ROBOT_STRESS" : {
          "de" : "Stressanzeige"
