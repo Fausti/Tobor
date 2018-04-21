@@ -111,7 +111,14 @@ class EpisodesScreen extends Screen {
 		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_EPISODE_NAME"));
 		
 		d.onOk = function () {
-			var ret:String = episoden[index].create(d.getInput(true));
+			var fileName:String = d.getInput(true);
+			
+			if (fileName == "") {
+				hideDialog();
+				return;
+			}
+			
+			var ret:String = episoden[index].create(fileName);
 			
 			if (ret != null) {
 				showError(ret);
@@ -136,6 +143,7 @@ class EpisodesScreen extends Screen {
 			} else if (Input.isKeyDown([Input.key.RETURN])) {
 				if (episoden[index].isEditor) {
 					createEpisode();
+					return;
 				} else {
 					game.world = new World(game, episoden[index]);
 					game.setScreen(new IntroScreen(game));
