@@ -269,12 +269,15 @@ class ObjectFactory {
 			.disableBrush();
 		
 		register("OBJ_SHOVEL", Shovel, Gfx.getSprite(192, 132))
-			.disableBrush();
+			.disableBrush()
+			.setPoints(200);
 		register("OBJ_SPOT", Spot, Gfx.getSprite(224, 84))
 			.disableBrush();
 			
 		register("OBJ_LAMP", Lamp, Gfx.getSprite(144, 132))
-			.disableBrush();
+			.disableBrush()
+			.setPoints(2000);
+			
 		register("OBJ_TORCH", Torch, Gfx.getSprite(80, 348))
 			.disableBrush();
 			
@@ -302,9 +305,11 @@ class ObjectFactory {
 			.disableBrush();
 		
 		register("OBJ_SICKLE", Sickle, Gfx.getSprite(240, 228))
+			.setPoints(1500)
 			.disableBrush();
 		register("OBJ_SEED", Seed, Gfx.getSprite(240, 216))
-			.disableBrush();
+			.disableBrush()
+			.setPoints(500);
 		
 		register("OBJ_PLANT", Plant, Gfx.getSprite(96, 312))
 			.disableBrush();

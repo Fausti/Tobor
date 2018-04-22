@@ -17,5 +17,13 @@ class Tree extends EntityItem {
 	override public function onUse(item:InventoryItem, x:Float, y:Float) {
 		room.addTreeTimer(30);
 		removeFromInventory();
+		
+		if (!getWorld().checkFirstUse("USED_TREE")) {
+			getWorld().markFirstUse("USED_TREE");
+			getWorld().showPickupMessage("USED_TREE", false, function () {
+				getWorld().addPoints(3000);
+				getWorld().hideDialog();
+			}, 3000);
+		}
 	}
 }

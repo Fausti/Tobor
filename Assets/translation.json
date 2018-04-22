@@ -50,6 +50,9 @@
     ,"OBJ_WOOD_3" : {
          "de" : "Wald"
     }
+    ,"DIED_BY_WATER" : {
+         "de" : "Mit diesen blubbernden Wasserstellen ist nicht zu spaßen! Darunter schießt glühende Lava aus der Tiefe."
+    }
     ,"OBJ_WOOD_4" : {
          "de" : "Wald"
     }
@@ -86,14 +89,14 @@
     ,"OBJ_DIAMOND_PICKUP" : {
          "de" : "Dein erster Diamant! Hier liegen noch mehr herum..."
     }
+    ,"OBJ_MUNITION#4" : {
+         "de" : "Munition"
+    }
     ,"OBJ_BEDROCK_1" : {
          "de" : "Felsgestein"
     }
     ,"TXT_BONUS" : {
          "de" : "Bonus"
-    }
-    ,"OBJ_MUNITION#4" : {
-         "de" : "Munition"
     }
     ,"OBJ_BEDROCK_2" : {
          "de" : "Felsgestein"
@@ -173,6 +176,9 @@
     ,"OBJ_SLING" : {
          "de" : "Schleuder"
     }
+    ,"OBJ_SEED_PICKUP" : {
+         "de" : "Dies ist ein absolut alkoholfreies Korn. Falls Du Freude an Grünzeug hast, pflanze es einfach irgendwo ein."
+    }
     ,"OBJ_KEY#13_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
@@ -182,17 +188,17 @@
     ,"OBJ_ISOLATOR_SOFT" : {
          "de" : "Isolator (betretbar)"
     }
+    ,"OBJ_CLONE_PICKUP" : {
+         "de" : "Du hast einen Duplikator gefunden! Es wäre bestimmt nicht schlecht, wenn Du seltene Gegenstände doppelt hättest."
+    }
+    ,"OBJ_CAVE_0" : {
+         "de" : "Höhlenwand"
+    }
     ,"OBJ_MOUNTAIN_0" : {
          "de" : "Gebirge"
     }
     ,"OBJ_BEDROCK_PATH" : {
          "de" : "Felspfad"
-    }
-    ,"OBJ_CAVE_0" : {
-         "de" : "Höhlenwand"
-    }
-    ,"OBJ_CLONE_PICKUP" : {
-         "de" : "Du hast einen Duplikator gefunden! Es wäre bestimmt nicht schlecht, wenn Du seltene Gegenstände doppelt hättest."
     }
     ,"OBJ_CAVE_1" : {
          "de" : "Höhlenwand"
@@ -401,6 +407,9 @@
     ,"OBJ_DIAMOND#1" : {
          "de" : "Diamant"
     }
+    ,"OBJ_FOOD#1_DESC" : {
+         "de" : "Proviant zum Mitnehmen."
+    }
     ,"OBJ_PLATIN" : {
          "de" : "Platin"
     }
@@ -442,6 +451,9 @@
     }
     ,"OBJ_DOOR#2" : {
          "de" : "Tür Nr. 3"
+    }
+    ,"OBJ_SHOVEL_DESC" : {
+         "de" : "Eine Schaufel. Damit kannst Du in der Wüste für Ordnung sorgen."
     }
     ,"OBJ_KEY#2" : {
          "de" : "Schlüssel Nr. 3"
@@ -566,6 +578,9 @@
     ,"DRIFT_SW" : {
          "de" : "Strömung"
     }
+    ,"OBJ_LAMP_PICKUP" : {
+         "de" : "Eine schöne Lampe. Möge diese Dir die erhoffte Erleuchtung bringen."
+    }
     ,"OBJ_MUNITION_PICKUP" : {
          "de" : "Ja, es ist bestimmt nicht von Nachteil, wenn Du ein paar Steine in die Tasche steckst. Du wirst sie bestimmt noch brauchen können."
     }
@@ -641,6 +656,9 @@
     ,"OBJ_SAND_PLANT_0" : {
          "de" : "Wüstenpflanze"
     }
+    ,"OBJ_TREE_DESC" : {
+         "de" : "Dies ist ein hübscher kleiner aber ganz normaler Baum. (Oder kann man doch noch etwas damit anfangen ?)"
+    }
     ,"OBJ_CHARLIE" : {
          "de" : "Charlie (nur im Editor!)"
     }
@@ -698,6 +716,9 @@
     ,"OBJ_GOAL_4" : {
          "de" : "Ziel"
     }
+    ,"OBJ_SHOVEL_PICKUP" : {
+         "de" : "Eben hast Du ein wichtiges Hilfsmittel gefunden! Viele Dinge sind nämlich unter Sand, Fels oder Wald vergraben, und wenn man weiß wo zu graben ist, wird man die Schaufel zu schätzen wissen."
+    }
     ,"OBJ_GOAL_5" : {
          "de" : "Ziel"
     }
@@ -709,6 +730,9 @@
     }
     ,"OBJ_FOOD#0" : {
          "de" : "Nahrung"
+    }
+    ,"USED_DOPPELGANGER" : {
+         "de" : "Waaah! Was ist denn das? Du hast Dir einen Doppelgänger produziert! Scheint aber ziemlich verwirrt zu sein, dem Tanzstil nach zu urteilen..."
     }
     ,"OBJ_FOOD#1" : {
          "de" : "Nahrung"
@@ -770,6 +794,9 @@
     ,"OBJ_ISOLATOR" : {
          "de" : "Isolator"
     }
+    ,"OBJ_FLIPPERS_DESC" : {
+         "de" : "Zwei Schwimmflossen aus Gummi, die hoffentlich passen. Mit ihnen läßt sich so manche nasse Stelle leichter durchqueren."
+    }
     ,"OBJ_TELEPORT_START_0" : {
          "de" : "Negativ Teleporter Start"
     }
@@ -805,6 +832,12 @@
     }
     ,"TXT_INVENTORY_LOOK" : {
          "de" : "Anschauen"
+    }
+    ,"OBJ_BUCKET#0_DESC" : {
+         "de" : "Ein leerer Eimer. Wer gegen den Strom schwimmt, kann ihn vielleicht mit etwas Nassem füllen..."
+    }
+    ,"OBJ_FOOD_PICKUP" : {
+         "de" : "Ah! Du hast etwas zum Essen gefunden. Guten Appetit!"
     }
     ,"OBJ_CLONE" : {
          "de" : "Verdoppler"
@@ -859,6 +892,9 @@
     }
     ,"OBJ_ELECTRIC_FLOOR_PLATE_1" : {
          "de" : "elektrische Bodenplatte (AN)"
+    }
+    ,"OBJ_SICKLE_PICKUP" : {
+         "de" : "Wenn Du kein Blumenfreund bist, kannst Du mit der Sichel jeden Gärtner in den Wahnsinn treiben und Dir eine Schneise schneiden..."
     }
     ,"OBJ_SAND#3" : {
          "de" : "Sand"
@@ -1094,6 +1130,9 @@
     ,"OBJ_EXPLOSION" : {
          "de" : "Explosion"
     }
+    ,"OBJ_SHOES_DESC" : {
+         "de" : "Die braunen Wanderschuhe. Sie sind für das Durchdringen bestimmter Wald- und Gebirgspassagen unabdingbar! Aber auch andere Dinge können sie vollbringen!"
+    }
     ,"OBJ_ELEXIR_PICKUP" : {
          "de" : "In dieser merkwürdigen Flasche ist ein Lebenselixier. Du solltest es unbedingt trinken, wenn Du merkst, daß Dir langsam die Kräfte schwinden!"
     }
@@ -1134,7 +1173,7 @@
          "de" : "Knoblauch"
     }
     ,"TXT_EPISODE_LOST" : {
-         "de" : "Du hast es leider nicht geschafft. Viel Glück beim nächsten Mal!"
+         "de" : "Du hast leider nichts dazugelernt."
     }
     ,"OBJ_WALL_HARD" : {
          "de" : "Mauer (unzerstörbar)"
@@ -1142,11 +1181,17 @@
     ,"TXT_MENU_ROBOT_BEHAVIOR_NEW" : {
          "de" : "Original"
     }
+    ,"OBJ_FOOD#0_DESC" : {
+         "de" : "Proviant zum Mitnehmen."
+    }
     ,"OBJ_WALL_DISSOLVE" : {
          "de" : "sich auflösende Mauer"
     }
     ,"OBJ_WALL_BLACK_SE" : {
          "de" : "Mauer (schwarz)"
+    }
+    ,"USED_TREE" : {
+         "de" : "Jetzt aber schnell weg, bevor sich diese lästigen Sperren wieder schließen!"
     }
     ,"TXT_MENU_SPEED_FASTEST" : {
          "de" : "Schnell"

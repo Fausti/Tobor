@@ -18,6 +18,14 @@ class DoppelgangerItem extends EntityCollectable {
 		var d:Doppelganger = new Doppelganger();
 		room.spawnEntity(x, y, d);
 		
+		if (!getWorld().checkFirstUse("USED_DOPPELGANGER")) {
+			getWorld().markFirstUse("USED_DOPPELGANGER");
+			getWorld().showPickupMessage("USED_DOPPELGANGER", false, function () {
+				getWorld().addPoints(500);
+				getWorld().hideDialog();
+			}, 500);
+		}
+		
 		super.onPickup();
 	}
 }

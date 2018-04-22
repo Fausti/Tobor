@@ -14,4 +14,12 @@ class Shoes extends EntityItem {
 		setSprite(Gfx.getSprite(112, 144));
 	}
 	
+	override public function onPickup() {
+		if (addToInventory()) {
+			Sound.play(Sound.SND_JINGLE_1);
+		} else {
+			Sound.play(Sound.SND_PICKUP_MISC);
+		}
+	}
+	
 }

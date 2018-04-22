@@ -67,6 +67,13 @@ class WaterDeadly extends EntityDynamic {
 			// "Wasserwandeln"
 			if (getWorld().checkRingEffect(1)) return;
 			
+			if (!getWorld().checkFirstUse("DIED_BY_WATER")) {
+				getWorld().markFirstUse("DIED_BY_WATER");
+				getWorld().showPickupMessage("DIED_BY_WATER", false, function () {
+					getWorld().hideDialog();
+				});
+			}
+			
 			e.die();
 		}
 	}
