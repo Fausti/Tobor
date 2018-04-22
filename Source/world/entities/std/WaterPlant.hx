@@ -1,27 +1,24 @@
 package world.entities.std;
 
-import lime.math.Vector2;
-import world.entities.Entity;
 import world.entities.EntityFloor;
+import lime.math.Vector2;
 
 /**
  * ...
  * @author Matthias Faust
  */
-class WaterIsolator extends EntityFloor {
-
+class WaterPlant extends EntityFloor {
 	public function new() {
 		super();
 		
-		setSprite(Gfx.getSprite(112, 156));
+		setSprite(Gfx.getSprite(144, 72));
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, Isolator) || Std.is(e, EntityAI)) {
+		if (Std.is(e, Charlie)) {
 			return true;
 		}
 		
 		return false;
 	}
-	
 }

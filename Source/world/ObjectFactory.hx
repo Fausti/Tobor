@@ -45,7 +45,9 @@ class ObjectFactory {
 		
 		register("OBJ_ISOLATOR_SOFT", 	SoftIsolator, 	Gfx.getSprite(128, 132))
 			.disableBrush();
-		register("OBJ_ISOLATOR_WATER", WaterIsolator, Gfx.getSprite(112, 156)).allowInEditor(false)
+		register("OBJ_ISOLATOR_WATER", WaterIsolator, Gfx.getSprite(112, 156))
+			.disableBrush();
+		register("OBJ_WATER_PLANT", WaterPlant, Gfx.getSprite(144, 72))
 			.disableBrush();
 		
 		register("OBJ_ELECTRIC_FENCE", ElectricFence, Gfx.getSprite(64, 12), {type: 0});
