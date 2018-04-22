@@ -397,6 +397,9 @@ class ObjectFactory {
 			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR);
 		}
 		
+		register("OBJ_ICE_DEADLY", IceDeadly, Gfx.getSprite(0, 180))
+			.disableBrush();
+		
 		register("OBJ_ICE_BLOCK", IceBlock, Gfx.getSprite(144, 324))
 			.disableBrush();
 		

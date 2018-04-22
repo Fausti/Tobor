@@ -1,11 +1,9 @@
 package world.entities.std;
 
 import lime.math.Vector2;
-import world.ObjectFactory.ObjectTemplate;
 import world.entities.Entity;
 import world.entities.EntityFloor;
 import world.entities.EntityMoveable;
-import world.entities.EntityStatic;
 
 /**
  * ...
@@ -54,7 +52,9 @@ class Ice extends EntityFloor {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie) || Std.is(e, Robot)) {
+		if (!e.alive || !e.visible) return;
+		
+		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) {
 			var m:EntityMoveable = cast e;
 			var canMove:Bool = false;
 
@@ -63,6 +63,8 @@ class Ice extends EntityFloor {
 				spd = Charlie.PLAYER_SPEED;
 			} else if (Std.is(e, Robot)) {
 				spd = Robot.SPEED;
+			} else if (Std.is(e, Android)) {
+				spd = Android.SPEED;
 			}
 			
 			if (direction != null) canMove = m.move(direction, spd / 2);
