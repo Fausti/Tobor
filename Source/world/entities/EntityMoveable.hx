@@ -36,8 +36,8 @@ class EntityMoveable extends EntityDynamic {
 	
 	override public function update(deltaTime:Float) {
 		if (!isMoving() && wasMoving) {
-			moveData.oldPositionX = Std.int(x);
-			moveData.oldPositionY = Std.int(y);
+			moveData.oldPositionX = gridX;
+			moveData.oldPositionY = gridY;
 			
 			onStopMoving();
 			wasMoving = false;

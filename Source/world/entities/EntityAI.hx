@@ -8,8 +8,6 @@ import world.entities.std.Doppelganger;
  * @author Matthias Faust
  */
 class EntityAI extends EntityMoveable {
-	var waitTicks:Float = 0;
-	
 	public function new() {
 		super();
 		
@@ -21,13 +19,10 @@ class EntityAI extends EntityMoveable {
 		super.update(deltaTime);
 		
 		if (!isMoving()) {
-			if (waitTicks != 0) {
-				waitTicks = -1;
-				
-				if (waitTicks < 0) waitTicks = 0;
-			} else {
-				idle();
-			}
+			moveData.oldPositionX = gridX;
+			moveData.oldPositionY = gridY;
+			
+			idle();
 		}
 	}
 	
