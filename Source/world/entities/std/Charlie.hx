@@ -143,6 +143,7 @@ class Charlie extends EntityMoveable {
 		
 		e.onRemove = function() {
 			room.world.player.visible = true;
+			room.world.player.alive = true;
 			room.world.lives--;
 			
 			if (walkInWater) {
