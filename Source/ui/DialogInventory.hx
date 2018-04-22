@@ -11,6 +11,7 @@ class DialogInventory extends Dialog {
 	var SPR_NONE:Sprite;
 	var SPR_GROUP_MUNITION:Sprite;
 	var SPR_GROUP_KEY:Sprite;
+	var SPR_GROUP_FLIPPERS:Sprite;
 		
 	
 	var inventory:Inventory;
@@ -41,6 +42,7 @@ class DialogInventory extends Dialog {
 		SPR_NONE = Gfx.getSprite(0, 0);
 		SPR_GROUP_KEY = Gfx.getSprite(224, 48);
 		SPR_GROUP_MUNITION = Gfx.getSprite(224, 60);
+		SPR_GROUP_FLIPPERS = Gfx.getSprite(16, 180);
 		
 		inventory = screen.game.world.inventory;
 		
@@ -237,7 +239,11 @@ class DialogInventory extends Dialog {
 						Gfx.drawSprite(iconX, 0, i.getSprite());
 					}
 				} else {
-					Gfx.drawSprite(iconX, 0, i.getSprite());
+					if (i.group == "OBJ_FLIPPERS" && pos == index) {
+						Gfx.drawSprite(iconX, 0, SPR_GROUP_FLIPPERS);
+					} else {
+						Gfx.drawSprite(iconX, 0, i.getSprite());
+					}
 				}
 			
 				iconX = iconX + 16;
