@@ -28,7 +28,7 @@ class Torch extends EntityDynamic {
 		if (type == 0) {
 			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_OFF);
 		} else {
-			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_ANIM[(timeLeft < (torchTime / 2))?0:1]);
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_ANIM[(Std.int(timeLeft) % 2 == 0)?0:1]);
 			getWorld().game.addLight(x + 0.5, y + 0.5, 6 - (type / 4));
 		}
 	}

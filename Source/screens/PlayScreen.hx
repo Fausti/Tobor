@@ -22,7 +22,7 @@ import world.Room;
  */
 class PlayScreen extends Screen {
 	var COLOR_DARKNESS_FULL:Color = new Color(0, 0, 0, 1);
-	var COLOR_DARKNESS_HALF:Color = new Color(0.25, 0.25, 0.25, 1);
+	var COLOR_DARKNESS_HALF:Color = new Color(0.2, 0.2, 0.2, 1);
 	
 	var SPR_ISOLATOR:Sprite;
 	var SPR_CHARLIE:Sprite;
