@@ -296,6 +296,7 @@ class Robot extends EntityAI implements IEnemy {
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		if (Std.is(e, Android)) return true;
 		if (Std.is(e, Charlie)) return true;
+		if (Std.is(e, Doppelganger)) return true;
 		if (Std.is(e, ElectricFence)) return true;
 		
 		if (Std.is(e, Robot)) {

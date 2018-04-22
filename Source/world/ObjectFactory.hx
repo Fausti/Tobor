@@ -108,6 +108,11 @@ class ObjectFactory {
 		register("OBJ_CLONE", Clone, Gfx.getSprite(128, 60))
 			.setPoints(100)
 			.disableBrush();
+			
+		register("OBJ_DOPPELGANGER_ITEM", 	DoppelgangerItem, 	Gfx.getSprite(160, 132))
+			.disableBrush();
+		register("OBJ_DOPPELGANGER", 	Doppelganger, 	Gfx.getSprite(16, 0))
+			.disableBrush();
 		
 		register("OBJ_DIAMOND#0", Diamond, Gfx.getSprite(160, 24), {type: 0})
 			.setPoints(1000);

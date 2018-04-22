@@ -1,6 +1,7 @@
 package world.entities;
 
 import lime.math.Vector2;
+import world.entities.std.Doppelganger;
 
 /**
  * ...
@@ -38,6 +39,7 @@ class EntityAI extends EntityMoveable {
 		var targetDirection:Vector2 = new Vector2();
 		
 		var player = room.getPlayer();
+		var distance:Float = 1000.0;
 		
 		// if (player.visible) {
 			if (player.gridX < gridX) {
@@ -51,10 +53,12 @@ class EntityAI extends EntityMoveable {
 			} else if (player.gridY > gridY) {
 				targetDirection.y = 1;
 			}
+			
+			distance = Utils.distance(x, y, player.x, player.y);
 		
 			if (!ignoreGarlic) {
 				if (room.world.garlic > 0) {
-					if (Utils.distance(x, y, player.x, player.y) < 4) { 
+					if (distance < 4) { 
 						// Richtung umkehren wenn Knoblauch aktiv
 						targetDirection.x = -targetDirection.x;
 						targetDirection.y = -targetDirection.y;
@@ -62,6 +66,28 @@ class EntityAI extends EntityMoveable {
 				}
 			}
 		// }
+		
+		for (e in room.findAll(Doppelganger)) {
+			if (e.alive) {
+				var d:Float = Utils.distance(x, y, e.x, e.y);
+				
+				if (d < distance) {
+					if (e.gridX < gridX) {
+						targetDirection.x = -1;
+					} else if (e.gridX > gridX) {
+						targetDirection.x = 1;
+					}
+		
+					if (e.gridY < gridY) {
+						targetDirection.y = -1;
+					} else if (e.gridY > gridY) {
+						targetDirection.y = 1;
+					}
+					
+					distance = d;
+				}
+			}
+		}
 		
 		targetDirection = Direction.normalize(targetDirection);
 		
