@@ -273,10 +273,10 @@ class EditorScreen extends PlayScreen {
 		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
 			switchRoom(rx, ry + 1, rz);
 			Input.clearKeys();
-		} else if (Input.isKeyDown([Input.key.PAGE_UP])) {
+		} else if (Input.isKeyDown([Input.key.PAGE_UP, Input.key.MINUS])) {
 			switchRoom(rx, ry, rz - 1);
 			Input.clearKeys();
-		} else if (Input.isKeyDown([Input.key.PAGE_DOWN])) {
+		} else if (Input.isKeyDown([Input.key.PAGE_DOWN, Input.key.PLUS])) {
 			switchRoom(rx, ry, rz + 1);
 			Input.clearKeys();
 		}
