@@ -316,7 +316,7 @@ class World {
 				
 				var t = actionTeleportTarget;
 			
-				game.world.room.saveState();
+				if (!editing) game.world.room.saveState();
 				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
 				game.world.room.restoreState();
 			
@@ -336,7 +336,7 @@ class World {
 				
 				var t = actionStairsTarget;
 			
-				game.world.room.saveState();
+				if (!editing) game.world.room.saveState();
 				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
 				game.world.room.restoreState();
 			
