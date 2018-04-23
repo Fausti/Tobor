@@ -5,7 +5,12 @@ import world.World;
 import world.entities.Entity;
 import world.entities.EntityRoof;
 import world.entities.std.Charlie;
+
 import world.entities.std.Robot;
+import world.entities.std.Android;
+import world.entities.std.Shark;
+import world.entities.std.Scorpion;
+
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.std.StartPosition;
 import world.entities.std.TeleportEnd;
@@ -80,7 +85,7 @@ class Room {
 		// Anzahl lebender Roboter
 		robots = 0;
 		for (e in entities.getTicking()) {
-			if (Std.is(e, Robot)) robots++;
+			if (Std.is(e, Robot) || Std.is(e, Android) || Std.is(e, Scorpion) || Std.is(e, Shark)) robots++;
 		}
 		
 		for (e in entities.getTicking()) {
