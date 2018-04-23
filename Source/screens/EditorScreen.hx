@@ -145,8 +145,21 @@ class EditorScreen extends PlayScreen {
 				}
 			}
 		
-			if (!editMode) checkPlayerMovement();
-			else checkRoomSwitch();
+			if (!editMode) {
+				checkPlayerMovement();
+			} else {
+				checkRoomSwitch();
+				
+				if (Input.wheelUp()) {
+					currentTile--;
+					if (currentTile < 0) currentTile = 0;
+				} else if (Input.wheelDown()) {
+					currentTile++;
+					if (currentTile > game.world.factory.length) {
+						currentTile = game.world.factory.length - 1;
+					}
+				}
+			}
 			
 			if (cursorX == 1 && cursorY == 0 && Input.mouseBtnLeft) {
 				switchEditMode();
