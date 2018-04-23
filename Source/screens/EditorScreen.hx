@@ -95,18 +95,22 @@ class EditorScreen extends PlayScreen {
 		
 		dialogTiles = new DialogTiles(this, 0, 0);
 		dialogTiles.onOk = function() {
-			var template = game.world.factory.get(currentTile);
-			if (!template.allowBrush) brush = 0;
+			checkBrushSetting();
 		}
+		
 		dialogTiles.onCancel = function() {
-			var template = game.world.factory.get(currentTile);
-			if (!template.allowBrush) brush = 0;
+			checkBrushSetting();
 		}
 		
 		dialogRooms = new DialogRooms(this, 0, 0);
 		dialogRooms.onOk = function() {
 			switchRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
 		}
+	}
+	
+	function checkBrushSetting() {
+		var template = game.world.factory.get(currentTile);
+		if (!template.allowBrush) brush = 0;
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -153,11 +157,15 @@ class EditorScreen extends PlayScreen {
 				if (Input.wheelUp()) {
 					currentTile--;
 					if (currentTile < 0) currentTile = 0;
+					
+					checkBrushSetting();
 				} else if (Input.wheelDown()) {
 					currentTile++;
 					if (currentTile > game.world.factory.length) {
 						currentTile = game.world.factory.length - 1;
 					}
+					
+					checkBrushSetting();
 				}
 			}
 			
