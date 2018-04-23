@@ -131,6 +131,25 @@ class PlayScreen extends Screen {
 	}
 	
 	function checkPlayerMovement() {
+		if (Input.mouseBtnLeft) {
+			var mouseGridX:Int = Std.int(Input.mouseX / Tobor.TILE_WIDTH);
+			var mouseGridY:Int = Std.int(Input.mouseY / Tobor.TILE_HEIGHT) - 1;
+		
+			if (mouseGridX < getPlayer().gridX) {
+				movePlayer(Direction.W, (Charlie.PLAYER_SPEED));
+				return;
+			} else if (mouseGridX > getPlayer().gridX) {
+				movePlayer(Direction.E, (Charlie.PLAYER_SPEED));
+				return;
+			} else if (mouseGridY < getPlayer().gridY) {
+				movePlayer(Direction.N, (Charlie.PLAYER_SPEED));
+				return;
+			} else if (mouseGridY > getPlayer().gridY) {
+				movePlayer(Direction.S, (Charlie.PLAYER_SPEED));
+				return;
+			}
+		}
+		
 		if (Input.isKeyDown(Tobor.KEY_LEFT)) {
 			movePlayer(Direction.W, (Charlie.PLAYER_SPEED));
 		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
