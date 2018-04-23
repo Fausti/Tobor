@@ -131,7 +131,7 @@ class PlayScreen extends Screen {
 	}
 	
 	function checkPlayerMovement() {
-		if (Input.mouseBtnLeft) {
+		if (Input.mouseBtnLeft && Input.mouseY >= 12) {
 			var mouseGridX:Int = Std.int(Input.mouseX / Tobor.TILE_WIDTH);
 			var mouseGridY:Int = Std.int(Input.mouseY / Tobor.TILE_HEIGHT) - 1;
 		
