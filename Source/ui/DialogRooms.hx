@@ -159,6 +159,10 @@ class DialogRooms extends Dialog {
 		if (roomY > 9) roomY = 9;
 		if (roomZ < 0) roomZ = 0;
 		if (roomZ > 9) roomZ = 9;
+		
+		if (world.room.position.x != roomX || world.room.position.y != roomY || world.room.position.z != roomZ) {
+			editor.switchRoom(roomX, roomY, roomZ, false);
+		}
 	}
 	
 	override

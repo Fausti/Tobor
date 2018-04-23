@@ -333,7 +333,7 @@ class EditorScreen extends PlayScreen {
 		}
 	}
 	
-	function switchRoom(x:Int, y:Int, z:Int) {
+	public function switchRoom(x:Int, y:Int, z:Int, ?ask:Bool = true) {
 		if (x < 0 || x >= 10) return;
 		if (y < 0 || y >= 10) return;
 		if (z < 0 || z >= 10) return;
@@ -343,18 +343,20 @@ class EditorScreen extends PlayScreen {
 		var nextRoom:Room = game.world.rooms.find(x, y, z);
 		
 		if (nextRoom == null) {
-			askNewRoom(function () {
-				nextRoom = new Room(game.world, x, y, z);
-				game.world.rooms.add(nextRoom);
-				game.world.switchRoom(x, y, z);
-				nextRoom.getName();
-				hideDialog();
-			});
+			if (ask) {
+				askNewRoom(function () {
+					nextRoom = new Room(game.world, x, y, z);
+					game.world.rooms.add(nextRoom);
+					game.world.switchRoom(x, y, z);
+					nextRoom.getName();
+					hideDialog();
+				});
+			}
 		}
 		
 		if (nextRoom != null) {
 			game.world.switchRoom(x, y, z);
-			hideDialog();
+			if (ask) hideDialog();
 		}
 		
 		game.world.room.restoreState();
