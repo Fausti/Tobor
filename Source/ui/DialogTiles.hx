@@ -93,10 +93,10 @@ class DialogTiles extends Dialog {
 			if (onOk != null) onOk();
 			screen.hideDialog();
 			return;
-		} else if (Input.isKeyDown(Tobor.KEY_LEFT)) {
+		} else if (Input.isKeyDown(Tobor.KEY_LEFT) || Input.wheelUp()) {
 			tile--;
 			Input.wait(0.2);
-		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
+		} else if (Input.isKeyDown(Tobor.KEY_RIGHT) || Input.wheelDown()) {
 			tile++;
 			Input.wait(0.2);
 		} else if (Input.isKeyDown(Tobor.KEY_UP)) {

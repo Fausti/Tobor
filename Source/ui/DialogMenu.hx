@@ -36,10 +36,10 @@ class DialogMenu extends Dialog {
 			} else if (Input.isKeyDown([Input.key.ESCAPE])) {
 				exit();
 				Input.wait(0.25);
-			} else if (Input.isKeyDown([Input.key.UP])) {
+			} else if (Input.isKeyDown([Input.key.UP]) || Input.wheelUp()) {
 				menu.up();
 				Input.wait(0.25);
-			} else if (Input.isKeyDown([Input.key.DOWN])) {
+			} else if (Input.isKeyDown([Input.key.DOWN]) || Input.wheelDown()) {
 				menu.down();
 				Input.wait(0.25);
 			}

@@ -148,10 +148,10 @@ class EpisodesScreen extends Screen {
 					game.world = new World(game, episoden[index]);
 					game.setScreen(new IntroScreen(game));
 				}
-			} else if (Input.isKeyDown(Tobor.KEY_UP)) {
+			} else if (Input.isKeyDown(Tobor.KEY_UP) || Input.wheelUp()) {
 				index--;
 				Input.wait(0.25);
-			} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
+			} else if (Input.isKeyDown(Tobor.KEY_DOWN) || Input.wheelDown()) {
 				index++;
 				Input.wait(0.25);
 			}

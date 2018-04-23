@@ -178,14 +178,14 @@ class DialogInventory extends Dialog {
 		} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
 			if (currentGroup == rootGroup) rootIndex = index;
 			exit();
-		} else if (Input.isKeyDown(Tobor.KEY_LEFT)) {
+		} else if (Input.isKeyDown(Tobor.KEY_LEFT) || Input.wheelDown()) {
 			index--;
 			if (index < 0) index = 0;
 			
 			updateActions();
 			
 			Input.wait(0.25);
-		} else if (Input.isKeyDown(Tobor.KEY_RIGHT)) {
+		} else if (Input.isKeyDown(Tobor.KEY_RIGHT) || Input.wheelUp()) {
 			index++;
 			if (index >= currentGroup.size) index = currentGroup.size - 1;
 			
