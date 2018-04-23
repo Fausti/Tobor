@@ -121,6 +121,11 @@ class EditorScreen extends PlayScreen {
 		autoTiling = false;
 	}
 	
+	function hasBrush():Bool {
+		var template = game.world.factory.get(currentTile);
+		return template.allowBrush;
+	}
+	
 	function hasAutoTiling():Bool {
 		var template = game.world.factory.get(currentTile);
 		if (template.autoFull == null || template.autoEdges == null) return false;
@@ -244,6 +249,7 @@ class EditorScreen extends PlayScreen {
 					}  else if (cursorX >= 12 && cursorX <= 14 && cursorY == 0) {
 						// Brush wählen
 						brush = cursorX - 12;
+						autoTiling = false;
 						
 						checkBrushSetting();
 						
@@ -252,6 +258,7 @@ class EditorScreen extends PlayScreen {
 						if (autoTiling) autoTiling = false;
 						else {
 							autoTiling = hasAutoTiling();
+							brush = 0;
 						}
 						
 						Input.clearKeys();
@@ -262,6 +269,7 @@ class EditorScreen extends PlayScreen {
 					if (autoTiling) autoTiling = false;
 					else {
 						autoTiling = hasAutoTiling();
+						brush = 0;
 					}
 					
 					Input.clearKeys();
@@ -474,14 +482,22 @@ class EditorScreen extends PlayScreen {
 				if (brush == x) {
 					Gfx.drawSprite((12 + x) * Tobor.TILE_WIDTH, 0, brushSprActive[x]);
 				} else {
-					Gfx.drawSprite((12 + x) * Tobor.TILE_WIDTH, 0, brushSpr[x]);
+					if (hasBrush()) {
+						Gfx.drawSprite((12 + x) * Tobor.TILE_WIDTH, 0, brushSpr[x]);
+					} else {
+						Gfx.drawSprite((12 + x) * Tobor.TILE_WIDTH, 0, brushSpr[x], Color.GRAY);
+					}
 				}
 			}
 			
 			if (autoTiling) {
 				Gfx.drawSprite(16 * Tobor.TILE_WIDTH, 0, autoSprActive);
 			} else {
-				Gfx.drawSprite(16 * Tobor.TILE_WIDTH, 0, autoSpr);
+				if (hasAutoTiling()) {
+					Gfx.drawSprite(16 * Tobor.TILE_WIDTH, 0, autoSpr);
+				} else {
+					Gfx.drawSprite(16 * Tobor.TILE_WIDTH, 0, autoSpr, Color.GRAY);
+				}
 			}
 			
 			if (game.world.room != null) {
