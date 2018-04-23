@@ -56,24 +56,34 @@ class ObjectFactory {
 		register("OBJ_SKULL", 		Skull, 		Gfx.getSprite(80, 12))
 			.disableBrush();
 		
-		register("OBJ_WALL", 		Wall, 		Gfx.getSprite(160, 0), 				{type: 0});
+		register("OBJ_WALL", 		Wall, 		Gfx.getSprite(160, 0), 				{type: 0})
+			.setAutoTiles([0], [4, 1, 3, 2]);
 		register("OBJ_WALL_NE", 	Wall, 		Gfx.getSprite(160 + 16 * 1, 0), 	{type: 1})
+			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
 		register("OBJ_WALL_SW", 	Wall, 		Gfx.getSprite(160 + 16 * 2, 0), 	{type: 2})
+			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
 		register("OBJ_WALL_SE", 	Wall, 		Gfx.getSprite(160 + 16 * 3, 0), 	{type: 3})
+			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
 		register("OBJ_WALL_NW", 	Wall, 		Gfx.getSprite(160 + 16 * 4, 0), 	{type: 4})
+			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
 		
-		register("OBJ_WALL_BLACK", 		Wall, 		Gfx.getSprite(48, 132),				{type: 5});
+		register("OBJ_WALL_BLACK", 		Wall, 		Gfx.getSprite(48, 132),				{type: 5})
+			.setAutoTiles([5], [9, 6, 8, 7]);
 		register("OBJ_WALL_BLACK_NE", 	Wall, 		Gfx.getSprite(48 + 16 * 1, 132),	{type: 6})
+			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
 		register("OBJ_WALL_BLACK_SW", 	Wall, 		Gfx.getSprite(48 + 16 * 2, 132),	{type: 7})
+			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
 		register("OBJ_WALL_BLACK_SE", 	Wall, 		Gfx.getSprite(48 + 16 * 3, 132),	{type: 8})
+			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
 		register("OBJ_WALL_BLACK_NW", 	Wall, 		Gfx.getSprite(48 + 16 * 4, 132),	{type: 9})
+			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
 		
 		register("OBJ_WALL_HARD", 	Wall, 		Gfx.getSprite(160, 12), 	{type: 10});
@@ -137,16 +147,19 @@ class ObjectFactory {
 		
 		for (i in 0 ... 4) {
 			register("OBJ_MOUNTAIN_" + Std.string(i), Mountain, Gfx.getSprite(176 + i * 16, 264), {type: i}, Room.LAYER_FLOOR)
-				.setRandom([0, 1, 2, 3]);
+				.setRandom([0, 1, 2, 3])
+				.setAutoTiles([0, 1, 2, 3], [8, 4, 16, 12]);
 		}
 		
 		for (i in 0 ... 8) {
 			register("OBJ_MOUNTAIN_" + Std.string(i + 4), Mountain, Gfx.getSprite(128 + i * 16, 288), {type: i + 4}, Room.LAYER_FLOOR)
+			.setAutoTiles([0, 1, 2, 3], [8, 4, 16, 12])
 			.disableBrush();
 		}
 		
 		for (i in 0 ... 8) {
 			register("OBJ_MOUNTAIN_" + Std.string(i + 12), Mountain, Gfx.getSprite(128 + i * 16, 300), {type: i + 12}, Room.LAYER_FLOOR)
+			.setAutoTiles([0, 1, 2, 3], [8, 4, 16, 12])
 			.disableBrush();
 		}
 		
@@ -221,7 +234,8 @@ class ObjectFactory {
 		}
 		
 		for (i in 0 ... 5) {
-			register("OBJ_SAND#" + Std.string(i), Sand, Gfx.getSprite(16 * i, 24), {type: i}, Room.LAYER_FLOOR);
+			register("OBJ_SAND#" + Std.string(i), Sand, Gfx.getSprite(16 * i, 24), {type: i}, Room.LAYER_FLOOR)
+				.setAutoTiles([0], [3, 4, 1, 2]);
 		}
 		
 		for (i in 0 ... 4) {
@@ -294,14 +308,19 @@ class ObjectFactory {
 				.disableBrush();
 		}
 		
-		register("OBJ_SAND_WALL", 		Wall, 		Gfx.getSprite(32, 120), 				{type: 11});
+		register("OBJ_SAND_WALL", 		Wall, 		Gfx.getSprite(32, 120), 			{type: 11})
+			.setAutoTiles([11], [15, 12, 14, 13]);
 		register("OBJ_SAND_WALL_NE", 	Wall, 		Gfx.getSprite(32 + 16 * 1, 120), 	{type: 12})
+			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
 		register("OBJ_SAND_WALL_SW", 	Wall, 		Gfx.getSprite(32 + 16 * 2, 120), 	{type: 13})
+			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
 		register("OBJ_SAND_WALL_SE", 	Wall, 		Gfx.getSprite(32 + 16 * 3, 120), 	{type: 14})
+			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
 		register("OBJ_SAND_WALL_NW", 	Wall, 		Gfx.getSprite(32 + 16 * 4, 120), 	{type: 15})
+			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
 		
 		register("OBJ_SICKLE", Sickle, Gfx.getSprite(240, 228))
@@ -362,18 +381,24 @@ class ObjectFactory {
 			.disableBrush();
 		
 		register("OBJ_WATER_SHALLOW", Water, Gfx.getSprite(0, 72), {type: 0}, Room.LAYER_FLOOR)
-			.setRandom([0, 1]);
+			.setRandom([0, 1])
+			.setAutoTiles([0, 1], [2, 4, 5, 3]);
 		register("OBJ_WATER_DEEP", Water, Gfx.getSprite(16, 72), {type: 1}, Room.LAYER_FLOOR)
-			.setRandom([0, 1]);
+			.setRandom([0, 1])
+			.setAutoTiles([0, 1], [0, 2, 4, 5, 3]);
 			
 		register("OBJ_WATER_NW", Water, Gfx.getSprite(80, 72), {type: 2}, Room.LAYER_FLOOR)
-			.disableBrush();
+			.disableBrush()
+			.setAutoTiles([0, 1], [0, 2, 4, 5, 3]);
 		register("OBJ_WATER_SW", Water, Gfx.getSprite(96, 72), {type: 3}, Room.LAYER_FLOOR)
-			.disableBrush();
+			.disableBrush()
+			.setAutoTiles([0, 1], [0, 2, 4, 5, 3]);
 		register("OBJ_WATER_NE", Water, Gfx.getSprite(112, 72), {type: 4}, Room.LAYER_FLOOR)
-			.disableBrush();
+			.disableBrush()
+			.setAutoTiles([0, 1], [0, 2, 4, 5, 3]);
 		register("OBJ_WATER_SE", Water, Gfx.getSprite(128, 72), {type: 5}, Room.LAYER_FLOOR)
-			.disableBrush();
+			.disableBrush()
+			.setAutoTiles([0, 1], [0, 2, 4, 5, 3]);
 			
 		register("OBJ_WATER_DEADLY", WaterDeadly, Gfx.getSprite(48, 72), null, Room.LAYER_FLOOR)
 			.disableBrush();
@@ -406,7 +431,8 @@ class ObjectFactory {
 			.disableBrush();
 
 		for (i in 0 ... 5) {
-			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR);
+			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR)
+				.setAutoTiles([0], [1, 3, 4, 2]);
 		}
 		
 		register("OBJ_ICE_DEADLY", IceDeadly, Gfx.getSprite(0, 180))
@@ -424,7 +450,8 @@ class ObjectFactory {
 		
 		for (i in 0 ... 7) {
 			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i}, Room.LAYER_FLOOR)
-				.setRandom([0, 5, 6]);
+				.setRandom([0, 5, 6])
+				.setAutoTiles([0, 5, 6], [1, 4, 3, 2]);
 		}
 		
 		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252), null, Room.LAYER_FLOOR)
@@ -446,7 +473,9 @@ class ObjectFactory {
 		// Höhle
 		
 		for (i in 0 ... 13) {
-			var ot = register("OBJ_CAVE_" + Std.string(i), Cave, Gfx.getSprite(32 + (i * 16), 180), {type: i}, Room.LAYER_FLOOR);
+			var ot = register("OBJ_CAVE_" + Std.string(i), Cave, Gfx.getSprite(32 + (i * 16), 180), {type: i}, Room.LAYER_FLOOR)
+				.setAutoTiles([1, 3, 4, 6], [7, 5, 0, 2]);
+				
 			if (i != 12) ot.disableBrush();
 		}
 		
@@ -608,6 +637,9 @@ class ObjectTemplate {
 	
 	public var random:Array<Int>;
 	
+	public var autoEdges:Array<Int> = null;
+	public var autoFull:Array<Int> = null;
+	
 	public var index:Int = -1;
 	public var name:String;
 	public var classPath:Class<Entity>;
@@ -645,6 +677,35 @@ class ObjectTemplate {
 				temp = Text.get(id.split("#")[0] + "_PICKUP");
 			}
 		}
+	}
+	
+	public function isTileable(t:Int):Bool {
+		for (a in autoFull) {
+			if (a == t) return true;
+		}
+		
+		return false;
+	}
+	
+	public function setAutoTiles(f:Array<Int>, e:Array<Int>):ObjectTemplate {
+		this.autoFull = f;
+		this.autoEdges = e;
+		
+		return this;
+	}
+	
+	public function getAutoTile(index:Int):Int {
+		if (this.autoEdges == null || index < 0 || index > 4) {
+			if (data != null) {
+				if (Reflect.field(data, "type") != null) {
+					return Reflect.field(data, "type");
+				}
+			}
+		} else {
+			return this.autoEdges[index];
+		}
+		
+		return 0;
 	}
 	
 	public function setRandom(rnd:Array<Int>):ObjectTemplate {

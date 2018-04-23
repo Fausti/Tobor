@@ -6,7 +6,6 @@ import ui.DialogRooms;
 import ui.DialogTiles;
 import ui.DialogMenu;
 import ui.DialogInventoryTemplate;
-import world.Direction;
 import world.Inventory;
 import world.ObjectFactory.ObjectTemplate;
 import world.World;
@@ -55,6 +54,10 @@ class EditorScreen extends PlayScreen {
 	var brushSpr:Array<Sprite>;
 	var brushSprActive:Array<Sprite>;
 	
+	var autoTiling:Bool = false;
+	var autoSpr:Sprite;
+	var autoSprActive:Sprite;
+	
 	public var currentTile:Int = 0;
 	
 	var SPR_CURSOR:Sprite;
@@ -81,6 +84,9 @@ class EditorScreen extends PlayScreen {
 			Gfx.getSprite(176 + 16, 432 + 12),
 			Gfx.getSprite(176 + 32, 432 + 12),
 		];
+		
+		autoSpr = Gfx.getSprite(224, 432);
+		autoSprActive = Gfx.getSprite(224, 444);
 		
 		SPR_SELECTOR = Gfx.getSprite(160, 240);
 		
@@ -111,6 +117,15 @@ class EditorScreen extends PlayScreen {
 	function checkBrushSetting() {
 		var template = game.world.factory.get(currentTile);
 		if (!template.allowBrush) brush = 0;
+		
+		autoTiling = false;
+	}
+	
+	function hasAutoTiling():Bool {
+		var template = game.world.factory.get(currentTile);
+		if (template.autoFull == null || template.autoEdges == null) return false;
+		
+		return true;
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -230,11 +245,26 @@ class EditorScreen extends PlayScreen {
 						// Brush wählen
 						brush = cursorX - 12;
 						
-						var template = game.world.factory.get(currentTile);
-						if (!template.allowBrush) brush = 0;
+						checkBrushSetting();
 						
 						return;
+					} else if (cursorX == 16 && cursorY == 0) {
+						if (autoTiling) autoTiling = false;
+						else {
+							autoTiling = hasAutoTiling();
+						}
+						
+						Input.clearKeys();
 					}
+				}
+			} else if (Input.mouseBtnMiddle) {
+				if (editMode) {
+					if (autoTiling) autoTiling = false;
+					else {
+						autoTiling = hasAutoTiling();
+					}
+					
+					Input.clearKeys();
 				}
 			} else if (Input.mouseBtnRight) {
 				if (editMode) {
@@ -444,6 +474,12 @@ class EditorScreen extends PlayScreen {
 				} else {
 					Gfx.drawSprite((12 + x) * Tobor.TILE_WIDTH, 0, brushSpr[x]);
 				}
+			}
+			
+			if (autoTiling) {
+				Gfx.drawSprite(16 * Tobor.TILE_WIDTH, 0, autoSprActive);
+			} else {
+				Gfx.drawSprite(16 * Tobor.TILE_WIDTH, 0, autoSpr);
 			}
 			
 			if (game.world.room != null) {
@@ -831,12 +867,69 @@ class EditorScreen extends PlayScreen {
 			
 		for (o in atPosition) {
 			if (o.z == e.z) {
-				return;
+				if (!autoTiling) return;
+				else {
+					if (!Std.is(o, template.classPath)) return;
+					else {
+						game.world.room.removeEntity(o);
+					}
+				}
 			}
 		}
 		
 		if (Std.is(e, StartPosition)) {
 			game.world.clearStartPositions();
+		}
+		
+		if (autoTiling && brush == 0) {
+			var nTileable:Int = 0;
+			var nSameClass:Int = 0;
+			var atN:Bool = false;
+			var atS:Bool = false;
+			var atW:Bool = false;
+			var atE:Bool = false;
+			
+			for (ee in getRoom().findEntityAt(e.x, e.y - 1, template.classPath)) {
+				if (template.isTileable(ee.type)) atN = true;
+				nSameClass++;
+			}
+			if (atN) nTileable++;
+			
+			for (ee in getRoom().findEntityAt(e.x, e.y + 1, template.classPath)) {
+				if (template.isTileable(ee.type)) atS = true;
+				nSameClass++;
+			}
+			if (atS) nTileable++;
+			
+			for (ee in getRoom().findEntityAt(e.x - 1, e.y, template.classPath)) {
+				if (template.isTileable(ee.type)) atW = true;
+				nSameClass++;
+			}
+			if (atW) nTileable++;
+			
+			for (ee in getRoom().findEntityAt(e.x + 1, e.y, template.classPath)) {
+				if (template.isTileable(ee.type)) atE = true;
+				nSameClass++;
+			}
+			if (atE) nTileable++;
+			
+			if (nTileable == 2) {
+				if (atN && atW) {
+					if (nSameClass == 2) e.type = template.getAutoTile(0);
+					else e.type = template.autoFull[Std.random(template.autoFull.length)];
+				} else if (atN && atE) {
+					if (nSameClass == 2) e.type = template.getAutoTile(1);
+					else e.type = template.autoFull[Std.random(template.autoFull.length)];
+				} else if (atS && atE) {
+					if (nSameClass == 2) e.type = template.getAutoTile(2);
+					else e.type = template.autoFull[Std.random(template.autoFull.length)];
+				} else if (atS && atW) {
+					if (nSameClass == 2) e.type = template.getAutoTile(3);
+					else e.type = template.autoFull[Std.random(template.autoFull.length)];
+				} else {
+					e.type = template.autoFull[Std.random(template.autoFull.length)];
+				}
+			}
 		}
 		
 		game.world.room.addEntity(e);
