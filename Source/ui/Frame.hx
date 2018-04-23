@@ -1,6 +1,7 @@
 package ui;
 
 import gfx.Sprite;
+import lime.math.Rectangle;
 /**
  * ...
  * @author Matthias Faust
@@ -55,6 +56,10 @@ class Frame {
 		SE = Gfx.getSprite(
 			x + w * 2, y + h * 2, w, h
 		);
+	}
+	
+	public function drawBoxRect(r:Rectangle, ?bg:Color = null) {
+		drawBox(Std.int(r.x), Std.int(r.y), Std.int(r.width / sizeX), Std.int(r.height / sizeY), bg);
 	}
 	
 	public function drawBox(x:Int, y:Int, w:Int, h:Int, ?bg:Color = null) {

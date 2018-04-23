@@ -20,6 +20,8 @@ class Input {
 	static var lastMouseButton:Int = -1;
 	public static var _mouseButton:Map<Int, Bool> = new Map<Int, Bool>();
 	
+	public static var mouseWheelUp:Bool = false;
+	public static var mouseWheelDown:Bool = false;
 	public static var mouseX:Float;
 	public static var mouseY:Float;
 	public static var mouseBtnLeft:Bool = false;
@@ -52,11 +54,39 @@ class Input {
 		}
 	}
 	
+	public static function onMouseWheel(deltaX:Float, deltaY:Float) {
+		if (deltaY > 0) {
+			mouseWheelUp = true;
+		} else if (deltaY < 0) {
+			mouseWheelDown = true;
+		}
+	}
+	
+	public static function wheelUp():Bool {
+		if (mouseWheelUp) {
+			mouseWheelUp = false;
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static function wheelDown():Bool {
+		if (mouseWheelDown) {
+			mouseWheelDown = false;
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public static function update(deltaTime:Float) {
 		if (waitTime > 0) {
 			waitTime = waitTime - deltaTime;
 			
-			if (waitTime < 0) waitTime = 0;
+			if (waitTime < 0) {
+				waitTime = 0;
+			}
 		}
 	}
 	

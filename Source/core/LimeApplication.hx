@@ -106,6 +106,12 @@ class LimeApplication extends Application {
 		if (game != null) game.onMouseButtonUp(x, y, button);
 	}
 	
+	override public function onMouseWheel(window:Window, deltaX:Float, deltaY:Float):Void {
+		super.onMouseWheel(window, deltaX, deltaY);
+		
+		Input.onMouseWheel(deltaX, deltaY);
+	}
+	
 	// Gamepad!
 	
 	private var gamepadDirection:Vector2 = new Vector2(0, 0);

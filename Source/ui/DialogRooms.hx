@@ -1,5 +1,6 @@
 package ui;
 
+import lime.math.Rectangle;
 import screens.EditorScreen;
 import world.World;
 import world.Room;
@@ -30,6 +31,10 @@ class DialogRooms extends Dialog {
 	var SPR_SCROLLBAR_0:Sprite;
 	var SPR_SCROLLBAR_1:Sprite;
 	
+	var rectFrame:Rectangle;
+	var rectUp:Rectangle;
+	var rectDown:Rectangle;
+	
 	public function new(screen:Screen, x:Int, y:Int) {
 		super(screen, x, y);
 	
@@ -57,6 +62,16 @@ class DialogRooms extends Dialog {
 				}
 			}
 		}
+		
+		rectFrame = new Rectangle(
+			160 - Tobor.frameBig.sizeX - 8, 
+			60 - Tobor.frameBig.sizeY, 
+			23 * Tobor.frameBig.sizeX, 
+			22 * Tobor.frameBig.sizeY
+		);
+		
+		rectUp = new Rectangle(480 - 4, 60, 16 ,12);
+		rectDown = new Rectangle(480 - 4, 60 + 19 * 12, 16, 12);
 	}
 	
 	override public function show() {
@@ -71,6 +86,41 @@ class DialogRooms extends Dialog {
 	
 	override
 	public function update(deltaTime:Float) {
+		// befindet sich der Mauszeiger innerhalb des Rahmens?
+		if (rectFrame.contains(Input.mouseX, Input.mouseY)) {
+			
+			// Raumkoordinaten unter dem Mauszeiger berechnen
+			var mouseRoomX:Int = Std.int((Input.mouseX - rectFrame.x - Tobor.frameBig.sizeX) / 32);
+			var mouseRoomY:Int = Std.int((Input.mouseY - rectFrame.y - Tobor.frameBig.sizeY) / 24);
+			
+			// befindet sich der Mauszeiger über einem Raum?
+			if (mouseRoomX >= 0 && mouseRoomX < 10 && mouseRoomY >= 0 && mouseRoomY < 10) {
+				roomX = mouseRoomX;
+				roomY = mouseRoomY;
+				
+				if (Input.mouseBtnLeft) {
+					ok();
+					Input.wait(0.25);
+				}
+			} else {
+				if (Input.mouseBtnLeft) {
+					if (rectUp.contains(Input.mouseX, Input.mouseY)) {
+						roomZ--;
+						Input.clearKeys();
+					} else if (rectDown.contains(Input.mouseX, Input.mouseY)) {
+						roomZ++;
+						Input.clearKeys();
+					}
+				}
+			}
+		}
+		
+		if (Input.wheelUp()) {
+			roomZ--;
+		} else if (Input.wheelDown()) {
+			roomZ++;
+		}
+		
 		if (Input.isKeyDown(Tobor.KEY_ENTER)) {
 			ok();
 			Input.wait(2);
@@ -95,10 +145,10 @@ class DialogRooms extends Dialog {
 			Input.wait(0.2);
 		}
 		
-		if (Input.isKeyDown([Input.key.PAGE_UP])) {
+		if (Input.isKeyDown([Input.key.PAGE_UP, Input.key.MINUS])) {
 			roomZ--;
 			Input.wait(0.2);
-		} else if (Input.isKeyDown([Input.key.PAGE_DOWN])) {
+		} else if (Input.isKeyDown([Input.key.PAGE_DOWN, Input.key.PLUS])) {
 			roomZ++;
 			Input.wait(0.2);
 		}
@@ -127,7 +177,7 @@ class DialogRooms extends Dialog {
 		}
 		
 		// Raumauswahl
-		Tobor.frameBig.drawBox(160 - Tobor.frameBig.sizeX - 8, 60 - Tobor.frameBig.sizeY, 23, 22);
+		Tobor.frameBig.drawBoxRect(rectFrame);
 		
 		for (xx in 0 ... 10) {
 			for (yy in 0 ... 10) {
@@ -179,5 +229,7 @@ class DialogRooms extends Dialog {
 		Gfx.drawSprite(offsetX + 1 * Tobor.TILE_WIDTH, offsetY + 0 * Tobor.TILE_HEIGHT, SPR_NONE, Color.GREEN);
 		Gfx.drawSprite(offsetX + 0 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_NONE, Color.GREEN);
 		Gfx.drawSprite(offsetX + 1 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_NONE, Color.GREEN);
+		
+		Tobor.fontSmall.drawString(offsetX + 4, offsetY + 7, rx + "" + ry + "" + roomZ, Color.DARK_GRAY, Color.NONE);
 	}
 }
