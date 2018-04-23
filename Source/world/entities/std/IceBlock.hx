@@ -35,4 +35,18 @@ class IceBlock extends EntityPushable implements IElectric {
 	override public function hasWeight():Bool {
 		return true;
 	}
+	
+	override public function die() {
+		// alle Objekte unter dem Iceblock informieren das er das Feld nun verlässt...
+		// ... entgültig!
+		var underMe = room.getAllEntitiesAt(gridX, gridY, this);
+		
+		for (e in underMe) {
+			if (e.alive && e.visible) {
+				e.onLeave(this, Direction.NONE);
+			}
+		}
+		
+		super.die();
+	}
 }
