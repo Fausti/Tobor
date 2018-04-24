@@ -88,7 +88,7 @@ class LimeGame {
 			index++;
 		}
 		
-		__frameBuffer = new Framebuffer(__framebuffer_w, __framebuffer_h);
+		__frameBuffer = new Framebuffer(__framebuffer_w, __framebuffer_h, 1);
 		
 		// falls das Spielfenster initial nicht der originalen Spielgröße entspricht
 		__resize(__application.window.width, __application.window.height);

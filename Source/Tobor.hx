@@ -71,12 +71,12 @@ class Tobor extends LimeGame {
 		__framebuffer_h = SCREEN_HEIGHT;
 		
 		Tobor.locale = Locale.currentLocale.split8("_")[0];
-		
-		// FrameBuffer für Lightmap erstellen
-		lightBuffer = new Framebuffer(Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 	}
 	
 	override public function init() {
+		// FrameBuffer für Lightmap erstellen
+		lightBuffer = new Framebuffer(Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT, 2);
+		
 		Config.init();
 		
 		Text.init();
