@@ -7,7 +7,7 @@ import lime.math.Vector2;
  */
 class WaterDeadly extends EntityDynamic {
 	var ANIM_WATER:Animation;
-	var SPR_WATER:Sprite;
+	public static var SPR_WATER:Sprite = Gfx.getSprite(48, 72);
 	
 	public function new() {
 		super();
@@ -18,8 +18,6 @@ class WaterDeadly extends EntityDynamic {
 	}
 	
 	function initSprites() {
-		SPR_WATER = Gfx.getSprite(48, 72);
-		
 		var arr:Array<Sprite> = [];
 		
 		for (i in 0 ... Std.random(4) + 1) {
@@ -48,8 +46,6 @@ class WaterDeadly extends EntityDynamic {
 		super.init();
 		
 		initSprites();
-		
-		z = Room.LAYER_FLOOR;
 	}
 	
 	override public function render_editor() {

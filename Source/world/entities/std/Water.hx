@@ -3,7 +3,6 @@ package world.entities.std;
 import lime.math.Vector2;
 import world.ObjectFactory.ObjectTemplate;
 import world.entities.Entity;
-import world.entities.EntityStatic;
 import world.entities.interfaces.IElectric;
 
 /**
@@ -11,12 +10,18 @@ import world.entities.interfaces.IElectric;
  * @author Matthias Faust
  */
 class Water extends EntityFloor implements IElectric {
-	var SPR_WATER:Array<Sprite>;
+	public static var SPR_WATER:Array<Sprite> = [
+		Gfx.getSprite(0, 72), // shallow
+		Gfx.getSprite(16, 72), // deep
+			
+		Gfx.getSprite(80, 72), // nw
+		Gfx.getSprite(96, 72), // sw
+		Gfx.getSprite(112, 72), // ne
+		Gfx.getSprite(128, 72) // se
+	];
 	
 	public function new() {
 		super();
-		
-		initSprites();
 	}
 	
 	function getDrift(?phase:Int = 0):Vector2 {
@@ -76,26 +81,8 @@ class Water extends EntityFloor implements IElectric {
 		return Direction.NONE;
 	}
 	
-	function initSprites() {
-		if (SPR_WATER == null) {
-			SPR_WATER = [
-				Gfx.getSprite(0, 72), // shallow
-				Gfx.getSprite(16, 72), // deep
-			
-				Gfx.getSprite(80, 72), // nw
-				Gfx.getSprite(96, 72), // sw
-				Gfx.getSprite(112, 72), // ne
-				Gfx.getSprite(128, 72) // se
-			];
-		}
-		
-		setSprite(SPR_WATER[type]);
-	}
-	
-	override public function init() {
-		super.init();
-		
-		initSprites();
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WATER[type]);
 	}
 	
 	override public function render_editor() {

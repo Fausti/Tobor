@@ -2,7 +2,6 @@ package world.entities;
 import lime.math.Vector2;
 import world.entities.Entity;
 import world.entities.std.Charlie;
-import world.entities.std.Isolator;
 
 /**
  * ...

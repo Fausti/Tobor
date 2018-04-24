@@ -12,9 +12,9 @@ class Wood extends EntityFloor {
 	public function new() {
 		super();
 	}
-	
-	override public function init() {
-		setSprite(SPR_WOOD[type]);
+
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WOOD[type]);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {

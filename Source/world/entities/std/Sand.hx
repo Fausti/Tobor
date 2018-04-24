@@ -10,26 +10,14 @@ import world.entities.EntityMoveable;
  * @author Matthias Faust
  */
 class Sand extends EntityFloor {
-
+	public static var SPR_SAND:Array<Sprite> = Gfx.getSprites(null, 0, 24, 0, 5);
+	
 	public function new() {
 		super();
 	}
 	
-	override public function init() {
-		super.init();
-		
-		switch(type) {
-			case 0:
-				setSprite(Gfx.getSprite(0, 24));
-			case 1:
-				setSprite(Gfx.getSprite(16, 24));
-			case 2:
-				setSprite(Gfx.getSprite(32, 24));
-			case 3:
-				setSprite(Gfx.getSprite(48, 24));
-			case 4:
-				setSprite(Gfx.getSprite(64, 24));
-		}
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_SAND[type]);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {

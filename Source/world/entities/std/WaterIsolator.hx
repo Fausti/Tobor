@@ -9,11 +9,14 @@ import world.entities.EntityFloor;
  * @author Matthias Faust
  */
 class WaterIsolator extends EntityFloor {
-
+	public static var SPR_WATER_ISOLATOR = Gfx.getSprite(112, 156);
+	
 	public function new() {
 		super();
-		
-		setSprite(Gfx.getSprite(112, 156));
+	}
+	
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WATER_ISOLATOR);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {

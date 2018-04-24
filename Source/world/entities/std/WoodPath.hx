@@ -7,14 +7,11 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class WoodPath extends EntityFloor {
-	var SPR_WOODPATH:Sprite;
-	var SPR_WOODPATH_EDITOR:Sprite;
+	public static var SPR_WOODPATH:Sprite = Gfx.getSprite(112, 252);
+	public static var SPR_WOODPATH_EDITOR:Sprite = Gfx.getSprite(160, 252);
 	
 	public function new() {
 		super();
-		
-		SPR_WOODPATH = Gfx.getSprite(112, 252);
-		SPR_WOODPATH_EDITOR = Gfx.getSprite(160, 252);
 	}
 	
 	override public function render() {
