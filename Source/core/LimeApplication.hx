@@ -2,6 +2,7 @@ package core;
 import lime.math.Vector2;
 import lime.ui.GamepadAxis;
 import lime.ui.GamepadButton;
+import lime.ui.Touch;
 
 import lime.app.Application;
 import lime.ui.Gamepad;
@@ -110,6 +111,32 @@ class LimeApplication extends Application {
 		super.onMouseWheel(window, deltaX, deltaY);
 		
 		Input.onMouseWheel(deltaX, deltaY);
+	}
+	
+	// Touch
+	
+	override public function onTouchStart(touch:Touch):Void {
+		super.onTouchStart(touch);
+		
+		trace("onTouchStart: ", touch.x, touch.y, touch.dx, touch.dy);
+	}
+	
+	override public function onTouchEnd(touch:Touch):Void {
+		super.onTouchEnd(touch);
+		
+		trace("onTouchEnd: ", touch.x, touch.y, touch.dx, touch.dy);
+	}
+	
+	override public function onTouchMove(touch:Touch):Void 	{
+		super.onTouchMove(touch);
+		
+		trace("onTouchMove: ", touch.x, touch.y, touch.dx, touch.dy);
+	}
+	
+	override public function onTouchCancel(touch:Touch):Void {
+		super.onTouchCancel(touch);
+		
+		trace("onTouchCancel: ", touch.x, touch.y, touch.dx, touch.dy);
 	}
 	
 	// Gamepad!
