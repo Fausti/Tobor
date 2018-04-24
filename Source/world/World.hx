@@ -288,9 +288,11 @@ class World {
 						player.y = 0;
 					}
 				
+					var timeStart:Float = Timer.stamp();
 					if (!editing) game.world.room.saveState();
 					switchRoom(rx, ry, rz);
 					game.world.room.restoreState();
+					trace("Debug: room change took: " + (Timer.stamp() - timeStart) + "s");
 				
 					var atTarget:Array<Entity> = room.getAllEntitiesAt(player.x, player.y, player);
 					for (e in atTarget) {
