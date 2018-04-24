@@ -165,6 +165,47 @@ class Room {
 		}
 	}
 	
+	public function renderPreview() {
+		var playerDrawn:Bool = false;
+		
+		entities.getState().sort(function (a:Entity, b:Entity):Int {
+			if (a.z < b.z) return -1;
+			if (a.z > b.z) return 1;
+			return 0;
+		});
+		
+		for (e in entities.getState()) {
+			if (e.z > world.player.z) {
+				if (!playerDrawn) {
+					playerDrawn = true;
+					if (world.player != null) {
+						//if (editMode) {
+							world.player.render_editor();
+						//} else {
+							//if (world.player.visible) world.player.render();
+						//}
+					}
+				}
+			}
+			
+			// if (editMode) {
+				e.render_editor();
+			//} else {
+				// if (e.visible) e.render();
+			//}
+		}
+		
+		if (!playerDrawn) {
+			if (world.player != null) {
+				//if (editMode) {
+					world.player.render_editor();
+				//} else {
+					//if (world.player.visible) world.player.render();
+				//}
+			}
+		}
+	}
+	
 	public function onRoomStart() {
 		if (world.isLoading) return;
 		

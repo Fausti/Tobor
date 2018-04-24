@@ -110,7 +110,7 @@ class EditorScreen extends PlayScreen {
 		
 		dialogRooms = new DialogRooms(this, 0, 0);
 		dialogRooms.onOk = function() {
-			switchRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ);
+			switchRoom(dialogRooms.roomX, dialogRooms.roomY, dialogRooms.roomZ, true, false);
 		}
 	}
 	
@@ -341,12 +341,12 @@ class EditorScreen extends PlayScreen {
 		}
 	}
 	
-	public function switchRoom(x:Int, y:Int, z:Int, ?ask:Bool = true) {
+	public function switchRoom(x:Int, y:Int, z:Int, ?ask:Bool = true, ?saveState:Bool = true) {
 		if (x < 0 || x >= 10) return;
 		if (y < 0 || y >= 10) return;
 		if (z < 0 || z >= 10) return;
 		
-		game.world.room.saveState();
+		if (saveState) game.world.room.saveState();
 		
 		var nextRoom:Room = game.world.rooms.find(x, y, z);
 		
@@ -381,7 +381,7 @@ class EditorScreen extends PlayScreen {
 			game.world.switchRoomTo(nextRoom);
 		}
 		
-		game.world.room.restoreState();
+		// game.world.room.restoreState();
 	}
 
 	function switchEditMode() {
@@ -421,7 +421,11 @@ class EditorScreen extends PlayScreen {
 			checkDarkness();
 		}
 		
-		game.world.render(editMode);
+		if (dialog == dialogRooms) {
+			game.world.renderPreview();
+		} else {
+			game.world.render(editMode);
+		}
 	}
 	
 	override function renderStatusLine() {

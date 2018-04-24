@@ -18,6 +18,10 @@ class DialogRooms extends Dialog {
 	public var roomY:Int;
 	public var roomZ:Int;
 	
+	var oldRoomX:Int;
+	var oldRoomY:Int;
+	var oldRoomZ:Int;
+	
 	var editor:EditorScreen;
 	var world:World;
 		
@@ -80,9 +84,9 @@ class DialogRooms extends Dialog {
 		// aktuellen Raum sichern!
 		editor.game.world.room.saveState();
 		
-		roomX = world.room.position.x;
-		roomY = world.room.position.y;
-		roomZ = world.room.position.z;
+		oldRoomX = roomX = world.room.position.x;
+		oldRoomY = roomY = world.room.position.y;
+		oldRoomZ = roomZ = world.room.position.z;
 		
 		for (r in world.rooms) {
 			rooms[r.position.z][r.position.x][r.position.y] = true;
@@ -132,6 +136,10 @@ class DialogRooms extends Dialog {
 		}
 		
 		if (Input.isKeyDown(Tobor.KEY_ESC)) {
+			roomX = oldRoomX;
+			roomY = oldRoomY;
+			roomZ = oldRoomZ;
+			
 			screen.showDialog(null);
 			Input.wait(2);
 		}

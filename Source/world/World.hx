@@ -392,17 +392,11 @@ class World {
 	}
 	
 	public function render(?editMode:Bool = false) {
-		if (actionChangeRoom) {
-			for (_x in 0 ... Room.WIDTH) {
-				for (_y in 0 ... Room.HEIGHT) {
-					Gfx.drawSprite(_x * Tobor.TILE_WIDTH, _y * Tobor.TILE_HEIGHT, SPR_BLACK);
-				}
-			}
-			
-			return;
-		}
-		
 		if (roomCurrent != null) roomCurrent.render(editMode);
+	}
+	
+	public function renderPreview() {
+		if (roomCurrent != null) roomCurrent.renderPreview();
 	}
 	
 	function get_room():Room {
