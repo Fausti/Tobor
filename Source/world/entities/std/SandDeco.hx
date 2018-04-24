@@ -24,6 +24,17 @@ class SandDeco extends EntityFloor {
 		return true;
 	}
 	
+	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
+		// Wenn Ring#2 im Inventar und Ringeffekte aktiv, keine Verlangsamung
+		if (getWorld().checkRingEffect(3) && Std.is(e, Charlie)) return;
+		
+		// Wenn Nahrungstimer aktiv, keine Verlangsamung
+		if (getWorld().food > 0 && Std.is(e, Charlie)) return;
+		
+		var ee:EntityMoveable = cast e;
+		ee.changeSpeed((speed) / 2);
+	}
+	
 	override public function render() {
 		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_SAND_DECO[type]);
 	}
