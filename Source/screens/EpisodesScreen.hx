@@ -4,6 +4,7 @@ import ui.DialogMessage;
 import ui.DialogInput;
 import ui.Screen;
 import world.World;
+import lime.math.Rectangle;
 
 /**
  * ...
@@ -26,12 +27,20 @@ class EpisodesScreen extends Screen {
 	var SPR_SCROLLBAR_1:Sprite;
 	
 	var episoden:Array<FileEpisode> = [];
+	
 	var index:Int = 0;
+	var oldPos:Int = 0;
 	
 	var scrollingText:String;
 	var scrollingPosition:Int;
 	var scrollingTime:Float;
 	var scrollingSpeed:Float = 0.25;
+	
+	var maxLines:Int = 7;
+	var begin:Int = 0;
+	
+	var rectUp:Rectangle;
+	var rectDown:Rectangle;
 	
 	public function new(game:Tobor) {
 		super(game);
@@ -57,6 +66,9 @@ class EpisodesScreen extends Screen {
 		scrollingText = scrollingText.rpad(38 * 2, " ");
 		scrollingText = scrollingText + scrollingText;
 		scrollingTime = scrollingSpeed;
+		
+		rectUp = new Rectangle(4 + 36 * 16, 10 * 12, 16 ,12);
+		rectDown = new Rectangle(4 + 36 * 16, 23 * 12, 16, 12);
 		
 		updateFileList();
 	}
@@ -138,16 +150,24 @@ class EpisodesScreen extends Screen {
 		if (dialog != null) {
 			dialog.update(deltaTime);
 		} else {
+			/*
+			if (Input.mouseX >= 48 && Input.mouseX < 48 + 528 && Input.mouseY >= 120 && Input.mouseY < 120 + 7 * 24) {
+				var pos:Int = Std.int((Input.mouseY - 120) / 24);
+				
+				if (pos >= 0 && pos < maxLines) {
+					if (oldPos != pos) {
+						oldPos = pos;
+						index = pos + begin;
+					}
+				}
+			}
+			*/
+		
 			if (Input.isKeyDown([Input.key.ESCAPE])) {
 				game.exit();
 			} else if (Input.isKeyDown([Input.key.RETURN])) {
-				if (episoden[index].isEditor) {
-					createEpisode();
-					return;
-				} else {
-					game.world = new World(game, episoden[index]);
-					game.setScreen(new IntroScreen(game));
-				}
+				chooseEpisode();
+				return;
 			} else if (Input.isKeyDown(Tobor.KEY_UP) || Input.wheelUp()) {
 				index--;
 				Input.wait(0.25);
@@ -157,9 +177,40 @@ class EpisodesScreen extends Screen {
 			}
 		}
 		
-		if (index < 0) index = 0;
-		if (index >= episoden.length) index = episoden.length - 1;
+		fixIndex();
 		
+		if (Input.mouseBtnLeft) {
+			if (Input.mouseX >= 48 && Input.mouseX < 48 + 528 && Input.mouseY >= 120 && Input.mouseY < 120 + 7 * 24) {
+				var pos:Int = Std.int((Input.mouseY - 120) / 24);
+				if (pos >= 0 && pos < maxLines) {
+					if (oldPos != pos) {
+						oldPos = pos;
+						index = pos + begin;
+						chooseEpisode();
+					}
+				}
+				return;
+			} else if (rectUp.contains(Input.mouseX, Input.mouseY)) {
+				if (begin > 0) {
+					begin--;
+					index--;
+				
+					fixIndex();
+				}
+				
+				Input.clearKeys();
+			} else if (rectDown.contains(Input.mouseX, Input.mouseY)) {
+				if (begin + 6 < episoden.length - 1) {
+					begin++;
+					index++;
+				
+					fixIndex();
+				}
+				
+				Input.clearKeys();
+			}
+		}
+				
 		if (scrollingTime > 0) {
 			scrollingTime = scrollingTime - deltaTime;
 		} else {
@@ -169,6 +220,31 @@ class EpisodesScreen extends Screen {
 			}
 			
 			scrollingTime = scrollingSpeed;
+		}
+	}
+	
+	function fixIndex() {
+		if (begin < 0) begin = 0;
+		if (index < 0) index = 0;
+		
+		if (index >= episoden.length) index = episoden.length - 1;
+		
+		if (index >= maxLines) {
+			begin = index - maxLines + 1;
+		}
+		
+		while ((begin > index) || (begin < 0)) {
+			begin--;
+		}
+	}
+	
+	function chooseEpisode() {
+		if (episoden[index].isEditor) {
+			createEpisode();
+			return;
+		} else {
+			game.world = new World(game, episoden[index]);
+			game.setScreen(new IntroScreen(game));
 		}
 	}
 	
@@ -211,15 +287,13 @@ class EpisodesScreen extends Screen {
 
 		Tobor.frameBig.drawBox(x, y, 36, 16);
 		
-		var lines:Int = 7;
-		
-		var begin:Int = 0;
-		
-		if (index >= lines) {
-			begin = index - lines + 1;
+		/*
+		if (index >= maxLines) {
+			begin = index - maxLines + 1;
 		}
+		*/
 		
-		for (i in 0 ... lines) {
+		for (i in 0 ... maxLines) {
 			var ep:FileEpisode = episoden[i + begin];
 			
 			if (ep != null) {
@@ -237,7 +311,7 @@ class EpisodesScreen extends Screen {
 		}
 		
 		var ps:Float = episoden.length / 12;
-		var end:Int = Std.int(Math.min(episoden.length, begin + lines));
+		var end:Int = Std.int(Math.min(episoden.length, begin + maxLines));
 		
 		for (i in 0 ... 14) {
 			if (i == 0) {
