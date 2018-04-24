@@ -170,10 +170,12 @@ class Gfx {
 	}
 	
 	public static inline function getSprite(x:Int, y:Int, ?w:Int = -1, ?h:Int = -1):Sprite {
+		/*
 		if (_texture == null) {
 			trace("getSprite(): No texture loaded!");
 			return null;
 		}
+		*/
 		
 		if (w == -1 || h == -1) {
 			return new Sprite(_texture, x, y, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);

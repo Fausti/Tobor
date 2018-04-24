@@ -16,9 +16,15 @@ class Sprite {
 	public var height:Int;
 	
 	public function new(?texture:Texture = null, ?x:Int = 0, ?y:Int = 0, ?w:Int = 0, ?h:Int = 0, ?scale:Float = 1.0) {
-		if (texture == null) return;
+		var texWidth:Int = 256;
+		var texHeight:Int = 512;
 		
-		uv = new Rectangle(x / texture.width, y / texture.height, w / texture.width / scale, h  / texture.height / scale);
+		if (texture != null) {
+			texWidth = texture.width;
+			texHeight = texture.height;
+		}
+		
+		uv = new Rectangle(x / texWidth, y / texHeight, w / texWidth / scale, h  / texHeight / scale);
 		
 		width = w;
 		height = h;
