@@ -140,132 +140,129 @@ class EditorScreen extends PlayScreen {
 		if (dialog != null) {
 			dialog.update(deltaTime);
 			return;
-		} else {
-			if (Input.isKeyDown([Input.key.ESCAPE])) {
-				if (editMode) {
-					showEditMenu();
-				} else {
-					showMainMenu();
-				}
-				
-				return;
-			} else if (Input.isKeyDown([Input.key.RETURN])) {
-				if (editMode) {
-					showDialog(dialogTiles);
-					
-					return;
-				} else {
-					showInventory();
-					
-					return;
-				}
-				
-				return;
-			} else if (Input.isKeyDown([Input.key.TAB])) {
-				if (editMode) {
-					showDialog(dialogRooms);
-					
-					return;
-				}
-			}
+		}
 		
-			if (!editMode) {
-				checkPlayerMovement();
+		if (game.world.isLoading) return;
+		
+		if (game.world.canStart) {
+			getWorld().start();
+			game.world.canStart = false;
+		}
+		
+		if (Input.isKeyDown([Input.key.ESCAPE])) {
+			if (editMode) {
+				showEditMenu();
 			} else {
-				checkRoomSwitch();
-				
-				if (Input.wheelUp()) {
-					currentTile--;
-					if (currentTile < 0) currentTile = 0;
-					
-					checkBrushSetting();
-				} else if (Input.wheelDown()) {
-					currentTile++;
-					if (currentTile > game.world.factory.length) {
-						currentTile = game.world.factory.length - 1;
-					}
-					
-					checkBrushSetting();
-				}
+				showMainMenu();
 			}
+				
+			return;
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			if (editMode) {
+				showDialog(dialogTiles);
+					
+				return;
+			} else {
+				showInventory();
+				
+				return;
+			}
+				
+			return;
+		} else if (Input.isKeyDown([Input.key.TAB])) {
+			if (editMode) {
+				showDialog(dialogRooms);
+					
+				return;
+			}
+		}
+		
+		if (!editMode) {
+			checkPlayerMovement();
+		} else {
+			checkRoomSwitch();
+				
+			if (Input.wheelUp()) {
+				currentTile--;
+				if (currentTile < 0) currentTile = 0;
+					
+				checkBrushSetting();
+			} else if (Input.wheelDown()) {
+				currentTile++;
+				if (currentTile > game.world.factory.length) {
+					currentTile = game.world.factory.length - 1;
+				}
+					
+				checkBrushSetting();
+			}
+		}
 			
-			if (cursorX == 1 && cursorY == 0 && Input.mouseBtnLeft) {
+		if (cursorX == 1 && cursorY == 0 && Input.mouseBtnLeft) {
+			switchEditMode();
+			return;
+		}
+			
+		if (Input.isKeyDown([Input.key.F5])) {
+			if (!game.world.player.isMoving()) {
 				switchEditMode();
 				return;
 			}
+		}
 			
-			if (Input.isKeyDown([Input.key.F5])) {
-				if (!game.world.player.isMoving()) {
-					switchEditMode();
-					return;
-				}
-			}
-			
-			if (Input.mouseBtnLeft) {
-				if (editMode) {
-					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
-						// im Raum zeichnen
-						var template = game.world.factory.get(currentTile);
+		if (Input.mouseBtnLeft) {
+			if (editMode) {
+				if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
+					// im Raum zeichnen
+					var template = game.world.factory.get(currentTile);
 						
-						if (template.name != "OBJ_CHARLIE") {
-							if (brush == 0) {
-								var e:Entity = template.create();
+					if (template.name != "OBJ_CHARLIE") {
+						if (brush == 0) {
+							var e:Entity = template.create();
 							
-								if (template.layer == Room.LAYER_MARKER) {
-									var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
-									for (le in l) {
-										le.setMarker(e.type);
-									}
-								} else if (template.layer == Room.LAYER_DRIFT) {
-									var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
-									for (le in l) {
-										le.setDrift(e.type);
-									}
-								} else {
-									if (template.canBePlaced) {
-										e.setPosition(cursorX, cursorY - 1);
-										addEntity(e, template);
-									}
+							if (template.layer == Room.LAYER_MARKER) {
+								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
+								for (le in l) {
+									le.setMarker(e.type);
+								}
+							} else if (template.layer == Room.LAYER_DRIFT) {
+								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
+								for (le in l) {
+									le.setDrift(e.type);
 								}
 							} else {
-								if (cursorX != oldCursorX || cursorY != oldCursorY) {
-									addBrush(template);
-									oldCursorX = cursorX;
-									oldCursorY = cursorY;
+								if (template.canBePlaced) {
+									e.setPosition(cursorX, cursorY - 1);
+									addEntity(e, template);
 								}
 							}
 						} else {
-							game.world.player.setPosition(cursorX, cursorY - 1);
-							game.world.oldPlayerX = cursorX;
-							game.world.oldPlayerY = cursorY - 1;
+							if (cursorX != oldCursorX || cursorY != oldCursorY) {
+								addBrush(template);
+								oldCursorX = cursorX;
+								oldCursorY = cursorY;
+							}
 						}
-						
-						return;
-					} else if (cursorX == 10 && cursorY == 0) {
-						// den Objektwahl Dialog öffnen
-						showDialog(dialogTiles);
-						
-						return;
-					}  else if (cursorX >= 12 && cursorX <= 14 && cursorY == 0) {
-						// Brush wählen
-						brush = cursorX - 12;
-						autoTiling = false;
-						
-						checkBrushSetting();
-						
-						return;
-					} else if (cursorX == 16 && cursorY == 0) {
-						if (autoTiling) autoTiling = false;
-						else {
-							autoTiling = hasAutoTiling();
-							brush = 0;
-						}
-						
-						Input.clearKeys();
+					} else {
+						game.world.player.setPosition(cursorX, cursorY - 1);
+						game.world.oldPlayerX = cursorX;
+						game.world.oldPlayerY = cursorY - 1;
 					}
-				}
-			} else if (Input.mouseBtnMiddle) {
-				if (editMode) {
+					
+					return;
+				} else if (cursorX == 10 && cursorY == 0) {
+					// den Objektwahl Dialog öffnen
+					showDialog(dialogTiles);
+					
+					return;
+				}  else if (cursorX >= 12 && cursorX <= 14 && cursorY == 0) {
+					// Brush wählen
+					brush = cursorX - 12;
+					autoTiling = false;
+					
+					checkBrushSetting();
+					
+					return;
+				} else if (cursorX == 16 && cursorY == 0) {
 					if (autoTiling) autoTiling = false;
 					else {
 						autoTiling = hasAutoTiling();
@@ -274,40 +271,50 @@ class EditorScreen extends PlayScreen {
 					
 					Input.clearKeys();
 				}
-			} else if (Input.mouseBtnRight) {
-				if (editMode) {
-					if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
-						var template = game.world.factory.get(currentTile);
-						
-						if (brush == 0) {
-							// Objekte an Position entfernen
-							var list = game.world.room.getAllEntitiesAt(cursorX, cursorY - 1);
-						
-							for (e in list) {
-								if (template.layer == Room.LAYER_MARKER) {
-									e.setMarker(Marker.MARKER_NO);
-								} else if (template.layer == Room.LAYER_DRIFT) {
-									e.setDrift( -1);
-								} else {
-									if (template.layer == Room.LAYER_ROOF) {
-										if (e.z == Room.LAYER_ROOF) {
-											game.world.room.removeEntity(e);
-										}
-									} else {
+			}
+		} else if (Input.mouseBtnMiddle) {
+			if (editMode) {
+				if (autoTiling) autoTiling = false;
+				else {
+					autoTiling = hasAutoTiling();
+					brush = 0;
+				}
+				
+				Input.clearKeys();
+			}
+		} else if (Input.mouseBtnRight) {
+			if (editMode) {
+				if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
+					var template = game.world.factory.get(currentTile);
+					
+					if (brush == 0) {
+						// Objekte an Position entfernen
+						var list = game.world.room.getAllEntitiesAt(cursorX, cursorY - 1);
+					
+						for (e in list) {
+							if (template.layer == Room.LAYER_MARKER) {
+								e.setMarker(Marker.MARKER_NO);
+							} else if (template.layer == Room.LAYER_DRIFT) {
+								e.setDrift( -1);
+							} else {
+								if (template.layer == Room.LAYER_ROOF) {
+									if (e.z == Room.LAYER_ROOF) {
 										game.world.room.removeEntity(e);
 									}
+								} else {
+									game.world.room.removeEntity(e);
 								}
 							}
-						} else {
-							if (cursorX != oldCursorX || cursorY != oldCursorY) {
-								removeBrush(template);
-								oldCursorX = cursorX;
-								oldCursorY = cursorY;
-							}
 						}
-						
-						return;
+					} else {
+						if (cursorX != oldCursorX || cursorY != oldCursorY) {
+							removeBrush(template);
+							oldCursorX = cursorX;
+							oldCursorY = cursorY;
+						}
 					}
+					
+					return;
 				}
 			}
 		}
@@ -409,6 +416,11 @@ class EditorScreen extends PlayScreen {
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
 		
+		if (game.world.isLoading) {
+			renderLoadingProcess();
+			return;
+		}
+		
 		if (game.world.room == null) {
 			return;
 		}
@@ -459,17 +471,19 @@ class EditorScreen extends PlayScreen {
 		if (dialog != null) {
 			dialog.render();
 		} else {
-			if (editMode) {
-				if (cursorY > 0) {
-					for (xx in (0 - brush) ... (1 + brush)) {
-						for (yy in (0 - brush) ... (1 + brush)) {
-							if (brushes[brush][brush + yy][brush + xx] == 1) {
-								var px:Int = cursorX + xx;
-								var py:Int = cursorY + yy;
+			if (!game.world.isLoading) {
+				if (editMode) {
+					if (cursorY > 0) {
+						for (xx in (0 - brush) ... (1 + brush)) {
+							for (yy in (0 - brush) ... (1 + brush)) {
+								if (brushes[brush][brush + yy][brush + xx] == 1) {
+									var px:Int = cursorX + xx;
+									var py:Int = cursorY + yy;
 								
-								if (px >= 0 && px < Room.WIDTH && py >= 1 && py <= Room.HEIGHT) {
-									Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, game.world.factory.get(currentTile).spr, COLOR_TRANSPARENT);
-									if (xx == 0 && yy == 0) Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, SPR_CURSOR, COLOR_TRANSPARENT);
+									if (px >= 0 && px < Room.WIDTH && py >= 1 && py <= Room.HEIGHT) {
+										Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, game.world.factory.get(currentTile).spr, COLOR_TRANSPARENT);
+										if (xx == 0 && yy == 0) Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, SPR_CURSOR, COLOR_TRANSPARENT);
+									}
 								}
 							}
 						}

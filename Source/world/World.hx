@@ -1,5 +1,6 @@
 package world;
 
+import cpp.vm.Thread;
 import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
@@ -64,6 +65,8 @@ class World {
 	public var highScore:Highscore;
 	
 	public var isLoading:Bool = false;
+	public var canStart:Bool = false;
+	public var loadStatus:Float = 0;
 	
 	public static var WIN_FLAG_ONLY:Int = 0;
 	public static var WIN_RING_1:Int = 1;
@@ -147,12 +150,18 @@ class World {
 			room.addEntity(sp);
 			
 			player.setRoom(roomCurrent);
+			
+			isLoading = false;
+			canStart = true;
 		} else {
-			loadData(content);
-						
-			switchRoom(inRoomX, inRoomY, inRoomZ);
-			room.restoreState();
-			player.setRoom(roomCurrent);
+			loadData(content, function () {		
+				switchRoom(inRoomX, inRoomY, inRoomZ);
+				room.restoreState();
+				player.setRoom(roomCurrent);
+				
+				isLoading = false;
+				canStart = true;
+			});
 		}
 		
 		flags = [false, false, false, false, false];
@@ -161,8 +170,6 @@ class World {
 		episodeLost = false;
 		
 		pointsAnim = points;
-		
-		isLoading = false;
 	}
 	
 	public function checkRingEffect(index:Int):Bool {
@@ -566,10 +573,12 @@ class World {
 	
 	// Save / Load
 	
-	public function load() {
+	/*
+	public function _load() {
 		var content:String = file.loadFile('rooms.json');
-		if (content != null) loadData(content);
+		if (content != null) loadData(content, function() {});
 	}
+	*/
 	
 	public function doSaveGame() {
 		actionSaveGame = true;
@@ -580,15 +589,6 @@ class World {
 
 		content = saveData();
 		file.saveSavegame(fileName, content);
-	}
-	
-	public function loadGame(fileName:String) {
-		var content:String = file.loadSavegame(fileName);
-
-		loadData(content);
-			
-		switchRoom(inRoomX, inRoomY, inRoomZ);
-		player.setRoom(roomCurrent);
 	}
 	
 	public function save() {
@@ -690,15 +690,26 @@ class World {
 		return TJSON.encode(data, 'fancy');
 	}
 	
-	function loadData(fileData:String) {
+	function loadData(fileData:String, ?cb:Void->Void = null) {
 		roomCurrent = null;
 		rooms = new RoomList();
-
-		var data = TJSON.parse(fileData);
+		loadStatus = 0;
 		
-		for (key in Reflect.fields(data)) {
-			parseKey(key, data);
-		}
+		var t = Thread.create(function () {
+			var data = TJSON.parse(fileData);
+			var max:Int = Reflect.fields(data).length;
+			var index:Int = 0;
+			
+			for (key in Reflect.fields(data)) {
+				index++;
+				loadStatus = Math.ceil((index * 100) / max);
+				// trace(loadStatus);
+				
+				parseKey(key, data);
+			}
+			
+			if (cb != null) cb();
+		});
 	}
 	
 	function parseKey(key, data) {

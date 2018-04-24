@@ -5,7 +5,6 @@ import ui.DialogInput;
 import ui.DialogMessage;
 import world.Inventory;
 import world.World;
-import world.entities.Entity;
 import world.entities.std.Charlie;
 
 import ui.DialogInventory;
@@ -32,6 +31,8 @@ class PlayScreen extends Screen {
 	var SPR_GARLIC:Sprite;
 	var SPR_TUNNEL:Sprite;
 	var SPR_NONE:Sprite;
+	var SPR_WALL:Sprite;
+	var SPR_WALL2:Sprite;
 	
 	var TXT_STATUS_POINTS:String;
 	var TXT_STATUS_LIVES:String;
@@ -54,6 +55,8 @@ class PlayScreen extends Screen {
 		SPR_GARLIC = Gfx.getSprite(192, 24);
 		
 		SPR_NONE = Gfx.getSprite(0, 0);
+		SPR_WALL = Gfx.getSprite(48, 132);
+		SPR_WALL2 = Gfx.getSprite(160, 0);
 		
 		SPR_TUNNEL = Gfx.getSprite(240, 120);
 		
@@ -62,8 +65,10 @@ class PlayScreen extends Screen {
 	
 	function init(?loadFileName:String = null) {
 		getWorld().init(loadFileName);
+	}
+	
+	function start() {
 		getWorld().start();
-
 		askForName();
 	}
 	
@@ -71,17 +76,24 @@ class PlayScreen extends Screen {
 		if (dialog != null) {
 			dialog.update(deltaTime);
 			return;
-		} else {
-			if (Input.isKeyDown([Input.key.ESCAPE])) {
-				showMainMenu();
-				
-				return;
-			} else if (Input.isKeyDown([Input.key.RETURN])) {
-				showInventory();
-			}
-		
-			checkPlayerMovement();
 		}
+
+		if (game.world.isLoading) return;
+		
+		if (game.world.canStart) {
+			start();
+			game.world.canStart = false;
+		}
+		
+		if (Input.isKeyDown([Input.key.ESCAPE])) {
+			showMainMenu();
+			
+			return;
+		} else if (Input.isKeyDown([Input.key.RETURN])) {
+			showInventory();
+		}
+		
+		checkPlayerMovement();
 		
 		getWorld().update(deltaTime);
 		
@@ -182,8 +194,34 @@ class PlayScreen extends Screen {
 		}
 	}
 	
+	function renderLoadingProcess() {
+		var percent:Float = game.world.loadStatus;
+		
+		for (x in 0 ... Room.WIDTH) {
+			for (y in 0 ... Room.HEIGHT) {
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WALL);
+			}
+		}
+		
+		Tobor.frameBig.drawBox(14 * Tobor.TILE_WIDTH, 12 * Tobor.TILE_HEIGHT, 12, 5);
+		Tobor.fontBig.drawString(15 * Tobor.TILE_WIDTH, 13 * Tobor.TILE_HEIGHT, "Lade...", Color.BLACK, Color.WHITE);
+		
+		for (x in 0 ... 10) {
+			if (x < Std.int(percent / 10)) {
+				Gfx.drawSprite((15 + x) * Tobor.TILE_WIDTH, 15 * Tobor.TILE_HEIGHT, SPR_WALL2);
+			} else {
+				Gfx.drawSprite((15 + x) * Tobor.TILE_WIDTH, 15 * Tobor.TILE_HEIGHT, SPR_ISOLATOR);
+			}
+		}
+	}
+	
 	override public function render() {
 		Gfx.setOffset(0, Tobor.TILE_HEIGHT);
+		
+		if (game.world.isLoading) {
+			renderLoadingProcess();			
+			return;
+		}
 		
 		checkDarkness();
 		
