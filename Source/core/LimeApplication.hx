@@ -1,5 +1,7 @@
 package core;
 import lime.math.Vector2;
+import lime.system.Display;
+import lime.system.System;
 import lime.ui.GamepadAxis;
 import lime.ui.GamepadButton;
 import lime.ui.Touch;
@@ -20,6 +22,7 @@ import lime.ui.Window;
  */
 class LimeApplication extends Application {
 	var game:LimeGame;
+	var display:Display;
 	
 	public function new () {
 		super ();
@@ -36,6 +39,9 @@ class LimeApplication extends Application {
 				
 			default:
 		}
+		
+				
+		display = System.getDisplay(0);
 	}
 	
 	override public function onPreloadComplete():Void {
@@ -117,26 +123,78 @@ class LimeApplication extends Application {
 	
 	override public function onTouchStart(touch:Touch):Void {
 		super.onTouchStart(touch);
-		
-		trace("onTouchStart: ", touch.x, touch.y, touch.dx, touch.dy);
+		if (game != null) {
+			game.onMouseButtonDown(
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y, 
+				0
+			);
+			
+			/*
+			trace(
+				"onTouchStart: ", 
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y
+			);
+			*/
+		}
 	}
 	
 	override public function onTouchEnd(touch:Touch):Void {
 		super.onTouchEnd(touch);
-		
-		trace("onTouchEnd: ", touch.x, touch.y, touch.dx, touch.dy);
+		if (game != null) {
+			game.onMouseButtonUp(
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y, 
+				0
+			);
+			
+			/*
+			trace(
+				"onTouchEnd: ", 
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y
+			);
+			*/
+		}
 	}
 	
 	override public function onTouchMove(touch:Touch):Void 	{
 		super.onTouchMove(touch);
-		
-		trace("onTouchMove: ", touch.x, touch.y, touch.dx, touch.dy);
+		if (game != null) {
+			game.onMouseButtonDown(
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y, 
+				0
+			);
+			
+			/*
+			trace(
+				"onTouchMove: ", 
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y
+			);
+			*/
+		}
 	}
 	
 	override public function onTouchCancel(touch:Touch):Void {
 		super.onTouchCancel(touch);
-		
-		trace("onTouchCancel: ", touch.x, touch.y, touch.dx, touch.dy);
+		if (game != null) {
+			game.onMouseButtonUp(
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y, 
+				0
+			);
+			
+			/*
+			trace(
+				"onTouchCancel: ", 
+				touch.x * display.currentMode.width - this.window.x, 
+				touch.y * display.currentMode.height - this.window.y
+			);
+			*/
+		}
 	}
 	
 	// Gamepad!
