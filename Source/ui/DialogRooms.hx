@@ -1,5 +1,7 @@
 package ui;
 
+import haxe.Timer;
+import lime.Lib;
 import lime.math.Rectangle;
 import screens.EditorScreen;
 import world.World;
@@ -75,6 +77,9 @@ class DialogRooms extends Dialog {
 	}
 	
 	override public function show() {
+		// aktuellen Raum sichern!
+		editor.game.world.room.saveState();
+		
 		roomX = world.room.position.x;
 		roomY = world.room.position.y;
 		roomZ = world.room.position.z;
@@ -161,7 +166,11 @@ class DialogRooms extends Dialog {
 		if (roomZ > 9) roomZ = 9;
 		
 		if (world.room.position.x != roomX || world.room.position.y != roomY || world.room.position.z != roomZ) {
-			editor.switchRoom(roomX, roomY, roomZ, false);
+			if (rooms[roomZ][roomX][roomY]) {
+				// var startTime:Float = Timer.stamp();
+				editor.switchRoomPreview(roomX, roomY, roomZ);
+				// trace(Timer.stamp() - startTime);
+			}
 		}
 	}
 	

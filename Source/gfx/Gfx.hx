@@ -183,4 +183,16 @@ class Gfx {
 			return new Sprite(_texture, x, y, w, h);
 		}
 	}
+	
+	public static function getSprites(list:Array<Sprite>, x:Int, y:Int, start:Int, count:Int):Array<Sprite> {
+		if (list == null) {
+			list = [];
+		}
+		
+		for (i in start ... count) {
+			list.push(Gfx.getSprite(x + 16 * i, y));
+		}
+		
+		return list;
+	}
 }

@@ -427,6 +427,10 @@ class World {
 	public function switchRoom(x:Int, y:Int, z:Int) {
 		var r:Room = rooms.find(x, y, z);
 		
+		switchRoomTo(r);
+	}
+	
+	public function switchRoomTo(r:Room) {
 		if (r != null) {
 			if (roomCurrent != null) {
 				// aktuellen Raum beenden!

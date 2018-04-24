@@ -369,6 +369,20 @@ class EditorScreen extends PlayScreen {
 		
 		game.world.room.restoreState();
 	}
+	
+	public function switchRoomPreview(x:Int, y:Int, z:Int) {
+		if (x < 0 || x >= 10) return;
+		if (y < 0 || y >= 10) return;
+		if (z < 0 || z >= 10) return;
+		
+		var nextRoom:Room = game.world.rooms.find(x, y, z);
+
+		if (nextRoom != null) {
+			game.world.switchRoomTo(nextRoom);
+		}
+		
+		game.world.room.restoreState();
+	}
 
 	function switchEditMode() {
 		// kein Umschalten während Spieler sich bewegt oder unsichtbar ist
