@@ -30,6 +30,7 @@ class EpisodesScreen extends Screen {
 	
 	var index:Int = 0;
 	var oldPos:Int = -1;
+	var mouseOver:Int = -1;
 	
 	var scrollingText:String;
 	var scrollingPosition:Int;
@@ -150,18 +151,16 @@ class EpisodesScreen extends Screen {
 		if (dialog != null) {
 			dialog.update(deltaTime);
 		} else {
-			/*
 			if (Input.mouseX >= 48 && Input.mouseX < 48 + 528 && Input.mouseY >= 120 && Input.mouseY < 120 + 7 * 24) {
 				var pos:Int = Std.int((Input.mouseY - 120) / 24);
-				
+
 				if (pos >= 0 && pos < maxLines) {
-					if (oldPos != pos) {
-						oldPos = pos;
-						index = pos + begin;
-					}
+					mouseOver = pos;
+
 				}
+			} else {
+				mouseOver = -1;
 			}
-			*/
 		
 			if (Input.isKeyDown([Input.key.ESCAPE])) {
 				game.exit();
@@ -298,10 +297,21 @@ class EpisodesScreen extends Screen {
 			
 			if (ep != null) {
 				if ((i + begin) == index) {
-					Gfx.drawTexture(x + 16, y + 12, 33 * 16, 12 * 2, SPR_NONE.uv, Color.ORANGE);
-					Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.ORANGE);
-					Tobor.fontSmall.drawString(x + 16, y + 12 + 12, ep.getDesc(66), Color.BLACK, Color.ORANGE);
+					if (i == mouseOver) {
+						Gfx.drawTexture(x + 16, y + 12, 33 * 16, 12 * 2, SPR_NONE.uv, Color.NEON_GREEN);
+						Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.NEON_GREEN);
+						Tobor.fontSmall.drawString(x + 16, y + 12 + 12, ep.getDesc(66), Color.BLACK, Color.NEON_GREEN);
+					} else {
+						Gfx.drawTexture(x + 16, y + 12, 33 * 16, 12 * 2, SPR_NONE.uv, Color.ORANGE);
+						Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.ORANGE);
+						Tobor.fontSmall.drawString(x + 16, y + 12 + 12, ep.getDesc(66), Color.BLACK, Color.ORANGE);
+					}
+
 				} else {
+					if (i == mouseOver) {
+						Gfx.drawTexture(x + 16, y + 12, 33 * 16, 12 * 2, SPR_NONE.uv, Color.NEON_GREEN);
+					}
+					
 					Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33));
 					Tobor.fontSmall.drawString(x + 16, y + 12 + 12, ep.getDesc(66), Color.BLACK);
 				}
