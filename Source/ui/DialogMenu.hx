@@ -58,6 +58,11 @@ class DialogMenu extends Dialog {
 					// Input.wait(0.25);
 					Input.clearKeys();
 				}
+			} else {
+				if (Input.mouseBtnLeft || Input.mouseBtnRight) {
+					exit();
+					Input.clearKeys();
+				}
 			}
 		}
 		
