@@ -725,7 +725,10 @@ class World {
 			case "gold":
 				if (!editing) gold = Reflect.field(data, "gold");
 			case "points":
-				if (!editing) points = Reflect.field(data, "points");
+				if (!editing) {
+					points = Reflect.field(data, "points");
+					pointsAnim = points;
+				}
 			case "lives":
 				if (!editing) lives = Reflect.field(data, "lives");
 			case "inventory":
