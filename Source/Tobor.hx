@@ -12,6 +12,7 @@ import ui.Frame;
 import ui.Screen;
 import ui.Dialog;
 import lime.graphics.Image;
+import lime.graphics.opengl.GLUniformLocation;
 
 import core.LimeGame;
 import gfx.Shader;
@@ -57,7 +58,16 @@ class Tobor extends LimeGame {
 	
 	// Lightmap
 	public var drawLight:Bool = false;
+	
 	public var lightBuffer:Framebuffer;
+	
+	public var lightShader:Shader;
+	private var lightShader_u_Scale:GLUniformLocation;
+	private var lightShader_u_Center:GLUniformLocation;
+	private var lightShader_u_Radius:GLUniformLocation;
+	private var lightShader_u_InputSize:GLUniformLocation;
+	private var lightShader_u_OutputSize:GLUniformLocation;
+	
 	var SPR_LIGHT_OVERLAY:Sprite;
 	public var lightColor:Color;
 	var listLights:Array<Rectangle>;
@@ -76,6 +86,13 @@ class Tobor extends LimeGame {
 	override public function init() {
 		// FrameBuffer für Lightmap erstellen
 		lightBuffer = new Framebuffer(Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT, 2);
+		
+		lightShader = Shader.createShaderFrom(Assets.getText("assets/light.vert"), Assets.getText("assets/light.frag"));
+		lightShader_u_Scale = lightShader.getUniformLocation("u_Scale");
+		lightShader_u_Center = lightShader.getUniformLocation("u_Center");
+		lightShader_u_Radius = lightShader.getUniformLocation("u_Radius");
+		lightShader_u_InputSize = lightShader.getUniformLocation("u_InputSize");
+		lightShader_u_OutputSize = lightShader.getUniformLocation("u_OutputSize");
 		
 		Config.init();
 		
@@ -189,16 +206,21 @@ class Tobor extends LimeGame {
 		
 		if (drawLight) {
 			// in lightBuffer zeichnen
+			Gfx.setShader(lightShader);
 			lightBuffer.bind();
-			Gfx.setShader(shader);
+			
+			GL.uniform2f(lightShader_u_Scale, 1, 1);
+			GL.uniform2f(lightShader_u_OutputSize, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
+			GL.uniform2f(lightShader_u_InputSize, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 			GL.uniform1i(Shader.current.u_Texture0, Gfx._texture.textureUnit);
+			
 			Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 			
 			GL.blendFunc(GL.ONE, GL.ONE); // ONE_ONE
 		
 			Gfx.clear(lightColor);  // 0, 0, 0, 1
 			
-			Gfx.begin(batch);
+			// Gfx.begin(batch);
 			
 			// Gfx.drawSprite(0, 0, SPR_LIGHT_OVERLAY);
 			// Gfx.drawSprite(24, 24, SPR_LIGHT_OVERLAY);
@@ -206,16 +228,21 @@ class Tobor extends LimeGame {
 			
 			if (listLights != null) {
 				for (rect in listLights) {
-					// Gfx.drawSprite(rect.x, rect.y, SPR_LIGHT_OVERLAY);
+					GL.uniform2f(lightShader_u_Center, rect.x + rect.width / 2, Tobor.SCREEN_HEIGHT - (rect.y + rect.height / 2) - 12);
+					GL.uniform2f(lightShader_u_Radius, rect.width / 2, rect.height / 2);
+					
+					Gfx.begin(batch);
 					Gfx.drawTexture(rect.x, rect.y, rect.width, rect.height, SPR_LIGHT_OVERLAY.uv);
+					Gfx.end();
 				}
 			}
 			
-			Gfx.end();
+			// Gfx.end();
 			
 			lightBuffer.unbind();
 		
 			// lightBuffer zeichnen
+			Gfx.setShader(shader);
 			getFrameBuffer().bind();
 			GL.uniform1i(Shader.current.u_Texture0, lightBuffer.textureUnit);
 			
