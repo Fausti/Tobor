@@ -66,11 +66,16 @@ class EditorScreen extends PlayScreen {
 	var SPR_EFENCE:Sprite;
 	var SPR_SELECTOR:Sprite;
 	
+	var SPR_DISC_0:Sprite;
+	var SPR_DISC_1:Sprite;
+	
 	var dialogTiles:DialogTiles;
 	var dialogRooms:DialogRooms;
 	
 	var inventoryTemplate:Inventory;
 	var dialogInventoryTemplate:DialogInventoryTemplate;
+	
+	var changed:Bool = false;
 	
 	public function new(game:Tobor) {
 		brushSpr = [
@@ -89,6 +94,9 @@ class EditorScreen extends PlayScreen {
 		autoSprActive = Gfx.getSprite(224, 444);
 		
 		SPR_SELECTOR = Gfx.getSprite(160, 240);
+		
+		SPR_DISC_0 = Gfx.getSprite(240, 432);
+		SPR_DISC_1 = Gfx.getSprite(240, 432 + 12);
 		
 		SPR_EFENCE = Gfx.getSprite(64, 12);
 		SPR_CURSOR = Gfx.getSprite(208, 240);
@@ -196,8 +204,18 @@ class EditorScreen extends PlayScreen {
 				checkBrushSetting();
 			}
 		}
+		
+		if (cursorX == 0 && cursorY == 0 && Input.mouseBtnLeft) {
+			if (changed) {
+				changed = false;
+				game.world.save();
 			
-		if (cursorX == 1 && cursorY == 0 && Input.mouseBtnLeft) {
+				Input.clearKeys();
+			}
+			return;
+		}
+			
+		if (cursorX == 2 && cursorY == 0 && Input.mouseBtnLeft) {
 			switchEditMode();
 			return;
 		}
@@ -212,6 +230,8 @@ class EditorScreen extends PlayScreen {
 		if (Input.mouseBtnLeft) {
 			if (editMode) {
 				if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
+					changed = true;
+					
 					// im Raum zeichnen
 					var template = game.world.factory.get(currentTile);
 						
@@ -444,7 +464,7 @@ class EditorScreen extends PlayScreen {
 		super.renderStatusLine();
 		
 		for (x in 0 ... 8) {
-			if (x == 1) {
+			if (x == 2) {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_EDIT);
 			} else {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
@@ -495,10 +515,12 @@ class EditorScreen extends PlayScreen {
 	
 	function renderMenuBar() {
 		for (x in 0 ... 8) {
-			if (x == 1) {
+			Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
+			
+			if (x == 0) {
+				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, changed?SPR_DISC_1:SPR_DISC_0);
+			} else if (x == 2) {
 				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_MODE_PLAY);
-			} else {
-				Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
 			}
 			
 			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
@@ -544,7 +566,7 @@ class EditorScreen extends PlayScreen {
 			// Cursor Koordinaten
 			if (cursorY > 0) {
 				var strCoords:String = "" + StringTools.lpad(Std.string(cursorX), "0", 2) + ", " + StringTools.lpad(Std.string(cursorY - 1), "0", 2);
-				Tobor.fontSmall.drawString(48, 1, strCoords, Color.BLACK, Color.WHITE);
+				Tobor.fontSmall.drawString(48 + 16, 1, strCoords, Color.BLACK, Color.WHITE);
 			}
 		
 			renderObjectCount();
@@ -767,6 +789,7 @@ class EditorScreen extends PlayScreen {
 				hideDialog();
 			}],
 			[Text.get("TXT_MENU_SAVE"), "", function () {
+				changed = false;
 				game.world.save();
 				hideDialog();
 			}],
@@ -804,6 +827,7 @@ class EditorScreen extends PlayScreen {
 		
 		d.onOk = function () {
 			game.world.room.clear(true);
+			changed = true;
 			hideDialog();
 		}
 		
@@ -815,6 +839,8 @@ class EditorScreen extends PlayScreen {
 		d.index = 0;
 		
 		d.onOk = function () {
+			changed = true;
+			
 			var tmpl:ObjectTemplate = game.world.factory.findFromID("OBJ_WALL_HARD");
 			
 			if (tmpl != null) {
@@ -844,6 +870,8 @@ class EditorScreen extends PlayScreen {
 	
 	function removeBrush(template:ObjectTemplate) {
 		if (!template.canBePlaced) return;
+		
+		changed = true;
 		
 		for (xx in (0 - brush) ... (1 + brush)) {
 			for (yy in (0 - brush) ... (1 + brush)) {
@@ -879,6 +907,8 @@ class EditorScreen extends PlayScreen {
 	function addBrush(template:ObjectTemplate) {
 		if (!template.canBePlaced) return;
 		
+		changed = true;
+		
 		for (xx in (0 - brush) ... (1 + brush)) {
 			for (yy in (0 - brush) ... (1 + brush)) {
 				if (brushes[brush][brush + yy][brush + xx] == 1) {
@@ -902,6 +932,8 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function addEntity(e:Entity, template:ObjectTemplate) {
+		changed = true;
+		
 		if (Std.is(e, EntityItem)) {
 			var container:Array<Entity> = game.world.room.findEntityAt(e.x, e.y, IContainer);
 			if (container.length > 0) {
