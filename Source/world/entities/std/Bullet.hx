@@ -238,7 +238,7 @@ class Bullet extends EntityDynamic {
 			bullet.move(newDir, (Bullet.BULLET_SPEED));
 				
 			die();
-		} if (Std.is(other, AndroidEgg)) {
+		} else if (Std.is(other, AndroidEgg)) {
 			room.spawnEntity(other.x, other.y, new Explosion());
 			var rob:Robot = new Robot();
 			room.spawnEntity(other.x, other.y, rob);
