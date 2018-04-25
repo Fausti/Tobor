@@ -9,19 +9,14 @@ import world.entities.EntityStatic;
  * @author Matthias Faust
  */
 class Door extends EntityStatic {
-
+	public static var SPR_DOOR:Array<Sprite> = Gfx.getSprites(null, 0, 36, 0, 16);
+	
 	public function new() {
 		super();
 	}
 	
-	override public function init() {
-		var spr:Sprite = null;
-		
-		spr = Gfx.getSprite(type * 16, 36);
-		
-		if (spr != null) {
-			setSprite(spr);
-		}
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_DOOR[type]);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {

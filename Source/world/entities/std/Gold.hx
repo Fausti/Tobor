@@ -9,11 +9,12 @@ import world.entities.EntityCollectable;
  * @author Matthias Faust
  */
 class Gold extends EntityCollectable {
-
+	public static var SPR_GOLD = Gfx.getSprite(96, 12);
+	
 	public function new() {
 		super();
 		
-		setSprite(Gfx.getSprite(96, 12));
+		setSprite(SPR_GOLD);
 	}
 	
 	override public function onPickup() {

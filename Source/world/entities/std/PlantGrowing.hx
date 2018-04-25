@@ -8,28 +8,26 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class PlantGrowing extends EntityDynamic {
-	var SPR_PLANT_GROWING:Array<Sprite> = [];
+	public static var SPR_PLANT_GROWING:Array<Sprite> = [
+		Gfx.getSprite(112, 312), 		// W - 0
+		Gfx.getSprite(112 + 64, 312),	// W - 1
+		Gfx.getSprite(96, 312), 
+		Gfx.getSprite(112 + 16, 312),	// N - 0
+		Gfx.getSprite(112 + 80, 312),	// N - 1
+		Gfx.getSprite(96, 312),
+		Gfx.getSprite(112 + 32, 312),	// E - 0
+		Gfx.getSprite(112 + 96, 312),	// E - 1
+		Gfx.getSprite(96, 312),
+		Gfx.getSprite(112 + 48, 312),	// S - 0
+		Gfx.getSprite(112 + 112, 312),	// S - 1
+		Gfx.getSprite(96, 312),
+	];
+	
 	var timeLeft:Float;
 	var growSpeed:Float = 2;
 	
 	public function new() {
 		super();
-		
-		SPR_PLANT_GROWING = [
-			Gfx.getSprite(112, 312), 		// W - 0
-			Gfx.getSprite(112 + 64, 312),	// W - 1
-			Gfx.getSprite(96, 312), 
-			Gfx.getSprite(112 + 16, 312),	// N - 0
-			Gfx.getSprite(112 + 80, 312),	// N - 1
-			Gfx.getSprite(96, 312),
-			Gfx.getSprite(112 + 32, 312),	// E - 0
-			Gfx.getSprite(112 + 96, 312),	// E - 1
-			Gfx.getSprite(96, 312),
-			Gfx.getSprite(112 + 48, 312),	// S - 0
-			Gfx.getSprite(112 + 112, 312),	// S - 1
-			Gfx.getSprite(96, 312),
-		];
-		
 		timeLeft = growSpeed - Config.getSpeed(1);
 	}
 	

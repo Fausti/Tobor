@@ -9,11 +9,12 @@ import world.entities.EntityStatic;
  * @author Matthias Faust
  */
 class Plant extends EntityStatic {
-
+	public static var SPR_PLANT = Gfx.getSprite(96, 312);
+	
 	public function new() {
 		super();
 		
-		setSprite(Gfx.getSprite(96, 312));
+		setSprite(SPR_PLANT);
 	}
 
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {

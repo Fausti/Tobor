@@ -10,16 +10,14 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class SandPlant extends EntityStatic {
-	var SPR_SAND_PLANT:Array<Sprite>;
+	public static var SPR_SAND_PLANT:Array<Sprite> = [
+		Gfx.getSprite(0, 168),
+		Gfx.getSprite(16, 168),
+		Gfx.getSprite(32, 168)
+	];
 	
 	public function new() {
 		super();
-		
-		SPR_SAND_PLANT = [
-			Gfx.getSprite(0, 168),
-			Gfx.getSprite(16, 168),
-			Gfx.getSprite(32, 168)
-		];
 	}
 	
 	override public function render() {

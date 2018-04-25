@@ -7,19 +7,14 @@ import world.entities.EntityItem;
  * @author Matthias Faust
  */
 class Key extends EntityItem {
-
+	public static var SPR_KEY:Array<Sprite> = Gfx.getSprites(null, 0, 48, 0, 16);
+	
 	public function new() {
 		super();
 	}
 	
-	override public function init() {
-		var spr:Sprite = null;
-		
-		spr = Gfx.getSprite(type * 16, 48);
-		
-		if (spr != null) {
-			setSprite(spr);
-		}
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_KEY[type]);
 	}
 	
 	override public function onPickup() {
