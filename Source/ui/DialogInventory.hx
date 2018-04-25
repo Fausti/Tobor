@@ -120,62 +120,45 @@ class DialogInventory extends Dialog {
 	}
 	
 	override public function update(deltaTime:Float) {
-		if (Input.isKeyDown(Tobor.KEY_ENTER)) {
-			if (currentGroup == rootGroup) {
-				rootIndex = index;
+		if (Input.mouseY >= 0 && Input.mouseY < 12) {
+			var offsetX = 320 - currentGroup.size * 8;
+			
+			if (Input.mouseX >= offsetX && Input.mouseX < offsetX + currentGroup.size * 16) {
+				var mouseIndex:Int = Std.int((Input.mouseX - offsetX) / 16);
 				
-				if (!rootGroup.content[index].isSingle()) {
-					if (rootGroup.content[index].group == "OBJ_MUNITION" && actions[actionIndex] == Inventory.ACTION_DROP_ALL) {
-						selectedAction = Inventory.ACTION_DROP; // actions[actionIndex];
-						selectedItem = [];
-					
-						for (itm in rootGroup.content[index].content) {
-							var itm2 = itm.getItem();
-							
-							for (i in 0 ... itm2.count) {
-								selectedItem.push(itm.getItem());
-							}
-						}
-						
-						ok();
-					} else {
-						currentGroup = rootGroup.content[index];
-						index = 0;
-					
-						updateActions();
-					}
-					
-					Input.wait(0.25);
-					return;
-				} else {
-					selectedAction = actions[actionIndex];
-					
-					if (selectedAction == Inventory.ACTION_DROP_ALL) {
-						selectedAction = Inventory.ACTION_DROP;
-						
-						selectedItem = [];
-						
-						var itm:InventoryItem = currentGroup.content[index].getItem();
-						for (i in 0 ... itm.count) {
-							selectedItem.push(itm);
-						}
-					} else {
-						selectedItem = [currentGroup.content[index].getItem()];
-					}
-					
-					ok();
-					Input.wait(0.25);
-					return;
-				}
-			} else {
-				selectedAction = actions[actionIndex];
-				selectedItem = [currentGroup.content[index].item];
-					
-				ok();
-				Input.wait(0.25);
-				return;
+				index = mouseIndex;
+				if (index >= currentGroup.size) index = currentGroup.size - 1;
+				if (index < 0) index = 0;
+				
+				updateActions();
 			}
-		} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
+		} else {
+			if (Input.mouseY >= 12 + Tobor.frameSmall.sizeY && Input.mouseY < 12 + (1 + actionsString.length) * Tobor.frameSmall.sizeY) {
+				var offsetX = 320 - currentGroup.size * 8;
+				offsetX = offsetX + index * 16 + Tobor.frameSmall.sizeX;
+				
+				if (Input.mouseX >= offsetX && Input.mouseX < offsetX + actionsSize * Tobor.frameSmall.sizeX) {
+					var mouseMenuIndex:Int = Std.int((Input.mouseY - 12 + Tobor.frameSmall.sizeY) / Tobor.frameSmall.sizeY) - 2;
+					
+					actionIndex = mouseMenuIndex;
+					
+					if (actionIndex < 0) actionIndex = 0;
+					if (actionIndex >= actions.length) actionIndex = actions.length - 1;
+					if (actions[actionIndex] == Inventory.ACTION_COUNT) actionIndex++;
+					
+					if (Input.mouseBtnLeft) {
+						selectItem();
+						Input.clearKeys();
+						return;
+					}
+				}
+			}
+		}
+		
+		if (Input.isKeyDown(Tobor.KEY_ENTER)) {
+			selectItem();
+			return;
+		} else if (Input.isKeyDown(Tobor.KEY_ESC) || Input.mouseBtnRight) {
 			if (currentGroup == rootGroup) rootIndex = index;
 			exit();
 		} else if (Input.isKeyDown(Tobor.KEY_LEFT) || Input.wheelDown()) {
@@ -205,6 +188,63 @@ class DialogInventory extends Dialog {
 			
 			if (actionIndex >= actions.length) actionIndex = actions.length - 1;
 			if (actions[actionIndex] == Inventory.ACTION_COUNT) actionIndex++;
+		}
+	}
+	
+	function selectItem() {
+		if (currentGroup == rootGroup) {
+			rootIndex = index;
+				
+			if (!rootGroup.content[index].isSingle()) {
+				if (rootGroup.content[index].group == "OBJ_MUNITION" && actions[actionIndex] == Inventory.ACTION_DROP_ALL) {
+					selectedAction = Inventory.ACTION_DROP; // actions[actionIndex];
+					selectedItem = [];
+					
+					for (itm in rootGroup.content[index].content) {
+						var itm2 = itm.getItem();
+							
+						for (i in 0 ... itm2.count) {
+							selectedItem.push(itm.getItem());
+						}
+					}
+					
+					ok();
+				} else {
+					currentGroup = rootGroup.content[index];
+					index = 0;
+					
+					updateActions();
+				}
+					
+				Input.wait(0.25);
+				return;
+			} else {
+				selectedAction = actions[actionIndex];
+					
+				if (selectedAction == Inventory.ACTION_DROP_ALL) {
+					selectedAction = Inventory.ACTION_DROP;
+						
+					selectedItem = [];
+						
+					var itm:InventoryItem = currentGroup.content[index].getItem();
+					for (i in 0 ... itm.count) {
+						selectedItem.push(itm);
+					}
+				} else {
+					selectedItem = [currentGroup.content[index].getItem()];
+				}
+					
+				ok();
+				Input.wait(0.25);
+				return;
+			}
+		} else {
+			selectedAction = actions[actionIndex];
+			selectedItem = [currentGroup.content[index].item];
+					
+			ok();
+			Input.wait(0.25);
+			return;
 		}
 	}
 	
