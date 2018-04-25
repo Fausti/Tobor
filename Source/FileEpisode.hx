@@ -265,8 +265,13 @@ class FileEpisode {
 		}
 	}
 	
-	public function getDesc(l:Int):String {
+	public function getDesc(l:Int = -1):String {
 		if (isEditor) return StringTools.rpad(Text.get("TXT_CREATE_NEW_EPISODE_IN_EDITOR"), ".", l);
+		
+		if (l == -1) {
+			return desc;
+		}
+		
 		return desc.rpad(l, ".", false);
 	}
 	

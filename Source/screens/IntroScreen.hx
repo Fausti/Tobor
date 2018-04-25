@@ -25,7 +25,9 @@ class IntroScreen extends Screen {
 	var frameRight:Sprite;
 	
 	var episodeName:String;
+	var episodeDesc:String;
 	var centerX:Int;
+	var centerXDesc:Int;
 	
 	var scrollingText:String;
 	var scrollingPosition:Int;
@@ -68,7 +70,10 @@ class IntroScreen extends Screen {
 		game.world.editing = false;
 		
 		episodeName = " " + game.world.getName() + " ";
+		episodeDesc = " " + game.world.getDesc() + " ";
+		
 		centerX = Std.int(320 - (episodeName.length8() / 2) * 16);
+		centerXDesc = Std.int(320 - (episodeDesc.length8() / 2) * 8);
 		
 		scrollingText = Text.get("TXT_PRESS_ENTER");
 		scrollingText = scrollingText.rpad(38 * 2, " ");
@@ -136,6 +141,7 @@ class IntroScreen extends Screen {
 	
 	override public function renderUI() {
 		Tobor.fontBig.drawString(centerX, 36, episodeName, Color.BLACK, Color.WHITE);
+		if (episodeDesc != "  ") Tobor.fontSmall.drawString(centerXDesc, 60, episodeDesc, Color.BLACK, Color.WHITE);
 		
 		Gfx.drawTexture(32, 60 + 24, 592 - 32, 264 - 60 - 24, SPR_NONE.uv, Color.WHITE);
 		
