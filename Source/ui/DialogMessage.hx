@@ -113,6 +113,8 @@ class DialogMessage extends Dialog {
 		
 		if (Input.isKeyDown([Input.key.ESCAPE, Input.key.RETURN, Input.key.RETURN2])) {
 			exit();
+		} else if (Input.mouseBtnLeft || Input.mouseBtnRight) {
+			exit();
 		}
 	}
 	
