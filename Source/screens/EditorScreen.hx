@@ -305,6 +305,8 @@ class EditorScreen extends PlayScreen {
 		} else if (Input.mouseBtnRight) {
 			if (editMode) {
 				if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
+					changed = true;
+					
 					var template = game.world.factory.get(currentTile);
 					
 					if (brush == 0) {
