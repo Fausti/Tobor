@@ -14,6 +14,7 @@ class Config {
 	public static var robotBehavior:Int = 1;
 	
 	public static var shader:Int = -1;
+	public static var light:Int = 1;
 	
 	public static function init() {
 		load();
@@ -29,6 +30,8 @@ class Config {
 			switch(key) {
 			case "speed":
 				speed = Reflect.field(data, "speed");
+			case "light":
+				speed = Reflect.field(data, "light");
 			case "shader":
 				shader = Reflect.field(data, "shader");
 			case "robotStress":
@@ -43,6 +46,7 @@ class Config {
 		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		data.set("speed", speed);
+		data.set("light", light);
 		data.set("shader", shader);
 		data.set("robotStress", robotStress);
 		data.set("robotBehavior", robotBehavior);

@@ -6,7 +6,9 @@ uniform mat4 u_camMatrix;
         
 varying vec2 v_TexCoord;
 varying vec4 v_Color;
-		
+
+uniform int u_Mode;
+
 uniform vec2 u_Center;
 uniform vec2 u_Radius;
 

@@ -373,6 +373,35 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
+	function showLightMenu() {
+		var menu = new DialogMenu(this, 320, 166, [
+			[Text.get("Dithering"), "", function () {
+				Config.light = 0;
+				hideDialog();
+			}],
+			[Text.get("Smooth"), "", function () {
+				Config.light = 1;
+				hideDialog();
+			}],
+			[Text.get("Both"), "", function () {
+				Config.light = 2;
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(Config.light);
+		
+		menu.onCancel = function () {
+			showOptionMenu();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showShaderMenu() {
 		var menu = new DialogMenu(this, 320, 166, [
 			[Text.get("Normal"), "", function () {
@@ -409,6 +438,9 @@ class PlayScreen extends Screen {
 			}],
 			[Text.get("TXT_MENU_SHADER"), "", function () {
 				showShaderMenu();
+			}],
+			[Text.get("TXT_MENU_LIGHT"), "", function () {
+				showLightMenu();
 			}],
 			[Text.get("TXT_MENU_ROBOT_STRESS"), "", function () {
 				showRobotStressMenu();

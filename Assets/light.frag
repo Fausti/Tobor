@@ -2,7 +2,9 @@ uniform sampler2D u_Texture0;
 		
 varying vec2 v_TexCoord;
 varying vec4 v_Color;
-		
+
+uniform int u_Mode;
+
 uniform vec2 u_Scale;
 uniform vec2 u_Center;
 uniform vec2 u_Radius;
@@ -28,12 +30,29 @@ void main(void) {
     if (dist < 0.5) {
        gl_FragColor = vec4(1, 1, 1, 1);
     } else {
-        if (dist < dither) {
-            // float c = clamp(1.25 - dist, 0, 1);
-            float c = 1 - smoothstep(0.5, 1, dist);
-            gl_FragColor = vec4(c, c, c, 1);
-        } else {
-            discard;
+        if (u_Mode == 0.0) { // Dithering
+            if (dist < dither) {
+                float c = 1 - smoothstep(0.5, 1, dist);
+                gl_FragColor = vec4(c, c, c, 1);
+            } else {
+                discard;
+            }
+        } else if (u_Mode == 1.0) { // Smooth
+            if (dist < dither) {
+                float c = 1 - smoothstep(0.5, 1, dist);
+                gl_FragColor = vec4(c, c, c, 1);
+            } else {
+                float c = 1 - smoothstep(0.5, 1, dist);
+                gl_FragColor = vec4(c, c, c, 1);
+            }
+        } else { // Kombi
+            if (dist < dither) {
+                float c = 1 - smoothstep(0.5, 1, dist);
+                gl_FragColor = vec4(c, c, c, 1);
+            } else {
+                float c = 1 - dist;
+                gl_FragColor = vec4(c, c, c, 1);
+            }
         }
     }
 }

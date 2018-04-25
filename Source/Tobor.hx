@@ -62,6 +62,7 @@ class Tobor extends LimeGame {
 	public var lightBuffer:Framebuffer;
 	
 	public var lightShader:Shader;
+	private var lightShader_u_Mode:GLUniformLocation;
 	private var lightShader_u_Scale:GLUniformLocation;
 	private var lightShader_u_Center:GLUniformLocation;
 	private var lightShader_u_Radius:GLUniformLocation;
@@ -89,6 +90,7 @@ class Tobor extends LimeGame {
 		
 		lightShader = Shader.createShaderFrom(Assets.getText("assets/light.vert"), Assets.getText("assets/light.frag"));
 		lightShader_u_Scale = lightShader.getUniformLocation("u_Scale");
+		lightShader_u_Mode = lightShader.getUniformLocation("u_Mode");
 		lightShader_u_Center = lightShader.getUniformLocation("u_Center");
 		lightShader_u_Radius = lightShader.getUniformLocation("u_Radius");
 		lightShader_u_InputSize = lightShader.getUniformLocation("u_InputSize");
@@ -208,6 +210,8 @@ class Tobor extends LimeGame {
 			// in lightBuffer zeichnen
 			Gfx.setShader(lightShader);
 			lightBuffer.bind();
+			
+			GL.uniform1i(lightShader_u_Mode, Config.light);
 			
 			GL.uniform2f(lightShader_u_Scale, 1, 1);
 			GL.uniform2f(lightShader_u_OutputSize, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
