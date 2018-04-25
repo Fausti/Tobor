@@ -29,7 +29,7 @@ class EpisodesScreen extends Screen {
 	var episoden:Array<FileEpisode> = [];
 	
 	var index:Int = 0;
-	var oldPos:Int = 0;
+	var oldPos:Int = -1;
 	
 	var scrollingText:String;
 	var scrollingPosition:Int;
