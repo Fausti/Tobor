@@ -2,17 +2,14 @@ package ui;
 
 import haxe.Utf8;
 
-import lime.math.Rectangle;
-
-using hx.strings.Strings;
 /**
  * ...
  * @author Matthias Faust
  */
 class Font {
 	private var offsetY:Int;
-	private var glyphW:Int;
-	private var glyphH:Int;
+	public var glyphW:Int;
+	public var glyphH:Int;
 	
 	private var tileBG:Sprite;
 	private var chars:Array<Sprite> = [];

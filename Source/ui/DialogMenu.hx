@@ -26,22 +26,38 @@ class DialogMenu extends Dialog {
 	
 	override public function update(deltaTime:Float) {
 		if (child == null) {
-			if (Input.isKeyDown([Input.key.RETURN])) {
+			if (Input.isKeyDown(Tobor.KEY_ENTER)) {
 				if (menu.currentItem.hasCallback()) {
 					menu.currentItem.call();
 				} else {
 					ok();
 				}
 				Input.wait(0.25);
-			} else if (Input.isKeyDown([Input.key.ESCAPE])) {
+			} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
 				exit();
 				Input.wait(0.25);
-			} else if (Input.isKeyDown([Input.key.UP]) || Input.wheelUp()) {
+			} else if (Input.isKeyDown(Tobor.KEY_UP) || Input.wheelUp()) {
 				menu.up();
 				Input.wait(0.25);
-			} else if (Input.isKeyDown([Input.key.DOWN]) || Input.wheelDown()) {
+			} else if (Input.isKeyDown(Tobor.KEY_DOWN) || Input.wheelDown()) {
 				menu.down();
 				Input.wait(0.25);
+			}
+			
+			if (Input.mouseX >= x + 8 && Input.mouseX < x + w * Tobor.frameSmall.sizeX - 8 && Input.mouseY >= y + 10 && Input.mouseY < y + h * Tobor.frameSmall.sizeY - 10) {
+				var mouseSelect:Int = Std.int((Input.mouseY - y) / Tobor.fontSmall.glyphH) - 1;
+				menu.select(mouseSelect);
+				
+				if (Input.mouseBtnLeft) {
+					if (menu.currentItem.hasCallback()) {
+						menu.currentItem.call();
+					} else {
+						ok();
+					}
+					
+					// Input.wait(0.25);
+					Input.clearKeys();
+				}
 			}
 		}
 		
