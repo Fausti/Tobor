@@ -1,5 +1,7 @@
 package world.entities.std;
 
+import lime.math.Vector2;
+import world.entities.Entity;
 import world.entities.EntityDynamic;
 
 /**
@@ -51,5 +53,9 @@ class AndroidEgg extends EntityDynamic {
 				setSprite(SPR_EGG[Std.random(4)]);
 			}
 		}
+	}
+	
+	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		return false;
 	}
 }
