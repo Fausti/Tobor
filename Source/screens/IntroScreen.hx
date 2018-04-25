@@ -27,6 +27,11 @@ class IntroScreen extends Screen {
 	var episodeName:String;
 	var centerX:Int;
 	
+	var scrollingText:String;
+	var scrollingPosition:Int;
+	var scrollingTime:Float;
+	var scrollingSpeed:Float = 0.25;
+	
 	public function new(game:Tobor) {
 		super(game);
 		
@@ -64,6 +69,11 @@ class IntroScreen extends Screen {
 		
 		episodeName = " " + game.world.getName() + " ";
 		centerX = Std.int(320 - (episodeName.length8() / 2) * 16);
+		
+		scrollingText = Text.get("TXT_PRESS_ENTER");
+		scrollingText = scrollingText.rpad(38 * 2, " ");
+		scrollingText = scrollingText + scrollingText;
+		scrollingTime = scrollingSpeed;
 	}
 	
 	function showLoadgameDialog() {
@@ -103,6 +113,17 @@ class IntroScreen extends Screen {
 		} else if (Input.mouseBtnLeft || Input.mouseBtnRight) {
 			showMainMenu(Input.mouseX, Input.mouseY);
 		}
+		
+		if (scrollingTime > 0) {
+			scrollingTime = scrollingTime - deltaTime;
+		} else {
+			scrollingPosition++;
+			if (scrollingPosition >= (scrollingText.length8() / 2)) {
+				scrollingPosition = 0;
+			}
+			
+			scrollingTime = scrollingSpeed;
+		}
 	}
 	
 	override public function render() {
@@ -137,6 +158,9 @@ class IntroScreen extends Screen {
 			
 			Gfx.drawSprite(32 + i * 16, 264, frameBottom);
 		}
+		
+		var text:String = scrollingText.substr8(scrollingPosition, 38 * 2).rpad(38 * 2, " ");
+		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
 		
 		super.renderUI();
 	}
