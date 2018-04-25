@@ -564,10 +564,10 @@ class EditorScreen extends PlayScreen {
 		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
 	}
 	
-	override function showMainMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	override function showMainMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_OPTIONS"), "", function () {
-				showOptionMenu();
+				showOptionMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_HELP"), ""],
 			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
@@ -589,8 +589,8 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditOptionsDarkness() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showEditOptionsDarkness(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_ROOM_DARKNESS_NONE"), "", function () {
 				game.world.room.config.darkness = Room.DARKNESS_OFF;
 				hideDialog();
@@ -618,8 +618,8 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditOptionsMusic() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showEditOptionsMusic(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_ROOM_MUSIC_NONE"), "", function () {
 				game.world.room.config.music = "";
 				hideDialog();
@@ -647,8 +647,8 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditOptionsRingEffects() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showEditOptionsRingEffects(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_RINGS_OFF"), "", function () {
 				game.world.config.ringEffects = false;
 				hideDialog();
@@ -676,8 +676,8 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditOptionsWinCondition() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showEditOptionsWinCondition(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_WIN_CONDITION_0"), "", function () {
 				game.world.config.winType = World.WIN_FLAG_ONLY;
 				hideDialog();
@@ -713,19 +713,19 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditOptions() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showEditOptions(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), "", function () {
-				showEditOptionsWinCondition();
+				showEditOptionsWinCondition(atX, atY);
 			}],
 			[Text.get("TXT_MENU_EDIT_OPTIONS_RING_EFFECTS"), "", function () {
-				showEditOptionsRingEffects();
+				showEditOptionsRingEffects(atX, atY);
 			}],
 			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), "", function () {
-				showEditOptionsMusic();
+				showEditOptionsMusic(atX, atY);
 			}],
 			[Text.get("TXT_MENU_EDIT_OPTIONS_DARKNESS"), "", function () {
-				showEditOptionsDarkness();
+				showEditOptionsDarkness(atX, atY);
 			}],
 		]);
 		
@@ -742,8 +742,8 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showEditMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_CLEAR"), "", function () {
 				askClearRoom();
 			}],
@@ -751,7 +751,7 @@ class EditorScreen extends PlayScreen {
 				askRoomTemplate();
 			}],
 			[Text.get("TXT_MENU_OPTIONS"), "", function () {
-				showEditOptions();
+				showEditOptions(atX, atY);
 			}],
 			[Text.get("TXT_MENU_CHOOSE_SCENE"), "TAB", function() {
 				showDialog(dialogRooms);

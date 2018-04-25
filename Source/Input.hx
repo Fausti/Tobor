@@ -22,8 +22,8 @@ class Input {
 	
 	public static var mouseWheelUp:Bool = false;
 	public static var mouseWheelDown:Bool = false;
-	public static var mouseX:Float;
-	public static var mouseY:Float;
+	public static var mouseX:Int;
+	public static var mouseY:Int;
 	public static var mouseBtnLeft:Bool = false;
 	public static var mouseBtnMiddle:Bool = false;
 	public static var mouseBtnRight:Bool = false;

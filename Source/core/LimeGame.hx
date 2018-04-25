@@ -170,8 +170,8 @@ class LimeGame {
 	}
 	
 	public function onMouseMove(x:Float, y:Float) {
-		if (x >= 0) Input.mouseX = x / __scaleX; else Input.mouseX = 0;
-		if (y >= 0) Input.mouseY = y / __scaleY; else Input.mouseY = 0;
+		if (x >= 0) Input.mouseX = Std.int(x / __scaleX); else Input.mouseX = 0;
+		if (y >= 0) Input.mouseY = Std.int(y / __scaleY); else Input.mouseY = 0;
 	}
 	
 	public function onMouseButtonDown(x:Float, y:Float, button:Int) {

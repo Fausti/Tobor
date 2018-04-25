@@ -91,6 +91,10 @@ class PlayScreen extends Screen {
 			return;
 		} else if (Input.isKeyDown([Input.key.RETURN])) {
 			showInventory();
+		} else if (Input.mouseBtnRight) {
+			showMainMenu(Input.mouseX, Input.mouseY);
+		} else {
+			
 		}
 		
 		checkPlayerMovement();
@@ -286,8 +290,8 @@ class PlayScreen extends Screen {
 		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
 	}
 	
-	function showSpeedMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showSpeedMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_SPEED_SLOWEST"), "", function () {
 				Config.setSpeed(0);
 				hideDialog();
@@ -313,7 +317,7 @@ class PlayScreen extends Screen {
 		menu.select(Config.speed);
 		
 		menu.onCancel = function () {
-			showOptionMenu();
+			showOptionMenu(atX, atY);
 		};
 			
 		menu.onOk = function () {
@@ -323,8 +327,8 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
-	function showRobotBehaviorMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showRobotBehaviorMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_ROBOT_BEHAVIOR_NEW"), "", function () {
 				Config.setRobotBehavior(0);
 				hideDialog();
@@ -338,7 +342,7 @@ class PlayScreen extends Screen {
 		menu.select(Config.robotBehavior);
 		
 		menu.onCancel = function () {
-			showOptionMenu();
+			showOptionMenu(atX, atY);
 		};
 			
 		menu.onOk = function () {
@@ -348,8 +352,8 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
-	function showRobotStressMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showRobotStressMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_OFF"), "", function () {
 				Config.setRobotStress(false);
 				hideDialog();
@@ -362,7 +366,7 @@ class PlayScreen extends Screen {
 		
 		menu.select(Config.robotStress?1:0);
 		
-		menu.onCancel = function () {
+		menu.onCancel = function (atX, atY) {
 			showOptionMenu();
 		};
 			
@@ -373,8 +377,8 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
-	function showLightMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showLightMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("Dithering"), "", function () {
 				Config.light = 0;
 				hideDialog();
@@ -392,7 +396,7 @@ class PlayScreen extends Screen {
 		menu.select(Config.light);
 		
 		menu.onCancel = function () {
-			showOptionMenu();
+			showOptionMenu(atX, atY);
 		};
 			
 		menu.onOk = function () {
@@ -402,8 +406,8 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
-	function showShaderMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showShaderMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("Normal"), "", function () {
 				Config.setShader(-1);
 				hideDialog();
@@ -421,7 +425,7 @@ class PlayScreen extends Screen {
 		menu.select(Config.shader + 1);
 		
 		menu.onCancel = function () {
-			showOptionMenu();
+			showOptionMenu(atX, atY);
 		};
 			
 		menu.onOk = function () {
@@ -431,22 +435,22 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
-	function showOptionMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showOptionMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_SPEED"), "", function () {
-				showSpeedMenu();
+				showSpeedMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_SHADER"), "", function () {
-				showShaderMenu();
+				showShaderMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_LIGHT"), "", function () {
-				showLightMenu();
+				showLightMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_ROBOT_STRESS"), "", function () {
-				showRobotStressMenu();
+				showRobotStressMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_ROBOT_BEHAVIOR"), "", function () {
-				showRobotBehaviorMenu();
+				showRobotBehaviorMenu(atX, atY);
 			}],
 		]);
 		
@@ -463,10 +467,10 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
-	function showMainMenu() {
-		var menu = new DialogMenu(this, 320, 166, [
+	function showMainMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("TXT_MENU_OPTIONS"), "", function () {
-				showOptionMenu();
+				showOptionMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_SCENE_TEXT"), "", function() {
 				showRoomName(true);

@@ -100,6 +100,8 @@ class IntroScreen extends Screen {
 			showMainMenu();
 		} else if (Input.isKeyDown([Input.key.RETURN])) {
 			showMainMenu();
+		} else if (Input.mouseBtnLeft || Input.mouseBtnRight) {
+			showMainMenu(Input.mouseX, Input.mouseY);
 		}
 	}
 	
@@ -139,11 +141,11 @@ class IntroScreen extends Screen {
 		super.renderUI();
 	}
 	
-	function showMainMenu() {
+	function showMainMenu(atX:Int = 320, atY:Int = 166) {
 		var menu;
 		
 		if (game.world.file.isZIP) {
-			menu = new DialogMenu(this, 320, 166, [
+			menu = new DialogMenu(this, atX, atY, [
 				[Text.get("TXT_MENU_STORY"), ""],
 				[Text.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
@@ -158,7 +160,7 @@ class IntroScreen extends Screen {
 			
 			menu.select(1);
 		} else {
-			menu = new DialogMenu(this, 320, 166, [
+			menu = new DialogMenu(this, atX, atY, [
 				[Text.get("TXT_MENU_STORY"), ""],
 				[Text.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
