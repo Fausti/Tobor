@@ -181,6 +181,8 @@ class Bullet extends EntityDynamic {
 	}
 	
 	function onHit(other:Entity, direction:Vector2) {
+		if (!alive) return;
+		
 		if (Std.is(other, Bullet)) {
 			
 		} else if (Std.is(other, Isolator)) {
@@ -204,8 +206,10 @@ class Bullet extends EntityDynamic {
 			room.spawnEntity(x, y, new Explosion());
 			Sound.play(Sound.SND_EXPLOSION_ROBOT);
 		} else if (Std.is(other, EntityAI)) {
-			other.die();
-			die();
+			if (alive) {
+				other.die();
+				die();
+			}
 		} else if (Std.is(other, Munition) || Std.is(other, Explosion) || Std.is(other, Grate)) {
 			// Nüscht...
 		} else if (Std.is(other, Water) || Std.is(other, WaterDeadly) || Std.is(other, WaterIsolator)) {
@@ -233,6 +237,13 @@ class Bullet extends EntityDynamic {
 			
 			bullet.move(newDir, (Bullet.BULLET_SPEED));
 				
+			die();
+		} if (Std.is(other, AndroidEgg)) {
+			room.spawnEntity(other.x, other.y, new Explosion());
+			var rob:Robot = new Robot();
+			room.spawnEntity(other.x, other.y, rob);
+
+			other.die();
 			die();
 		} else {
 			die();

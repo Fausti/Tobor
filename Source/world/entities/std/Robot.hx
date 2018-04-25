@@ -21,6 +21,8 @@ class Robot extends EntityAI implements IEnemy {
 	var sprLayer0:Array<Sprite>;
 	var sprLayer1:Array<Sprite>;
 	
+	var justSpawned:Bool = true;
+	
 	public function new() {
 		super();
 	
@@ -316,6 +318,8 @@ class Robot extends EntityAI implements IEnemy {
 	}
 	
 	override public function die() {
+		if (justSpawned) return;
+		
 		room.spawnEntity(x, y, new Explosion());
 		
 		Sound.play(Sound.SND_EXPLOSION_ROBOT);
@@ -343,5 +347,10 @@ class Robot extends EntityAI implements IEnemy {
 		speed = Config.getSpeed(speed);
 		
 		return super.move(direction, speed, dist);
+	}
+	
+	override public function update(deltaTime:Float) {
+		justSpawned = false;
+		super.update(deltaTime);
 	}
 }
