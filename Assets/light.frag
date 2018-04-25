@@ -1,3 +1,4 @@
+#version 120
 uniform sampler2D u_Texture0;
 		
 varying vec2 v_TexCoord;
@@ -17,8 +18,8 @@ const int indexMatrix4x4[16] = int[](0,  8,  2,  10,
                                      15, 7,  13, 5);
 
 float indexValue() {
-    int x = int(mod(gl_FragCoord.x, 4));
-    int y = int(mod(gl_FragCoord.y, 4));
+    int x = int(mod(gl_FragCoord.x, 4.0));
+    int y = int(mod(gl_FragCoord.y, 4.0));
     return indexMatrix4x4[(x + y * 4)] / 16.0;
 }
 
