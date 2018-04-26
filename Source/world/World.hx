@@ -696,6 +696,8 @@ class World {
 		loadStatus = 0;
 		
 		var t = Thread.create(function () {
+			var timeStart:Float = Timer.stamp();
+			
 			var data = TJSON.parse(fileData);
 			var max:Int = Reflect.fields(data).length;
 			var index:Int = 0;
@@ -709,6 +711,8 @@ class World {
 			}
 			
 			if (cb != null) cb();
+			
+			trace("Debug: episode loading took: " + (Timer.stamp() - timeStart) + "s");
 		});
 	}
 	

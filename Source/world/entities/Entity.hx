@@ -67,14 +67,6 @@ class Entity {
 		return Reflect.hasField(data, id);
 	}
 	
-	function getData(data:Dynamic, id:String):Dynamic {
-		if (hasData(data, id)) {
-			return Reflect.field(data, id);
-		}
-		
-		return 0;
-	}
-	
 	public function setRoom(r:Room) {
 		room = r;
 	}
