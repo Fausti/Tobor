@@ -63,7 +63,7 @@ class Entity {
 		if (Std.is(this, EntityStatic)) room.removeEntity(this);
 	}
 	
-	function hasData(data:Dynamic, id:String):Bool {
+	inline function hasData(data:Dynamic, id:String):Bool {
 		return Reflect.hasField(data, id);
 	}
 	
@@ -159,14 +159,14 @@ class Entity {
 		
 	}
 	
-	public function setPosition(x:Int, y:Int):Entity {
+	public inline function setPosition(x:Int, y:Int):Entity {
 		this.x = x;
 		this.y = y;
 		
 		return this;
 	}
 	
-	public function getBoundingBox():Rectangle {
+	public inline function getBoundingBox():Rectangle {
 		return boundingBox;
 	}
 	
@@ -214,7 +214,7 @@ class Entity {
 		return v;
 	}
 	
-	private function isOutsideMap(x:Float, y:Float):Bool {
+	inline function isOutsideMap(x:Float, y:Float):Bool {
 		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
 	}
 	
