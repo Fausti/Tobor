@@ -21,6 +21,8 @@ class EntityCollectable extends EntityStatic {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
+		if (!e.visible || !e.alive) return;
+		
 		if (Std.is(e, Charlie)) {
 			onPickup();
 			die();

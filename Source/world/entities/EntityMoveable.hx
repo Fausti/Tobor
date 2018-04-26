@@ -141,7 +141,7 @@ class EntityMoveable extends EntityDynamic {
 			});
 			
 			for (e in atTarget) {
-				e.onEnter(this, oldDirection);
+				if (alive && visible) e.onEnter(this, oldDirection);
 			}
 			
 			

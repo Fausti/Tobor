@@ -164,7 +164,7 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (visible && (Std.is(e, Robot))) {
+		if (alive && visible && (Std.is(e, Robot))) {
 			die();
 			
 			if (getWorld().checkFirstUse("KILLED_BY_ROBOT")) {
@@ -175,7 +175,7 @@ class Charlie extends EntityMoveable {
 					getWorld().hideDialog();
 				});
 			}
-		} else if (visible && (Std.is(e, Android))) {
+		} else if (alive && visible && (Std.is(e, Android))) {
 			die();
 			
 			if (getWorld().checkFirstUse("KILLED_BY_ANDROID")) {
@@ -186,7 +186,7 @@ class Charlie extends EntityMoveable {
 					getWorld().hideDialog();
 				});
 			}
-		} else if (visible && (Std.is(e, Shark))) {
+		} else if (alive && visible && (Std.is(e, Shark))) {
 			die();
 			
 			if (getWorld().checkFirstUse("KILLED_BY_SHARK")) {
@@ -197,7 +197,7 @@ class Charlie extends EntityMoveable {
 					getWorld().hideDialog();
 				});
 			}
-		} else if (visible && (Std.is(e, Scorpion))) {
+		} else if (alive && visible && (Std.is(e, Scorpion))) {
 			die();
 			
 			if (getWorld().checkFirstUse("KILLED_BY_SCORPION")) {
@@ -208,7 +208,7 @@ class Charlie extends EntityMoveable {
 					getWorld().hideDialog();
 				});
 			}
-		} else if (visible && (Std.is(e, NPC))) {
+		} else if (alive && visible && (Std.is(e, NPC))) {
 			e.onEnter(this, direction);
 		}
 	}
