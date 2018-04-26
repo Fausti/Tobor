@@ -56,37 +56,37 @@ class ObjectFactory {
 		register("OBJ_SKULL", 		Skull, 		Gfx.getSprite(80, 12))
 			.disableBrush();
 		
-		register("OBJ_WALL", 		Wall, 		Gfx.getSprite(160, 0), 				{type: 0})
+		register("OBJ_WALL", 		Wall, 		Gfx.getSprite(160, 0), 				{type: 0}, Room.LAYER_FLOOR)
 			.setAutoTiles([0], [4, 1, 3, 2]);
-		register("OBJ_WALL_NE", 	Wall, 		Gfx.getSprite(160 + 16 * 1, 0), 	{type: 1})
+		register("OBJ_WALL_NE", 	Wall, 		Gfx.getSprite(160 + 16 * 1, 0), 	{type: 1}, Room.LAYER_FLOOR)
 			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
-		register("OBJ_WALL_SW", 	Wall, 		Gfx.getSprite(160 + 16 * 2, 0), 	{type: 2})
+		register("OBJ_WALL_SW", 	Wall, 		Gfx.getSprite(160 + 16 * 2, 0), 	{type: 2}, Room.LAYER_FLOOR)
 			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
-		register("OBJ_WALL_SE", 	Wall, 		Gfx.getSprite(160 + 16 * 3, 0), 	{type: 3})
+		register("OBJ_WALL_SE", 	Wall, 		Gfx.getSprite(160 + 16 * 3, 0), 	{type: 3}, Room.LAYER_FLOOR)
 			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
-		register("OBJ_WALL_NW", 	Wall, 		Gfx.getSprite(160 + 16 * 4, 0), 	{type: 4})
+		register("OBJ_WALL_NW", 	Wall, 		Gfx.getSprite(160 + 16 * 4, 0), 	{type: 4}, Room.LAYER_FLOOR)
 			.setAutoTiles([0], [4, 1, 3, 2])
 			.disableBrush();
 		
-		register("OBJ_WALL_BLACK", 		Wall, 		Gfx.getSprite(48, 132),				{type: 5})
+		register("OBJ_WALL_BLACK", 		Wall, 		Gfx.getSprite(48, 132),				{type: 5}, Room.LAYER_FLOOR)
 			.setAutoTiles([5], [9, 6, 8, 7]);
-		register("OBJ_WALL_BLACK_NE", 	Wall, 		Gfx.getSprite(48 + 16 * 1, 132),	{type: 6})
+		register("OBJ_WALL_BLACK_NE", 	Wall, 		Gfx.getSprite(48 + 16 * 1, 132),	{type: 6}, Room.LAYER_FLOOR)
 			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
-		register("OBJ_WALL_BLACK_SW", 	Wall, 		Gfx.getSprite(48 + 16 * 2, 132),	{type: 7})
+		register("OBJ_WALL_BLACK_SW", 	Wall, 		Gfx.getSprite(48 + 16 * 2, 132),	{type: 7}, Room.LAYER_FLOOR)
 			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
-		register("OBJ_WALL_BLACK_SE", 	Wall, 		Gfx.getSprite(48 + 16 * 3, 132),	{type: 8})
+		register("OBJ_WALL_BLACK_SE", 	Wall, 		Gfx.getSprite(48 + 16 * 3, 132),	{type: 8}, Room.LAYER_FLOOR)
 			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
-		register("OBJ_WALL_BLACK_NW", 	Wall, 		Gfx.getSprite(48 + 16 * 4, 132),	{type: 9})
+		register("OBJ_WALL_BLACK_NW", 	Wall, 		Gfx.getSprite(48 + 16 * 4, 132),	{type: 9}, Room.LAYER_FLOOR)
 			.setAutoTiles([5], [9, 6, 8, 7])
 			.disableBrush();
 		
-		register("OBJ_WALL_HARD", 	Wall, 		Gfx.getSprite(160, 12), 	{type: 10});
+		register("OBJ_WALL_HARD", 	Wall, 		Gfx.getSprite(160, 12), 	{type: 10}, Room.LAYER_FLOOR);
 		
 		register("OBJ_ROOM_EXIT", 	Exit, 		Gfx.getSprite(0, 12))
 			.disableBrush();
@@ -234,8 +234,12 @@ class ObjectFactory {
 		}
 		
 		for (i in 0 ... 5) {
-			register("OBJ_SAND#" + Std.string(i), Sand, Gfx.getSprite(16 * i, 24), {type: i}, Room.LAYER_FLOOR)
+			var ot = register("OBJ_SAND#" + Std.string(i), Sand, Gfx.getSprite(16 * i, 24), {type: i}, Room.LAYER_FLOOR)
 				.setAutoTiles([0], [3, 4, 1, 2]);
+				
+			if (i > 0) {
+				ot.disableBrush();
+			}
 		}
 		
 		for (i in 0 ... 4) {
@@ -308,20 +312,23 @@ class ObjectFactory {
 				.disableBrush();
 		}
 		
-		register("OBJ_SAND_WALL", 		Wall, 		Gfx.getSprite(32, 120), 			{type: 11})
+		register("OBJ_SAND_WALL", 		Wall, 		Gfx.getSprite(32, 120), 			{type: 11}, Room.LAYER_FLOOR)
 			.setAutoTiles([11], [15, 12, 14, 13]);
-		register("OBJ_SAND_WALL_NE", 	Wall, 		Gfx.getSprite(32 + 16 * 1, 120), 	{type: 12})
+		register("OBJ_SAND_WALL_NE", 	Wall, 		Gfx.getSprite(32 + 16 * 1, 120), 	{type: 12}, Room.LAYER_FLOOR)
 			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
-		register("OBJ_SAND_WALL_SW", 	Wall, 		Gfx.getSprite(32 + 16 * 2, 120), 	{type: 13})
+		register("OBJ_SAND_WALL_SW", 	Wall, 		Gfx.getSprite(32 + 16 * 2, 120), 	{type: 13}, Room.LAYER_FLOOR)
 			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
-		register("OBJ_SAND_WALL_SE", 	Wall, 		Gfx.getSprite(32 + 16 * 3, 120), 	{type: 14})
+		register("OBJ_SAND_WALL_SE", 	Wall, 		Gfx.getSprite(32 + 16 * 3, 120), 	{type: 14}, Room.LAYER_FLOOR)
 			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
-		register("OBJ_SAND_WALL_NW", 	Wall, 		Gfx.getSprite(32 + 16 * 4, 120), 	{type: 15})
+		register("OBJ_SAND_WALL_NW", 	Wall, 		Gfx.getSprite(32 + 16 * 4, 120), 	{type: 15}, Room.LAYER_FLOOR)
 			.setAutoTiles([11], [15, 12, 14, 13])
 			.disableBrush();
+			
+		register("OBJ_SAND_WALL_HARD", 	Wall, 		Gfx.getSprite(160, 72), 	{type: 16}, Room.LAYER_FLOOR)
+			.setAutoTiles([11], [15, 12, 14, 13]);
 		
 		register("OBJ_SICKLE", Sickle, Gfx.getSprite(240, 228))
 			.setPoints(1500)
@@ -431,8 +438,12 @@ class ObjectFactory {
 			.disableBrush();
 
 		for (i in 0 ... 5) {
-			register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR)
+			var ot = register("OBJ_ICE_" + Std.string(i), Ice, Gfx.getSprite(64 + i * 16, 324), {type: i}, Room.LAYER_FLOOR)
 				.setAutoTiles([0], [1, 3, 4, 2]);
+				
+			if (i > 0) {
+				ot.disableBrush();
+			}
 		}
 		
 		register("OBJ_ICE_DEADLY", IceDeadly, Gfx.getSprite(0, 180))
@@ -449,9 +460,11 @@ class ObjectFactory {
 			.disableBrush();
 		
 		for (i in 0 ... 7) {
-			register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i}, Room.LAYER_FLOOR)
+			var ot = register("OBJ_WOOD_" + Std.string(i), Wood, Gfx.getSprite(0 + (i * 16), 252), {type: i}, Room.LAYER_FLOOR)
 				.setRandom([0, 5, 6])
 				.setAutoTiles([0, 5, 6], [1, 4, 3, 2]);
+				
+			if (i >= 1 && i <= 4) ot.disableBrush();
 		}
 		
 		register("OBJ_WOOD_PATH", WoodPath, Gfx.getSprite(112, 252), null, Room.LAYER_FLOOR)
@@ -491,10 +504,9 @@ class ObjectFactory {
 		
 		// Pfade
 		
-		register("OBJ_BEDROCK_PATH", BedrockPath, Gfx.getSprite(240, 180), null, Room.LAYER_FLOOR)
-			.disableBrush();
-		register("OBJ_PATH", Path, Gfx.getSprite(224, 120), null, Room.LAYER_FLOOR)
-			.disableBrush();
+		register("OBJ_BEDROCK_PATH", BedrockPath, Gfx.getSprite(240, 180), null, Room.LAYER_FLOOR);
+			
+		register("OBJ_PATH", Path, Gfx.getSprite(224, 120), null, Room.LAYER_FLOOR);
 		
 		// Electric Stuff
 		register("MARKER_0", Marker, Gfx.getSprite(0, 348), {type:0}, Room.LAYER_MARKER)

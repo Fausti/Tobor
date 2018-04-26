@@ -127,6 +127,9 @@ class EditorScreen extends PlayScreen {
 		if (!template.allowBrush) brush = 0;
 		
 		autoTiling = false;
+		
+		oldCursorX = -1;
+		oldCursorY = -1;
 	}
 	
 	function hasBrush():Bool {
@@ -142,9 +145,11 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	override public function update(deltaTime:Float) {
+		// Cursorposition aus Mauskoordinaten errechnen
 		cursorX = Math.floor(Input.mouseX / Tobor.TILE_WIDTH);
 		cursorY = Math.floor(Input.mouseY / Tobor.TILE_HEIGHT);
-				
+		
+		// Dialogbox updaten...
 		if (dialog != null) {
 			dialog.update(deltaTime);
 			return;
@@ -207,6 +212,9 @@ class EditorScreen extends PlayScreen {
 		
 		if (cursorX == 0 && cursorY == 0 && Input.mouseBtnLeft) {
 			if (changed) {
+				oldCursorX = -1;
+				oldCursorY = -1;
+						
 				changed = false;
 				game.world.save();
 			
@@ -230,45 +238,50 @@ class EditorScreen extends PlayScreen {
 		if (Input.mouseBtnLeft) {
 			if (editMode) {
 				if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
-					changed = true;
-					
-					// im Raum zeichnen
-					var template = game.world.factory.get(currentTile);
+					if (cursorX != oldCursorX || cursorY != oldCursorY) {
+						changed = true;
 						
-					if (template.name != "OBJ_CHARLIE") {
-						if (brush == 0) {
-							var e:Entity = template.create();
+						oldCursorX = cursorX;
+						oldCursorY = cursorY;
+								
+						// im Raum zeichnen
+						var template = game.world.factory.get(currentTile);
+						
+						if (template.name != "OBJ_CHARLIE") {
+							if (brush == 0) {
+								var e:Entity = template.create();
 							
-							if (template.layer == Room.LAYER_MARKER) {
-								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
-								for (le in l) {
-									le.setMarker(e.type);
-								}
-							} else if (template.layer == Room.LAYER_DRIFT) {
-								var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
-								for (le in l) {
-									le.setDrift(e.type);
+								if (template.layer == Room.LAYER_MARKER) {
+									var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
+									for (le in l) {
+										le.setMarker(e.type);
+									}
+								} else if (template.layer == Room.LAYER_DRIFT) {
+									var l:Array<Entity> = game.world.room.getAllEntitiesAt(cursorX, cursorY -  1);
+									for (le in l) {
+										le.setDrift(e.type);
+									}
+								} else {
+									if (template.canBePlaced) {
+										e.setPosition(cursorX, cursorY - 1);
+										addEntity(e, template);
+									}
 								}
 							} else {
-								if (template.canBePlaced) {
-									e.setPosition(cursorX, cursorY - 1);
-									addEntity(e, template);
-								}
+								// if (cursorX != oldCursorX || cursorY != oldCursorY) {
+									addBrush(template);
+									// oldCursorX = cursorX;
+									// oldCursorY = cursorY;
+								//}
 							}
 						} else {
-							if (cursorX != oldCursorX || cursorY != oldCursorY) {
-								addBrush(template);
-								oldCursorX = cursorX;
-								oldCursorY = cursorY;
-							}
+							game.world.player.setPosition(cursorX, cursorY - 1);
+							game.world.oldPlayerX = cursorX;
+							game.world.oldPlayerY = cursorY - 1;
 						}
-					} else {
-						game.world.player.setPosition(cursorX, cursorY - 1);
-						game.world.oldPlayerX = cursorX;
-						game.world.oldPlayerY = cursorY - 1;
-					}
 					
-					return;
+						return;
+					}
 				} else if (cursorX == 10 && cursorY == 0) {
 					// den Objektwahl Dialog öffnen
 					showDialog(dialogTiles);
@@ -304,6 +317,9 @@ class EditorScreen extends PlayScreen {
 			}
 		} else if (Input.mouseBtnRight) {
 			if (editMode) {
+				oldCursorX = -1;
+				oldCursorY = -1;
+				
 				if (cursorX >= 0 && cursorX < Room.WIDTH && cursorY >= 1 && cursorY <= Room.HEIGHT) {
 					changed = true;
 					
@@ -324,7 +340,14 @@ class EditorScreen extends PlayScreen {
 										game.world.room.removeEntity(e);
 									}
 								} else {
-									game.world.room.removeEntity(e);
+									if (e.subType > 0) {
+										e.subType = 0;
+										
+										oldCursorX = cursorX;
+										oldCursorY = cursorY;
+									} else {
+										game.world.room.removeEntity(e);
+									}
 								}
 							}
 						}
@@ -433,6 +456,9 @@ class EditorScreen extends PlayScreen {
 			game.world.room.restoreState();
 			game.world.player.setPosition(game.world.oldPlayerX, game.world.oldPlayerY);
 		}
+		
+		oldCursorX = -1;
+		oldCursorY = -1;
 	}
 	
 	override public function render() {
@@ -926,11 +952,38 @@ class EditorScreen extends PlayScreen {
 								e.setPosition(px, py - 1);
 								addEntity(e, template);
 							}
+						} else {
+							var e:Entity = template.createRandom();
+							if (e != null) {
+								e.setPosition(px, py - 1);
+							}
+								
+							for (o in atPosition) {
+								if (combine(o, e)) break;
+							}
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	function combine(e1:Entity, e2:Entity):Bool {
+		if (e1.canCombine(e2)) {
+			e1.doCombine(e2);
+			return true;
+		} else {
+			if (e2.canCombine(e1, true)) {
+				game.world.room.addEntity(e2);
+				game.world.room.removeEntity(e1);
+				
+				e2.doCombine(e1, true);
+				
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	function addEntity(e:Entity, template:ObjectTemplate) {
@@ -950,6 +1003,10 @@ class EditorScreen extends PlayScreen {
 		var atPosition:Array<Entity> = game.world.room.getAllEntitiesAt(e.x, e.y);
 			
 		for (o in atPosition) {
+			
+			// können Objekte kombiniert werden?
+			if (combine(o, e)) return;
+			
 			if (o.z == e.z) {
 				if (!autoTiling) return;
 				else {

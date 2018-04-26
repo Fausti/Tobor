@@ -20,8 +20,19 @@ class Water extends EntityFloor implements IElectric {
 		Gfx.getSprite(128, 72) // se
 	];
 	
+	static var FULL_TILES = [0, 1];
+	static var HALF_TILES = [
+		Direction.NW => [2],
+		Direction.SW => [3],
+		Direction.NE => [4],
+		Direction.SE => [5]
+	];
+	
 	public function new() {
 		super();
+		
+		fullTiles = FULL_TILES;
+		halfTiles = HALF_TILES;
 	}
 	
 	function getDrift(?phase:Int = 0):Vector2 {
@@ -82,6 +93,12 @@ class Water extends EntityFloor implements IElectric {
 	}
 	
 	override public function render() {
+		// Untergrund zeichnen?
+		if (isHalfTile()) {
+			renderSubType();
+		}
+		
+		// Wassergrafik zeichnen
 		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_WATER[type]);
 	}
 	
@@ -94,6 +111,12 @@ class Water extends EntityFloor implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
+		if (isHalfTile()) {
+			if (subType > 0) {
+				return canEnterSubType(e, direction, speed);
+			}
+		}
+		
 		if (Std.is(e, Shark)) return true;
 		if (Std.is(e, Charlie)) return true;
 		
@@ -222,5 +245,13 @@ class Water extends EntityFloor implements IElectric {
 					drift = 4;
 			}
 		}
+	}
+	
+	override public function canCombine(e:Entity, ?reverse:Bool = false):Bool {
+		return checkCombine(e, reverse);
+	}
+	
+	override public function doCombine(e:Entity, ?reverse:Bool = false) {
+		combine(e, reverse);
 	}
 }

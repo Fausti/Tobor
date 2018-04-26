@@ -12,8 +12,19 @@ import world.entities.EntityMoveable;
 class Sand extends EntityFloor {
 	public static var SPR_SAND:Array<Sprite> = Gfx.getSprites(null, 0, 24, 0, 5);
 	
+	static var FULL_TILES = [0];
+	static var HALF_TILES = [
+		Direction.NW => [3],
+		Direction.SW => [2],
+		Direction.NE => [4],
+		Direction.SE => [1]
+	];
+	
 	public function new() {
 		super();
+		
+		fullTiles = FULL_TILES;
+		halfTiles = HALF_TILES;
 	}
 	
 	override public function render() {

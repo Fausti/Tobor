@@ -8,12 +8,10 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class Path extends EntityFloor {
-	var SPR_PATH:Sprite;
+	public static var SPR_PATH:Sprite = Gfx.getSprite(224, 120);
 	
 	public function new() {
 		super();
-		
-		SPR_PATH = Gfx.getSprite(224, 120);
 	}
 	
 	override public function render() {

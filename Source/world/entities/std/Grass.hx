@@ -9,21 +9,17 @@ import lime.math.Vector2;
  * @author Matthias Faust
  */
 class Grass extends EntityFloor {
-
+	public static var SPR_GRASS:Array<Sprite> = [
+		Gfx.getSprite(128 + 16 * 0, 252),
+		Gfx.getSprite(128 + 16 * 1, 252)
+	];
+	
 	public function new() {
 		super();
 	}
-	
-	override public function init() {
-		var spr:Sprite = null;
-		
-		for (i in 0 ... 2) {
-			spr = Gfx.getSprite(128 + 16 * type, 252);
-		}
-		
-		if (spr != null) {
-			setSprite(spr);
-		}
+
+	override public function render() {
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_GRASS[type]);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
