@@ -32,6 +32,7 @@ class Entity {
 	private var sprites:Array<Sprite> = [];
 	
 	public var type:Int = 0;
+	public var subType:Int = 0;
 	public var flag:Int = Marker.MARKER_NO;
 	public var content:String = null;
 	
@@ -235,6 +236,7 @@ class Entity {
 		// o.z = z;
 		
 		o.type = type;
+		o.subType = subType;
 		o.flag = flag;
 		o.content = content;
 		
@@ -250,6 +252,10 @@ class Entity {
 	}
 	
 	public function parseData(data) {
+		if (hasData(data, "subType")) {
+			this.subType = data.subType;
+		}
+		
 		if (hasData(data, "drift")) {
 			this.drift = data.drift;
 		}
@@ -293,6 +299,7 @@ class Entity {
 		if (def != null) {
 			data.set("id", def.name);
 			data.set("type", type);
+			data.set("subType", subType);
 			if (content != null) data.set("content", content);
 			if (Std.is(this, IElectric)) data.set("flag", flag);
 			data.set("x", gridX);
