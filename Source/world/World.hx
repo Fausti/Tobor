@@ -297,6 +297,7 @@ class World {
 				
 					var timeStart:Float = Timer.stamp();
 					if (!editing) game.world.room.saveState();
+					room.treeTimer = 0;
 					switchRoom(rx, ry, rz);
 					game.world.room.restoreState();
 					trace("Debug: room change took: " + (Timer.stamp() - timeStart) + "s");
@@ -326,6 +327,7 @@ class World {
 				var t = actionTeleportTarget;
 			
 				if (!editing) game.world.room.saveState();
+				room.treeTimer = 0;
 				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
 				game.world.room.restoreState();
 			
@@ -346,6 +348,7 @@ class World {
 				var t = actionStairsTarget;
 			
 				if (!editing) game.world.room.saveState();
+				room.treeTimer = 0;
 				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
 				game.world.room.restoreState();
 			
