@@ -213,9 +213,17 @@ class Bullet extends EntityDynamic {
 		} else if (Std.is(other, Munition) || Std.is(other, Explosion) || Std.is(other, Grate)) {
 			// Nüscht...
 		} else if (Std.is(other, Water) || Std.is(other, WaterDeadly) || Std.is(other, WaterIsolator)) {
-			// Nüscht...
+			if (other.subType > 0) {
+				if (!other.canEnterSubType(this, direction, Bullet.BULLET_SPEED)) {
+					die();
+				}
+			}
 		} else if (Std.is(other, EntityFloor)) {
-			// Nüscht...
+			if (other.subType > 0) {
+				if (!other.canEnterSubType(this, direction, Bullet.BULLET_SPEED)) {
+					die();
+				}
+			}
 		} else if (Std.is(other, Target)) {
 			if (other.flag != Marker.MARKER_NO) {
 				room.switchStatus(other.flag);
