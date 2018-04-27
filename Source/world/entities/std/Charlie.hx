@@ -218,6 +218,9 @@ class Charlie extends EntityMoveable {
 	}
 	
 	override public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
+		moveData.oldPositionX = gridX;
+		moveData.oldPositionY = gridY;
+		
 		if (direction == Direction.NONE) return false;
 		
 		if (!isMoving()) {

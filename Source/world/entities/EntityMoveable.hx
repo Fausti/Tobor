@@ -1,6 +1,8 @@
 package world.entities;
 
 import lime.math.Vector2;
+import world.entities.std.Explosion;
+import world.entities.std.Robot;
 import world.entities.std.Sling;
 
 /**
@@ -68,11 +70,14 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	public function move(direction:Vector2, speed:Float, ?dist:Int = 1):Bool {
+		moveData.oldPositionX = gridX;
+		moveData.oldPositionY = gridY;
+			
 		if (direction == Direction.NONE) return false;
 		
 		if (!isMoving()) {
 			if (isOutsideMap(x + direction.x, y + direction.y)) return false;
-			
+
 			var atTarget:Array<Entity> = room.getCollisionsAt(gridX + direction.x, gridY + direction.y);
 			
 			// kann Feld betreten werden?
@@ -98,9 +103,6 @@ class EntityMoveable extends EntityDynamic {
 				e.onLeave(this, direction);
 			}
 			
-			moveData.oldPositionX = Std.int(x);
-			moveData.oldPositionY = Std.int(y);
-			
 			onStartMoving();
 			
 			return true;
@@ -125,8 +127,8 @@ class EntityMoveable extends EntityDynamic {
 		y += (moveData.direction.y * distance);
 		
 		if (moveData.distanceLeft == 0.0) {
-			x = Math.fround(x);
-			y = Math.fround(y);
+			x = Math.round(moveData.oldPositionX + moveData.direction.x);
+			y = Math.round(moveData.oldPositionY + moveData.direction.y);
 			
 			var atTarget:Array<Entity> = room.getEntitiesAt(gridX, gridY, this);
 			
@@ -157,9 +159,15 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	override public function onRoomEnds() {
+		if (!alive) trace("dead entity: ", this);
+		
 		if (moveData.oldPositionX == -1 || moveData.oldPositionY == -1) return;
+		if (!isMoving()) return;
 		
 		// alte Position wiederherstellen
+		// x = Math.round(moveData.oldPositionX + moveData.direction.x);
+		// y = Math.round(moveData.oldPositionY + moveData.direction.y);
+		
 		x = moveData.oldPositionX;
 		y = moveData.oldPositionY;
 		

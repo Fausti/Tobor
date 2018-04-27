@@ -196,7 +196,7 @@ class Entity {
 	// grid
 	
 	inline function get_gridX():Int {
-		return Std.int(x);
+		return Math.round(x); // Std.int(x);
 	}
 	
 	inline function set_gridX(v:Int):Int {
@@ -206,7 +206,7 @@ class Entity {
 	}
 	
 	inline function get_gridY():Int {
-		return Std.int(y);
+		return Math.round(y); // Std.int(y);
 	}
 	
 	inline function set_gridY(v:Int):Int {
