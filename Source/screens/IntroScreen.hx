@@ -37,6 +37,8 @@ class IntroScreen extends Screen {
 	public function new(game:Tobor) {
 		super(game);
 		
+		game.drawLight = false;
+		
 		Sound.stopMusicAll();
 		
 		if (game.world != null) {
