@@ -21,7 +21,7 @@ class Explosion extends EntityDynamic {
 			Gfx.getSprite(64 + 16 * 3, 0),
 			Gfx.getSprite(64 + 16 * 4, 0),
 			Gfx.getSprite(64 + 16 * 5, 0),
-		], 5);
+		], 2.5);
 		
 		SPR_EXPLOSION.onAnimationEnd = function() {
 			die();
