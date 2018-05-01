@@ -1,9 +1,11 @@
 package world.entities;
 
 import lime.math.Vector2;
+import world.entities.std.Charlie;
 import world.entities.std.Explosion;
 import world.entities.std.Robot;
 import world.entities.std.Sling;
+import world.entities.std.Tunnel;
 
 /**
  * ...
@@ -127,8 +129,10 @@ class EntityMoveable extends EntityDynamic {
 		y += (moveData.direction.y * distance);
 		
 		if (moveData.distanceLeft == 0.0) {
-			x = Math.round(moveData.oldPositionX + moveData.direction.x);
-			y = Math.round(moveData.oldPositionY + moveData.direction.y);
+			// x = Math.round(moveData.oldPositionX + moveData.direction.x);
+			// y = Math.round(moveData.oldPositionY + moveData.direction.y);
+			x = gridX;
+			y = gridY;
 			
 			var atTarget:Array<Entity> = room.getEntitiesAt(gridX, gridY, this);
 			
@@ -143,7 +147,12 @@ class EntityMoveable extends EntityDynamic {
 			});
 			
 			for (e in atTarget) {
-				if (alive && visible) e.onEnter(this, oldDirection);
+				if (alive && visible) {
+					e.onEnter(this, oldDirection);
+				} else if (Std.is(this, Charlie) && Std.is(e, Tunnel)) {
+					// Sonderfall Tunnel
+					e.onEnter(this, oldDirection);
+				}
 			}
 			
 			
