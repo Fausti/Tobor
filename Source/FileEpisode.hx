@@ -187,7 +187,15 @@ class FileEpisode {
 		if (isZIP) {
 			var file:FileInput = File.read(root);
 			var unzip:Reader = new Reader(file);
-			var files = unzip.read();
+			
+			var files;
+			
+			try {
+				files = unzip.read();
+			} catch (err:Dynamic) {
+				trace(err);
+				return null;
+			}
 
 			var entry = null;
 			for (e in files) {
