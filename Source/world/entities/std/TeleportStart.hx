@@ -81,7 +81,20 @@ class TeleportStart extends EntityStatic implements IContainer {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
+		if (Std.is(e, Charlie)) {
+			if (content != null) {
+				switch(type) {
+					case 0:
+						if (!getInventory().hasItem(content)) return true; else return false;
+					case 1:
+						if (getInventory().hasItem(content)) return true; else return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		if (Std.is(e, EntityAI)) return true;
 		
 		return super.canEnter(e, direction, speed);
 	}
