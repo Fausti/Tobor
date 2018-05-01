@@ -185,7 +185,12 @@ class EpisodesScreen extends Screen {
 					if (oldPos != pos) {
 						oldPos = pos;
 						index = pos + begin;
-						chooseEpisode();
+						
+						if (index < episoden.length) {
+							chooseEpisode();
+						}
+						
+						Input.clearKeys();
 					}
 				}
 				return;
