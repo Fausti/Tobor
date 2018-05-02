@@ -129,10 +129,13 @@ class EntityMoveable extends EntityDynamic {
 		y += (moveData.direction.y * distance);
 		
 		if (moveData.distanceLeft == 0.0) {
-			// x = Math.round(moveData.oldPositionX + moveData.direction.x);
-			// y = Math.round(moveData.oldPositionY + moveData.direction.y);
-			x = Math.fround(x);
-			y = Math.fround(y);
+			if (Std.is(this, Charlie)) {
+				x = Math.round(moveData.oldPositionX + moveData.direction.x);
+				y = Math.round(moveData.oldPositionY + moveData.direction.y);
+			} else {
+				x = Math.fround(x);
+				y = Math.fround(y);
+			}
 			
 			var atTarget:Array<Entity> = room.getEntitiesAt(gridX, gridY, this);
 			
