@@ -253,6 +253,11 @@ class Bullet extends EntityDynamic {
 
 			other.die();
 			die();
+		} else if (Std.is(other, Scorpion)) {
+			if (other.type > 0) {
+				other.die();
+				die();
+			}
 		} else {
 			die();
 		}
