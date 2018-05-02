@@ -21,6 +21,9 @@ class DialogInventory extends Dialog {
 	
 	var index:Int = 0;
 	var rootIndex:Int = 0;
+	
+	var oldMouseX:Int = 0;
+	var oldMouseY:Int = 0;
 
 	private var actions:Array<Int> = [];
 	private var actionsString:Array<String> = [];
@@ -124,13 +127,18 @@ class DialogInventory extends Dialog {
 			var offsetX = 320 - currentGroup.size * 8;
 			
 			if (Input.mouseX >= offsetX && Input.mouseX < offsetX + currentGroup.size * 16) {
-				var mouseIndex:Int = Std.int((Input.mouseX - offsetX) / 16);
+				if (Input.mouseX != oldMouseX || Input.mouseY != oldMouseY) {
+					var mouseIndex:Int = Std.int((Input.mouseX - offsetX) / 16);
 				
-				index = mouseIndex;
-				if (index >= currentGroup.size) index = currentGroup.size - 1;
-				if (index < 0) index = 0;
+					index = mouseIndex;
+					if (index >= currentGroup.size) index = currentGroup.size - 1;
+					if (index < 0) index = 0;
 				
-				updateActions();
+					updateActions();
+					
+					oldMouseX = Input.mouseX;
+					oldMouseY = Input.mouseY;
+				}
 			}
 		} else {
 			if (Input.mouseY >= 12 + Tobor.frameSmall.sizeY && Input.mouseY < 12 + (1 + actionsString.length) * Tobor.frameSmall.sizeY) {
@@ -138,13 +146,18 @@ class DialogInventory extends Dialog {
 				offsetX = offsetX + index * 16 + Tobor.frameSmall.sizeX;
 				
 				if (Input.mouseX >= offsetX && Input.mouseX < offsetX + actionsSize * Tobor.frameSmall.sizeX) {
-					var mouseMenuIndex:Int = Std.int((Input.mouseY - 12 + Tobor.frameSmall.sizeY) / Tobor.frameSmall.sizeY) - 2;
+					if (Input.mouseX != oldMouseX || Input.mouseY != oldMouseY) {
+						var mouseMenuIndex:Int = Std.int((Input.mouseY - 12 + Tobor.frameSmall.sizeY) / Tobor.frameSmall.sizeY) - 2;
 					
-					actionIndex = mouseMenuIndex;
+						actionIndex = mouseMenuIndex;
 					
-					if (actionIndex < 0) actionIndex = 0;
-					if (actionIndex >= actions.length) actionIndex = actions.length - 1;
-					if (actions[actionIndex] == Inventory.ACTION_COUNT) actionIndex++;
+						if (actionIndex < 0) actionIndex = 0;
+						if (actionIndex >= actions.length) actionIndex = actions.length - 1;
+						if (actions[actionIndex] == Inventory.ACTION_COUNT) actionIndex++;
+						
+						oldMouseX = Input.mouseX;
+						oldMouseY = Input.mouseY;
+					}
 					
 					if (Input.mouseBtnLeft) {
 						selectItem();
