@@ -9,21 +9,14 @@ import world.entities.EntityStatic;
  * @author Matthias Faust
  */
 class Arrow extends EntityStatic {
-	var SPR_ARROW:Array<Sprite>;
+	public static var SPR_ARROW:Array<Sprite> = Gfx.getSprites([], 96, 24, 0, 4);
 	
 	public function new() {
 		super();
-		
-		SPR_ARROW = [];
-		
-		for (i in 0 ... 4) {
-			SPR_ARROW.push(Gfx.getSprite(96 + 16 * i, 24));
-		}
 	}
 	
 	override public function render() {
-		setSprite(SPR_ARROW[type]);
-		super.render();
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_ARROW[type]);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
