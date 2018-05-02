@@ -84,11 +84,19 @@ class LimeApplication extends Application {
 	override public function onKeyDown(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
 		super.onKeyDown(window, keyCode, modifier);
 		
+		if ((keyCode == KeyCode.RETURN || keyCode == KeyCode.RETURN2) && (modifier == KeyModifier.ALT || modifier == KeyModifier.LEFT_ALT || modifier == KeyModifier.RIGHT_ALT)) {
+			return;
+		}
+		
 		Input.onKeyDown(keyCode, modifier);
 	}
 	
 	override public function onKeyUp(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
 		super.onKeyUp(window, keyCode, modifier);
+		
+		if ((keyCode == KeyCode.RETURN || keyCode == KeyCode.RETURN2) && (modifier == KeyModifier.ALT || modifier == KeyModifier.LEFT_ALT || modifier == KeyModifier.RIGHT_ALT)) {
+			return;
+		}
 		
 		Input.onKeyUp(keyCode, modifier);
 	}
