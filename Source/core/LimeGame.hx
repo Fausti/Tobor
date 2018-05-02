@@ -1,11 +1,9 @@
 package core;
 
-import haxe.Timer;
 import lime.graphics.Image;
 import lime.graphics.ImageBuffer;
 import lime.graphics.PixelFormat;
 import lime.utils.UInt8Array;
-import haxe.io.Bytes;
 import lime.Assets;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLUniformLocation;
@@ -37,6 +35,14 @@ class LimeGame {
 	
 	public function new() {
 		
+	}
+	
+	public function isFullscreen():Bool {
+		return __application.window.fullscreen;
+	}
+	
+	public function toggleFullscreen() {
+		__application.window.fullscreen = !isFullscreen();
 	}
 	
 	public function takeScreenShot() {

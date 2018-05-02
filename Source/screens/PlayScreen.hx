@@ -437,6 +437,10 @@ class PlayScreen extends Screen {
 	
 	function showOptionMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
+			[game.isFullscreen()?Text.get("TXT_WINDOW"):Text.get("TXT_FULLSCREEN"), "", function () {
+				game.toggleFullscreen();
+				hideDialog();
+			}],
 			[Text.get("TXT_MENU_SPEED"), "", function () {
 				showSpeedMenu(atX, atY);
 			}],

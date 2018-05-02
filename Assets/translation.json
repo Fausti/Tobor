@@ -56,6 +56,9 @@
     ,"DIED_BY_WATER" : {
          "de" : "Mit diesen blubbernden Wasserstellen ist nicht zu spaßen! Darunter schießt glühende Lava aus der Tiefe."
     }
+    ,"TXT_FULLSCREEN" : {
+         "de" : "Vollbild"
+    }
     ,"OBJ_WOOD_5" : {
          "de" : "Wald"
     }
@@ -92,11 +95,11 @@
     ,"OBJ_MUNITION#4" : {
          "de" : "Munition"
     }
-    ,"OBJ_BEDROCK_1" : {
-         "de" : "Felsgestein"
-    }
     ,"TXT_BONUS" : {
          "de" : "Bonus"
+    }
+    ,"OBJ_BEDROCK_1" : {
+         "de" : "Felsgestein"
     }
     ,"OBJ_MUNITION#5" : {
          "de" : "Munition"
@@ -430,6 +433,9 @@
     }
     ,"OBJ_BUCKET#0" : {
          "de" : "leerer Eimer"
+    }
+    ,"TXT_WINDOW" : {
+         "de" : "Fenstermodus"
     }
     ,"OBJ_BUCKET#1" : {
          "de" : "gefüllter Eimer"
