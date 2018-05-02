@@ -110,12 +110,16 @@ class Room {
 		underRoof = false;
 		
 		if (world.player.visible) {
-			var atPlayerPos:Array<Entity> = getAllEntitiesAt(world.player.x, world.player.y, world.player);
+			//var atPlayerPos:Array<Entity> = getAllEntitiesAt(world.player.x, world.player.y, world.player);
+			//var atPlayerPos:Array<Entity> = findEntityAt(world.player.x, world.player.y, EntityRoof);
+			var atPlayerPos:Array<Entity> = getCollisionsAt(world.player.x, world.player.y);
 			for (e in atPlayerPos) {
 				if (Std.is(e, EntityRoof)) {
-					underRoof = true;
-					underRoofOld = underRoof;
-					return;
+					if (world.player.gridX == e.gridX && world.player.gridY == e.gridY) {
+						underRoof = true;
+						underRoofOld = underRoof;
+						return;
+					}
 				}
 			}
 			
