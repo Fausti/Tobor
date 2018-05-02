@@ -25,8 +25,6 @@ class Tunnel extends EntityFloor {
 	}
 	
 	override function canCombine(e:Entity, ?reverse:Bool = false):Bool {
-		trace("combine with tunnel", e);
-		
 		var cl = Type.getClass(this);
 		var sameClass = Std.is(e, cl);
 		
@@ -39,6 +37,8 @@ class Tunnel extends EntityFloor {
 		} else if (!sameClass && Std.is(e, Path)) {
 			return true;
 		} else if (!sameClass && Std.is(e, Water)) {
+			return true;
+		} else if (!sameClass && Std.is(e, MountainPath)) {
 			return true;
 		}
 		
@@ -67,6 +67,8 @@ class Tunnel extends EntityFloor {
 			newSubType = 5;
 		} else if (!sameClass && Std.is(e, Path)) {
 			newSubType = 10;
+		} else if (!sameClass && Std.is(e, MountainPath)) {
+			newSubType = 18;
 		}
 		
 		// trace("old: ", this, type, subType, e, e.type, e.subType);

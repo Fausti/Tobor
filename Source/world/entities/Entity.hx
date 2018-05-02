@@ -452,6 +452,8 @@ class Entity {
 			if (e.isHalfTile()) return true;
 		} else if (!sameClass && Std.is(e, Grass)) {
 			if (!reverse) return true;
+		} else if (!sameClass && Std.is(e, MountainPath)) {
+			if (!reverse) return true;
 		} else if (!sameClass && Std.is(e, Mountain)) {
 			if (!reverse) return true;
 			if (e.isHalfTile()) return true;
@@ -514,6 +516,8 @@ class Entity {
 			}
 		} else if (!sameClass && Std.is(e, Grass)) {
 			newSubType = 5;
+		} else if (!sameClass && Std.is(e, MountainPath)) {
+			newSubType = 18;
 		} else if (!sameClass && Std.is(e, Mountain)) {
 			if (reverse) newType = fixType(e);
 			
@@ -612,6 +616,13 @@ class Entity {
 				subSpr = Water.SPR_WATER[0];
 			case 17:
 				subSpr = Water.SPR_WATER[1];
+				
+			case 18:
+				if (getInventory().containsCompass) {
+					subSpr = MountainPath.SPR_MOUNTAINPATH_EDITOR;
+				} else {
+					subSpr = MountainPath.SPR_MOUNTAINPATH;
+				}
 		}
 			
 		if (subSpr != null) {

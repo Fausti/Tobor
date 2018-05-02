@@ -8,14 +8,11 @@ import world.entities.EntityFloor;
  * @author Matthias Faust
  */
 class MountainPath extends EntityFloor {
-	var SPR_MOUNTAINPATH:Sprite;
-	var SPR_MOUNTAINPATH_EDITOR:Sprite;
+	public static var SPR_MOUNTAINPATH:Sprite = Gfx.getSprite(160, 264);
+	public static var SPR_MOUNTAINPATH_EDITOR:Sprite = Gfx.getSprite(144, 264);
 	
 	public function new() {
 		super();
-		
-		SPR_MOUNTAINPATH = Gfx.getSprite(160, 264);
-		SPR_MOUNTAINPATH_EDITOR = Gfx.getSprite(144, 264);
 	}
 	
 	override public function render() {
