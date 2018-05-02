@@ -114,15 +114,15 @@ class EntityMoveable extends EntityDynamic {
 	}
 	
 	function processMovement(deltaTime:Float) {
-		var distance:Float = 0;
+		var distance:Float = 0.0;
 
 		distance = deltaTime * moveData.speedMovement;
-		
+
 		if (distance > moveData.distanceLeft) {
 			distance = moveData.distanceLeft;
 			moveData.distanceLeft = 0.0;
 		} else {
-			moveData.distanceLeft -= distance;
+			moveData.distanceLeft = moveData.distanceLeft - distance;
 		}
 		
 		x += (moveData.direction.x * distance);
@@ -131,8 +131,8 @@ class EntityMoveable extends EntityDynamic {
 		if (moveData.distanceLeft == 0.0) {
 			// x = Math.round(moveData.oldPositionX + moveData.direction.x);
 			// y = Math.round(moveData.oldPositionY + moveData.direction.y);
-			x = gridX;
-			y = gridY;
+			x = Math.fround(x);
+			y = Math.fround(y);
 			
 			var atTarget:Array<Entity> = room.getEntitiesAt(gridX, gridY, this);
 			
