@@ -218,6 +218,16 @@ class Bullet extends EntityDynamic {
 					die();
 				}
 			}
+		} else if (Std.is(other, Wall)) {
+			die();
+		} else if (Std.is(other, Cave)) {
+			die();
+		} else if (Std.is(other, Bedrock)) {
+			die();
+		} else if (Std.is(other, Mountain)) {
+			die();
+		} else if (Std.is(other, Wood)) {
+			die();
 		} else if (Std.is(other, EntityFloor)) {
 			if (other.subType > 0) {
 				if (!other.canEnterSubType(this, direction, Bullet.BULLET_SPEED)) {
