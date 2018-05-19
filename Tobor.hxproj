@@ -30,7 +30,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="--macro lime.Lib.extraParams()" />
+    <option additional="--macro lime.Lib.extraParams()&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
