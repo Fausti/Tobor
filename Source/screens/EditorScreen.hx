@@ -202,7 +202,7 @@ class EditorScreen extends PlayScreen {
 				checkBrushSetting();
 			} else if (Input.wheelDown()) {
 				currentTile++;
-				if (currentTile > game.world.factory.length) {
+				if (currentTile >= game.world.factory.length) {
 					currentTile = game.world.factory.length - 1;
 				}
 					
