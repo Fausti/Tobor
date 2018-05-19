@@ -60,12 +60,21 @@ class Bullet extends EntityDynamic {
 			if (traveled >= 1) { // wenn noch kein ganzes Feld geflogen tun wir niemandem weh!
 				// haben wir unterwegs einen Roboter erwischt?
 				var ais = room.getCollisionsWithAI(x + (5.5 / 16), y + (5.5 / 16), 5 / 16, 5 / 16);
-			
+				var will_die:Bool = false;
+				
 				for (ai in ais) {
-					ai.die();
+					if (Std.is(ai, Scorpion)) {
+						if (ai.type > 0) {
+							ai.die();
+							will_die = true;
+						}
+					} else {
+						ai.die();
+						will_die = true;
+					}
 				}
 			
-				if (ais.length != 0) die();
+				if (will_die) die();
 			}
 		}
 		
@@ -205,7 +214,14 @@ class Bullet extends EntityDynamic {
 			
 			room.spawnEntity(x, y, new Explosion());
 			Sound.play(Sound.SND_EXPLOSION_ROBOT);
+		} else if (Std.is(other, Scorpion)) {
+			trace(other);
+			if (other.type > 0) {
+				other.die();
+				die();
+			}
 		} else if (Std.is(other, EntityAI)) {
+			trace("EntityAI", other);
 			if (alive) {
 				other.die();
 				die();
@@ -263,11 +279,6 @@ class Bullet extends EntityDynamic {
 
 			other.die();
 			die();
-		} else if (Std.is(other, Scorpion)) {
-			if (other.type > 0) {
-				other.die();
-				die();
-			}
 		} else {
 			die();
 		}

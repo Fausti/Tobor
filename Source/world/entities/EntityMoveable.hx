@@ -2,8 +2,6 @@ package world.entities;
 
 import lime.math.Vector2;
 import world.entities.std.Charlie;
-import world.entities.std.Explosion;
-import world.entities.std.Robot;
 import world.entities.std.Sling;
 import world.entities.std.Tunnel;
 

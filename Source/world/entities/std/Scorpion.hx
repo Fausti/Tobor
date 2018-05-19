@@ -163,7 +163,7 @@ class Scorpion extends EntityAI implements IEnemy {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.is(e, Robot) || Std.is(e, Android) || Std.is(e, Charlie)) {
 			e.die();
 			// if (Utils.chance(5)) stress = stress + 1;
 		}
