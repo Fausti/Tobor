@@ -55,6 +55,10 @@ class Ice extends EntityFloor {
 		if (!e.alive || !e.visible) return;
 		
 		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) {
+			if (room.getAllEntitiesAt(x, y, e, EntityStatic).length > 1) {
+				return;
+			}
+			
 			var m:EntityMoveable = cast e;
 			var canMove:Bool = false;
 

@@ -215,13 +215,11 @@ class Bullet extends EntityDynamic {
 			room.spawnEntity(x, y, new Explosion());
 			Sound.play(Sound.SND_EXPLOSION_ROBOT);
 		} else if (Std.is(other, Scorpion)) {
-			trace(other);
 			if (other.type > 0) {
 				other.die();
 				die();
 			}
 		} else if (Std.is(other, EntityAI)) {
-			trace("EntityAI", other);
 			if (alive) {
 				other.die();
 				die();
