@@ -74,9 +74,20 @@ class Inventory {
 				var count:Int = Reflect.field(dataItem, "count");
 				var content:String = Reflect.field(dataItem, "content");
 				
-				add(key, template.spr, count, content);
+				add(key, Config.colorKeys?template.spr:template.sprBlack, count, content);
 			} else {
 				trace("Couldn't find inventory item: " + key);
+			}
+		}
+	}
+	
+	public function refresh(factory:ObjectFactory) {
+		for (itm in list) {
+			if (itm.group == "OBJ_KEY") {
+				var tmp = factory.findFromID(itm.id);
+				if (tmp != null) {
+					itm.spr = Config.colorKeys?tmp.spr:tmp.sprBlack;
+				}
 			}
 		}
 	}

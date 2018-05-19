@@ -10,6 +10,8 @@ class Config {
 	public static var speed:Int = 2;
 	static var _speeds:Array<Float> = [0.5, 0.75, 1, 1.25, 1.5];
 	
+	public static var colorKeys:Bool = true;
+	
 	public static var robotStress:Bool = false;
 	public static var robotBehavior:Int = 1;
 	
@@ -38,6 +40,8 @@ class Config {
 				robotStress = Reflect.field(data, "robotStress");
 			case "robotBehavior":
 				robotBehavior = Reflect.field(data, "robotBehavior");
+			case "colorKeys":
+				colorKeys = Reflect.field(data, "colorKeys");
 			}
 		}
 	}
@@ -50,6 +54,7 @@ class Config {
 		data.set("shader", shader);
 		data.set("robotStress", robotStress);
 		data.set("robotBehavior", robotBehavior);
+		data.set("colorKeys", colorKeys);
 		
 		Files.saveToFile("config.json", TJSON.encode(data, 'fancy'));
 	}
@@ -78,6 +83,12 @@ class Config {
 	
 	public static function setRobotStress(value:Bool) {
 		robotStress = value;
+		
+		save();
+	}
+	
+	public static function setColoredKeys(value:Bool) {
+		colorKeys = value;
 		
 		save();
 	}

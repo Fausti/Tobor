@@ -1247,6 +1247,9 @@
     ,"TXT_DIR_ALREADY_EXISTS" : {
          "de" : "Verzeichnis existiert bereits!"
     }
+    ,"TXT_MENU_KEYS" : {
+         "de" : "farbige Schlüssel"
+    }
     ,"OBJ_ACID" : {
          "de" : "Säure"
     }

@@ -377,6 +377,33 @@ class PlayScreen extends Screen {
 		showDialog(menu);
 	}
 	
+	function showKeysMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
+			[Text.get("TXT_OFF"), "", function () {
+				Config.setColoredKeys(false);
+				game.world.inventory.refresh(game.world.factory);
+				hideDialog();
+			}],
+			[Text.get("TXT_ON"), "", function () {
+				Config.setColoredKeys(true);
+				game.world.inventory.refresh(game.world.factory);
+				hideDialog();
+			}],
+		]);
+		
+		menu.select(Config.colorKeys?1:0);
+		
+		menu.onCancel = function (atX, atY) {
+			showOptionMenu();
+		};
+			
+		menu.onOk = function () {
+			
+		};
+		
+		showDialog(menu);
+	}
+	
 	function showLightMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
 			[Text.get("Dithering"), "", function () {
@@ -452,6 +479,9 @@ class PlayScreen extends Screen {
 			}],
 			[Text.get("TXT_MENU_LIGHT"), ">>", function () {
 				showLightMenu(atX, atY);
+			}],
+			[Text.get("TXT_MENU_KEYS"), ">>", function () {
+				showKeysMenu(atX, atY);
 			}],
 			["- Debug -", "", function () {
 				

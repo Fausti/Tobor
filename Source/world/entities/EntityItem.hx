@@ -59,7 +59,7 @@ class EntityItem extends EntityCollectable {
 				}, template.points);
 			}
 			
-			getInventory().add(template.name, template.spr, num, content);
+			getInventory().add(template.name, Config.colorKeys?template.spr:template.sprBlack, num, content);
 		}
 		
 		return firstTime; 

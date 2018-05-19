@@ -10,13 +10,14 @@ import world.entities.EntityStatic;
  */
 class Door extends EntityStatic {
 	public static var SPR_DOOR:Array<Sprite> = Gfx.getSprites(null, 0, 36, 0, 16);
+	public static var SPR_DOOR_BLACK:Array<Sprite> = Gfx.getSprites(null, 0, 192, 0, 16);
 	
 	public function new() {
 		super();
 	}
 	
 	override public function render() {
-		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, SPR_DOOR[type]);
+		Gfx.drawSprite(x * Tobor.TILE_WIDTH, y * Tobor.TILE_HEIGHT, Config.colorKeys?SPR_DOOR[type]:SPR_DOOR_BLACK[type]);
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {

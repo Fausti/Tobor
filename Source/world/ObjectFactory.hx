@@ -166,14 +166,18 @@ class ObjectFactory {
 		// Türen
 		
 		for (i in 0 ... 15) {
-			register("OBJ_DOOR#" + Std.string(i), Door, Gfx.getSprite(i * 16, 36), {type: i})
+			var door = register("OBJ_DOOR#" + Std.string(i), Door, Gfx.getSprite(i * 16, 36), {type: i})
 			.disableBrush();
+			
+			door.sprBlack = Gfx.getSprite(i * 16, 192);
 		}
 		
 		for (i in 0 ... 15) {
-			register("OBJ_KEY#" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i})
+			var key = register("OBJ_KEY#" + Std.string(i), Key, Gfx.getSprite(i * 16, 48), {type: i})
 				.setPoints(500)
 				.disableBrush();
+			
+				key.sprBlack = Gfx.getSprite(i * 16, 204);
 		}
 		
 		register("OBJ_EXPLOSION", 	Explosion, 	Gfx.getSprite(64, 0))
@@ -656,7 +660,9 @@ class ObjectTemplate {
 	public var name:String;
 	public var classPath:Class<Entity>;
 	public var data:Dynamic;
+	
 	public var spr:Sprite;
+	public var sprBlack:Sprite;
 	
 	public var points:Int;
 	
@@ -670,6 +676,7 @@ class ObjectTemplate {
 		this.classPath = c;
 		this.data = d;
 		this.spr = spr;
+		this.sprBlack = spr;
 		this.layer = layer;
 		
 		if (d != null) {

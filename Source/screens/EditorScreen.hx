@@ -529,7 +529,7 @@ class EditorScreen extends PlayScreen {
 									var py:Int = cursorY + yy;
 								
 									if (px >= 0 && px < Room.WIDTH && py >= 1 && py <= Room.HEIGHT) {
-										Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, game.world.factory.get(currentTile).spr, COLOR_TRANSPARENT);
+										Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, Config.colorKeys?game.world.factory.get(currentTile).spr:game.world.factory.get(currentTile).sprBlack, COLOR_TRANSPARENT);
 										if (xx == 0 && yy == 0) Gfx.drawSprite(px * Tobor.TILE_WIDTH, py * Tobor.TILE_HEIGHT, SPR_CURSOR, COLOR_TRANSPARENT);
 									}
 								}
@@ -557,7 +557,7 @@ class EditorScreen extends PlayScreen {
 			Tobor.fontBig.drawString(9 * 16 + 8, 0, "[", Color.BLACK);
 			Tobor.fontBig.drawString(11 * 16 - 4, 0, "]", Color.BLACK);
 			
-			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, game.world.factory.get(currentTile).spr);
+			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, Config.colorKeys?game.world.factory.get(currentTile).spr:game.world.factory.get(currentTile).sprBlack);
 			// Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, SPR_SELECTOR);
 			
 			for (x in 0 ... 3) {

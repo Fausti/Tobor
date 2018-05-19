@@ -11,6 +11,7 @@ class InventoryItem {
 
 	public var group:String;
 	public var id:String;
+	
 	public var spr:Sprite;
 	
 	public var content:String;
