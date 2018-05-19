@@ -616,7 +616,7 @@ class EditorScreen extends PlayScreen {
 	
 	override function showMainMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_OPTIONS"), "", function () {
+			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
 			}],
 			[Text.get("TXT_MENU_HELP"), ""],
@@ -765,16 +765,16 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditOptions(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), "", function () {
+			[Text.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), ">>", function () {
 				showEditOptionsWinCondition(atX, atY);
 			}],
-			[Text.get("TXT_MENU_EDIT_OPTIONS_RING_EFFECTS"), "", function () {
+			[Text.get("TXT_MENU_EDIT_OPTIONS_RING_EFFECTS"), ">>", function () {
 				showEditOptionsRingEffects(atX, atY);
 			}],
-			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), "", function () {
+			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), ">>", function () {
 				showEditOptionsMusic(atX, atY);
 			}],
-			[Text.get("TXT_MENU_EDIT_OPTIONS_DARKNESS"), "", function () {
+			[Text.get("TXT_MENU_EDIT_OPTIONS_DARKNESS"), ">>", function () {
 				showEditOptionsDarkness(atX, atY);
 			}],
 		]);
@@ -792,16 +792,56 @@ class EditorScreen extends PlayScreen {
 		showDialog(menu);
 	}
 	
-	function showEditMenu(atX:Int = 320, atY:Int = 166) {
+	function showEditEditMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
+		/*
+			[Text.get("TXT_MENU_COPY"), "", function () {
+				// askClearRoom();
+			}],
+			[Text.get("TXT_MENU_CUT"), "", function () {
+				// askClearRoom();
+			}],
+			[Text.get("TXT_MENU_PASTE"), "", function () {
+				// askClearRoom();
+			}],
+			["", "", function () {
+				
+			}],
+		*/
 			[Text.get("TXT_MENU_CLEAR"), "", function () {
 				askClearRoom();
 			}],
 			[Text.get("TXT_MENU_BORDERS"), "", function () {
 				askRoomTemplate();
 			}],
-			[Text.get("TXT_MENU_OPTIONS"), "", function () {
+			["", "", function () {
+				
+			}],
+			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showEditOptions(atX, atY);
+			}],
+		]);
+		
+		menu.select(2);
+		
+		menu.onCancel = function () {
+			hideDialog();
+		};
+			
+		menu.onOk = function () {
+			// hideDialog();
+		};
+		
+		showDialog(menu);
+	}
+	
+	function showEditMenu(atX:Int = 320, atY:Int = 166) {
+		var menu = new DialogMenu(this, atX, atY, [
+			[Text.get("TXT_MENU_EDIT"), ">>", function () {
+				showEditEditMenu(atX, atY);
+			}],
+			["", "", function () {
+				
 			}],
 			[Text.get("TXT_MENU_CHOOSE_SCENE"), "TAB", function() {
 				showDialog(dialogRooms);
@@ -811,6 +851,9 @@ class EditorScreen extends PlayScreen {
 			}],
 			[Text.get("TXT_MENU_EDIT_INVENTORY"), "", function () {
 				showInventoryTemplate();
+			}],
+			["", "", function () {
+				
 			}],
 			[Text.get("TXT_MENU_HELP"), "", function () {
 				System.openURL("https://github.com/Fausti/Tobor#inhalt");
@@ -829,6 +872,9 @@ class EditorScreen extends PlayScreen {
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
+			}],
+			["", "", function () {
+				
 			}],
 			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();

@@ -179,17 +179,20 @@
     ,"OBJ_SLING" : {
          "de" : "Schleuder"
     }
+    ,"TXT_MENU_PASTE" : {
+         "de" : "Einfügen"
+    }
     ,"OBJ_SEED_PICKUP" : {
          "de" : "Dies ist ein absolut alkoholfreies Korn. Falls Du Freude an Grünzeug hast, pflanze es einfach irgendwo ein."
     }
     ,"OBJ_KEY#13_DESC" : {
          "de" : "Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein."
     }
-    ,"OBJ_KEY_PICKUP" : {
-         "de" : "Dies ist aber ein schöner Schlüssel! Vielleicht wirst Du einmal an der entsprechenden Tür vorbeikommen..."
-    }
     ,"OBJ_ISOLATOR_SOFT" : {
          "de" : "Isolator (betretbar)"
+    }
+    ,"OBJ_KEY_PICKUP" : {
+         "de" : "Dies ist aber ein schöner Schlüssel! Vielleicht wirst Du einmal an der entsprechenden Tür vorbeikommen..."
     }
     ,"OBJ_BEDROCK_PATH" : {
          "de" : "Felspfad"
@@ -851,6 +854,9 @@
     ,"OBJ_COMPASS_PICKUP" : {
          "de" : "Gerade hast Du den Kompaß gefunden. Er ist sehr nützlich zum Auffinden verborgener Wege."
     }
+    ,"TXT_MENU_CUT" : {
+         "de" : "Ausschneiden"
+    }
     ,"OBJ_CLONE" : {
          "de" : "Verdoppler"
     }
@@ -858,7 +864,7 @@
          "de" : "Ah! Du hast etwas zum Essen gefunden. Guten Appetit!"
     }
     ,"TXT_MENU_BORDERS" : {
-         "de" : "Szenenrand einfügen"
+         "de" : "Szenenrand"
     }
     ,"TXT_EDITOR_NO_ROOM" : {
          "de" : "keine Szene"
@@ -973,6 +979,9 @@
     }
     ,"OBJ_HARD_SAND_5" : {
          "de" : "Dünen"
+    }
+    ,"TXT_MENU_COPY" : {
+         "de" : "Kopieren"
     }
     ,"OBJ_EXCLAMATION_MARK" : {
          "de" : "Ausrufezeichen"

@@ -441,19 +441,25 @@ class PlayScreen extends Screen {
 				game.toggleFullscreen();
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SPEED"), "", function () {
+			["", "", function () {
+				
+			}],
+			[Text.get("TXT_MENU_SPEED"), ">>", function () {
 				showSpeedMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_SHADER"), "", function () {
+			[Text.get("TXT_MENU_SHADER"), ">>", function () {
 				showShaderMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_LIGHT"), "", function () {
+			[Text.get("TXT_MENU_LIGHT"), ">>", function () {
 				showLightMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_ROBOT_STRESS"), "", function () {
+			["- Debug -", "", function () {
+				
+			}],
+			[Text.get("TXT_MENU_ROBOT_STRESS"), ">>", function () {
 				showRobotStressMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_ROBOT_BEHAVIOR"), "", function () {
+			[Text.get("TXT_MENU_ROBOT_BEHAVIOR"), ">>", function () {
 				showRobotBehaviorMenu(atX, atY);
 			}],
 		]);
@@ -473,8 +479,11 @@ class PlayScreen extends Screen {
 	
 	function showMainMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_OPTIONS"), "", function () {
+			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
+			}],
+			["", "", function () {
+				
 			}],
 			[Text.get("TXT_MENU_SCENE_TEXT"), "", function() {
 				showRoomName(true);
@@ -489,15 +498,24 @@ class PlayScreen extends Screen {
 			[Text.get("TXT_MENU_STORY"), "", function () {
 				hideDialog();
 			}],
+			["", "", function () {
+				
+			}],
 			[Text.get("TXT_MENU_RESTART"), "", function () {
 				getWorld().player.die();
 				hideDialog();
+			}],
+			["", "", function () {
+				
 			}],
 			[Text.get("TXT_MENU_LOAD"), "", function () {
 				showLoadgameDialog();
 			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				getWorld().checkHighScore();
+			}],
+			["", "", function () {
+				
 			}],
 			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();

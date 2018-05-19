@@ -16,7 +16,7 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\lime\6,2,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\6,3,1" />
     <class path="C:\HaxeToolkit\haxe\lib\compiletime\2,7,0\src" />
     <class path="C:\HaxeToolkit\haxe\lib\tjson\1,4,0" />
     <class path="C:\HaxeToolkit\haxe\lib\haxe-strings\5,0,1\src" />
@@ -25,7 +25,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="lime=6.2.0&#xA;compiletime=2.7.0&#xA;tjson=1.4.0&#xA;haxe-strings=5.0.1&#xA;tools=6.2.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="lime=6.3.1&#xA;compiletime=2.7.0&#xA;tjson=1.4.0&#xA;haxe-strings=5.0.1&#xA;tools=6.3.1&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
