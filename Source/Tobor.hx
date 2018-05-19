@@ -269,6 +269,10 @@ class Tobor extends LimeGame {
 		Gfx.end();
 	}
 	
+	public function setTitle(?title:String = "The Game of Tobor") {
+		__application.window.title = title;
+	}
+	
 	public function setScreen(newScreen:Screen) {
 		if (this.screen != null) {
 			this.screen.hide();

@@ -37,6 +37,8 @@ class IntroScreen extends Screen {
 	public function new(game:Tobor) {
 		super(game);
 		
+		game.setTitle("The Game of Tobor - " + game.world.getName());
+		
 		game.drawLight = false;
 		
 		Sound.stopMusicAll();

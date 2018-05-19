@@ -46,6 +46,8 @@ class EpisodesScreen extends Screen {
 	public function new(game:Tobor) {
 		super(game);
 		
+		game.setTitle();
+		
 		Gfx.resetTexture();
 		
 		bgSprite = Gfx.getSprite(160, 0, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);
