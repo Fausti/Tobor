@@ -34,6 +34,8 @@ class MountainPath extends EntityFloor {
 		
 		if (Std.is(e, EntityCollectable)) return true;
 		
+		if (Std.is(e, ElectricFence)) return true;
+		
 		return false;
 	}
 }

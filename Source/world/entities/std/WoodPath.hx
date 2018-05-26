@@ -33,6 +33,8 @@ class WoodPath extends EntityFloor {
 		
 		if (Std.is(e, EntityCollectable)) return true;
 		
+		if (Std.is(e, ElectricFence)) return true;
+		
 		return false;
 	}
 }
