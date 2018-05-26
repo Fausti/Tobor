@@ -870,6 +870,15 @@ class EditorScreen extends PlayScreen {
 				game.setScreen(new EditorScreen(game));
 				// hideDialog();
 			}],
+			["", "", function () {
+				
+			}],
+			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+				showOptionMenu(atX, atY);
+			}],
+			["", "", function () {
+				
+			}],
 			[Text.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
 			}],

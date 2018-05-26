@@ -9,7 +9,7 @@ import ui.DialogMenu;
  * ...
  * @author Matthias Faust
  */
-class IntroScreen extends Screen {
+class IntroScreen extends GameScreen {
 	var bgSprite:Sprite;
 	var SPR_NONE:Sprite;
 	
@@ -187,6 +187,15 @@ class IntroScreen extends Screen {
 				[Text.get("TXT_MENU_LOAD"), "", function () {
 					showLoadgameDialog();
 				}],
+				["", "", function () {
+				
+				}],
+				[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+				showOptionMenu(atX, atY);
+				}],
+				["", "", function () {
+				
+				}],
 				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
@@ -204,6 +213,15 @@ class IntroScreen extends Screen {
 				}],
 				[Text.get("TXT_MENU_LOAD"), "", function () {
 					showLoadgameDialog();
+				}],
+				["", "", function () {
+				
+				}],
+				[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+				showOptionMenu(atX, atY);
+				}],
+				["", "", function () {
+				
 				}],
 				[Text.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
