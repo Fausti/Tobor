@@ -85,7 +85,7 @@ class Room {
 		// Anzahl lebender Roboter
 		robots = 0;
 		for (e in entities.getTicking()) {
-			if (Std.is(e, Robot) || Std.is(e, Android) || Std.is(e, Scorpion) || Std.is(e, Shark)) robots++;
+			if (Std.is(e, Robot) || Std.is(e, Android)) robots++;
 		}
 		
 		for (e in entities.getTicking()) {
