@@ -1,12 +1,13 @@
 package core;
 
+import lime.utils.Assets;
 import lime.graphics.Image;
 import lime.graphics.ImageBuffer;
 import lime.graphics.PixelFormat;
 import lime.utils.UInt8Array;
-import lime.Assets;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLUniformLocation;
+import lime.graphics.ImageFileFormat;
 
 import gfx.Framebuffer;
 import gfx.Shader;
@@ -67,7 +68,7 @@ class LimeGame {
 		var imgBuffer:ImageBuffer = new ImageBuffer(pixelsOut, __application.window.width, __application.window.height, 32, PixelFormat.RGBA32);
 		var img:Image = new Image(imgBuffer);
 			
-		Files.saveToFileAsBinary("screenshot_" + DateTools.format(Date.now(),"%Y%m%d_%H%M%S") + ".png", img.encode("png", 100));
+		Files.saveToFileAsBinary("screenshot_" + DateTools.format(Date.now(),"%Y%m%d_%H%M%S") + ".png", img.encode(ImageFileFormat.PNG, 100));
 
 		
 	}

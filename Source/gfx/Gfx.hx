@@ -1,10 +1,10 @@
 package gfx;
 
-import lime.Assets;
 import lime.graphics.Image;
 import lime.graphics.opengl.GL;
 import lime.math.Matrix4;
 import lime.math.Rectangle;
+import lime.utils.Assets;
 
 import gfx.Color;
 
@@ -31,7 +31,8 @@ class Gfx {
 		_width = w;
 		_height = h;
 		
-		_matrix = Matrix4.createOrtho(0, w, h, 0, -1000, 1000);
+		_matrix = new Matrix4();
+		_matrix.createOrtho(0, w, h, 0, -1000, 1000);
 	}
 	
 	public static inline function begin(batch:Batch) {

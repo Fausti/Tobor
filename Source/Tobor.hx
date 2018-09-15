@@ -1,7 +1,6 @@
 package;
 
 import gfx.Framebuffer;
-import lime.Assets;
 import lime.graphics.opengl.GL;
 import cpp.vm.Gc;
 import lime.math.Rectangle;
@@ -13,6 +12,8 @@ import ui.Screen;
 import ui.Dialog;
 import lime.graphics.Image;
 import lime.graphics.opengl.GLUniformLocation;
+
+import lime.utils.Assets;
 
 import core.LimeGame;
 import gfx.Shader;
@@ -271,7 +272,7 @@ class Tobor extends LimeGame {
 	
 	public function setTitle(?title:String = null) {
 		if (title == null) {
-			title = "The Game of Tobor - Version " + __application.config.version;
+			title = "The Game of Tobor - Version " + __application.meta.get('version');
 		}
 		__application.window.title = title;
 	}

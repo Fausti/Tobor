@@ -139,7 +139,8 @@ class Framebuffer {
 		GL.bufferData(GL.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), GL.STATIC_DRAW);
 		GL.bindBuffer(GL.ARRAY_BUFFER, null);
 		
-		matrix = Matrix4.createOrtho(0, 1, 0, 1, -1000, 1000);
+		matrix = new Matrix4();
+		matrix.createOrtho(0, 1, 0, 1, -1000, 1000);
 		// matrix = Matrix4.createOrtho(0, this.width, 0, this.height, -1000, 1000);
 	}
 	

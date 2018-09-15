@@ -1,7 +1,6 @@
 package ui;
 
 import haxe.Timer;
-import lime.Lib;
 import lime.math.Rectangle;
 import screens.EditorScreen;
 import world.World;

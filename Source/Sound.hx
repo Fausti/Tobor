@@ -1,6 +1,6 @@
 package;
 
-import lime.Assets;
+import lime.utils.Assets;
 import lime.media.AudioBuffer;
 import lime.media.AudioSource;
 

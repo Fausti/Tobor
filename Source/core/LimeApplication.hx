@@ -1,19 +1,18 @@
 package core;
+import lime.graphics.RenderContext;
 import lime.math.Vector2;
 import lime.system.Display;
 import lime.system.System;
 import lime.ui.GamepadAxis;
 import lime.ui.GamepadButton;
+import lime.ui.MouseWheelMode;
 import lime.ui.Touch;
 
 import lime.app.Application;
 import lime.ui.Gamepad;
 
-import lime.graphics.Renderer;
-
 import lime.ui.KeyModifier;
 import lime.ui.KeyCode;
-import lime.ui.Mouse;
 import lime.ui.Window;
 
 /**
@@ -32,9 +31,9 @@ class LimeApplication extends Application {
 		
 	}
 	
-	override public function onWindowCreate(window:Window):Void {
-		switch(window.renderer.context) {
-			case OPENGL(gl):
+	override public function onWindowCreate():Void {
+		switch(this.window.context.type) {
+			case OPENGL, OPENGLES, WEBGL:
 				init();
 				
 			default:
@@ -61,28 +60,27 @@ class LimeApplication extends Application {
 		Input.update(dt);
 		if (game != null) game.__update(dt);
 	}
-	
-	
-	override public function render(renderer:Renderer):Void {
+
+	override public function render(renderer:RenderContext):Void {
 		if (!preloader.complete) return;
 		
-		switch(window.renderer.context) {
-			case OPENGL(gl):
+		switch(window.context.type) {
+			case OPENGL, OPENGLES, WEBGL:
 				if (game != null) game.__render();
 				
 			default:
 		}
 	}
 	
-	override public function onWindowResize(window:Window, width:Int, height:Int):Void {
-		super.onWindowResize(window, width, height);
+	override public function onWindowResize(width:Int, height:Int):Void {
+		super.onWindowResize(width, height);
 		
 		if (!preloader.complete) return;
 		if (game != null) game.__resize(width, height);
 	}
 	
-	override public function onKeyDown(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
-		super.onKeyDown(window, keyCode, modifier);
+	override public function onKeyDown(keyCode:KeyCode, modifier:KeyModifier):Void {
+		super.onKeyDown(keyCode, modifier);
 		
 		if ((keyCode == KeyCode.RETURN || keyCode == KeyCode.RETURN2) && (modifier == KeyModifier.ALT || modifier == KeyModifier.LEFT_ALT || modifier == KeyModifier.RIGHT_ALT)) {
 			return;
@@ -91,8 +89,8 @@ class LimeApplication extends Application {
 		Input.onKeyDown(keyCode, modifier);
 	}
 	
-	override public function onKeyUp(window:Window, keyCode:KeyCode, modifier:KeyModifier):Void {
-		super.onKeyUp(window, keyCode, modifier);
+	override public function onKeyUp(keyCode:KeyCode, modifier:KeyModifier):Void {
+		super.onKeyUp(keyCode, modifier);
 		
 		if ((keyCode == KeyCode.RETURN || keyCode == KeyCode.RETURN2) && (modifier == KeyModifier.ALT || modifier == KeyModifier.LEFT_ALT || modifier == KeyModifier.RIGHT_ALT)) {
 			return;
@@ -103,26 +101,26 @@ class LimeApplication extends Application {
 	
 	// Maus
 	
-	override public function onMouseMove(window:Window, x:Float, y:Float):Void {
-		super.onMouseMove(window, x, y);
+	override public function onMouseMove(x:Float, y:Float):Void {
+		super.onMouseMove(x, y);
 		
 		if (game != null) game.onMouseMove(x, y);
 	}
 	
-	override public function onMouseDown(window:Window, x:Float, y:Float, button:Int):Void {
-		super.onMouseDown(window, x, y, button);
+	override public function onMouseDown(x:Float, y:Float, button:Int):Void {
+		super.onMouseDown(x, y, button);
 		
 		if (game != null) game.onMouseButtonDown(x, y, button);
 	}
 	
-	override public function onMouseUp(window:Window, x:Float, y:Float, button:Int):Void {
-		super.onMouseUp(window, x, y, button);
+	override public function onMouseUp(x:Float, y:Float, button:Int):Void {
+		super.onMouseUp(x, y, button);
 		
 		if (game != null) game.onMouseButtonUp(x, y, button);
 	}
 	
-	override public function onMouseWheel(window:Window, deltaX:Float, deltaY:Float):Void {
-		super.onMouseWheel(window, deltaX, deltaY);
+	override public function onMouseWheel(deltaX:Float, deltaY:Float, deltaMode:MouseWheelMode):Void {
+		super.onMouseWheel(deltaX, deltaY, deltaMode);
 		
 		Input.onMouseWheel(deltaX, deltaY);
 	}
@@ -274,21 +272,21 @@ class LimeApplication extends Application {
 		}
 	}
 	
-	override public function onTextInput(window:Window, text:String):Void 
+	override public function onTextInput(text:String):Void 
 	{
 		if (game != null) game.onTextInput(text);
 	}
 	
-	override public function onWindowClose(window:Window):Void {
+	override public function onWindowClose():Void {
 		if (game != null) game.onExit();
 		
-		super.onWindowClose(window);
+		super.onWindowClose();
 	}
 	
 	// Drag N Drop
 	
-	override public function onWindowDropFile(window:Window, file:String):Void {
-		super.onWindowDropFile(window, file);
+	override public function onWindowDropFile(file:String):Void {
+		super.onWindowDropFile(file);
 		
 		if (game != null) game.onDropFile(file);
 	}
