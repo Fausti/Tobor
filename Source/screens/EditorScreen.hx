@@ -162,7 +162,7 @@ class EditorScreen extends PlayScreen {
 			game.world.canStart = false;
 		}
 		
-		if (Input.isKeyDown([Input.key.ESCAPE])) {
+		if (Input.isKeyDown([KeyCode.ESCAPE])) {
 			if (editMode) {
 				showEditMenu();
 			} else {
@@ -170,7 +170,7 @@ class EditorScreen extends PlayScreen {
 			}
 				
 			return;
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
+		} else if (Input.isKeyDown([KeyCode.RETURN])) {
 			if (editMode) {
 				showDialog(dialogTiles);
 					
@@ -182,7 +182,7 @@ class EditorScreen extends PlayScreen {
 			}
 				
 			return;
-		} else if (Input.isKeyDown([Input.key.TAB])) {
+		} else if (Input.isKeyDown([KeyCode.TAB])) {
 			if (editMode) {
 				showDialog(dialogRooms);
 					
@@ -228,7 +228,7 @@ class EditorScreen extends PlayScreen {
 			return;
 		}
 			
-		if (Input.isKeyDown([Input.key.F5])) {
+		if (Input.isKeyDown([KeyCode.F5])) {
 			if (!game.world.player.isMoving()) {
 				switchEditMode();
 				return;
@@ -384,10 +384,10 @@ class EditorScreen extends PlayScreen {
 		} else if (Input.isKeyDown(Tobor.KEY_DOWN)) {
 			switchRoom(rx, ry + 1, rz);
 			Input.clearKeys();
-		} else if (Input.isKeyDown([Input.key.PAGE_UP, Input.key.MINUS])) {
+		} else if (Input.isKeyDown([KeyCode.PAGE_UP, KeyCode.MINUS])) {
 			switchRoom(rx, ry, rz - 1);
 			Input.clearKeys();
-		} else if (Input.isKeyDown([Input.key.PAGE_DOWN, Input.key.PLUS])) {
+		} else if (Input.isKeyDown([KeyCode.PAGE_DOWN, KeyCode.PLUS])) {
 			switchRoom(rx, ry, rz + 1);
 			Input.clearKeys();
 		}

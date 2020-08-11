@@ -242,7 +242,7 @@ class Robot extends EntityAI implements IEnemy {
 		}
 		
 		if (Config.robotStress) {
-			var strStress:String = Std.string(stress).lpad(3, " ");
+			var strStress:String = Std.string(stress).lpad(" ", 3);
 			Tobor.fontSmall.drawString(x * Tobor.TILE_WIDTH - 4, y * Tobor.TILE_HEIGHT + 1, strStress, Color.ORANGE, new Color(0, 0, 0, 0.75));
 		}
 	}

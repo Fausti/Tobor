@@ -197,52 +197,52 @@ class DialogInventoryTemplate extends Dialog {
 			Input.wait(0.25);
 			
 			add( -1);
-		} else if (Input.isKeyDown([Input.key.DELETE, Input.key.NUMBER_0, Input.key.NUMPAD_0])) {
+		} else if (Input.isKeyDown([KeyCode.DELETE, KeyCode.NUMBER_0, KeyCode.NUMPAD_0])) {
 			Input.wait(0.25);
 			
 			set(0);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_1 ,  Input.key.NUMPAD_1])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_1 ,  KeyCode.NUMPAD_1])) {
 			Input.wait(0.25);
 			
 			set(1);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_2 ,  Input.key.NUMPAD_2])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_2 ,  KeyCode.NUMPAD_2])) {
 			Input.wait(0.25);
 			
 			set(2);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_3 ,  Input.key.NUMPAD_3])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_3 ,  KeyCode.NUMPAD_3])) {
 			Input.wait(0.25);
 			
 			set(3);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_4 ,  Input.key.NUMPAD_4])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_4 ,  KeyCode.NUMPAD_4])) {
 			Input.wait(0.25);
 			
 			set(4);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_5 ,  Input.key.NUMPAD_5])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_5 ,  KeyCode.NUMPAD_5])) {
 			Input.wait(0.25);
 			
 			set(5);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_6 ,  Input.key.NUMPAD_6])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_6 ,  KeyCode.NUMPAD_6])) {
 			Input.wait(0.25);
 			
 			set(6);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_7 ,  Input.key.NUMPAD_7])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_7 ,  KeyCode.NUMPAD_7])) {
 			Input.wait(0.25);
 			
 			set(7);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_8 ,  Input.key.NUMPAD_8])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_8 ,  KeyCode.NUMPAD_8])) {
 			Input.wait(0.25);
 			
 			set(8);
 			updateActions();
-		} else if (Input.isKeyDown([Input.key.NUMBER_9 ,  Input.key.NUMPAD_9])) {
+		} else if (Input.isKeyDown([KeyCode.NUMBER_9 ,  KeyCode.NUMPAD_9])) {
 			Input.wait(0.25);
 			
 			set(9);
@@ -383,16 +383,16 @@ class DialogInventoryTemplate extends Dialog {
 			switch(line) {
 				case Inventory.ACTION_COUNT:
 					var strCount:String = "" + (currentGroup.content[index].count()) + STRINGS[Inventory.ACTION_COUNT];
-					actionsSize = Std.int(Math.max(actionsSize, strCount.length8()));
+					actionsSize = Std.int(Math.max(actionsSize, strCount.length));
 					actionsString.push(strCount);
 				default:
 					actionsString.push(STRINGS[line]);
-					actionsSize = Std.int(Math.max(actionsSize, STRINGS[line].length8()));
+					actionsSize = Std.int(Math.max(actionsSize, STRINGS[line].length));
 			}
 		}
 		
 		for (i in 0 ... actionsString.length) {
-			actionsString[i] = actionsString[i].rpad(actionsSize, " ", false);
+			actionsString[i] = actionsString[i].rpad(" ", actionsSize);
 		}
 		
 		actionIndex = 0;

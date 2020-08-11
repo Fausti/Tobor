@@ -85,11 +85,11 @@ class PlayScreen extends GameScreen {
 			game.world.canStart = false;
 		}
 		
-		if (Input.isKeyDown([Input.key.ESCAPE])) {
+		if (Input.isKeyDown([KeyCode.ESCAPE])) {
 			showMainMenu();
 			
 			return;
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
+		} else if (Input.isKeyDown([KeyCode.RETURN])) {
 			showInventory();
 		} else if (Input.mouseBtnRight) {
 			showMainMenu(Input.mouseX, Input.mouseY);

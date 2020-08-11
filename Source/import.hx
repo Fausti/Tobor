@@ -9,4 +9,9 @@ import gfx.Color;
 import gfx.Sprite;
 import gfx.Animation;
 
+import lime.ui.KeyCode;
+import lime.ui.KeyModifier;
+
 // using hx.strings.Strings;
+using StringTools;
+using StringTools2;

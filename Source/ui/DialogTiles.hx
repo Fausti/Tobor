@@ -81,13 +81,13 @@ class DialogTiles extends Dialog {
 			}
 		}
 		
-		if (Input.isKeyDown([Input.key.ESCAPE])) {
+		if (Input.isKeyDown([KeyCode.ESCAPE])) {
 			Input.clearKeys();
 			editor.currentTile = oldTile;
 			if (onCancel != null) onCancel();
 			screen.hideDialog();
 			return;
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
+		} else if (Input.isKeyDown([KeyCode.RETURN])) {
 			Input.clearKeys();
 			editor.currentTile = tile;
 			if (onOk != null) onOk();

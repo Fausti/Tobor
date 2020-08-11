@@ -269,7 +269,7 @@ class FileEpisode {
 		if (l == -1) {
 			return name;
 		} else {
-			return name.rpad(l, ".", false);
+			return name.rpad(".", l);
 		}
 	}
 	
@@ -280,7 +280,7 @@ class FileEpisode {
 			return desc;
 		}
 		
-		return desc.rpad(l, ".", false);
+		return desc.rpad(".", l);
 	}
 	
 	public static function getFiles(path:Path):Array<String> {

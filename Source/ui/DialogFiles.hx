@@ -50,7 +50,7 @@ class DialogFiles extends DialogMessage {
 				fg = Color.YELLOW;
 			}
 			
-			Tobor.fontSmall.drawString(x + 16 + offsetX, y + 12 * ( lines.length + 2 ) + i * 12, files[begin + i].rpad((w - 2) * 2 - 3, ' ', false), fg, bg);
+			Tobor.fontSmall.drawString(x + 16 + offsetX, y + 12 * ( lines.length + 2 ) + i * 12, files[begin + i].rpad(" ", (w - 2) * 2 - 3), fg, bg);
 		}
 		
 		if (files.length > countFiles) {
@@ -79,12 +79,12 @@ class DialogFiles extends DialogMessage {
 			ok();
 		} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
 			exit();
-		} else if (Input.isKeyDown([Input.key.UP])) {
+		} else if (Input.isKeyDown([KeyCode.UP])) {
 			index--;
 			
 			if (index < 0) index = 0;
 			Input.wait(0.25);
-		} else if (Input.isKeyDown([Input.key.DOWN])) {
+		} else if (Input.isKeyDown([KeyCode.DOWN])) {
 			index++;
 			
 			if (index >= files.length) index = files.length - 1;

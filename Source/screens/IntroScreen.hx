@@ -76,11 +76,11 @@ class IntroScreen extends GameScreen {
 		episodeName = " " + game.world.getName() + " ";
 		episodeDesc = " " + game.world.getDesc() + " ";
 		
-		centerX = Std.int(320 - (episodeName.length8() / 2) * 16);
-		centerXDesc = Std.int(320 - (episodeDesc.length8() / 2) * 8);
+		centerX = Std.int(320 - (episodeName.length / 2) * 16);
+		centerXDesc = Std.int(320 - (episodeDesc.length / 2) * 8);
 		
 		scrollingText = Text.get("TXT_PRESS_ENTER");
-		scrollingText = scrollingText.rpad(38 * 2, " ");
+		scrollingText = scrollingText.rpad(" ", 38 * 2);
 		scrollingText = scrollingText + scrollingText;
 		scrollingTime = scrollingSpeed;
 	}
@@ -115,9 +115,9 @@ class IntroScreen extends GameScreen {
 			return;
 		}
 		
-		if (Input.isKeyDown([Input.key.ESCAPE])) {
+		if (Input.isKeyDown([KeyCode.ESCAPE])) {
 			showMainMenu();
-		} else if (Input.isKeyDown([Input.key.RETURN])) {
+		} else if (Input.isKeyDown([KeyCode.RETURN])) {
 			showMainMenu();
 		} else if (Input.mouseBtnLeft || Input.mouseBtnRight) {
 			showMainMenu(Input.mouseX, Input.mouseY);
@@ -127,7 +127,7 @@ class IntroScreen extends GameScreen {
 			scrollingTime = scrollingTime - deltaTime;
 		} else {
 			scrollingPosition++;
-			if (scrollingPosition >= (scrollingText.length8() / 2)) {
+			if (scrollingPosition >= (scrollingText.length / 2)) {
 				scrollingPosition = 0;
 			}
 			
@@ -169,7 +169,7 @@ class IntroScreen extends GameScreen {
 			Gfx.drawSprite(32 + i * 16, 264, frameBottom);
 		}
 		
-		var text:String = scrollingText.substr8(scrollingPosition, 38 * 2).rpad(38 * 2, " ");
+		var text:String = scrollingText.substr(scrollingPosition, 38 * 2).rpad(" ", 38 * 2);
 		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
 		
 		super.renderUI();

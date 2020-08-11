@@ -67,7 +67,7 @@ class Menu {
 		_w = 0;
 		
 		for (i in 0 ... items.length) {
-			if (items[i].text.length8() > _w) _w = items[i].text.length8();
+			if (items[i].text.length > _w) _w = items[i].text.length;
 		}
 		
 		for (i in 0 ... items.length) {

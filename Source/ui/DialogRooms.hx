@@ -157,10 +157,10 @@ class DialogRooms extends Dialog {
 			Input.wait(0.2);
 		}
 		
-		if (Input.isKeyDown([Input.key.PAGE_UP, Input.key.MINUS])) {
+		if (Input.isKeyDown([KeyCode.PAGE_UP, KeyCode.MINUS])) {
 			roomZ--;
 			Input.wait(0.2);
-		} else if (Input.isKeyDown([Input.key.PAGE_DOWN, Input.key.PLUS])) {
+		} else if (Input.isKeyDown([KeyCode.PAGE_DOWN, KeyCode.PLUS])) {
 			roomZ++;
 			Input.wait(0.2);
 		}

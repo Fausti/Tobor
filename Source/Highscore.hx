@@ -21,8 +21,8 @@ class Highscore {
 		Gfx.drawTexture(x, y, 512, 100, SPR_NONE.uv, Color.WHITE);
 		
 		for (s in scores) {
-			scoreString = Std.string(index + 1).lpad(2, " ");
-			scoreString += " " + s.name.left(15).lpad(15, " "); 
+			scoreString = Std.string(index + 1).lpad(" ", 2);
+			scoreString += " " + s.name.left(15).lpad(" ", 15); 
 			scoreString += ": " + StringTools.lpad(Std.string(s.points), " ", 7); 
 			scoreString += " (" + StringTools.lpad(Std.string(s.rooms), " ", 2) + ")";
 

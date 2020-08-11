@@ -378,16 +378,16 @@ class DialogInventory extends Dialog {
 			switch(line) {
 				case Inventory.ACTION_COUNT:
 					var strCount:String = "" + currentGroup.content[index].count() + STRINGS[Inventory.ACTION_COUNT];
-					actionsSize = Std.int(Math.max(actionsSize, strCount.length8()));
+					actionsSize = Std.int(Math.max(actionsSize, strCount.length));
 					actionsString.push(strCount);
 				default:
 					actionsString.push(STRINGS[line]);
-					actionsSize = Std.int(Math.max(actionsSize, STRINGS[line].length8()));
+					actionsSize = Std.int(Math.max(actionsSize, STRINGS[line].length));
 			}
 		}
 		
 		for (i in 0 ... actionsString.length) {
-			actionsString[i] = actionsString[i].rpad(actionsSize, " ", false);
+			actionsString[i] = actionsString[i].rpad(" ", actionsSize);
 		}
 		
 		actionIndex = 0;

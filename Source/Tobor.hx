@@ -82,7 +82,7 @@ class Tobor extends LimeGame {
 		__framebuffer_w = SCREEN_WIDTH;
 		__framebuffer_h = SCREEN_HEIGHT;
 		
-		Tobor.locale = Locale.currentLocale.split8("_")[0];
+		Tobor.locale = cast(Locale.currentLocale, String).split("_")[0];
 	}
 	
 	override public function init() {
@@ -175,7 +175,7 @@ class Tobor extends LimeGame {
 				blink = !blink;
 			}
 			
-			if (Input.isKeyDown([Input.key.PRINT_SCREEN, Input.key.F12])) {
+			if (Input.isKeyDown([KeyCode.PRINT_SCREEN, KeyCode.F12])) {
 				takeScreenShot();
 				Input.clearKeys();
 			}
@@ -313,11 +313,11 @@ class Tobor extends LimeGame {
 	
 	// Tasten...
 	
-	public static var KEY_LEFT = [Input.key.A, Input.key.LEFT];
-	public static var KEY_RIGHT = [Input.key.D, Input.key.RIGHT];
-	public static var KEY_UP = [Input.key.W, Input.key.UP];
-	public static var KEY_DOWN = [Input.key.S, Input.key.DOWN];
+	public static var KEY_LEFT = [KeyCode.A, KeyCode.LEFT];
+	public static var KEY_RIGHT = [KeyCode.D, KeyCode.RIGHT];
+	public static var KEY_UP = [KeyCode.W, KeyCode.UP];
+	public static var KEY_DOWN = [KeyCode.S, KeyCode.DOWN];
 	
-	public static var KEY_ESC = [Input.key.ESCAPE];
-	public static var KEY_ENTER = [Input.key.RETURN, Input.key.RETURN2];
+	public static var KEY_ESC = [KeyCode.ESCAPE];
+	public static var KEY_ENTER = [KeyCode.RETURN, KeyCode.RETURN2];
 }

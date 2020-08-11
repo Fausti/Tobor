@@ -8,9 +8,6 @@ import lime.ui.KeyModifier;
  * @author Matthias Faust
  */
 class Input {
-	public static var key = KeyCode;
-	public static var mod = KeyModifier;
-	
 	static var lastKeyCode:KeyCode = -1;
 	static var waitTime:Float = 0;
 	

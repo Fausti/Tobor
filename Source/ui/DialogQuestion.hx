@@ -26,11 +26,11 @@ class DialogQuestion extends DialogMessage {
 			else exit();
 		} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
 			exit();
-		} else if (Input.isKeyDown([Input.key.LEFT])) {
+		} else if (Input.isKeyDown([KeyCode.LEFT])) {
 			index--;
 			if (index < 0) index = 0;
 			Input.wait(0.25);
-		} else if (Input.isKeyDown([Input.key.RIGHT])) {
+		} else if (Input.isKeyDown([KeyCode.RIGHT])) {
 			index++;
 			if (index >= 2) index = 1;
 			Input.wait(0.25);
@@ -60,10 +60,10 @@ class DialogQuestion extends DialogMessage {
 		
 		if (index == 0) {
 			Tobor.fontBig.drawString(this.x + offsetX + 16, this.y + (12 * (this.h - 2)), "[ " + strOK + " ]", Color.BLACK, Color.NEON_GREEN);
-			Tobor.fontBig.drawString(this.x + offsetX + ((this.w - strCancel.length8() - 4 - 1) * 16), this.y + (12 * (this.h - 2)), "[ " + strCancel + " ]", Color.BLACK);
+			Tobor.fontBig.drawString(this.x + offsetX + ((this.w - strCancel.length - 4 - 1) * 16), this.y + (12 * (this.h - 2)), "[ " + strCancel + " ]", Color.BLACK);
 		} else {
 			Tobor.fontBig.drawString(this.x + offsetX + 16, this.y + (12 * (this.h - 2)), "[ " + strOK + " ]", Color.BLACK);
-			Tobor.fontBig.drawString(this.x + offsetX + ((this.w - strCancel.length8() - 4 - 1) * 16), this.y + (12 * (this.h - 2)), "[ " + strCancel + " ]", Color.BLACK, Color.NEON_GREEN);
+			Tobor.fontBig.drawString(this.x + offsetX + ((this.w - strCancel.length - 4 - 1) * 16), this.y + (12 * (this.h - 2)), "[ " + strCancel + " ]", Color.BLACK, Color.NEON_GREEN);
 		}
 	}
 }

@@ -24,15 +24,15 @@ class DialogInput extends DialogMessage {
 	}
 	
 	function fixInput() {
-		chars = chars.rpad(16, " ", false);
-		chars = chars.substr8(0, 16);
+		chars = chars.rpad(" ", 16);
+		chars = chars.substr(0, 16);
 	}
 	
 	override public function render() {
 		super.render();
 		
 		Tobor.fontBig.drawString(this.x + offsetX + 16, this.y + (12 * (this.h - 2)), chars, Color.BLACK, Color.NEON_GREEN);
-		Tobor.fontBig.drawString(this.x + offsetX + 16 + index * 16, this.y + (12 * (this.h - 2)), chars.charAt8(index), Color.WHITE, Color.BLACK);
+		Tobor.fontBig.drawString(this.x + offsetX + 16 + index * 16, this.y + (12 * (this.h - 2)), chars.charAt(index), Color.WHITE, Color.BLACK);
 	}
 	
 	override public function update(deltaTime:Float) {
@@ -40,21 +40,21 @@ class DialogInput extends DialogMessage {
 			ok();
 		} else if (Input.isKeyDown(Tobor.KEY_ESC)) {
 			exit();
-		} else if (Input.isKeyDown([Input.key.LEFT])) {
+		} else if (Input.isKeyDown([KeyCode.LEFT])) {
 			index--;
 			if (index < 0) index = 0;
 			Input.wait(0.25);
-		} else if (Input.isKeyDown([Input.key.RIGHT])) {
+		} else if (Input.isKeyDown([KeyCode.RIGHT])) {
 			index++;
 			if (index >= 16) index = 15;
 			Input.wait(0.25);
-		} else if (Input.isKeyDown([Input.key.BACKSPACE, Input.key.NUMPAD_BACKSPACE])) {
+		} else if (Input.isKeyDown([KeyCode.BACKSPACE, KeyCode.NUMPAD_BACKSPACE])) {
 			chars = chars.removeAt(index - 1, 1);
 			index--;
 			if (index < 0) index = 0;
 			fixInput();
 			Input.wait(0.25);
-		} else if (Input.isKeyDown([Input.key.DELETE])) {
+		} else if (Input.isKeyDown([KeyCode.DELETE])) {
 			chars = chars.removeAt(index + 1, 1);
 			fixInput();
 			Input.wait(0.25);

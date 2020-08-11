@@ -66,7 +66,7 @@ class EpisodesScreen extends Screen {
 		SPR_SCROLLBAR_1 = Gfx.getSprite(64, 12);
 		
 		scrollingText = "Danke an TOM Productions für ihre tollen ROBOT Spiele! ";
-		scrollingText = scrollingText.rpad(38 * 2, " ");
+		scrollingText = scrollingText.rpad(" ", 38 * 2);
 		scrollingText = scrollingText + scrollingText;
 		scrollingTime = scrollingSpeed;
 		
@@ -164,9 +164,9 @@ class EpisodesScreen extends Screen {
 				mouseOver = -1;
 			}
 		
-			if (Input.isKeyDown([Input.key.ESCAPE])) {
+			if (Input.isKeyDown([KeyCode.ESCAPE])) {
 				game.exit();
-			} else if (Input.isKeyDown([Input.key.RETURN])) {
+			} else if (Input.isKeyDown([KeyCode.RETURN])) {
 				chooseEpisode();
 				return;
 			} else if (Input.isKeyDown(Tobor.KEY_UP) || Input.wheelUp()) {
@@ -221,7 +221,7 @@ class EpisodesScreen extends Screen {
 			scrollingTime = scrollingTime - deltaTime;
 		} else {
 			scrollingPosition++;
-			if (scrollingPosition >= (scrollingText.length8() / 2)) {
+			if (scrollingPosition >= (scrollingText.length / 2)) {
 				scrollingPosition = 0;
 			}
 			
@@ -345,7 +345,7 @@ class EpisodesScreen extends Screen {
 			}
 		}
 		
-		var text:String = scrollingText.substr8(scrollingPosition, 38 * 2).rpad(38 * 2, " ");
+		var text:String = scrollingText.substr(scrollingPosition, 38 * 2).rpad(" ", 38 * 2);
 		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
 		
 		super.renderUI();

@@ -25,11 +25,11 @@ class DialogMessage extends Dialog {
 	}
 	
 	public function prepareText() {
-		lines = msg.split8("\n");
+		lines = msg.split("\n");
 		
 		this.w = 0;
 		for (line in lines) {
-			if (line.length8() > this.w) this.w = line.length8();
+			if (line.length > this.w) this.w = line.length;
 		}
 		
 		if (smallFont) {
@@ -51,22 +51,22 @@ class DialogMessage extends Dialog {
 	
 	function splitText() {
 		lines = [];
-		var nlines:Array<String> = msg.split8("\n");
+		var nlines:Array<String> = msg.split("\n");
 		
 		this.w = 0;
 		
 		var lineSize:Int = 0;
 		
 		for (nline in nlines) {
-			var l = nline.length8();
+			var l = nline.length;
 			
 			if (l > maxWidth) {
 				lineSize = 0;
-				var words:Array<String> = nline.split8(" ");
+				var words:Array<String> = nline.split(" ");
 				var ll:String = "";
 				
 				for (word in words) {
-					if ((lineSize + word.length8() + 1) >= maxWidth) {
+					if ((lineSize + word.length + 1) >= maxWidth) {
 						lines.push(ll);
 						ll = "";
 						lineSize = 0;
@@ -78,7 +78,7 @@ class DialogMessage extends Dialog {
 						ll = ll + " " + word;
 					}
 						
-					lineSize = ll.length8();
+					lineSize = ll.length;
 				}
 				
 				if (ll != "") {
@@ -90,7 +90,7 @@ class DialogMessage extends Dialog {
 		}
 		
 		for (line in lines) {
-			var l = line.length8();
+			var l = line.length;
 			if (l > this.w) this.w = l;
 		}
 			
@@ -111,7 +111,7 @@ class DialogMessage extends Dialog {
 	override public function update(deltaTime:Float) {
 		super.update(deltaTime);
 		
-		if (Input.isKeyDown([Input.key.ESCAPE, Input.key.RETURN, Input.key.RETURN2])) {
+		if (Input.isKeyDown([KeyCode.ESCAPE, KeyCode.RETURN, KeyCode.RETURN2])) {
 			exit();
 		} else if (Input.mouseBtnLeft || Input.mouseBtnRight) {
 			exit();
