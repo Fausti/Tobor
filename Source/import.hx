@@ -9,4 +9,4 @@ import gfx.Color;
 import gfx.Sprite;
 import gfx.Animation;
 
-using hx.strings.Strings;
+// using hx.strings.Strings;

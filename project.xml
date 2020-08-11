@@ -13,9 +13,9 @@
 	<haxelib name="lime" />
 	<haxelib name="compiletime" />
 	<haxelib name="tjson" />
-	<haxelib name="haxe-strings" />
+	<!-- <haxelib name="haxe-strings" /> -->
 	
-	<assets path="Assets" rename="assets" embed="true" />
+	<assets path="Assets" rename="assets" embed="false" />
 	
 	<icon path="icon-1024.png" size="1024" embed="true" />
 	<icon path="icon-16.png" size="16" embed="true" />
