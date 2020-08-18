@@ -2,7 +2,6 @@ package;
 
 import gfx.Framebuffer;
 import lime.graphics.opengl.GL;
-import cpp.vm.Gc;
 import lime.math.Rectangle;
 import lime.system.Locale;
 import screens.EpisodesScreen;
@@ -159,8 +158,8 @@ class Tobor extends LimeGame {
 	}
 	
 	function collectGarbage() {
-		Gc.run(true);
-		Gc.compact();
+		// Gc.run(true);
+		// Gc.compact();
 	}
 	
 	override public function update(deltaTime:Float) {

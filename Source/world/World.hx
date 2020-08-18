@@ -1,9 +1,10 @@
 package world;
 
-import cpp.vm.Thread;
+// import cpp.vm.Thread;
 import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
+import sys.thread.Thread;
 import ui.Dialog;
 import ui.DialogMessage;
 import world.entities.Entity;
@@ -698,7 +699,8 @@ class World {
 		rooms = new RoomList();
 		loadStatus = 0;
 		
-		var t = Thread.create(function () {
+		// var t = Thread.create(function () {
+		var t = sys.thread.Thread.create(function () {
 			var timeStart:Float = Timer.stamp();
 			
 			var data = TJSON.parse(fileData);
