@@ -186,6 +186,35 @@ class FileEpisode {
 		
 		if (isZIP) {
 			var file:FileInput = File.read(root);
+			// var unzip:Reader = new Reader(file);
+			
+			var files;
+			
+			try {
+				files = Reader.readZip(file);
+				// files = unzip.read();
+			} catch (err:Dynamic) {
+				trace(err);
+				return null;
+			}
+
+			var entry = null;
+			for (e in files) {
+				if (e.fileName.endsWithIgnoreCase(fileName)) entry = e;
+			}
+			
+			if (entry != null) {
+				if (entry.compressed) {
+					// content = entry.data.toString();
+					content = Reader.unzip(entry).toString();
+				} else {
+					content = entry.data.toString();
+				}
+			} else {
+				trace(fileName + " in " + root + " not found!");
+			}
+			/*
+			var file:FileInput = File.read(root);
 			var unzip:Reader = new Reader(file);
 			
 			var files;
@@ -211,6 +240,7 @@ class FileEpisode {
 			} else {
 				trace(fileName + " in " + root + " not found!");
 			}
+			*/
 		} else {
 			fileName = root + "/" + fileName;
 			
