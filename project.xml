@@ -12,7 +12,7 @@
 	
 	<haxelib name="lime" />
 	<haxelib name="compiletime" />
-	<haxelib name="tjson" />
+	<!-- <haxelib name="tjson" /> -->
 	<!-- <haxelib name="haxe-strings" /> -->
 	
 	<assets path="Assets" rename="assets" embed="false" />

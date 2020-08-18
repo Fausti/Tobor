@@ -92,7 +92,7 @@ class DialogInput extends DialogMessage {
 			
 			chars = chars.replaceAll("ß", "ss");
 			
-			chars = Utf8.decode(chars);
+			// chars = Utf8.decode(chars);
 			
 			return chars;
 		}

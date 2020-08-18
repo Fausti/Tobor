@@ -1,6 +1,6 @@
 package ui;
 
-import haxe.Utf8;
+// import haxe.Utf8;
 
 /**
  * ...
@@ -44,7 +44,7 @@ class Font {
 		var posX:Float = x;
 		var posY:Float = y;
 		
-		text = Utf8.decode(text);
+		// text = Utf8.decode(text);
 		
 		for (i in 0 ... text.length) {
 			var ci:Int = GLYPHS.indexOf(text.charAt(i));
@@ -80,11 +80,12 @@ class Font {
 		}
 	}
 	
-	public static var GLYPHS:String = Utf8.decode("" + //
+	// public static var GLYPHS:String = Utf8.decode("" + //
+	public static var GLYPHS:String =
 		"abcdefghijklmnop" +
 		"qrstuvwxyzäöüß_ " +
 		"ABCDEFGHIJKLMNOP" +
 		"QRSTUVWXYZÄÖÜ^° " + //
 		"0123456789.,!?'\"-+=/\\%()<>:;[]`´" + //
-		"$#&@*éúíóáýèùìòà");
+		"$#&@*éúíóáýèùìòà";
 }
