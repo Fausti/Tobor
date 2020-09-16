@@ -26,7 +26,11 @@ class StringTools2 {
    }
    
    public static function compact(str:String):String {
-      return str;
+	  while (str.indexOf("  ") > -1) {
+		str = str.replaceAll("  ", " ");
+	  }
+	  
+      return StringTools.trim(str);
    }
    
    inline
