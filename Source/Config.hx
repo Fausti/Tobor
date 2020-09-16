@@ -1,6 +1,6 @@
 package;
+import haxe.Json;
 
-import tjson.TJSON;
 /**
  * ...
  * @author Matthias Faust
@@ -26,7 +26,7 @@ class Config {
 		var fileData:String = Files.loadFromFile("config.json");
 		if (fileData == null) return;
 		
-		var data = TJSON.parse(fileData);
+		var data = Json.parse(fileData);
 		
 		for (key in Reflect.fields(data)) {
 			switch(key) {
@@ -56,7 +56,7 @@ class Config {
 		data.set("robotBehavior", robotBehavior);
 		data.set("colorKeys", colorKeys);
 		
-		Files.saveToFile("config.json", TJSON.encode(data, 'fancy'));
+		Files.saveToFile("config.json", haxe.Json.stringify(data));
 	}
 	
 	public static function setShader(index:Int) {

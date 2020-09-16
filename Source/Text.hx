@@ -1,6 +1,5 @@
 package;
 
-import tjson.TJSON;
 /**
  * ...
  * @author Matthias Faust
@@ -45,7 +44,7 @@ class Text {
 			return;
 		}
 		
-		var data = TJSON.parse(content);
+		var data = haxe.Json.parse(content);
 		
 		for (key in Reflect.fields(data)) {
 			var data2 = Reflect.field(data, key);
@@ -60,7 +59,7 @@ class Text {
 			return;
 		}
 		
-		var data = TJSON.parse(content);
+		var data = haxe.Json.parse(content);
 		
 		for (key in Reflect.fields(data)) {
 			var data2 = Reflect.field(data, key);
@@ -73,25 +72,25 @@ class Text {
 	public static function save():String {
 		var data:Map<String, Dynamic> = db.save();
 		
-		return TJSON.encode(data, 'fancy');
+		return haxe.Json.stringify(data);
 	}
 	
 	public static function saveForWorld():String {
 		var data:Map<String, Dynamic> = db_world.save();
 		
-		return TJSON.encode(data, 'fancy');
+		return haxe.Json.stringify(data);
 	}
 	
 	public static function saveMissing():String {
 		var data:Map<String, Dynamic> = db.saveMissing();
 		
-		return TJSON.encode(data, 'fancy');
+		return haxe.Json.stringify(data);
 	}
 	
 	public static function saveForWorldMissing():String {
 		var data:Map<String, Dynamic> = db_world.saveMissing();
 		
-		return TJSON.encode(data, 'fancy');
+		return haxe.Json.stringify(data);
 	}
 }
 

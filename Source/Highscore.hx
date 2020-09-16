@@ -1,5 +1,4 @@
 package;
-import tjson.TJSON;
 
 /**
  * ...
@@ -70,7 +69,7 @@ class Highscore {
 			data.push(s.save());
 		}
 		
-		return TJSON.encode(data, 'fancy');
+		return haxe.Json.stringify(data);
 	}
 	
 	public function load(fileData:String) {
@@ -81,7 +80,7 @@ class Highscore {
 			return;
 		}
 		
-		var data:Array<Dynamic> = TJSON.parse(fileData);
+		var data:Array<Dynamic> = haxe.Json.parse(fileData);
 		
 		for (entry in data) {
 			var _name:String = Reflect.field(entry, "name");

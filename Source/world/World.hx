@@ -1,6 +1,7 @@
 package world;
 
 // import cpp.vm.Thread;
+import haxe.Json;
 import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
@@ -9,7 +10,6 @@ import ui.Dialog;
 import ui.DialogMessage;
 import world.entities.Entity;
 import world.entities.std.Charlie;
-import tjson.TJSON;
 import world.entities.std.StartPosition;
 import screens.IntroScreen;
 import ui.DialogInput;
@@ -691,7 +691,7 @@ class World {
 		data.set("winType", config.winType);
 		data.set("ringEffects", config.ringEffects);
 		
-		return TJSON.encode(data, 'fancy');
+		return haxe.Json.stringify(data);
 	}
 	
 	function loadData(fileData:String, ?cb:Void->Void = null) {
@@ -703,7 +703,8 @@ class World {
 		var t = sys.thread.Thread.create(function () {
 			var timeStart:Float = Timer.stamp();
 			
-			var data = TJSON.parse(fileData);
+			var data = haxe.Json.parse(fileData);
+			// var data = Json.parse(fileData);
 			var max:Int = Reflect.fields(data).length;
 			var index:Int = 0;
 			
