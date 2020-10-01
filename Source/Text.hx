@@ -59,7 +59,18 @@ class Text {
 			return;
 		}
 		
-		var data = haxe.Json.parse(content);
+		var data = null;
+		
+		try 
+		{
+			data = haxe.Json.parse(content);
+		} catch (err:Dynamic)
+		{
+			trace(data);
+			trace(err);
+			
+			return;
+		}
 		
 		for (key in Reflect.fields(data)) {
 			var data2 = Reflect.field(data, key);
