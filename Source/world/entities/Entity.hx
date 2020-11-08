@@ -284,10 +284,10 @@ class Entity {
 		init();
 	}
 	
-	public function saveData():Map<String, Dynamic> {
-		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
-		
+	public function saveData():EntityData {
 		var def:ObjectTemplate = getTemplate();
+		/*
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
 		
 		if (def != null) {
 			data.set("id", def.name);
@@ -303,8 +303,22 @@ class Entity {
 		} else {
 			return null;
 		}
+		*/
 		
-		return data;
+		if (def != null) {
+			return {
+				id: def.name, 
+				type: type, 
+				subType: subType, 
+				content: content, 
+				flag: flag, 
+				x: gridX, 
+				y: gridY, 
+				drift: drift 
+			};
+		}
+		
+		return null;
 	}
 	
 	inline function getWorld():World {
@@ -652,3 +666,14 @@ class Entity {
 		
 	}
 }
+
+typedef EntityData = {
+	id:String, 
+	type:Int, 
+	subType:Int, 
+	content:String, 
+	flag:Int, 
+	x:Int, 
+	y:Int, 
+	drift:Int 
+};

@@ -58,7 +58,7 @@ class Room {
 	
 	var listRemove:Array<Entity>;
 	
-	public var saveData:Array<Map<String, Dynamic>> = null;
+	public var saveData:Array<EntityData> = null;
 	
 	function get_length():Int {
 		return entities.length;
@@ -240,7 +240,10 @@ class Room {
 		
 		getPlayer().onRoomEnds();
 		
-		saveData = save();
+		// Savedata nur vorbereiten wenn NICHT im Editor!
+		if (!world.editing) saveData = save();
+		
+		// saveData = save();
 	}
 	
 	public function spawnEntity(x:Float, y:Float, e:Entity) {
@@ -420,10 +423,10 @@ class Room {
 		}
 	}
 	
-	public function save():Array<Map<String, Dynamic>> {
+	public function save():Array<EntityData> {
 		if (entities.length > 0) entities.saveState();
 		
-		var data:Array<Map<String, Dynamic>> = [];
+		var data:Array<EntityData> = [];
 		
 		for (e in entities.getState()) {
 			if (e != null) {
@@ -460,11 +463,60 @@ class Room {
 		return null;
 	}
 	
-	public function findStairs(stairsX:Int, stairsY:Int, stairsType:Int):Entity {
+	// Treppe im geladenen Raum suchen...
+	function findStairsOld(stairsX:Int, stairsY:Int, stairsType:Int):Entity {
 		for (e in entities.getState()) {
 			if (Std.is(e, Stairs)) {
 				if (e.type == stairsType && e.gridX == stairsX && e.gridY == stairsY) {
 					return e;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	// Treppe in SaveData suchen...
+	public function findStairs(stairsX:Int, stairsY:Int, stairsType:Int):ActionTarget {
+		var at:ActionTarget = new ActionTarget();
+		
+		if (saveData == null) {
+			trace("searching in ENTITIES " + getID() + " for " + stairsType);
+			var e = findStairsOld(stairsX, stairsY, stairsType);
+			if (e != null) {
+				at.gridX = e.gridX;
+				at.gridY = e.gridY;
+				at.roomX = position.x;
+				at.roomY = position.y;
+				at.roomZ = position.z;
+				
+				return at;
+			}
+			
+			return null;
+		}
+		
+		trace("searching in SAVEDATA " + getID() + " for " + stairsType);
+		
+		var searchFor = ["OBJ_STAIRS_UP", "OBJ_STAIRS_DOWN"];
+		
+		for (el in saveData) {
+			var eid = Reflect.field(el, "id");
+			//trace(el.id);
+			trace(el, Reflect.fields(el), Reflect.getProperty(el, "id"));
+			trace(el, "-" + searchFor[stairsType] + "-", "-"+eid+"-");
+			if (eid == searchFor[stairsType]) {
+				at.gridX = Reflect.field(el, "x");
+				at.gridY = Reflect.field(el, "y");
+				at.roomX = position.x;
+				at.roomY = position.y;
+				at.roomZ = position.z;
+				
+				trace("Found: ", at.gridX, at.gridY);
+				
+				if (at.gridX == stairsX && at.gridY == stairsY) {
+					trace(at);
+					return at;
 				}
 			}
 		}

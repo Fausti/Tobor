@@ -17,6 +17,8 @@
 	<!-- <haxelib name="tjson" /> -->
 	<!-- <haxelib name="haxe-strings" /> -->
 	
+	<!-- <haxeflag name="-dce" value="no" /> -->
+	
 	<assets path="Assets" rename="assets" embed="false" />
 	
 	<icon path="icon-1024.png" size="1024" embed="true" />

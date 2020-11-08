@@ -420,6 +420,9 @@ class EditorScreen extends PlayScreen {
 		}
 		
 		game.world.room.restoreState();
+		
+		// ?
+		// game.world.room.saveData = game.world.room.save();
 	}
 	
 	public function switchRoomPreview(x:Int, y:Int, z:Int) {
@@ -455,6 +458,9 @@ class EditorScreen extends PlayScreen {
 		} else {
 			game.world.room.restoreState();
 			game.world.player.setPosition(game.world.oldPlayerX, game.world.oldPlayerY);
+			
+			// ?
+			// game.world.room.saveData = game.world.room.save();
 		}
 		
 		oldCursorX = -1;

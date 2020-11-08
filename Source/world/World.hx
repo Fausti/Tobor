@@ -84,6 +84,8 @@ class World {
 	};
 	
 	// AFTER_UPDATE Aktionen
+	var actionTarget:ActionTarget;
+	
 	var actionSaveGame:Bool = false;
 	
 	var actionLoadGame:Bool = false;
@@ -94,7 +96,7 @@ class World {
 	var actionTeleportTarget:Entity = null;
 	
 	var actionStairs:Bool = false;
-	var actionStairsTarget:Entity = null;
+	// var actionStairsTarget:Entity = null;
 	
 	var actionChangeRoom:Bool = false;
 	var actionChangeRoomDirection:Vector2 = null;
@@ -371,18 +373,16 @@ class World {
 		}
 		
 		if (actionStairs) {
-			if (actionStairsTarget != null) {
+			if (actionTarget != null) {
 				actionStairs = false;
-				
-				var t = actionStairsTarget;
 			
 				if (!editing) game.world.room.saveState();
 				room.treeTimer = 0;
-				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
+				switchRoom(actionTarget.roomX, actionTarget.roomY, actionTarget.roomZ);
 				game.world.room.restoreState();
 			
-				player.setPosition(t.gridX, t.gridY);
-				actionStairsTarget = null;
+				player.setPosition(actionTarget.gridX, actionTarget.gridY);
+				actionTarget = null;
 				
 				var playScreen:PlayScreen = cast game.getScreen();
 				playScreen.showRoomName();
@@ -512,7 +512,8 @@ class World {
 	}
 	
 	public function stairsFrom(e:Entity) {
-		var target:Entity;
+		var target:ActionTarget = null;
+		actionTarget = null;
 		
 		for (r in rooms) {
 			if (r.position.x == room.position.x && r.position.y == room.position.y) {
@@ -525,11 +526,27 @@ class World {
 				}
 			
 				if (target != null) {
-					actionStairs = true;
-					actionStairsTarget = target;
-					return;
+					trace("FROM: ", room.position.x, room.position.y, room.position.z);
+					trace("TO: ", target.roomX, target.roomY, target.roomZ, " - ", target.gridX, target.gridY);
+					
+					if (actionTarget == null) {
+						actionTarget = target;
+						trace("NEU", target);
+					} else {
+						if (e.type == 1 && actionTarget.roomZ > target.roomZ) {
+							actionTarget = target;
+							trace("ALT", target, "hoch");
+						} else if (e.type == 0 && actionTarget.roomZ < target.roomZ) {
+							actionTarget = target;
+							trace("ALT", target, "runter");
+						}
+					}
 				}
 			}
+		}
+		
+		if (actionTarget != null) {
+			actionStairs = true;
 		}
 	}
 	
@@ -706,7 +723,7 @@ class World {
 			data.set("inventory", inventory.save());
 		}
 		
-		var playerData:Map<String, Dynamic> = player.saveData();
+		var playerData:Map<String, Dynamic> = cast player.saveData();
 		
 		playerData.set("inRoomX", roomCurrent.position.x);
 		playerData.set("inRoomY", roomCurrent.position.y);
@@ -787,11 +804,11 @@ class World {
 			data.set("inventory", inventory.save());
 		}
 		
-		var playerData:Map<String, Dynamic> = player.saveData();
+		var playerData:Dynamic = player.saveData();
 		
-		playerData.set("inRoomX", roomCurrent.position.x);
-		playerData.set("inRoomY", roomCurrent.position.y);
-		playerData.set("inRoomZ", roomCurrent.position.z);
+		Reflect.setField(playerData, "inRoomX", roomCurrent.position.x);
+		Reflect.setField(playerData, "inRoomY", roomCurrent.position.y);
+		Reflect.setField(playerData, "inRoomZ", roomCurrent.position.z);
 		
 		data.set("player", playerData);
 		data.set("flags", flags);
@@ -1017,5 +1034,18 @@ class World {
 	
 	public function getDesc():String {
 		return file.getDesc();
+	}
+}
+
+class ActionTarget {
+	public var roomX:Int;
+	public var roomY:Int;
+	public var roomZ:Int;
+	
+	public var gridX:Int;
+	public var gridY:Int;
+	
+	public function new() {
+		
 	}
 }
