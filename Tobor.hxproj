@@ -18,12 +18,13 @@
   <classpaths>
     <class path="C:\HaxeToolkit\haxe\lib\lime\7,8,0\src" />
     <class path="C:\HaxeToolkit\haxe\lib\compiletime\2,8,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\msgpack\git" />
     <class path="Source" />
     <class path="Export\windows\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="lime=7.8.0&#xA;compiletime=2.8.0&#xA;lime-harfbuzz&#xA;lime-openal&#xA;tools=7.8.0&#xA;lime-cairo&#xA;lime-opengl&#xA;no-compilation&#xA;native&#xA;lime-curl&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
+    <option directives="lime=7.8.0&#xA;compiletime=2.8.0&#xA;msgpack-haxe=1.15.1&#xA;msgpack=1.15.1&#xA;lime-harfbuzz&#xA;lime-openal&#xA;tools=7.8.0&#xA;lime-cairo&#xA;lime-opengl&#xA;no-compilation&#xA;native&#xA;lime-curl&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

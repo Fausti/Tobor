@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="The Game of Tobor" package="de.netzweh.tobor" version="0.4.8-beta" company="Netzweh" />
+	<meta title="The Game of Tobor" package="de.netzweh.tobor" version="0.4.9-beta" company="Netzweh" />
 	<app main="Main" path="Export" file="Tobor" />
 	
 	<!-- <window width="960" height="522" orientation="landscape" resizable="true" fps="60" vsync="false" background="0xFFFFFF"/> -->
@@ -12,6 +12,8 @@
 	
 	<haxelib name="lime" />
 	<haxelib name="compiletime" />
+	<haxelib name="msgpack" />
+	
 	<!-- <haxelib name="tjson" /> -->
 	<!-- <haxelib name="haxe-strings" /> -->
 	

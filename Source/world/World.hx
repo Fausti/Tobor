@@ -2,6 +2,9 @@ package world;
 
 // import cpp.vm.Thread;
 import haxe.Json;
+import haxe.io.Bytes;
+import org.msgpack.Decoder;
+import org.msgpack.MsgPack;
 import haxe.Timer;
 import lime.math.Vector2;
 import screens.PlayScreen;
@@ -114,6 +117,8 @@ class World {
 	}
 	
 	public function init(?fileName:String = null) {
+		trace("init: ", fileName);
+		
 		isLoading = true;
 		
 		visitedRooms = new Map<String, Bool>();
@@ -134,16 +139,28 @@ class World {
 		
 		Text.loadForWorld(file.loadFile('translation.json'));
 		
-		var content:String;
+		var content:String = null;
+		var content2:Bytes = null;
 		
 		if (fileName == null) {
-			content = file.loadFile('rooms.json');
+			trace("msgpack");
+			content2 = file.loadFileAsBytes("rooms.dat");
+			if (content2 == null) {
+				trace("json");
+				content = file.loadFile('rooms.json');
+			}
+			
 			playerName = null;
 		} else {
-			content = file.loadSavegame(fileName);
+			content2 = file.loadSavegame(fileName);
+			
+			if (content2.get(0) == 0x7b) {
+				content = content2.toString();
+				content2 = null;
+			}
 		}
 		
-		if (content == null) {
+		if (content == null && content2 == null) {
 			rooms.add(createRoom(0, 0, 0));
 			switchRoom(0, 0, 0);
 		
@@ -155,14 +172,25 @@ class World {
 			isLoading = false;
 			canStart = true;
 		} else {
-			loadData(content, function () {		
-				switchRoom(inRoomX, inRoomY, inRoomZ);
-				room.restoreState();
-				player.setRoom(roomCurrent);
+			if (content2 != null) {
+				loadData2(content2, function () {		
+					switchRoom(inRoomX, inRoomY, inRoomZ);
+					room.restoreState();
+					player.setRoom(roomCurrent);
 				
-				isLoading = false;
-				canStart = true;
-			});
+					isLoading = false;
+					canStart = true;
+				});
+			} else {
+				loadData(content, function () {		
+					switchRoom(inRoomX, inRoomY, inRoomZ);
+					room.restoreState();
+					player.setRoom(roomCurrent);
+				
+					isLoading = false;
+					canStart = true;
+				});
+			}
 		}
 		
 		flags = [false, false, false, false, false];
@@ -589,10 +617,16 @@ class World {
 	}
 	
 	public function saveGame(fileName:String) {
+		/*
 		var content:String;
 
 		content = saveData();
 		file.saveSavegame(fileName, content);
+		*/
+		var content:Bytes;
+
+		content = saveData2();
+		file.saveSavegame2(fileName, content);
 	}
 	
 	public function save() {
@@ -601,8 +635,20 @@ class World {
 		Text.loadForWorld(file.loadFile('translation.json'));
 		Text.loadForWorld(file.loadFile('translation_missing.json'));
 		
+		var timeStart:Float = Timer.stamp();
+		/*
 		content = saveData();
+		
 		file.saveFile('rooms.json', content);
+		trace("Debug: episode saving (json) took: " + (Timer.stamp() - timeStart) + "s");
+		*/
+		
+		timeStart = Timer.stamp();
+		var content2:Bytes;
+		content2 = saveData2();
+		
+		file.saveFileAsBytes("rooms.dat", content2);
+		trace("Debug: episode saving (msgpack) took: " + (Timer.stamp() - timeStart) + "s");
 		
 		if (editing) {
 			content = Text.saveForWorld();
@@ -694,6 +740,88 @@ class World {
 		return haxe.Json.stringify(data);
 	}
 	
+	function saveData2():Bytes {
+		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
+		
+		if (!editing) {
+			data.set("food", food);
+			data.set("garlic", garlic);
+			data.set("gold", gold);
+			data.set("points", points);
+			data.set("lives", lives);
+			
+			if (playerName != null) {
+				data.set("playerName", playerName);
+			}
+			
+			// itemSeen
+			
+			var itemSeenData:Array<String> = [];
+		
+			for (vr in inventory.seen.keys()) {
+				itemSeenData.push(vr);
+			}
+		
+			data.set("itemSeen", itemSeenData);
+			
+			// firstUse
+			
+			var firstUseData:Array<String> = [];
+		
+			for (vr in firstUse.keys()) {
+				firstUseData.push(vr);
+			}
+		
+			data.set("firstUse", firstUseData);
+			
+			// besuchte Räume
+			
+			var visitedData:Array<String> = [];
+		
+			for (vr in visitedRooms.keys()) {
+				visitedData.push(vr);
+			}
+		
+			data.set("visited", visitedData);
+			
+			data.set("inventory", inventory.save());
+		}
+		
+		var playerData:Map<String, Dynamic> = player.saveData();
+		
+		playerData.set("inRoomX", roomCurrent.position.x);
+		playerData.set("inRoomY", roomCurrent.position.y);
+		playerData.set("inRoomZ", roomCurrent.position.z);
+		
+		data.set("player", playerData);
+		data.set("flags", flags);
+		
+		for (r in rooms) {
+			var worldData:Map<String, Dynamic> = new Map();
+			
+			if (!editing) {
+				worldData.set("treeTimer", r.treeTimer);
+			}
+			
+			worldData.set("music", r.config.music);
+			worldData.set("darkness", r.config.darkness);
+			
+			worldData.set("x", r.position.x);
+			worldData.set("y", r.position.y);
+			worldData.set("z", r.position.z);
+			
+			worldData.set("data", r.save());
+			
+			data.set(r.getID(), worldData);
+		}
+		
+		data.set("winType", config.winType);
+		data.set("ringEffects", config.ringEffects);
+		
+		return MsgPack.encode(data);
+		// return haxe.Json.stringify(data);
+	}
+	
 	function loadData(fileData:String, ?cb:Void->Void = null) {
 		roomCurrent = null;
 		rooms = new RoomList();
@@ -718,7 +846,35 @@ class World {
 			
 			if (cb != null) cb();
 			
-			trace("Debug: episode loading took: " + (Timer.stamp() - timeStart) + "s");
+			trace("Debug: episode loading (json) took: " + (Timer.stamp() - timeStart) + "s");
+		});
+	}
+	
+	function loadData2(fileData:Bytes, ?cb:Void->Void = null) {
+		roomCurrent = null;
+		rooms = new RoomList();
+		loadStatus = 0;
+		
+		// var t = Thread.create(function () {
+		var t = sys.thread.Thread.create(function () {
+			var timeStart:Float = Timer.stamp();
+			
+			var data = MsgPack.decode(fileData);
+			// var data = Json.parse(fileData);
+			var max:Int = Reflect.fields(data).length;
+			var index:Int = 0;
+			
+			for (key in Reflect.fields(data)) {
+				index++;
+				loadStatus = Math.ceil((index * 100) / max);
+				// trace(loadStatus);
+				
+				parseKey(key, data);
+			}
+			
+			if (cb != null) cb();
+			
+			trace("Debug: episode loading (msgpack) took: " + (Timer.stamp() - timeStart) + "s");
 		});
 	}
 	

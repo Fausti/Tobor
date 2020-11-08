@@ -134,16 +134,22 @@ class FileEpisode {
 		return list;
 	}
 	
-	public function loadSavegame(fileName:String):String {
+	public function loadSavegame(fileName:String):Bytes {
 		checkSavePath();
 		
-		return Files.loadFromFile(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav');
+		return Files.loadFileAsBytes(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav');
 	}
 	
 	public function saveSavegame(fileName:String, data:String) {
 		checkSavePath();
 		
 		Files.saveToFile(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav', data);
+	}
+	
+	public function saveSavegame2(fileName:String, data:Bytes) {
+		checkSavePath();
+		
+		Files.saveToFileAsBinary(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav', data);
 	}
 	
 	public function hasTexture():Bool {
@@ -173,6 +179,23 @@ class FileEpisode {
 		try {
 			var fout = File.write(fileName, false);
 			fout.writeString(content);
+			fout.close();
+		}
+		catch (err:Dynamic)
+		{
+			trace(err);
+		}
+	}
+	
+	public function saveFileAsBytes(fileName:String, content:Bytes) {
+		// können nicht in ZIP Archive speichern
+		if (isZIP) return;
+		
+		fileName = root + "/" + fileName;
+		
+		try {
+			var fout = File.write(fileName, true);
+			fout.write(content);
 			fout.close();
 		}
 		catch (err:Dynamic)

@@ -115,7 +115,7 @@ class Files {
 	
 	public static function loadFromFile(fileName:String):String {
 		var fin:FileInput;
-		
+
 		try 
 		{
 			fin = File.read(fileName, false);
@@ -125,7 +125,9 @@ class Files {
 			return null;
 		}
 		
+		/*
 		// erste Zeile lesen, falls Kommentar vorhanden
+		trace("Header");
 		var header = fin.readLine();
 		if (header.indexOf("//") == 0) {
 			header = header.substr(2);
@@ -133,10 +135,14 @@ class Files {
 			header = "";
 		}
 		
+		trace("Content");
 		// Rest der Datei lesen
-		var fileData = header + fin.readAll().toString();
-		fin.close();
+		// var fileData = header + fin.readAll().toString();
+		*/
 		
+		var fileData = fin.readAll().toString();
+		fin.close();
+
 		return fileData;
 	}
 	
