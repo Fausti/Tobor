@@ -12,8 +12,8 @@
 	
 	<haxelib name="lime" />
 	<haxelib name="compiletime" />
-	<haxelib name="msgpack" />
 	
+	<!-- <haxelib name="msgpack" /> -->
 	<!-- <haxelib name="tjson" /> -->
 	<!-- <haxelib name="haxe-strings" /> -->
 	
