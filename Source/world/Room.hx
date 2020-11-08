@@ -58,6 +58,8 @@ class Room {
 	
 	var listRemove:Array<Entity>;
 	
+	public var saveData:Array<Map<String, Dynamic>> = null;
+	
 	function get_length():Int {
 		return entities.length;
 	}
@@ -213,6 +215,8 @@ class Room {
 	public function onRoomStart() {
 		if (world.isLoading) return;
 		
+		saveData = null;
+		
 		for (e in entities.getAll()) {
 			e.onRoomStart();
 		}
@@ -235,6 +239,8 @@ class Room {
 		}
 		
 		getPlayer().onRoomEnds();
+		
+		saveData = save();
 	}
 	
 	public function spawnEntity(x:Float, y:Float, e:Entity) {
@@ -398,6 +404,8 @@ class Room {
 	}
 	
 	public function load(data) {
+		saveData = data;
+		
 		for (entry in cast(data, Array<Dynamic>)) {
 			var template:ObjectTemplate = world.factory.findFromID(entry.id);
 			

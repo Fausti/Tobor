@@ -810,7 +810,11 @@ class World {
 			worldData.set("y", r.position.y);
 			worldData.set("z", r.position.z);
 			
-			worldData.set("data", r.save());
+			if (r.saveData != null && r.saveData.length > 0) {
+				worldData.set("data", r.saveData);
+			} else {
+				worldData.set("data", r.save());
+			}
 			
 			data.set(r.getID(), worldData);
 		}
