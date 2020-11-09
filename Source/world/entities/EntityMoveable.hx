@@ -2,6 +2,7 @@ package world.entities;
 
 import lime.math.Vector2;
 import world.entities.std.Charlie;
+import world.entities.std.Munition;
 import world.entities.std.Sling;
 import world.entities.std.Tunnel;
 
@@ -147,9 +148,18 @@ class EntityMoveable extends EntityDynamic {
 				return 0;
 			});
 			
+			var onMunition:Bool = false;
+			
 			for (e in atTarget) {
 				if (alive && visible) {
-					e.onEnter(this, oldDirection);
+					if (Std.isOfType(e, Munition)) {
+						if (!onMunition) {
+							if (!Std.isOfType(this, Charlie)) onMunition = true;
+							e.onEnter(this, oldDirection);
+						}
+					} else {
+						e.onEnter(this, oldDirection);
+					}
 				} else if (Std.is(this, Charlie) && Std.is(e, Tunnel)) {
 					// Sonderfall Tunnel
 					e.onEnter(this, oldDirection);
