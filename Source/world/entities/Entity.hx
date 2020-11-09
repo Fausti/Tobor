@@ -91,6 +91,8 @@ class Entity {
 	public function render_editor() {
 		render();
 		
+		if (!Std.isOfType(this, IElectric)) return;
+		
 		if (flag != Marker.MARKER_NO) {
 			var spr_marker:Sprite = null;
 			
