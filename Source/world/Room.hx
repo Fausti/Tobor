@@ -59,6 +59,7 @@ class Room {
 	var listRemove:Array<Entity>;
 	
 	public var saveData:Array<EntityData> = null;
+	public var loaded:Bool = true;
 	
 	function get_length():Int {
 		return entities.length;
@@ -406,10 +407,13 @@ class Room {
 		entities.restoreState();
 	}
 	
-	public function load(data) {
+	public function setData(data) {
 		saveData = data;
-		
-		for (entry in cast(data, Array<Dynamic>)) {
+		loaded = false;
+	}
+	
+	public function load() {
+		for (entry in cast(saveData, Array<Dynamic>)) {
 			var template:ObjectTemplate = world.factory.findFromID(entry.id);
 			
 			if (template != null) {
@@ -421,6 +425,8 @@ class Room {
 				trace("There is no Entity with ID of: " + entry.id);
 			}
 		}
+		
+		loaded = true;
 	}
 	
 	public function save():Array<EntityData> {

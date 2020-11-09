@@ -455,19 +455,24 @@ class World {
 		return r;
 	}
 	
-	public function switchRoom(x:Int, y:Int, z:Int) {
+	public function switchRoom(x:Int, y:Int, z:Int, ?load:Bool = true) {
 		var r:Room = rooms.find(x, y, z);
 		
-		switchRoomTo(r);
+		switchRoomTo(r, load);
 	}
 	
-	public function switchRoomTo(r:Room) {
+	public function switchRoomTo(r:Room, ?load:Bool = true) {
 		if (r != null) {
 			if (roomCurrent != null) {
 				// aktuellen Raum beenden!
 				roomCurrent.onRoomEnd();
 			}
 			roomCurrent = r;
+			
+			if (load && !r.loaded) {
+				r.load();
+			}
+			
 			player.setRoom(roomCurrent);
 			
 			roomCurrent.onRoomStart();
@@ -988,7 +993,7 @@ class World {
 		}
 		
 		var newRoom:Room = new Room(this, rx, ry, rz);
-		newRoom.load(rdata);
+		newRoom.setData(rdata);
 		newRoom.getName();
 		
 		if (rmusic == null) {
@@ -999,7 +1004,7 @@ class World {
 		newRoom.config.darkness = rdarkness;
 		
 		rooms.add(newRoom);
-		switchRoom(rx, ry, rz);
+		switchRoom(rx, ry, rz, false);
 	}
 	
 	function parsePlayer(data) {
