@@ -53,7 +53,7 @@ class Bucket extends EntityItem {
 				removeFromInventory();
 			
 				var tmpl:ObjectTemplate = getFactory().findFromID("OBJ_BUCKET#0");
-				if (tmpl != null) getInventory().add("OBJ_BUCKET#0", tmpl.spr, count);
+				if (tmpl != null) getInventory().add("OBJ_BUCKET#0", tmpl.spr, 1);
 			}
 		}
 	}
