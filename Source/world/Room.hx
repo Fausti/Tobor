@@ -455,9 +455,29 @@ class Room {
 		entities.removeState(cl);
 	}
 	
-	public function findStartPosition():StartPosition {
-		for (e in entities.getState()) {
-			if (Std.is(e, StartPosition)) return cast e;
+	public function findStartPosition():ActionTarget {
+		if (saveData == null) {
+			for (e in entities.getState()) {
+				if (Std.is(e, StartPosition)) {
+					var at:ActionTarget = new ActionTarget();
+					at.gridX = Std.int(e.x);
+					at.gridY = Std.int(e.y);
+					
+					return at;
+				}
+			}
+		} else {
+			for (el in saveData) {
+				var eid = el.id;
+
+				if (eid == "OBJ_START_POSITION") {
+					var at:ActionTarget = new ActionTarget();
+					at.gridX = el.x;
+					at.gridY = el.y;
+					
+					return at;
+				}
+			}
 		}
 		
 		return null;

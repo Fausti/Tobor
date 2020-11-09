@@ -234,15 +234,15 @@ class World {
 		Input.clearKeys();
 		
 		// Startposition suchen...
-		var sp:StartPosition = null;
+		var at:ActionTarget = null;
 		
 		for (r in rooms) {
-			if (sp == null) {
-				sp = r.findStartPosition();
+			if (at == null) {
+				at = r.findStartPosition();
 				
-				if (sp != null) {
-					oldPlayerX = Std.int(sp.x);
-					oldPlayerY = Std.int(sp.y);
+				if (at != null) {
+					oldPlayerX = at.gridX;
+					oldPlayerY = at.gridY;
 			
 					player.setPosition(oldPlayerX, oldPlayerY);
 					
