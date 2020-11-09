@@ -221,7 +221,7 @@ class Entity {
 	
 	// Save / Load
 	
-	public function clone():Entity {
+	public inline function clone():Entity {
 		var o = Type.createInstance(Type.getClass(this), []);
 		
 		o.x = x;
@@ -244,66 +244,20 @@ class Entity {
 		return true;
 	}
 	
-	public function parseData(data) {
-		if (hasData(data, "subType")) {
-			this.subType = data.subType;
-		}
-		
-		if (hasData(data, "drift")) {
-			this.drift = data.drift;
-		}
-		
-		if (hasData(data, "type")) {
-			this.type = data.type;
-		}
-		
-		if (hasData(data, "content")) {
-			this.content = data.content;
-		}
-		
-		if (Std.is(this, IElectric)) {
-			if (hasData(data, "flag")) {
-				this.flag = data.flag;
-			}
-		}
-		
-		if (hasData(data, "x")) {
-			this.x = data.x;
-		}
-		
-		if (hasData(data, "y")) {
-			this.y = data.y;
-		}
-		
-		/*
-		if (hasData(data, "z")) {
-			this.z = data.z;
-		}
-		*/
-		
+	public inline function parseData(data) {
+		this.subType = data.subType;
+		this.drift = data.drift;
+		this.type = data.type;
+		this.content = data.content;
+		this.flag = data.flag;
+		this.x = data.x;
+		this.y = data.y;
+
 		init();
 	}
 	
 	public function saveData():EntityData {
 		var def:ObjectTemplate = getTemplate();
-		/*
-		var data:Map<String, Dynamic> = new Map<String, Dynamic>();
-		
-		if (def != null) {
-			data.set("id", def.name);
-			data.set("type", type);
-			data.set("subType", subType);
-			if (content != null) data.set("content", content);
-			if (Std.is(this, IElectric)) data.set("flag", flag);
-			data.set("x", gridX);
-			data.set("y", gridY);
-			// data.set("z", z);
-			
-			data.set("drift", drift);
-		} else {
-			return null;
-		}
-		*/
 		
 		if (def != null) {
 			return {
