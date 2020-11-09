@@ -532,10 +532,37 @@ class Room {
 		return null;
 	}
 	
-	public function findTeleportTargetState(_type:Int, _content:String):Entity {
+	public function findTeleportTargetState(_type:Int, _content:String):ActionTarget {
+		var at:ActionTarget = new ActionTarget();
+		
+		/*
 		for (e in entities.getState()) {
 			if (Std.is(e, TeleportEnd)) {
 				if (e.type == _type && e.content == _content) return e;
+			}
+		}
+		*/
+		
+		if (saveData == null) return null;
+		
+		var searchFor = ["OBJ_TELEPORT_END_0", "OBJ_TELEPORT_END_1"];
+		
+		for (el in saveData) {
+			var eid = el.id;
+			
+			if (eid == searchFor[_type]) {
+				var ec = el.content;
+				if (ec == _content) {
+					at.gridX = el.x; // Reflect.field(el, "x");
+					at.gridY = el.y; // Reflect.field(el, "y");
+					at.roomX = position.x;
+					at.roomY = position.y;
+					at.roomZ = position.z;
+				
+					trace("Found: ", at.gridX, at.gridY);
+				
+					return at;
+				}
 			}
 		}
 		

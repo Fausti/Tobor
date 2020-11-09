@@ -93,8 +93,6 @@ class World {
 	var actionResetRoom:Bool = false;
 	
 	var actionTeleport:Bool = false;
-	var actionTeleportTarget:Entity = null;
-	
 	var actionStairs:Bool = false;
 	// var actionStairsTarget:Entity = null;
 	
@@ -352,18 +350,16 @@ class World {
 		}
 		
 		if (actionTeleport) {
-			if (actionTeleportTarget != null) {
+			if (actionTarget != null) {
 				actionTeleport = false;
-				
-				var t = actionTeleportTarget;
 			
 				if (!editing) game.world.room.saveState();
 				room.treeTimer = 0;
-				switchRoom(t.room.position.x, t.room.position.y, t.room.position.z);
+				switchRoom(actionTarget.roomX, actionTarget.roomY, actionTarget.roomZ);
 				game.world.room.restoreState();
 			
-				player.setPosition(t.gridX, t.gridY);
-				actionTeleportTarget = null;
+				player.setPosition(actionTarget.gridX, actionTarget.gridY);
+				actionTarget = null;
 				
 				var playScreen:PlayScreen = cast game.getScreen();
 				playScreen.showRoomName();
@@ -564,13 +560,16 @@ class World {
 		// freie Teleporter NUR im aktuellen Raum
 		if (e.content == null) return;
 		
+		
+		var target2:ActionTarget;
+		
 		// in allen Räumen
 		for (r in rooms) {
-			target = r.findTeleportTargetState(e.type, e.content);
+			target2 = r.findTeleportTargetState(e.type, e.content);
 			
-			if (target != null) {
+			if (target2 != null) {
 				actionTeleport = true;
-				actionTeleportTarget = target;
+				actionTarget = target2;
 				return;
 			}
 		}
