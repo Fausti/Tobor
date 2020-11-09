@@ -399,7 +399,6 @@ class World {
 		
 				d.onOk = function () {
 					var fileName:String = d.getInput(true);
-					
 					if (fileName != "" && fileName != null) {
 						inventory.remove("OBJ_CLOCK", 1);
 						
@@ -408,6 +407,9 @@ class World {
 						
 						saveGame(fileName);
 						
+						game.getScreen().hideDialog();
+					} else {
+						// Dialog ohne Dateinamen einfach schließen
 						game.getScreen().hideDialog();
 					}
 				};
