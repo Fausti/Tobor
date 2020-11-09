@@ -522,19 +522,13 @@ class World {
 				}
 			
 				if (target != null) {
-					trace("FROM: ", room.position.x, room.position.y, room.position.z);
-					trace("TO: ", target.roomX, target.roomY, target.roomZ, " - ", target.gridX, target.gridY);
-					
 					if (actionTarget == null) {
 						actionTarget = target;
-						trace("NEU", target);
 					} else {
 						if (e.type == 1 && actionTarget.roomZ > target.roomZ) {
 							actionTarget = target;
-							trace("ALT", target, "hoch");
 						} else if (e.type == 0 && actionTarget.roomZ < target.roomZ) {
 							actionTarget = target;
-							trace("ALT", target, "runter");
 						}
 					}
 				}
