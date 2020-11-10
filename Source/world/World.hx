@@ -10,6 +10,7 @@ import lime.math.Vector2;
 import screens.PlayScreen;
 import sys.thread.Thread;
 import ui.Dialog;
+import ui.DialogHelp;
 import ui.DialogMessage;
 import world.entities.Entity;
 import world.entities.std.Charlie;
@@ -586,6 +587,18 @@ class World {
 	
 	public function hideDialog() {
 		game.getScreen().hideDialog();
+	}
+	
+	public function showItemHelp() {
+		var messageBox:DialogHelp = new DialogHelp(game.getScreen(), 0, 0);
+
+		messageBox.onOk = function () {
+			if (messageBox.lookTarget != null) {
+				showMessage(messageBox.lookTarget + "_DESC", false);
+			}
+		};
+		
+		showDialog(messageBox);
 	}
 	
 	public function showMessage(key:String, ?smallFont:Bool = true, ?cb:Dynamic = null) {

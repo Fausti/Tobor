@@ -246,7 +246,7 @@ class DialogInventory extends Dialog {
 				} else {
 					selectedItem = [currentGroup.content[index].getItem()];
 				}
-					
+				
 				ok();
 				Input.wait(0.25);
 				return;

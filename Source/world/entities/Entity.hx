@@ -302,7 +302,7 @@ class Entity {
 		return getFactory().findFromObject(this);
 	}
 	
-	function getID():String {
+	public function getID():String {
 		var template:ObjectTemplate = getTemplate();
 		
 		if (template != null) return template.name;
@@ -310,7 +310,7 @@ class Entity {
 		return "ERROR";
 	}
 	
-	function getGroupID():String {
+	public function getGroupID():String {
 		return getID().split("#")[0];
 	}
 	
