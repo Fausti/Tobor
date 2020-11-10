@@ -251,6 +251,11 @@ class Entity {
 		this.drift = data.drift;
 		this.type = data.type;
 		this.content = data.content;
+		
+		if (!Reflect.hasField(data, "flag")) {
+			Reflect.setField(data, "flag", Marker.MARKER_NO);
+		}
+		
 		this.flag = data.flag;
 		this.x = data.x;
 		this.y = data.y;
