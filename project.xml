@@ -11,7 +11,7 @@
 	<source path="Source" />
 	
 	<haxelib name="lime" />
-	<haxelib name="compiletime" />
+	<!-- <haxelib name="compiletime" /> -->
 	
 	<!-- <haxelib name="msgpack" /> -->
 	<!-- <haxelib name="tjson" /> -->

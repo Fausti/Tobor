@@ -76,7 +76,7 @@ class Tobor extends LimeGame {
 	public function new() {
 		super();
 		
-		CompileTime.importPackage("world.entities.std");
+		// CompileTime.importPackage("world.entities.std");
 		
 		__framebuffer_w = SCREEN_WIDTH;
 		__framebuffer_h = SCREEN_HEIGHT;
