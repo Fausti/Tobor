@@ -126,7 +126,7 @@ class NPC extends EntityAI implements IElectric {
 		
 		if (timeLeft == 0.0) {
 			if (flag != Marker.MARKER_NO) {
-				getWorld().showMessage("TXT_NPC_" + room.getID() + "_NR_" + flag, false);
+				getWorld().showMessage("TXT_" + room.getID() + "_NPC_NR_" + flag, false);
 			}
 			
 			timeLeft = waitTime;

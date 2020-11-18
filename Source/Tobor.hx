@@ -98,20 +98,22 @@ class Tobor extends LimeGame {
 		
 		Config.init();
 		
-		Text.init();
+		GetText.init();
 		
-		Text.load(Files.loadFromFile("translation.json"));
-						
+		GetText.loadJson(Files.loadFromFile("translation.json"));
+		
 		try 
 		{
-			Text.load(Assets.getText("assets/translation.json"));
+			// GetText.load(Assets.getText("assets/translation.json"));
+			GetText.load(Assets.getText("lang." + defaultLocale));
 		}
 		catch (err:Dynamic)
 		{
 			
 		}
 		
-		Text.load(Files.loadFromFile("translation_missing.json"));
+		GetText.load(Files.loadFromFile("lang." + defaultLocale));
+		GetText.load(Files.loadFromFile("missing." + defaultLocale));
 		
 		GL.enable(GL.BLEND);
 		GL.disable(GL.DEPTH_TEST);
@@ -273,6 +275,7 @@ class Tobor extends LimeGame {
 		if (title == null) {
 			title = "The Game of Tobor - Version " + __application.meta.get('version');
 		}
+		
 		__application.window.title = title;
 	}
 	
@@ -294,8 +297,8 @@ class Tobor extends LimeGame {
 	}
 	
 	override function onExit() {
-		Files.saveToFile("translation.json", Text.save());
-		Files.saveToFile("translation_missing.json", Text.saveMissing());
+		Files.saveToFile("lang." + Tobor.defaultLocale, GetText.save());
+		Files.saveToFile("missing." + Tobor.defaultLocale, GetText.saveMissing());
 	}
 	
 	public function showDialog(dialog:Dialog) {

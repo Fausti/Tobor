@@ -49,13 +49,13 @@ class DialogInventory extends Dialog {
 		
 		inventory = screen.game.world.inventory;
 		
-		STRINGS[Inventory.ACTION_COUNT] = " " + Text.get("TXT_INVENTORY_COUNT");
-		STRINGS[Inventory.ACTION_USE] = Text.get("TXT_INVENTORY_USE");
-		STRINGS[Inventory.ACTION_DROP] = Text.get("TXT_INVENTORY_DROP");
-		STRINGS[Inventory.ACTION_LOOK] = Text.get("TXT_INVENTORY_LOOK");
-		STRINGS[Inventory.ACTION_CHOOSE] = Text.get("TXT_INVENTORY_CHOOSE");
-		STRINGS[Inventory.ACTION_DROP_ALL] = Text.get("TXT_INVENTORY_DROP_ALL");
-		STRINGS[Inventory.ACTION_CLONE] = Text.get("TXT_INVENTORY_CLONE");
+		STRINGS[Inventory.ACTION_COUNT] = " " + GetText.get("TXT_INVENTORY_COUNT");
+		STRINGS[Inventory.ACTION_USE] = GetText.get("TXT_INVENTORY_USE");
+		STRINGS[Inventory.ACTION_DROP] = GetText.get("TXT_INVENTORY_DROP");
+		STRINGS[Inventory.ACTION_LOOK] = GetText.get("TXT_INVENTORY_LOOK");
+		STRINGS[Inventory.ACTION_CHOOSE] = GetText.get("TXT_INVENTORY_CHOOSE");
+		STRINGS[Inventory.ACTION_DROP_ALL] = GetText.get("TXT_INVENTORY_DROP_ALL");
+		STRINGS[Inventory.ACTION_CLONE] = GetText.get("TXT_INVENTORY_CLONE");
 	}
 	
 	override public function show() {

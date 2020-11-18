@@ -47,6 +47,7 @@ class FileEpisode {
 		
 		var content:String = loadFile("info." + Tobor.locale);
 		if (content == null) content = loadFile("info." + Tobor.defaultLocale);
+		
 		if (content != null) {
 			desc = content;
 			isOK = true;
@@ -60,7 +61,7 @@ class FileEpisode {
 		
 		if (FileSystem.exists(Files.DIR_EPISODES + '/' + fileName)) {
 			isOK = false;
-			return Text.get("TXT_DIR_ALREADY_EXISTS");
+			return GetText.get("TXT_DIR_ALREADY_EXISTS");
 		} else {
 			try 
 			{
@@ -68,20 +69,20 @@ class FileEpisode {
 			}
 			catch (err:Dynamic)
 			{
-				return Text.get("TXT_COULDNT_CREATE_DIR") + ": " + err;
+				return GetText.get("TXT_COULDNT_CREATE_DIR") + ": " + err;
 			}
 			
 			if (FileSystem.exists(Files.DIR_EPISODES + '/' + fileName)) {
 				path = new Path(Files.DIR_EPISODES + '/' + fileName);
 				isEmpty = true;
 			} else {
-				return Text.get("TXT_COULDNT_CREATE_DIR");
+				return GetText.get("TXT_COULDNT_CREATE_DIR");
 			}
 		}
 			
 		if (!FileSystem.exists(path.toString() + "/info." + Tobor.defaultLocale)) {
 			var fout = File.write(path.toString() + "/info." + Tobor.defaultLocale, false);
-			fout.writeString(Text.get("TXT_SET_DESC_IN_INFO_FILE"));
+			fout.writeString(GetText.get("TXT_SET_DESC_IN_INFO_FILE"));
 			fout.close();
 		}
 		
@@ -317,7 +318,7 @@ class FileEpisode {
 	}
 	
 	public function getName(?l:Int = -1):String {
-		if (isEditor) return StringTools.rpad(Text.get("TXT_NEW_EPISODE"), ".", l);
+		if (isEditor) return StringTools.rpad(GetText.get("TXT_NEW_EPISODE"), ".", l);
 		
 		if (l == -1) {
 			return name;
@@ -327,7 +328,7 @@ class FileEpisode {
 	}
 	
 	public function getDesc(l:Int = -1):String {
-		if (isEditor) return StringTools.rpad(Text.get("TXT_CREATE_NEW_EPISODE_IN_EDITOR"), ".", l);
+		if (isEditor) return StringTools.rpad(GetText.get("TXT_CREATE_NEW_EPISODE_IN_EDITOR"), ".", l);
 		
 		if (l == -1) {
 			return desc;

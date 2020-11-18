@@ -17,7 +17,7 @@ class Notice extends EntityCollectable implements IElectric {
 	}
 	
 	function getTextID():String {
-		return "TXT_NOTICE_" + room.getID() + "_NR_" + flag;
+		return "TXT_" + room.getID() + "_NOTICE_NR_" + flag;
 	}
 	
 	override public function onPickup() {
@@ -28,7 +28,7 @@ class Notice extends EntityCollectable implements IElectric {
 	
 	override public function onSetMarker(f:Int) {
 		if (f != Marker.MARKER_NO) {
-			Text.getFromWorld(getTextID());
+			GetText.getFromWorld(getTextID());
 		}
 	}
 }

@@ -107,7 +107,7 @@ class EpisodesScreen extends Screen {
 	}
 	
 	function showEpisodeInstalled(fileName:String) {
-		var msg:String = Text.get("TXT_NEW_EPISODE_INSTALLED") + "\n\n" + fileName;
+		var msg:String = GetText.get("TXT_NEW_EPISODE_INSTALLED") + "\n\n" + fileName;
 		
 		var d:DialogMessage = new DialogMessage(this, 0, 0, msg, true);
 		
@@ -123,7 +123,7 @@ class EpisodesScreen extends Screen {
 	}
 	
 	function createEpisode() {
-		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_EPISODE_NAME"));
+		var d:DialogInput = new DialogInput(this, 0, 0, GetText.get("TXT_ASK_FOR_EPISODE_NAME"));
 		
 		d.onOk = function () {
 			var fileName:String = d.getInput(true);

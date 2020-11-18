@@ -36,7 +36,7 @@ class IntroScreen extends GameScreen {
 	
 	public function new(game:Tobor) {
 		super(game);
-		
+
 		game.setTitle("The Game of Tobor - " + game.world.getName());
 		
 		game.drawLight = false;
@@ -79,7 +79,7 @@ class IntroScreen extends GameScreen {
 		centerX = Std.int(320 - (episodeName.length / 2) * 16);
 		centerXDesc = Std.int(320 - (episodeDesc.length / 2) * 8);
 		
-		scrollingText = Text.get("TXT_PRESS_ENTER");
+		scrollingText = GetText.get("TXT_PRESS_ENTER");
 		scrollingText = scrollingText.rpad(" ", 38 * 2);
 		scrollingText = scrollingText + scrollingText;
 		scrollingTime = scrollingSpeed;
@@ -89,7 +89,7 @@ class IntroScreen extends GameScreen {
 		var files = game.world.file.getSavegames();
 		
 		if (files.length > 0) {
-			var d:DialogFiles = new DialogFiles(this, 0, 0, Text.get("TXT_LOAD_WHICH_GAME"), files);
+			var d:DialogFiles = new DialogFiles(this, 0, 0, GetText.get("TXT_LOAD_WHICH_GAME"), files);
 			
 			d.onOk = function () {
 				game.setScreen(new PlayScreen(game, d.getInput()));
@@ -180,23 +180,23 @@ class IntroScreen extends GameScreen {
 		
 		if (game.world.file.isZIP) {
 			menu = new DialogMenu(this, atX, atY, [
-				[Text.get("TXT_MENU_STORY"), ""],
-				[Text.get("TXT_MENU_PLAY"), "", function() {
+				[GetText.get("TXT_MENU_STORY"), ""],
+				[GetText.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
 				}],
-				[Text.get("TXT_MENU_LOAD"), "", function () {
+				[GetText.get("TXT_MENU_LOAD"), "", function () {
 					showLoadgameDialog();
 				}],
 				["", "", function () {
 				
 				}],
-				[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+				[GetText.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
 				}],
 				["", "", function () {
 				
 				}],
-				[Text.get("TXT_MENU_EXIT"), "", function() {
+				[GetText.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
 			]);
@@ -204,26 +204,26 @@ class IntroScreen extends GameScreen {
 			menu.select(1);
 		} else {
 			menu = new DialogMenu(this, atX, atY, [
-				[Text.get("TXT_MENU_STORY"), ""],
-				[Text.get("TXT_MENU_PLAY"), "", function() {
+				[GetText.get("TXT_MENU_STORY"), ""],
+				[GetText.get("TXT_MENU_PLAY"), "", function() {
 					game.setScreen(new PlayScreen(game));
 				}],
-				[Text.get("TXT_MENU_EDIT"), "", function() {
+				[GetText.get("TXT_MENU_EDIT"), "", function() {
 					game.setScreen(new EditorScreen(game));
 				}],
-				[Text.get("TXT_MENU_LOAD"), "", function () {
+				[GetText.get("TXT_MENU_LOAD"), "", function () {
 					showLoadgameDialog();
 				}],
 				["", "", function () {
 				
 				}],
-				[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+				[GetText.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
 				}],
 				["", "", function () {
 				
 				}],
-				[Text.get("TXT_MENU_EXIT"), "", function() {
+				[GetText.get("TXT_MENU_EXIT"), "", function() {
 					game.setScreen(new EpisodesScreen(game));
 				}],	
 			]);

@@ -47,7 +47,10 @@ class Font {
 		// text = Utf8.decode(text);
 		
 		for (i in 0 ... text.length) {
-			var ci:Int = GLYPHS.indexOf(text.charAt(i));
+			var c = text.charAt(i);
+			if (c == "_") c = " ";
+			
+			var ci:Int = GLYPHS.indexOf(c);
 			
 			if (ci >= 0) {
 				drawChar(posX, posY, ci, fg, bg);

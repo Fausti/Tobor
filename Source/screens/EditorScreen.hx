@@ -589,7 +589,7 @@ class EditorScreen extends PlayScreen {
 			}
 			
 			if (game.world.room != null) {
-				var roomCoords:String = Text.get("TXT_EDITOR_ROOM") + " " 
+				var roomCoords:String = GetText.get("TXT_EDITOR_ROOM") + " " 
 					+ Std.string(game.world.room.position.x) 
 					+ Std.string(game.world.room.position.y) 
 					+ Std.string(game.world.room.position.z);
@@ -616,17 +616,17 @@ class EditorScreen extends PlayScreen {
 		
 		countEntities = game.world.room.length;
 		
-		var strStatus:String = Text.get("TXT_EDITOR_OBJECTS") + ": " + StringTools.lpad(Std.string(countEntities), "0", 4);
+		var strStatus:String = GetText.get("TXT_EDITOR_OBJECTS") + ": " + StringTools.lpad(Std.string(countEntities), "0", 4);
 		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
 	}
 	
 	override function showMainMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+			[GetText.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_HELP"), ""],
-			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
+			[GetText.get("TXT_MENU_HELP"), ""],
+			[GetText.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();
 				hideDialog();
 			}],
@@ -647,15 +647,15 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditOptionsDarkness(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_ROOM_DARKNESS_NONE"), "", function () {
+			[GetText.get("TXT_ROOM_DARKNESS_NONE"), "", function () {
 				game.world.room.config.darkness = Room.DARKNESS_OFF;
 				hideDialog();
 			}],
-			[Text.get("TXT_ROOM_DARKNESS_HALF"), "", function () {
+			[GetText.get("TXT_ROOM_DARKNESS_HALF"), "", function () {
 				game.world.room.config.darkness = Room.DARKNESS_HALF;
 				hideDialog();
 			}],
-			[Text.get("TXT_ROOM_DARKNESS_FULL"), "", function () {
+			[GetText.get("TXT_ROOM_DARKNESS_FULL"), "", function () {
 				game.world.room.config.darkness = Room.DARKNESS_FULL;
 				hideDialog();
 			}],
@@ -676,11 +676,11 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditOptionsMusic(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_ROOM_MUSIC_NONE"), "", function () {
+			[GetText.get("TXT_ROOM_MUSIC_NONE"), "", function () {
 				game.world.room.config.music = "";
 				hideDialog();
 			}],
-			[Text.get("TXT_ROOM_MUSIC_NATURE"), "", function () {
+			[GetText.get("TXT_ROOM_MUSIC_NATURE"), "", function () {
 				game.world.room.config.music = "MUS_NATURE";
 				hideDialog();
 			}],
@@ -705,11 +705,11 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditOptionsRingEffects(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_RINGS_OFF"), "", function () {
+			[GetText.get("TXT_RINGS_OFF"), "", function () {
 				game.world.config.ringEffects = false;
 				hideDialog();
 			}],
-			[Text.get("TXT_RINGS_ON"), "", function () {
+			[GetText.get("TXT_RINGS_ON"), "", function () {
 				game.world.config.ringEffects = true;
 				hideDialog();
 			}],
@@ -734,23 +734,23 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditOptionsWinCondition(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_WIN_CONDITION_0"), "", function () {
+			[GetText.get("TXT_WIN_CONDITION_0"), "", function () {
 				game.world.config.winType = World.WIN_FLAG_ONLY;
 				hideDialog();
 			}],
-			[Text.get("TXT_WIN_CONDITION_1"), "", function () {
+			[GetText.get("TXT_WIN_CONDITION_1"), "", function () {
 				game.world.config.winType = World.WIN_RING_1;
 				hideDialog();
 			}],
-			[Text.get("TXT_WIN_CONDITION_2"), "", function () {
+			[GetText.get("TXT_WIN_CONDITION_2"), "", function () {
 				game.world.config.winType = World.WIN_RING_2;
 				hideDialog();
 			}],
-			[Text.get("TXT_WIN_CONDITION_3"), "", function () {
+			[GetText.get("TXT_WIN_CONDITION_3"), "", function () {
 				game.world.config.winType = World.WIN_RING_3;
 				hideDialog();
 			}],
-			[Text.get("TXT_WIN_CONDITION_4"), "", function () {
+			[GetText.get("TXT_WIN_CONDITION_4"), "", function () {
 				game.world.config.winType = World.WIN_RING_4;
 				hideDialog();
 			}],
@@ -771,16 +771,16 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditOptions(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), ">>", function () {
+			[GetText.get("TXT_MENU_EDIT_OPTIONS_WIN_CONDITION"), ">>", function () {
 				showEditOptionsWinCondition(atX, atY);
 			}],
-			[Text.get("TXT_MENU_EDIT_OPTIONS_RING_EFFECTS"), ">>", function () {
+			[GetText.get("TXT_MENU_EDIT_OPTIONS_RING_EFFECTS"), ">>", function () {
 				showEditOptionsRingEffects(atX, atY);
 			}],
-			[Text.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), ">>", function () {
+			[GetText.get("TXT_MENU_EDIT_OPTIONS_MUSIC"), ">>", function () {
 				showEditOptionsMusic(atX, atY);
 			}],
-			[Text.get("TXT_MENU_EDIT_OPTIONS_DARKNESS"), ">>", function () {
+			[GetText.get("TXT_MENU_EDIT_OPTIONS_DARKNESS"), ">>", function () {
 				showEditOptionsDarkness(atX, atY);
 			}],
 		]);
@@ -800,30 +800,16 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditEditMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-		/*
-			[Text.get("TXT_MENU_COPY"), "", function () {
-				// askClearRoom();
-			}],
-			[Text.get("TXT_MENU_CUT"), "", function () {
-				// askClearRoom();
-			}],
-			[Text.get("TXT_MENU_PASTE"), "", function () {
-				// askClearRoom();
-			}],
-			["", "", function () {
-				
-			}],
-		*/
-			[Text.get("TXT_MENU_CLEAR"), "", function () {
+			[GetText.get("TXT_MENU_CLEAR"), "", function () {
 				askClearRoom();
 			}],
-			[Text.get("TXT_MENU_BORDERS"), "", function () {
+			[GetText.get("TXT_MENU_BORDERS"), "", function () {
 				askRoomTemplate();
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+			[GetText.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showEditOptions(atX, atY);
 			}],
 		]);
@@ -843,34 +829,34 @@ class EditorScreen extends PlayScreen {
 	
 	function showEditMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_EDIT"), ">>", function () {
+			[GetText.get("TXT_MENU_EDIT"), ">>", function () {
 				showEditEditMenu(atX, atY);
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_CHOOSE_SCENE"), "TAB", function() {
+			[GetText.get("TXT_MENU_CHOOSE_SCENE"), "TAB", function() {
 				showDialog(dialogRooms);
 			}],
-			[Text.get("TXT_MENU_OBJECTS"), "ENTER", function () {
+			[GetText.get("TXT_MENU_OBJECTS"), "ENTER", function () {
 				showDialog(dialogTiles);
 			}],
-			[Text.get("TXT_MENU_EDIT_INVENTORY"), "", function () {
+			[GetText.get("TXT_MENU_EDIT_INVENTORY"), "", function () {
 				showInventoryTemplate();
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_HELP"), "", function () {
+			[GetText.get("TXT_MENU_HELP"), "", function () {
 				System.openURL("https://github.com/Fausti/Tobor#inhalt");
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SAVE"), "", function () {
+			[GetText.get("TXT_MENU_SAVE"), "", function () {
 				changed = false;
 				game.world.save();
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_LOAD"), "", function () {
+			[GetText.get("TXT_MENU_LOAD"), "", function () {
 				// game.world.load();
 				game.world = new World(game, game.world.file);
 				game.setScreen(new EditorScreen(game));
@@ -879,19 +865,19 @@ class EditorScreen extends PlayScreen {
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+			[GetText.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_CANCEL"), "", function() {
+			[GetText.get("TXT_MENU_CANCEL"), "", function() {
 				game.setScreen(new IntroScreen(game));
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
+			[GetText.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();
 				hideDialog();
 			}],
@@ -911,7 +897,7 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function askClearRoom() {
-		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_REMOVE_OBJECTS_FROM_ROOM"));
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, GetText.get("TXT_EDITOR_ASK_REMOVE_OBJECTS_FROM_ROOM"));
 		d.index = 1;
 		
 		d.onOk = function () {
@@ -924,7 +910,7 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function askRoomTemplate() {
-		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_CREATE_ROOM_BORDER"));
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, GetText.get("TXT_EDITOR_ASK_CREATE_ROOM_BORDER"));
 		d.index = 0;
 		
 		d.onOk = function () {
@@ -949,7 +935,7 @@ class EditorScreen extends PlayScreen {
 	}
 	
 	function askNewRoom(cb:Dynamic) {
-		var d:DialogQuestion = new DialogQuestion(this, 0, 0, Text.get("TXT_EDITOR_ASK_CREATE_NEW_ROOM"));
+		var d:DialogQuestion = new DialogQuestion(this, 0, 0, GetText.get("TXT_EDITOR_ASK_CREATE_NEW_ROOM"));
 		d.index = 0;
 		
 		d.onOk = cb;

@@ -15,23 +15,23 @@ class GameScreen extends Screen {
 	
 		function showSpeedMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_SPEED_SLOWEST"), "", function () {
+			[GetText.get("TXT_MENU_SPEED_SLOWEST"), "", function () {
 				Config.setSpeed(0);
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SPEED_SLOW"), "", function () {
+			[GetText.get("TXT_MENU_SPEED_SLOW"), "", function () {
 				Config.setSpeed(1);
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SPEED_NORMAL"), "", function () {
+			[GetText.get("TXT_MENU_SPEED_NORMAL"), "", function () {
 				Config.setSpeed(2);
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SPEED_FAST"), "", function () {
+			[GetText.get("TXT_MENU_SPEED_FAST"), "", function () {
 				Config.setSpeed(3);
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_SPEED_FASTEST"), "", function () {
+			[GetText.get("TXT_MENU_SPEED_FASTEST"), "", function () {
 				Config.setSpeed(4);
 				hideDialog();
 			}],
@@ -52,11 +52,11 @@ class GameScreen extends Screen {
 	
 	function showRobotBehaviorMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_ROBOT_BEHAVIOR_NEW"), "", function () {
+			[GetText.get("TXT_MENU_ROBOT_BEHAVIOR_NEW"), "", function () {
 				Config.setRobotBehavior(0);
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_ROBOT_BEHAVIOR_OLD"), "", function () {
+			[GetText.get("TXT_MENU_ROBOT_BEHAVIOR_OLD"), "", function () {
 				Config.setRobotBehavior(1);
 				hideDialog();
 			}],
@@ -77,11 +77,11 @@ class GameScreen extends Screen {
 	
 	function showRobotStressMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_OFF"), "", function () {
+			[GetText.get("TXT_OFF"), "", function () {
 				Config.setRobotStress(false);
 				hideDialog();
 			}],
-			[Text.get("TXT_ON"), "", function () {
+			[GetText.get("TXT_ON"), "", function () {
 				Config.setRobotStress(true);
 				hideDialog();
 			}],
@@ -102,12 +102,12 @@ class GameScreen extends Screen {
 	
 	function showKeysMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_OFF"), "", function () {
+			[GetText.get("TXT_OFF"), "", function () {
 				Config.setColoredKeys(false);
 				if (Std.is(game.getScreen(), PlayScreen)) game.world.inventory.refresh(game.world.factory);
 				hideDialog();
 			}],
-			[Text.get("TXT_ON"), "", function () {
+			[GetText.get("TXT_ON"), "", function () {
 				Config.setColoredKeys(true);
 				if (Std.is(game.getScreen(), PlayScreen)) game.world.inventory.refresh(game.world.factory);
 				hideDialog();
@@ -129,15 +129,15 @@ class GameScreen extends Screen {
 	
 	function showLightMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("Dithering"), "", function () {
+			[GetText.get("Dithering"), "", function () {
 				Config.light = 0;
 				hideDialog();
 			}],
-			[Text.get("Smooth"), "", function () {
+			[GetText.get("Smooth"), "", function () {
 				Config.light = 1;
 				hideDialog();
 			}],
-			[Text.get("Both"), "", function () {
+			[GetText.get("Both"), "", function () {
 				Config.light = 2;
 				hideDialog();
 			}],
@@ -158,15 +158,15 @@ class GameScreen extends Screen {
 	
 	function showShaderMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("Normal"), "", function () {
+			[GetText.get("Normal"), "", function () {
 				Config.setShader(-1);
 				hideDialog();
 			}],
-			[Text.get("HQ2X"), "", function () {
+			[GetText.get("HQ2X"), "", function () {
 				Config.setShader(0);
 				hideDialog();
 			}],
-			[Text.get("HQ4X"), "", function () {
+			[GetText.get("HQ4X"), "", function () {
 				Config.setShader(1);
 				hideDialog();
 			}],
@@ -187,32 +187,32 @@ class GameScreen extends Screen {
 	
 	function showOptionMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[game.isFullscreen()?Text.get("TXT_WINDOW"):Text.get("TXT_FULLSCREEN"), "", function () {
+			[game.isFullscreen()?GetText.get("TXT_WINDOW"):GetText.get("TXT_FULLSCREEN"), "", function () {
 				game.toggleFullscreen();
 				hideDialog();
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_SPEED"), ">>", function () {
+			[GetText.get("TXT_MENU_SPEED"), ">>", function () {
 				showSpeedMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_SHADER"), ">>", function () {
+			[GetText.get("TXT_MENU_SHADER"), ">>", function () {
 				showShaderMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_LIGHT"), ">>", function () {
+			[GetText.get("TXT_MENU_LIGHT"), ">>", function () {
 				showLightMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_KEYS"), ">>", function () {
+			[GetText.get("TXT_MENU_KEYS"), ">>", function () {
 				showKeysMenu(atX, atY);
 			}],
 			["- Debug -", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_ROBOT_STRESS"), ">>", function () {
+			[GetText.get("TXT_MENU_ROBOT_STRESS"), ">>", function () {
 				showRobotStressMenu(atX, atY);
 			}],
-			[Text.get("TXT_MENU_ROBOT_BEHAVIOR"), ">>", function () {
+			[GetText.get("TXT_MENU_ROBOT_BEHAVIOR"), ">>", function () {
 				showRobotBehaviorMenu(atX, atY);
 			}],
 		]);

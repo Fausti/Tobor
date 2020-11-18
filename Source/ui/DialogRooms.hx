@@ -191,7 +191,7 @@ class DialogRooms extends Dialog {
 		
 		var room:Room = world.rooms.find(roomX, roomY, roomZ);
 		if (room == null) {
-			Tobor.fontSmall.drawString(9 * Tobor.TILE_WIDTH, 0, Text.get("TXT_EDITOR_NO_ROOM"), Color.BLACK);
+			Tobor.fontSmall.drawString(9 * Tobor.TILE_WIDTH, 0, GetText.get("TXT_EDITOR_NO_ROOM"), Color.BLACK);
 		} else {
 			Tobor.fontSmall.drawString(9 * Tobor.TILE_WIDTH, 0, room.getName(), Color.BLACK);
 		}

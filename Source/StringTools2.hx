@@ -68,4 +68,22 @@ class StringTools2 {
    inline
    public static function isEmpty(str:String):Bool
       return str == null || str.length == 0;
+
+	public static function isEOL(s:String, pos:Int):Bool {
+		var c = s.charAt(pos);
+		return (c == "\n");
+	}
+	
+	public static function rtrimLF(s:String):String {
+		var l = s.length;
+		var r = 0;
+		while (r < l && isEOL(s, l - r - 1)) {
+			r++;
+		}
+		if (r > 0) {
+			return s.substr(0, l - r);
+		} else {
+			return s;
+		}
+	}
 }

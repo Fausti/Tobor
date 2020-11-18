@@ -1,6 +1,7 @@
 package world;
 
 import lime.math.Rectangle;
+import world.Position;
 import world.World;
 import world.entities.Entity;
 import world.entities.EntityRoof;
@@ -413,10 +414,25 @@ class Room {
 	}
 	
 	public function load() {
+		// Savegame Edit!!!
+		/*
+		var fix:Bool = false;
+		if (position.id == "512") fix = true;
+		*/
+		
 		for (entry in cast(saveData, Array<Dynamic>)) {
 			var template:ObjectTemplate = world.factory.findFromID(entry.id);
 			
 			if (template != null) {
+				/*
+				if (fix) {
+					if (entry.x == 7 && entry.y == 14) {
+						if (entry.id == "OBJ_BEDROCK_0") continue;
+						trace(entry);
+					}
+				}
+				*/
+				
 				var obj = template.create();
 				obj.parseData(entry);
 			
@@ -582,7 +598,7 @@ class Room {
 	}
 	
 	public function getName():String {
-		return Text.getFromWorld("TXT_" + getID());
+		return GetText.getFromWorld("TXT_" + getID());
 	}
 	
 	// STATIC

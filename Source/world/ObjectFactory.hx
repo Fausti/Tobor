@@ -687,13 +687,13 @@ class ObjectTemplate {
 			this.random = [0];
 		}
 		
-		this.editorName = Text.get(id);
+		this.editorName = GetText.get(id);
 		
 		var e = Type.createEmptyInstance(c);
 		if (e != null) {
 			if (Std.is(e, EntityItem)) {
-				var temp:String = Text.get(id + "_DESC");
-				temp = Text.get(id.split("#")[0] + "_PICKUP");
+				var temp:String = GetText.get(id + "_DESC");
+				temp = GetText.get(id.split("#")[0] + "_PICKUP");
 			}
 		}
 	}

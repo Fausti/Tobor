@@ -138,7 +138,8 @@ class World {
 		garlic = 0;
 		food = 0;
 		
-		Text.loadForWorld(file.loadFile('translation.json'));
+		GetText.loadJsonForWorld(file.loadFile('translation.json'));
+		GetText.loadForWorld(file.loadFile('lang.' + Tobor.defaultLocale));
 		
 		var content:String = null;
 		var content2:Bytes = null;
@@ -183,7 +184,7 @@ class World {
 					canStart = true;
 				});
 			} else {
-				loadData(content, function () {		
+				loadData(content, function () {
 					switchRoom(inRoomX, inRoomY, inRoomZ);
 					room.restoreState();
 					player.setRoom(roomCurrent);
@@ -396,7 +397,7 @@ class World {
 			actionSaveGame = false;
 			
 			if (!editing) {
-				var d:DialogInput = new DialogInput(game.getScreen(), 0, 0, Text.get("TXT_ASK_FOR_SAVEGAME_NAME"));
+				var d:DialogInput = new DialogInput(game.getScreen(), 0, 0, GetText.get("TXT_ASK_FOR_SAVEGAME_NAME"));
 		
 				d.onOk = function () {
 					var fileName:String = d.getInput(true);
@@ -602,7 +603,7 @@ class World {
 	}
 	
 	public function showMessage(key:String, ?smallFont:Bool = true, ?cb:Dynamic = null) {
-		var msg:String = Text.getFromWorld(key);
+		var msg:String = GetText.getFromWorld(key);
 		if (msg != "") {
 			var messageBox:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, msg, smallFont);
 		
@@ -616,9 +617,9 @@ class World {
 	}
 	
 	public function showPickupMessage(key:String, ?smallFont:Bool = true, ?cb:Dynamic = null, ?p:Int = 0) {
-		var msg:String = Text.getFromWorld(key);
+		var msg:String = GetText.getFromWorld(key);
 		if (p > 0) {
-			msg = msg + "\n\n" + Text.get("TXT_BONUS") + " : " + Std.string(p) + " " + Text.get("TXT_POINTS") + " !";
+			msg = msg + "\n\n" + GetText.get("TXT_BONUS") + " : " + Std.string(p) + " " + GetText.get("TXT_POINTS") + " !";
 		}
 		
 		if (msg != "") {
@@ -662,8 +663,9 @@ class World {
 	public function save() {
 		var content:String;
 		
-		Text.loadForWorld(file.loadFile('translation.json'));
-		Text.loadForWorld(file.loadFile('translation_missing.json'));
+		GetText.loadJsonForWorld(file.loadFile('translation.json'));
+		GetText.loadForWorld(file.loadFile('lang.' + Tobor.defaultLocale));
+		GetText.loadForWorld(file.loadFile('missing.' + Tobor.defaultLocale));
 		
 		var timeStart:Float = Timer.stamp();
 		/*
@@ -681,11 +683,11 @@ class World {
 		trace("Debug: episode saving (msgpack) took: " + (Timer.stamp() - timeStart) + "s");
 		
 		if (editing) {
-			content = Text.saveForWorld();
-			file.saveFile('translation.json', content);
+			content = GetText.saveForWorld();
+			file.saveFile('lang.' + Tobor.defaultLocale, content);
 		
-			content = Text.saveForWorldMissing();
-			file.saveFile('translation_missing.json', content);
+			content = GetText.saveForWorldMissing();
+			file.saveFile('missing.' + Tobor.defaultLocale, content);
 		}
 	}
 	
@@ -1007,6 +1009,7 @@ class World {
 			}
 		}
 		
+		
 		var newRoom:Room = new Room(this, rx, ry, rz);
 		newRoom.setData(rdata);
 		newRoom.getName();
@@ -1039,6 +1042,14 @@ class World {
 			default:
 			}
 		}
+		
+		// FIX SAVEGAME!!!
+		
+		/*
+		inRoomX = 2;
+		inRoomY = 1;
+		inRoomZ = 2;
+		*/
 	}
 	
 	public function getName():String {

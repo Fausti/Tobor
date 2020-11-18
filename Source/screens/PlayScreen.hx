@@ -44,8 +44,8 @@ class PlayScreen extends GameScreen {
 		
 		Sound.stopMusicAll();
 		
-		TXT_STATUS_POINTS = Text.get("TXT_STATUS_POINTS");
-		TXT_STATUS_LIVES = Text.get("TXT_STATUS_LIVES");
+		TXT_STATUS_POINTS = GetText.get("TXT_STATUS_POINTS");
+		TXT_STATUS_LIVES = GetText.get("TXT_STATUS_LIVES");
 		
 		SPR_ISOLATOR = Gfx.getSprite(240, 0);
 		SPR_CHARLIE = Gfx.getSprite(32, 0);
@@ -103,7 +103,7 @@ class PlayScreen extends GameScreen {
 		
 		if (!Std.is(this, EditorScreen)) {
 			if (getWorld().lives <= 0) {
-				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.get("TXT_EPISODE_LOST"), false);
+				var d:DialogMessage = new DialogMessage(this, 0, 0, GetText.get("TXT_EPISODE_LOST"), false);
 				
 				d.onCancel = function () {
 					getWorld().checkHighScore();
@@ -115,7 +115,7 @@ class PlayScreen extends GameScreen {
 				
 				showDialog(d);
 			} else if (getWorld().episodeWon) {
-				var d:DialogMessage = new DialogMessage(this, 0, 0, Text.getFromWorld("TXT_EPISODE_WON"), false);
+				var d:DialogMessage = new DialogMessage(this, 0, 0, GetText.getFromWorld("TXT_EPISODE_WON"), false);
 				
 				d.onCancel = function () {
 					getWorld().checkHighScore();
@@ -292,45 +292,45 @@ class PlayScreen extends GameScreen {
 	
 	function showMainMenu(atX:Int = 320, atY:Int = 166) {
 		var menu = new DialogMenu(this, atX, atY, [
-			[Text.get("TXT_MENU_OPTIONS"), ">>", function () {
+			[GetText.get("TXT_MENU_OPTIONS"), ">>", function () {
 				showOptionMenu(atX, atY);
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_SCENE_TEXT"), "", function() {
+			[GetText.get("TXT_MENU_SCENE_TEXT"), "", function() {
 				showRoomName(true);
 			}],
-			[Text.get("TXT_MENU_BACKPACK"), "<-", function() {
+			[GetText.get("TXT_MENU_BACKPACK"), "<-", function() {
 				hideDialog();
 				showInventory();
 			}],
-			[Text.get("TXT_MENU_HELP"), "", function () {
+			[GetText.get("TXT_MENU_HELP"), "", function () {
 				hideDialog();
 			}],
-			[Text.get("TXT_MENU_STORY"), "", function () {
+			[GetText.get("TXT_MENU_STORY"), "", function () {
 				hideDialog();
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_RESTART"), "", function () {
+			[GetText.get("TXT_MENU_RESTART"), "", function () {
 				getWorld().player.die();
 				hideDialog();
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_LOAD"), "", function () {
+			[GetText.get("TXT_MENU_LOAD"), "", function () {
 				showLoadgameDialog();
 			}],
-			[Text.get("TXT_MENU_CANCEL"), "", function() {
+			[GetText.get("TXT_MENU_CANCEL"), "", function() {
 				getWorld().checkHighScore();
 			}],
 			["", "", function () {
 				
 			}],
-			[Text.get("TXT_MENU_SCREENSHOT"), "F12", function() {
+			[GetText.get("TXT_MENU_SCREENSHOT"), "F12", function() {
 				game.takeScreenShot();
 				hideDialog();
 			}],	
@@ -380,7 +380,7 @@ class PlayScreen extends GameScreen {
 			return;
 		}
 		
-		var d:DialogInput = new DialogInput(this, 0, 0, Text.get("TXT_ASK_FOR_NAME"));
+		var d:DialogInput = new DialogInput(this, 0, 0, GetText.get("TXT_ASK_FOR_NAME"));
 		
 		d.onCancel = function () {
 			showRoomName();
@@ -398,7 +398,7 @@ class PlayScreen extends GameScreen {
 		var files = getWorld().file.getSavegames();
 		
 		if (files.length > 0) {
-			var d:DialogFiles = new DialogFiles(this, 0, 0, Text.get("TXT_LOAD_WHICH_GAME"), files);
+			var d:DialogFiles = new DialogFiles(this, 0, 0, GetText.get("TXT_LOAD_WHICH_GAME"), files);
 			
 			d.onOk = function () {
 				game.setScreen(new PlayScreen(game, d.getInput()));
