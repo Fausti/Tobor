@@ -12,11 +12,13 @@ import sys.thread.Thread;
 import ui.Dialog;
 import ui.DialogHelp;
 import ui.DialogMessage;
+import world.Room;
 import world.entities.Entity;
 import world.entities.std.Charlie;
 import world.entities.std.StartPosition;
 import screens.IntroScreen;
 import ui.DialogInput;
+import world.entities.std.Target;
 import world.entities.std.Wood;
 
 /**
@@ -175,7 +177,9 @@ class World {
 			canStart = true;
 		} else {
 			if (content2 != null) {
-				loadData2(content2, function () {		
+				loadData2(content2, function () {
+					loadPatch();
+					
 					switchRoom(inRoomX, inRoomY, inRoomZ);
 					room.restoreState();
 					player.setRoom(roomCurrent);
@@ -185,6 +189,8 @@ class World {
 				});
 			} else {
 				loadData(content, function () {
+					loadPatch();
+					
 					switchRoom(inRoomX, inRoomY, inRoomZ);
 					room.restoreState();
 					player.setRoom(roomCurrent);
@@ -201,6 +207,42 @@ class World {
 		episodeLost = false;
 		
 		pointsAnim = points;
+	}
+	
+	function loadPatch() {
+		var patch:String = file.loadPatch();
+		
+		if (patch == null) {
+			trace("No patch found.");
+		} else {
+			var cmdRemove:EReg = ~/^REMOVE ROOM_(\d+),(\d+),(\d+) ([A-Z0-9_#]+)$/i;
+			var lines = patch.split("\n");
+			
+			for (line in lines) {
+				if (cmdRemove.match(line)) {
+					trace(line);
+					
+					var patchRoom:String = cmdRemove.matched(1);
+					var patchX:Int = Std.parseInt(cmdRemove.matched(2));
+					var patchY:Int = Std.parseInt(cmdRemove.matched(3));
+					var patchObj:String = cmdRemove.matched(4);
+					
+					trace(patchRoom, patchX, patchY, patchObj);
+					
+					var targetRoom:Room = rooms.findByID(patchRoom);
+					
+					if (targetRoom != null) {
+						if (targetRoom.patches == null) targetRoom.patches = new List();
+						targetRoom.patches.add({
+							cmd: Room.PATCH_REMOVE,
+							x: patchX,
+							y: patchY,
+							objID:patchObj
+						});
+					}
+				}
+			}
+		}
 	}
 	
 	public function checkRingEffect(index:Int):Bool {

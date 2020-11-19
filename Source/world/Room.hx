@@ -38,6 +38,8 @@ class Room {
 	public static inline var DARKNESS_HALF:Int = 1;
 	public static inline var DARKNESS_FULL:Int = 2;
 	
+	public static inline var PATCH_REMOVE:Int = 0;
+	
 	public var config = {
 		"music": "",
 		"darkness": Room.DARKNESS_OFF,
@@ -61,6 +63,8 @@ class Room {
 	
 	public var saveData:Array<EntityData> = null;
 	public var loaded:Bool = true;
+	
+	public var patches:List<RoomPatch> = null;
 	
 	function get_length():Int {
 		return entities.length;
@@ -424,6 +428,8 @@ class Room {
 			var template:ObjectTemplate = world.factory.findFromID(entry.id);
 			
 			if (template != null) {
+				var skip:Bool = false;
+				
 				/*
 				if (fix) {
 					if (entry.x == 7 && entry.y == 14) {
@@ -432,6 +438,20 @@ class Room {
 					}
 				}
 				*/
+				if (patches != null) {
+					for (patch in patches) {
+						switch (patch.cmd) {
+							case Room.PATCH_REMOVE:
+								if (entry.x == patch.x && entry.y == patch.y && entry.id == patch.objID) {
+									patches.remove(patch);
+									skip = true;
+								}
+							default:
+						}
+					}
+				}
+				
+				if (skip) continue;
 				
 				var obj = template.create();
 				obj.parseData(entry);
@@ -607,3 +627,10 @@ class Room {
 		return x < 0 || x >= Room.WIDTH || y < 0 || y >= Room.HEIGHT;
 	}
 }
+
+typedef RoomPatch = {
+	cmd:Int,
+	x:Int,
+	y:Int,
+	objID:String
+};

@@ -32,4 +32,8 @@ class RoomList {
 	public function find(x:Int, y:Int, z:Int):Room {
 		return list.get(new Position(x, y, z).id);
 	}
+	
+	public function findByID(id:String):Room {
+		return list.get(id);
+	}
 }

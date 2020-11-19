@@ -141,6 +141,12 @@ class FileEpisode {
 		return Files.loadFileAsBytes(Files.DIR_SAVEGAMES + '/' + name + '/' + fileName + '.sav');
 	}
 	
+	public function loadPatch():String {
+		checkSavePath();
+		
+		return Files.loadFromFile(Files.DIR_SAVEGAMES + '/' + name + '/patch.txt');
+	}
+	
 	public function saveSavegame(fileName:String, data:String) {
 		checkSavePath();
 		
