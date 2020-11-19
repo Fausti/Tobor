@@ -596,6 +596,19 @@ class World {
 		messageBox.onOk = function () {
 			if (messageBox.lookTarget != null) {
 				showMessage(messageBox.lookTarget + "_DESC", false);
+			} else if (messageBox.lookDebug != null) {
+				var out:String = room.getID() + "\n\n";
+				out = out + "X: " + messageBox.cursorX + "\n";
+				out = out + "Y: " + (messageBox.cursorY - 1) + "\n";
+				
+				for (e in messageBox.lookDebug) {
+					if (e != null) {
+						out = out + "\n" + e.getID();
+					}
+				}
+				
+				var msg:DialogMessage = new DialogMessage(game.getScreen(), 0, 0, out, true);
+				showDialog(msg);
 			}
 		};
 		

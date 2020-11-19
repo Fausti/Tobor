@@ -322,4 +322,6 @@ class Tobor extends LimeGame {
 	
 	public static var KEY_ESC = [KeyCode.ESCAPE];
 	public static var KEY_ENTER = [KeyCode.RETURN, KeyCode.RETURN2];
+	
+	public static var KEY_SPACE = [KeyCode.SPACE];
 }

@@ -48,7 +48,7 @@ class Font {
 		
 		for (i in 0 ... text.length) {
 			var c = text.charAt(i);
-			if (c == "_") c = " ";
+			// if (c == "_") c = " ";
 			
 			var ci:Int = GLYPHS.indexOf(c);
 			

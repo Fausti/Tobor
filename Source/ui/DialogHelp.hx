@@ -11,10 +11,11 @@ class DialogHelp extends Dialog {
 	
 	var oldMouseX:Int;
 	var oldMouseY:Int;
-	var cursorX:Int;
-	var cursorY:Int;
+	public var cursorX:Int;
+	public var cursorY:Int;
 	
 	public var lookTarget:String = null;
+	public var lookDebug:Array<Entity> = null;
 
 	public function new(screen:Screen, x:Int, y:Int) {
 		super(screen, x, y);
@@ -38,6 +39,11 @@ class DialogHelp extends Dialog {
 				var target:Entity = targets[0];
 				lookTarget = target.getID();
 			}
+			
+			ok();
+		} else if (Input.isKeyDown(Tobor.KEY_SPACE)) {
+			var targets = screen.game.world.room.getEntitiesAt(cursorX, cursorY - 1);
+			lookDebug = targets;
 			
 			ok();
 		} else if (Input.isKeyDown(Tobor.KEY_ESC) || Input.mouseBtnRight) {
