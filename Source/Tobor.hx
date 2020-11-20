@@ -273,7 +273,7 @@ class Tobor extends LimeGame {
 	
 	public function setTitle(?title:String = null) {
 		if (title == null) {
-			title = "The Game of Tobor - Version " + __application.meta.get('version');
+			title = "The Game of Tobor - Version B" + __application.meta.get('version');
 		}
 		
 		__application.window.title = title;
