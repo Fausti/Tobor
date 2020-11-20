@@ -219,15 +219,17 @@ class World {
 			var lines = patch.split("\n");
 			
 			for (line in lines) {
-				if (cmdRemove.match(line)) {
-					trace(line);
+				var l:String = StringTools.trim(line);
+				
+				if (cmdRemove.match(l)) {
+					// trace(line);
 					
 					var patchRoom:String = cmdRemove.matched(1);
 					var patchX:Int = Std.parseInt(cmdRemove.matched(2));
 					var patchY:Int = Std.parseInt(cmdRemove.matched(3));
 					var patchObj:String = cmdRemove.matched(4);
 					
-					trace(patchRoom, patchX, patchY, patchObj);
+					// trace(patchRoom, patchX, patchY, patchObj);
 					
 					var targetRoom:Room = rooms.findByID(patchRoom);
 					
@@ -639,9 +641,9 @@ class World {
 			if (messageBox.lookTarget != null) {
 				showMessage(messageBox.lookTarget + "_DESC", false);
 			} else if (messageBox.lookDebug != null) {
-				var out:String = room.getID() + "\n\n";
-				out = out + "X: " + messageBox.cursorX + "\n";
-				out = out + "Y: " + (messageBox.cursorY - 1) + "\n";
+				var out:String = room.getID() + "," + messageBox.cursorX + "," + (messageBox.cursorY - 1) + "\n";
+				//out = out + "X: " + messageBox.cursorX + "\n";
+				//out = out + "Y: " + (messageBox.cursorY - 1) + "\n";
 				
 				for (e in messageBox.lookDebug) {
 					if (e != null) {
