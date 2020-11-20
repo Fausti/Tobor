@@ -216,12 +216,31 @@ class World {
 			trace("No patch found.");
 		} else {
 			var cmdRemove:EReg = ~/^REMOVE ROOM_(\d+),(\d+),(\d+) ([A-Z0-9_#]+)$/i;
+			var cmdAdd:EReg = ~/^ADD ROOM_(\d+),(\d+),(\d+) ([A-Z0-9_#]+)$/i;
 			var lines = patch.split("\n");
 			
 			for (line in lines) {
 				var l:String = StringTools.trim(line);
 				
-				if (cmdRemove.match(l)) {
+				if (cmdAdd.match(l)) {
+					var patchRoom:String = cmdAdd.matched(1);
+					var patchX:Int = Std.parseInt(cmdAdd.matched(2));
+					var patchY:Int = Std.parseInt(cmdAdd.matched(3));
+					var patchObj:String = cmdAdd.matched(4);
+					
+					var targetRoom:Room = rooms.findByID(patchRoom);
+					
+					if (targetRoom != null) {
+						if (targetRoom.patches == null) targetRoom.patches = new List();
+						targetRoom.patches.add({
+							cmd: Room.PATCH_ADD,
+							x: patchX,
+							y: patchY,
+							objID:patchObj,
+							line:l
+						});
+					}
+				} else if (cmdRemove.match(l)) {
 					// trace(line);
 					
 					var patchRoom:String = cmdRemove.matched(1);
@@ -239,7 +258,8 @@ class World {
 							cmd: Room.PATCH_REMOVE,
 							x: patchX,
 							y: patchY,
-							objID:patchObj
+							objID:patchObj,
+							line:l
 						});
 					}
 				}
@@ -642,8 +662,6 @@ class World {
 				showMessage(messageBox.lookTarget + "_DESC", false);
 			} else if (messageBox.lookDebug != null) {
 				var out:String = room.getID() + "," + messageBox.cursorX + "," + (messageBox.cursorY - 1) + "\n";
-				//out = out + "X: " + messageBox.cursorX + "\n";
-				//out = out + "Y: " + (messageBox.cursorY - 1) + "\n";
 				
 				for (e in messageBox.lookDebug) {
 					if (e != null) {
@@ -818,6 +836,8 @@ class World {
 			worldData.set("y", r.position.y);
 			worldData.set("z", r.position.z);
 			
+			worldData.set("patches", r.patches_done);
+			
 			worldData.set("data", r.save());
 			
 			data.set(r.getID(), worldData);
@@ -898,6 +918,8 @@ class World {
 			worldData.set("x", r.position.x);
 			worldData.set("y", r.position.y);
 			worldData.set("z", r.position.z);
+			
+			worldData.set("patches", r.patches_done);
 			
 			if (r.saveData != null && r.saveData.length > 0) {
 				worldData.set("data", r.saveData);
@@ -1040,6 +1062,7 @@ class World {
 		var rz:Int = -1;
 		var rdata = null;
 		var rtree:Float = 0;
+		var rpatches:Array<String> = [];
 		var rdarkness:Int = Room.DARKNESS_OFF;
 		
 		var rmusic:String = null;
@@ -1062,12 +1085,15 @@ class World {
 				rz = Reflect.field(data, "z");
 			case "data":
 				rdata = Reflect.field(data, "data");
+			case "patches":
+				rpatches = Reflect.field(data, "patches");
 			default:
 			}
 		}
 		
 		
 		var newRoom:Room = new Room(this, rx, ry, rz);
+		newRoom.patches_done = rpatches;
 		newRoom.setData(rdata);
 		newRoom.getName();
 		

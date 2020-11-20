@@ -39,6 +39,7 @@ class Room {
 	public static inline var DARKNESS_FULL:Int = 2;
 	
 	public static inline var PATCH_REMOVE:Int = 0;
+	public static inline var PATCH_ADD:Int = 1;
 	
 	public var config = {
 		"music": "",
@@ -65,6 +66,7 @@ class Room {
 	public var loaded:Bool = true;
 	
 	public var patches:List<RoomPatch> = null;
+	public var patches_done:Array<String> = [];
 	
 	function get_length():Int {
 		return entities.length;
@@ -380,6 +382,14 @@ class Room {
 		return listTarget;
 	}
 	
+	public function getEntitiesAtInState(x:Float, y:Float):Array<Entity> {
+		var listTarget:Array<Entity> = entities.getState().filter(function(e):Bool {
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y);
+		});
+		
+		return listTarget;
+	}
+	
 	public function findEntityAround(x:Float, y:Float, cl:Dynamic):Array<Entity> {
 		var list:Array<Entity> = [];
 		
@@ -444,6 +454,7 @@ class Room {
 							case Room.PATCH_REMOVE:
 								if (entry.x == patch.x && entry.y == patch.y && entry.id == patch.objID) {
 									patches.remove(patch);
+									if (patches_done.indexOf(patch.line) == -1) patches_done.push(patch.line);
 									skip = true;
 								}
 							default:
@@ -459,6 +470,35 @@ class Room {
 				addEntityState(obj);
 			} else {
 				trace("There is no Entity with ID of: " + entry.id);
+			}
+		}
+		
+		if (patches != null) {
+			for (patch in patches) {
+				switch (patch.cmd) {
+					case Room.PATCH_ADD:
+						if (patches_done.indexOf(patch.line) == -1) {
+							patches_done.push(patch.line);
+							
+							var template:ObjectTemplate = world.factory.findFromID(patch.objID);
+			
+							if (template != null) {
+								var c = getEntitiesAtInState(patch.x, patch.y);
+								if (c.length == 0) {
+									var obj = template.create();
+									obj.gridX = patch.x;
+									obj.gridY = patch.y;
+							
+									// obj.parseData(entry);
+			
+									addEntityState(obj);
+								}
+							}
+						}
+						
+						patches.remove(patch);
+					default:
+				}
 			}
 		}
 		
@@ -632,5 +672,6 @@ typedef RoomPatch = {
 	cmd:Int,
 	x:Int,
 	y:Int,
-	objID:String
+	objID:String,
+	line:String
 };
