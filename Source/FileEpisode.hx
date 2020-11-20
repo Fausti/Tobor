@@ -384,6 +384,8 @@ class FileEpisode {
 			for (file in content) {
 				if (file.endsWithIgnoreCase("rooms.json")) {
 					hasRooms = true;
+				} else if (file.endsWithIgnoreCase("rooms.dat")) {
+					hasRooms = true;
 				}
 			}
 			
