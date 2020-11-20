@@ -114,11 +114,22 @@ class EpisodesScreen extends Screen {
 		showDialog(d);
 	}
 	
+	function showPatchInstalled(fileName:String) {
+		var msg:String = GetText.get("TXT_NEW_PATCH_INSTALLED") + "\n\n" + fileName;
+		
+		var d:DialogMessage = new DialogMessage(this, 0, 0, msg, true);
+		
+		showDialog(d);
+	}
+	
 	override public function onDropFile(fileName:String) {
 		if (FileEpisode.isEpisodeFile(fileName)) {
 			FileEpisode.install(fileName);
 			updateFileList();
 			showEpisodeInstalled(fileName);
+		} else if (FileEpisode.isPatchFile(fileName)) {
+			FileEpisode.install(fileName);
+			showPatchInstalled(fileName);
 		}
 	}
 	

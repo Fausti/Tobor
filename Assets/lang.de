@@ -1,0 +1,1412 @@
+[_Both_]
+Kombiniert
+
+[_DIED_BY_WATER_]
+Mit diesen blubbernden Wasserstellen ist nicht zu spaßen! Darunter schießt glühende Lava aus der Tiefe.
+
+[_Dithering_]
+Retro
+
+[_DRIFT_E_]
+Strömung
+
+[_DRIFT_N_]
+Strömung
+
+[_DRIFT_NE_]
+Strömung
+
+[_DRIFT_NW_]
+Strömung
+
+[_DRIFT_S_]
+Strömung
+
+[_DRIFT_SE_]
+Strömung
+
+[_DRIFT_SW_]
+Strömung
+
+[_DRIFT_W_]
+Strömung
+
+[_KILLED_BY_ANDROID_]
+Androiden sind meist schlauer als sie aussehen...
+
+[_KILLED_BY_EFENCE_]
+Diese Elektrozäune sind ziemlich gefährlich für Dich.
+
+[_KILLED_BY_ROBOT_]
+Dieses gemeine Monster hat Dich aber ziemlich übel zugerichtet.
+
+[_KILLED_BY_SCORPION_]
+Pass auf wo Du hintrittst! Diese kleinen Biester lauern gerne unvorsichtigen Abenteurern auf...
+
+[_KILLED_BY_SHARK_]
+Da muss aber jemand großen Hunger gehabt haben...
+
+[_MARKER_0_]
+Markierung
+
+[_MARKER_1_]
+Markierung
+
+[_MARKER_2_]
+Markierung
+
+[_MARKER_3_]
+Markierung
+
+[_MARKER_4_]
+Markierung
+
+[_OBJ_ACID_]
+Säure
+
+[_OBJ_ACID_DESC_]
+Diese Flasche enthält ätzende Flüssigkeit. Du solltest sie nicht trinken, aber benutzen.
+
+[_OBJ_ACID_PICKUP_]
+In diesen kleinen Flaschen befindet sich eine ätzende Flüssigkeit, die imstande ist, Mauerkalk aufzulösen. Dies funktioniert aber nur bei bestimmten Mauern.
+
+[_OBJ_ACID_USE_]
+Sehr gut! Jetzt sieh Dir an, was mit der Mauer passiert, die Du gerade mit der ätzenden Flüssigkeit begossen hast...
+
+[_OBJ_ANDROID_]
+Android
+
+[_OBJ_ANDROID_EGG_]
+Androiden Ei
+
+[_OBJ_ARROW_0_]
+Pfeil
+
+[_OBJ_ARROW_1_]
+Pfeil
+
+[_OBJ_ARROW_2_]
+Pfeil
+
+[_OBJ_ARROW_3_]
+Pfeil
+
+[_OBJ_BAGPACK#0_]
+Beutel
+
+[_OBJ_BAGPACK#0_DESC_]
+OBJ_BAGPACK#0_DESC
+
+[_OBJ_BAGPACK#1_]
+Beutel
+
+[_OBJ_BAGPACK#1_DESC_]
+OBJ_BAGPACK#1_DESC
+
+[_OBJ_BAGPACK#2_]
+Beutel
+
+[_OBJ_BAGPACK#2_DESC_]
+OBJ_BAGPACK#2_DESC
+
+[_OBJ_BAGPACK#3_]
+Beutel
+
+[_OBJ_BAGPACK#3_DESC_]
+OBJ_BAGPACK#3_DESC
+
+[_OBJ_BAGPACK#4_]
+Beutel
+
+[_OBJ_BAGPACK#4_DESC_]
+OBJ_BAGPACK#4_DESC
+
+[_OBJ_BAGPACK_PICKUP_]
+OBJ_BAGPACK_PICKUP
+
+[_OBJ_BANK_]
+Bank
+
+[_OBJ_BARRIER_]
+Barriere
+
+[_OBJ_BEDROCK_0_]
+Felsgestein
+
+[_OBJ_BEDROCK_1_]
+Felsgestein
+
+[_OBJ_BEDROCK_2_]
+Felsgestein
+
+[_OBJ_BEDROCK_3_]
+Felsgestein
+
+[_OBJ_BEDROCK_4_]
+Felsgestein
+
+[_OBJ_BEDROCK_5_]
+Felsgestein
+
+[_OBJ_BEDROCK_6_]
+Felsgestein
+
+[_OBJ_BEDROCK_7_]
+Felsgestein
+
+[_OBJ_BEDROCK_8_]
+Felsgestein
+
+[_OBJ_BEDROCK_9_]
+Felsgestein
+
+[_OBJ_BEDROCK_PATH_]
+Felspfad
+
+[_OBJ_BUCKET#0_]
+leerer Eimer
+
+[_OBJ_BUCKET#0_DESC_]
+Ein leerer Eimer. Wer gegen den Strom schwimmt, kann ihn vielleicht mit etwas Nassem füllen...
+
+[_OBJ_BUCKET#1_]
+gefüllter Eimer
+
+[_OBJ_BUCKET#1_DESC_]
+OBJ_BUCKET#1_DESC
+
+[_OBJ_BUCKET_PICKUP_]
+Schon wieder ein neues Objekt! Den Eimer gibt es nur selten, aber dafür bringt er auch nicht viel. Immerhin ein paar Bonuspunkte.
+
+[_OBJ_CAVE_0_]
+Höhlenwand
+
+[_OBJ_CAVE_1_]
+Höhlenwand
+
+[_OBJ_CAVE_10_]
+Höhlenwand
+
+[_OBJ_CAVE_11_]
+Höhlenwand
+
+[_OBJ_CAVE_12_]
+Höhlenwand
+
+[_OBJ_CAVE_2_]
+Höhlenwand
+
+[_OBJ_CAVE_3_]
+Höhlenwand
+
+[_OBJ_CAVE_4_]
+Höhlenwand
+
+[_OBJ_CAVE_5_]
+Höhlenwand
+
+[_OBJ_CAVE_6_]
+Höhlenwand
+
+[_OBJ_CAVE_7_]
+Höhlenwand
+
+[_OBJ_CAVE_8_]
+Höhlenwand
+
+[_OBJ_CAVE_9_]
+Höhlenwand
+
+[_OBJ_CHARLIE_]
+Charlie (nur im Editor!)
+
+[_OBJ_CLOCK_]
+Speicheruhr
+
+[_OBJ_CLOCK_DESC_]
+Jene Uhr dient der "Erinnerung"...
+
+[_OBJ_CLOCK_PICKUP_]
+Eine solche Uhr benötigst Du unbedingt, wenn du nicht immer von vorne anfangen willst!
+
+[_OBJ_CLONE_]
+Verdoppler
+
+[_OBJ_CLONE_DESC_]
+OBJ_CLONE_DESC
+
+[_OBJ_CLONE_PICKUP_]
+Du hast einen Duplikator gefunden! Es wäre bestimmt nicht schlecht, wenn Du seltene Gegenstände doppelt hättest.
+
+[_OBJ_COMPASS_]
+Kompass
+
+[_OBJ_COMPASS_DESC_]
+OBJ_COMPASS_DESC
+
+[_OBJ_COMPASS_PICKUP_]
+Gerade hast Du den Kompaß gefunden. Er ist sehr nützlich zum Auffinden verborgener Wege.
+
+[_OBJ_DEALER_]
+Händler
+
+[_OBJ_DIAMOND#0_]
+Diamant
+
+[_OBJ_DIAMOND#1_]
+Diamant
+
+[_OBJ_DIAMOND_PICKUP_]
+Dein erster Diamant! Hier liegen noch mehr herum...
+
+[_OBJ_DOOR#0_]
+Tür Nr. 1
+
+[_OBJ_DOOR#1_]
+Tür Nr. 2
+
+[_OBJ_DOOR#10_]
+Tür Nr. 11
+
+[_OBJ_DOOR#11_]
+Tür Nr. 12
+
+[_OBJ_DOOR#12_]
+Tür Nr. 13
+
+[_OBJ_DOOR#13_]
+Tür Nr. 14
+
+[_OBJ_DOOR#14_]
+Tür Nr. 15
+
+[_OBJ_DOOR#2_]
+Tür Nr. 3
+
+[_OBJ_DOOR#3_]
+Tür Nr. 4
+
+[_OBJ_DOOR#4_]
+Tür Nr. 5
+
+[_OBJ_DOOR#5_]
+Tür Nr. 6
+
+[_OBJ_DOOR#6_]
+Tür Nr. 7
+
+[_OBJ_DOOR#7_]
+Tür Nr. 8
+
+[_OBJ_DOOR#8_]
+Tür Nr. 9
+
+[_OBJ_DOOR#9_]
+Tür Nr. 10
+
+[_OBJ_DOPPELGANGER_]
+Doppelgänger
+
+[_OBJ_DOPPELGANGER_ITEM_]
+Doppelgänger Spawner
+
+[_OBJ_ELECTRIC_DOOR_0_]
+elektrische Tür (GESCHLOSSEN)
+
+[_OBJ_ELECTRIC_DOOR_1_]
+elektrische Tür (OFFEN)
+
+[_OBJ_ELECTRIC_FENCE_]
+elektrischer Zaun (AN)
+
+[_OBJ_ELECTRIC_FENCE_OFF_]
+elektrischer Zaun (AUS)
+
+[_OBJ_ELECTRIC_FLOOR_PLATE_0_]
+elektrische Bodenplatte (AUS)
+
+[_OBJ_ELECTRIC_FLOOR_PLATE_1_]
+elektrische Bodenplatte (AN)
+
+[_OBJ_ELEXIR_]
+Lebenselexier
+
+[_OBJ_ELEXIR_DESC_]
+Dieses Getränk ist gut für Deine Gesundheit.
+
+[_OBJ_ELEXIR_PICKUP_]
+In dieser merkwürdigen Flasche ist ein Lebenselixier. Du solltest es unbedingt trinken, wenn Du merkst, daß Dir langsam die Kräfte schwinden!
+
+[_OBJ_ELEXIR_USE_]
+Hmmmm, das tut gut! Nach dem Genuß dieses Lebenselixiers fühlst Du Dich quasi wie neugeboren!
+
+[_OBJ_EXCLAMATION_MARK_]
+Ausrufezeichen
+
+[_OBJ_EXCLAMATION_MARK_DESC_]
+Es handelt sich hier um ein wirklich hübsches Ausrufezeichen. Aber ich denke Du weißt schon, wozu es gut ist.
+
+[_OBJ_EXCLAMATION_MARK_PICKUP_]
+Das Ausrufezeichen ist so eine Art Ratgeber. Für alles, was Dir so begegnet, hat es ein paar Hinweise. Du kannst es leider nicht anwenden, wenn Du Dich in einem sehr dunklen Raum befindest.
+
+[_OBJ_EXPLOSION_]
+Explosion
+
+[_OBJ_FLIPPERS_]
+Schwimmflossen
+
+[_OBJ_FLIPPERS_DESC_]
+Zwei Schwimmflossen aus Gummi, die hoffentlich passen. Mit ihnen läßt sich so manche nasse Stelle leichter durchqueren.
+
+[_OBJ_FLIPPERS_PICKUP_]
+Endlich hast Du die Schwimmflossen gefunden! Jetzt kannst Du endlich selbst bestimmen, wohin Dich die Flüsse treiben.
+
+[_OBJ_FOOD#0_]
+Nahrung
+
+[_OBJ_FOOD#0_DESC_]
+Proviant zum Mitnehmen.
+
+[_OBJ_FOOD#1_]
+Nahrung
+
+[_OBJ_FOOD#1_DESC_]
+Proviant zum Mitnehmen.
+
+[_OBJ_FOOD_PICKUP_]
+Ah! Du hast etwas zum Essen gefunden. Guten Appetit!
+
+[_OBJ_GARLIC_]
+Knoblauch
+
+[_OBJ_GARLIC_DESC_]
+Diese Knoblauchknolle ist ganz normal. Solange Du sie mit Dir herumträgst, ist alles in Ordnung. Aber hast du sie gegessen, wird es eine Zeit lang schwierig sein, neue Freunde zu finden.
+
+[_OBJ_GARLIC_PICKUP_]
+Sieh an, eine Knoblauchknolle! Wenn Du so eine gegessen hast, wird Dir vorläufig keiner mehr zu nahe treten.
+
+[_OBJ_GARLIC_USE_]
+Puuh! So eine Knoblauchknolle schmeckt - pur genossen - zwar etwas streng, hält Dir dafür aber allerlei ungebetene Gäste vom Leib!
+
+[_OBJ_GOAL_0_]
+Ziel
+
+[_OBJ_GOAL_1_]
+Ziel
+
+[_OBJ_GOAL_2_]
+Ziel
+
+[_OBJ_GOAL_3_]
+Ziel
+
+[_OBJ_GOAL_4_]
+Ziel
+
+[_OBJ_GOAL_5_]
+Ziel
+
+[_OBJ_GOLD_]
+Gold
+
+[_OBJ_GRASS_0_]
+Pfad mit Beeren
+
+[_OBJ_GRASS_1_]
+Pfad
+
+[_OBJ_GRATE_]
+Gitter
+
+[_OBJ_GROUND_NEST_]
+Roboternest
+
+[_OBJ_HARD_SAND_0_]
+Dünen
+
+[_OBJ_HARD_SAND_1_]
+Dünen
+
+[_OBJ_HARD_SAND_2_]
+Dünen
+
+[_OBJ_HARD_SAND_3_]
+Dünen
+
+[_OBJ_HARD_SAND_4_]
+Dünen
+
+[_OBJ_HARD_SAND_5_]
+Dünen
+
+[_OBJ_HARD_SAND_6_]
+Dünen
+
+[_OBJ_HARD_SAND_7_]
+Dünen
+
+[_OBJ_ICE_0_]
+Eisfläche
+
+[_OBJ_ICE_1_]
+Eisfläche
+
+[_OBJ_ICE_2_]
+Eisfläche
+
+[_OBJ_ICE_3_]
+Eisfläche
+
+[_OBJ_ICE_4_]
+Eisfläche
+
+[_OBJ_ICE_BLOCK_]
+Eisblock
+
+[_OBJ_ICE_DEADLY_]
+Loch im Eis
+
+[_OBJ_ISOLATOR_]
+Isolator
+
+[_OBJ_ISOLATOR_SOFT_]
+Isolator (betretbar)
+
+[_OBJ_ISOLATOR_WATER_]
+Brücke (Isolator im Wasser)
+
+[_OBJ_KEY#0_]
+Schlüssel Nr. 1
+
+[_OBJ_KEY#0_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#1_]
+Schlüssel Nr. 2
+
+[_OBJ_KEY#10_]
+Schlüssel Nr. 11
+
+[_OBJ_KEY#10_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#11_]
+Schlüssel Nr. 12
+
+[_OBJ_KEY#11_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#12_]
+Schlüssel Nr. 13
+
+[_OBJ_KEY#12_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#13_]
+Schlüssel Nr. 14
+
+[_OBJ_KEY#13_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#14_]
+Schlüssel Nr. 15
+
+[_OBJ_KEY#14_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#1_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#2_]
+Schlüssel Nr. 3
+
+[_OBJ_KEY#2_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#3_]
+Schlüssel Nr. 4
+
+[_OBJ_KEY#3_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#4_]
+Schlüssel Nr. 5
+
+[_OBJ_KEY#4_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#5_]
+Schlüssel Nr. 6
+
+[_OBJ_KEY#5_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#6_]
+Schlüssel Nr. 7
+
+[_OBJ_KEY#6_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#7_]
+Schlüssel Nr. 8
+
+[_OBJ_KEY#7_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#8_]
+Schlüssel Nr. 9
+
+[_OBJ_KEY#8_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY#9_]
+Schlüssel Nr. 10
+
+[_OBJ_KEY#9_DESC_]
+Richtig, das ist ein Schlüssel. Du mußt jetzt nur noch das passende Schlüsselloch finden. Wenn Du es nicht findest, kann er Dir vielleicht auch anders nützlich sein.
+
+[_OBJ_KEY_PICKUP_]
+Dies ist aber ein schöner Schlüssel! Vielleicht wirst Du einmal an der entsprechenden Tür vorbeikommen...
+
+[_OBJ_KEY_USE_]
+Man sollte es nicht glauben, es gibt auch Schlüssel, die passen! Aber weil dies deine erste geöffnete Tür ist, gibt´s ausnahmsweise einen Sonderbonus!
+
+[_OBJ_KNIFE_]
+Messer
+
+[_OBJ_KNIFE_DESC_]
+OBJ_KNIFE_DESC
+
+[_OBJ_KNIFE_PICKUP_]
+OBJ_KNIFE_PICKUP
+
+[_OBJ_LAMP_]
+Lampe
+
+[_OBJ_LAMP_DESC_]
+OBJ_LAMP_DESC
+
+[_OBJ_LAMP_PICKUP_]
+Eine schöne Lampe. Möge diese Dir die erhoffte Erleuchtung bringen.
+
+[_OBJ_MAGNET#0_]
+Magnet
+
+[_OBJ_MAGNET#0_DESC_]
+Magnetische Objekte können einen Kompass irritieren, aber sie sind nutzlos, solange Du sie mit Dir herumträgst. Sie sind ganz nützlich in Verbindung mit Objekten, die Dich nicht auf den rechten Weg lassen.
+
+[_OBJ_MAGNET#1_]
+Magnet
+
+[_OBJ_MAGNET#1_DESC_]
+Magnetische Objekte können einen Kompass irritieren, aber sie sind nutzlos, solange Du sie mit Dir herumträgst. Sie sind ganz nützlich in Verbindung mit Objekten, die Dich nicht auf den rechten Weg lassen.
+
+[_OBJ_MAGNET_PICKUP_]
+Oh, Du hast einen Magneten gefunden! Damit kannst Du diese magnetischen Sperren überwinden, auf die Du bestimmt noch stoßen wirst. Leider haben nur die besonders starken Exemplare diese Wirkung.
+
+[_OBJ_MAGNET_USE_]
+Jetzt weißt Du also auch, wie man die Magnete benutzt! Doch Achtung: Es gibt zwei verschiedene davon!
+
+[_OBJ_MIRROR_0_]
+Spiegel
+
+[_OBJ_MIRROR_1_]
+Spiegel
+
+[_OBJ_MOUNTAIN_0_]
+Gebirge
+
+[_OBJ_MOUNTAIN_1_]
+Gebirge
+
+[_OBJ_MOUNTAIN_10_]
+Gebirge
+
+[_OBJ_MOUNTAIN_11_]
+Gebirge
+
+[_OBJ_MOUNTAIN_12_]
+Gebirge
+
+[_OBJ_MOUNTAIN_13_]
+Gebirge
+
+[_OBJ_MOUNTAIN_14_]
+Gebirge
+
+[_OBJ_MOUNTAIN_15_]
+Gebirge
+
+[_OBJ_MOUNTAIN_16_]
+Gebirge
+
+[_OBJ_MOUNTAIN_17_]
+Gebirge
+
+[_OBJ_MOUNTAIN_18_]
+Gebirge
+
+[_OBJ_MOUNTAIN_19_]
+Gebirge
+
+[_OBJ_MOUNTAIN_2_]
+Gebirge
+
+[_OBJ_MOUNTAIN_3_]
+Gebirge
+
+[_OBJ_MOUNTAIN_4_]
+Gebirge
+
+[_OBJ_MOUNTAIN_5_]
+Gebirge
+
+[_OBJ_MOUNTAIN_6_]
+Gebirge
+
+[_OBJ_MOUNTAIN_7_]
+Gebirge
+
+[_OBJ_MOUNTAIN_8_]
+Gebirge
+
+[_OBJ_MOUNTAIN_9_]
+Gebirge
+
+[_OBJ_MOUNTAIN_PATH_]
+Gebirgspfad (betretbar)
+
+[_OBJ_MUNITION#0_]
+Munition
+
+[_OBJ_MUNITION#0_DESC_]
+Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen.
+
+[_OBJ_MUNITION#1_]
+Munition
+
+[_OBJ_MUNITION#1_DESC_]
+Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen.
+
+[_OBJ_MUNITION#2_]
+Munition
+
+[_OBJ_MUNITION#2_DESC_]
+Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen.
+
+[_OBJ_MUNITION#3_]
+Munition
+
+[_OBJ_MUNITION#3_DESC_]
+Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen.
+
+[_OBJ_MUNITION#4_]
+Munition
+
+[_OBJ_MUNITION#4_DESC_]
+Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen.
+
+[_OBJ_MUNITION#5_]
+Munition
+
+[_OBJ_MUNITION#5_DESC_]
+Diese Munition ist nutzlos, wenn Du nicht weißt, was Du damit anfangen sollst. Aber beobachte einmal die Roboter, wie sie sie benutzen.
+
+[_OBJ_MUNITION_PICKUP_]
+Ja, es ist bestimmt nicht von Nachteil, wenn Du ein paar Steine in die Tasche steckst. Du wirst sie bestimmt noch brauchen können.
+
+[_OBJ_NOTICE_]
+Zettel
+
+[_OBJ_NPC_]
+NPC
+
+[_OBJ_OVERALL_]
+Blaumann
+
+[_OBJ_OVERALL_DESC_]
+OBJ_OVERALL_DESC
+
+[_OBJ_OVERALL_PICKUP_]
+Gut siehst Du aus, in diesem blauen Anzug! Diese Kleidungsstücke schützen Dich ausgezeichnet vor diesen gemeinen Elektrozäunen.
+
+[_OBJ_PATH_]
+Weg
+
+[_OBJ_PLANT_]
+Pflanze
+
+[_OBJ_PLANT_GROWING_]
+OBJ_PLANT_GROWING
+
+[_OBJ_PLATIN_]
+Platin
+
+[_OBJ_QUESTION_MARK_]
+Fragezeichen
+
+[_OBJ_RING#0_]
+Ring
+
+[_OBJ_RING#0_DESC_]
+OBJ_RING#0_DESC
+
+[_OBJ_RING#1_]
+Ring
+
+[_OBJ_RING#1_DESC_]
+OBJ_RING#1_DESC
+
+[_OBJ_RING#2_]
+Ring
+
+[_OBJ_RING#2_DESC_]
+OBJ_RING#2_DESC
+
+[_OBJ_RING#3_]
+Ring
+
+[_OBJ_RING#3_DESC_]
+OBJ_RING#3_DESC
+
+[_OBJ_RING_PICKUP_]
+Oh! Was ist denn das für ein schicker Ring? Du fragst Dich was es wohl mit ihm auf sich haben wird...
+
+[_OBJ_ROBOT_]
+Roboter (zufällig)
+
+[_OBJ_ROBOT_FACTORY_0_]
+Roboter Fabrikator (AUS)
+
+[_OBJ_ROBOT_FACTORY_1_]
+Roboter Fabrikator (AN)
+
+[_OBJ_ROOF_0_]
+Dach
+
+[_OBJ_ROOF_1_]
+Dach
+
+[_OBJ_ROOF_10_]
+Dach
+
+[_OBJ_ROOF_11_]
+Dach
+
+[_OBJ_ROOF_12_]
+Dach
+
+[_OBJ_ROOF_13_]
+Dach
+
+[_OBJ_ROOF_14_]
+Dach
+
+[_OBJ_ROOF_15_]
+Dach
+
+[_OBJ_ROOF_16_]
+Dach
+
+[_OBJ_ROOF_17_]
+Dach
+
+[_OBJ_ROOF_2_]
+Dach
+
+[_OBJ_ROOF_3_]
+Dach
+
+[_OBJ_ROOF_4_]
+Dach
+
+[_OBJ_ROOF_5_]
+Dach
+
+[_OBJ_ROOF_6_]
+Dach
+
+[_OBJ_ROOF_7_]
+Dach
+
+[_OBJ_ROOF_8_]
+Dach
+
+[_OBJ_ROOF_9_]
+Dach
+
+[_OBJ_ROOM_EXIT_]
+Raumausgang
+
+[_OBJ_SAND#0_]
+Sand
+
+[_OBJ_SAND#1_]
+Sand
+
+[_OBJ_SAND#2_]
+Sand
+
+[_OBJ_SAND#3_]
+Sand
+
+[_OBJ_SAND#4_]
+Sand
+
+[_OBJ_SAND_DECO_0_]
+Wüstendekoration
+
+[_OBJ_SAND_DECO_1_]
+Wüstendekoration
+
+[_OBJ_SAND_DECO_2_]
+Wüstendekoration
+
+[_OBJ_SAND_PLANT_0_]
+Wüstenpflanze
+
+[_OBJ_SAND_PLANT_1_]
+Wüstenpflanze
+
+[_OBJ_SAND_PLANT_2_]
+Wüstenpflanze
+
+[_OBJ_SAND_WALL_]
+Mauer aus Sandstein
+
+[_OBJ_SAND_WALL_HARD_]
+Mauer aus Sandstein (unzerstörbar)
+
+[_OBJ_SAND_WALL_NE_]
+Mauer aus Sandstein
+
+[_OBJ_SAND_WALL_NW_]
+Mauer aus Sandstein
+
+[_OBJ_SAND_WALL_SE_]
+Mauer aus Sandstein
+
+[_OBJ_SAND_WALL_SW_]
+Mauer aus Sandstein
+
+[_OBJ_SCORPION_]
+Skorpion
+
+[_OBJ_SEED_]
+Samen
+
+[_OBJ_SEED_DESC_]
+OBJ_SEED_DESC
+
+[_OBJ_SEED_PICKUP_]
+Dies ist ein absolut alkoholfreies Korn. Falls Du Freude an Grünzeug hast, pflanze es einfach irgendwo ein.
+
+[_OBJ_SHADOW#0_]
+Schatten
+
+[_OBJ_SHADOW#1_]
+Schatten
+
+[_OBJ_SHADOW#2_]
+Schatten
+
+[_OBJ_SHARK_]
+Hai
+
+[_OBJ_SHOES_]
+Wanderschuhe
+
+[_OBJ_SHOES_DESC_]
+Die braunen Wanderschuhe. Sie sind für das Durchdringen bestimmter Wald- und Gebirgspassagen unabdingbar! Aber auch andere Dinge können sie vollbringen!
+
+[_OBJ_SHOES_PICKUP_]
+Endlich hast Du die braunen Wanderschuhe gefunden! Jetzt kannst Du auf bestimmten Wegen durch den Wald laufen.
+
+[_OBJ_SHOOTER_0_]
+Geschütz
+
+[_OBJ_SHOOTER_1_]
+Geschütz
+
+[_OBJ_SHOOTER_2_]
+Geschütz
+
+[_OBJ_SHOOTER_3_]
+Geschütz
+
+[_OBJ_SHOVEL_]
+Spaten
+
+[_OBJ_SHOVEL_DESC_]
+Eine Schaufel. Damit kannst Du in der Wüste für Ordnung sorgen.
+
+[_OBJ_SHOVEL_PICKUP_]
+Eben hast Du ein wichtiges Hilfsmittel gefunden! Viele Dinge sind nämlich unter Sand, Fels oder Wald vergraben, und wenn man weiß wo zu graben ist, wird man die Schaufel zu schätzen wissen.
+
+[_OBJ_SICKLE_]
+Sichel
+
+[_OBJ_SICKLE_DESC_]
+OBJ_SICKLE_DESC
+
+[_OBJ_SICKLE_PICKUP_]
+Wenn Du kein Blumenfreund bist, kannst Du mit der Sichel jeden Gärtner in den Wahnsinn treiben und Dir eine Schneise schneiden...
+
+[_OBJ_SKULL_]
+Totenkopf
+
+[_OBJ_SLING_]
+Schleuder
+
+[_OBJ_SLING_DESC_]
+Diese Schleuder ist recht nützlich, wenn Du ein wenig Munition besitzt. Du kannst viele Sachen damit zerstören.
+
+[_OBJ_SLING_PICKUP_]
+Ausgezeichnet! Du hast die Schleuder gefunden. Nun mußt Du nur noch herausfinden wie man damit schießt!
+
+[_OBJ_SLING_USE_]
+Ja! Mit der Schleuder kannst Du Dich endlich des lästigen Ungeziefers erwehren!
+
+[_OBJ_SPOT_]
+Schatz
+
+[_OBJ_STAIRS_DOWN_]
+Treppe (runter)
+
+[_OBJ_STAIRS_UP_]
+Treppe (hoch)
+
+[_OBJ_START_POSITION_]
+Startposition
+
+[_OBJ_TARGET_]
+Zielscheibe
+
+[_OBJ_TELEPORT_END_0_]
+Negativ Teleporter Ziel
+
+[_OBJ_TELEPORT_END_1_]
+Positiv Teleporter Ziel
+
+[_OBJ_TELEPORT_START_0_]
+Negativ Teleporter Start
+
+[_OBJ_TELEPORT_START_1_]
+Positiv Teleporter Start
+
+[_OBJ_THERMOPLATE_0_]
+Thermoplatte (heiß)
+
+[_OBJ_THERMOPLATE_1_]
+Thermoplatte (kalt)
+
+[_OBJ_THERMOPLATE_2_]
+Thermoplatte (aus)
+
+[_OBJ_TORCH_]
+Fackel
+
+[_OBJ_TREE_]
+Weihnachtsbaum
+
+[_OBJ_TREE_DESC_]
+Dies ist ein hübscher kleiner aber ganz normaler Baum. (Oder kann man doch noch etwas damit anfangen ?)
+
+[_OBJ_TREE_PICKUP_]
+Du hast einen Tannenbaum gefunden! Er kann Dich befreien, wenn Du in Bedrängnis geraten solltest.
+
+[_OBJ_TUNNEL#0_]
+Tunnel
+
+[_OBJ_TUNNEL#1_]
+Tunnel
+
+[_OBJ_TUNNEL#2_]
+Tunnel
+
+[_OBJ_TUNNEL#3_]
+Tunnel
+
+[_OBJ_WALL_]
+Mauer
+
+[_OBJ_WALL_BLACK_]
+Mauer (schwarz)
+
+[_OBJ_WALL_BLACK_NE_]
+Mauer (schwarz)
+
+[_OBJ_WALL_BLACK_NW_]
+Mauer (schwarz)
+
+[_OBJ_WALL_BLACK_SE_]
+Mauer (schwarz)
+
+[_OBJ_WALL_BLACK_SW_]
+Mauer (schwarz)
+
+[_OBJ_WALL_DISSOLVE_]
+sich auflösende Mauer
+
+[_OBJ_WALL_HARD_]
+Mauer (unzerstörbar)
+
+[_OBJ_WALL_NE_]
+Mauer
+
+[_OBJ_WALL_NW_]
+Mauer
+
+[_OBJ_WALL_SAND_DISSOLVE_]
+Mauer aus Sandstein (Auflösend)
+
+[_OBJ_WALL_SE_]
+Mauer
+
+[_OBJ_WALL_SW_]
+Mauer
+
+[_OBJ_WATCHER_]
+Wächter (auf dem Boden versteckt / auf Objekten immer sichtbar)
+
+[_OBJ_WATER_DEADLY_]
+tödliches Wasser
+
+[_OBJ_WATER_DEEP_]
+tiefes Wasser
+
+[_OBJ_WATER_NE_]
+Wasser
+
+[_OBJ_WATER_NW_]
+Wasser
+
+[_OBJ_WATER_PLANT_]
+Wasserpflanze
+
+[_OBJ_WATER_SE_]
+Wasser
+
+[_OBJ_WATER_SHALLOW_]
+seichtes Wasser
+
+[_OBJ_WATER_SW_]
+Wasser
+
+[_OBJ_WOOD_0_]
+Wald
+
+[_OBJ_WOOD_1_]
+Wald
+
+[_OBJ_WOOD_2_]
+Wald
+
+[_OBJ_WOOD_3_]
+Wald
+
+[_OBJ_WOOD_4_]
+Wald
+
+[_OBJ_WOOD_5_]
+Wald
+
+[_OBJ_WOOD_6_]
+Wald
+
+[_OBJ_WOOD_PATH_]
+Waldpfad
+
+[_Smooth_]
+Sanft
+
+[_TXT_ASK_FOR_EPISODE_NAME_]
+Wie möchtest Du deine Episode nennen?
+
+[_TXT_ASK_FOR_NAME_]
+Willkommen!
+
+Du hast ein neues Abenteuer mit
+neuen Leben begonnen.
+Bitte sag´ mir Deinen Namen:
+
+[_TXT_ASK_FOR_ROOM_NAME_]
+Szenennamen ändern
+
+Wie soll die Szene genannt werden?
+
+[_TXT_ASK_FOR_SAVEGAME_NAME_]
+Unter welchem Namen möchtest Du speichern?
+
+[_TXT_BONUS_]
+Bonus
+
+[_TXT_CREATE_NEW_EPISODE_IN_EDITOR_]
+Neue Episode im Editor erstellen
+
+[_TXT_DIALOG_CANCEL_]
+Nein
+
+[_TXT_DIALOG_OK_]
+Ja
+
+[_TXT_DIR_ALREADY_EXISTS_]
+Verzeichnis existiert bereits!
+
+[_TXT_EDITOR_ASK_CREATE_NEW_ROOM_]
+Keine Szene vorhanden!
+
+Diese Szene erstellen?
+
+[_TXT_EDITOR_ASK_CREATE_ROOM_BORDER_]
+Szenenrand einfügen
+
+Soll die Szene von festen Mauern umrandet werden?
+
+[_TXT_EDITOR_ASK_REMOVE_OBJECTS_FROM_ROOM_]
+Szene leeren
+
+Alle Objekte in der aktuellen Szene entfernen?
+
+[_TXT_EDITOR_NO_ROOM_]
+keine Szene
+
+[_TXT_EDITOR_OBJECTS_]
+Objekte
+
+[_TXT_EDITOR_ROOM_]
+Raum
+
+[_TXT_EPISODE_LOST_]
+Du hast leider nichts dazugelernt.
+
+[_TXT_EPISODE_NAME_]
+Episodenname
+
+[_TXT_FULLSCREEN_]
+Vollbild
+
+[_TXT_INVENTORY_CHOOSE_]
+Auswählen
+
+[_TXT_INVENTORY_CLONE_]
+Verdoppeln
+
+[_TXT_INVENTORY_COUNT_]
+Stück
+
+[_TXT_INVENTORY_DROP_]
+Ablegen
+
+[_TXT_INVENTORY_DROP_ALL_]
+Alles weg
+
+[_TXT_INVENTORY_LOOK_]
+Anschauen
+
+[_TXT_INVENTORY_USE_]
+Benutzen
+
+[_TXT_LOAD_WHICH_GAME_]
+Welchen Spielstand möchtest Du laden?
+
+[_TXT_MENU_BACKPACK_]
+Rucksack
+
+[_TXT_MENU_BORDERS_]
+Szenenrand
+
+[_TXT_MENU_CANCEL_]
+Abbruch
+
+[_TXT_MENU_CHOOSE_SCENE_]
+Szenenauswahl...
+
+[_TXT_MENU_CLEAR_]
+Objekte löschen
+
+[_TXT_MENU_COPY_]
+Kopieren
+
+[_TXT_MENU_CUT_]
+Ausschneiden
+
+[_TXT_MENU_EDIT_]
+Bearbeiten
+
+[_TXT_MENU_EDIT_INVENTORY_]
+Test Inventar
+
+[_TXT_MENU_EDIT_OPTIONS_DARKNESS_]
+Dunkelheit
+
+[_TXT_MENU_EDIT_OPTIONS_MUSIC_]
+Raummusik wählen...
+
+[_TXT_MENU_EDIT_OPTIONS_RING_EFFECTS_]
+Ringeffekte
+
+[_TXT_MENU_EDIT_OPTIONS_WIN_CONDITION_]
+Gewinn - Bedingung
+
+[_TXT_MENU_EXIT_]
+Abbruch
+
+[_TXT_MENU_HELP_]
+Hilfe
+
+[_TXT_MENU_KEYS_]
+farbige Schlüssel
+
+[_TXT_MENU_LIGHT_]
+Lichteffekt
+
+[_TXT_MENU_LOAD_]
+Laden
+
+[_TXT_MENU_OBJECTS_]
+Objektauswahl...
+
+[_TXT_MENU_OPTIONS_]
+Einstellungen
+
+[_TXT_MENU_PASTE_]
+Einfügen
+
+[_TXT_MENU_PLAY_]
+Spielen
+
+[_TXT_MENU_RESTART_]
+Szenenanfang
+
+[_TXT_MENU_ROBOT_BEHAVIOR_]
+Roboter Verhalten
+
+[_TXT_MENU_ROBOT_BEHAVIOR_NEW_]
+Original
+
+[_TXT_MENU_ROBOT_BEHAVIOR_OLD_]
+Tobor
+
+[_TXT_MENU_ROBOT_STRESS_]
+Stressanzeige
+
+[_TXT_MENU_ROOM_NAME_]
+Szenennamen ändern
+
+[_TXT_MENU_SAVE_]
+Speichern
+
+[_TXT_MENU_SCENE_TEXT_]
+Szenen-Text
+
+[_TXT_MENU_SCREENSHOT_]
+Screenshot
+
+[_TXT_MENU_SHADER_]
+Shader
+
+[_TXT_MENU_SPEED_]
+Geschwindigkeit
+
+[_TXT_MENU_SPEED_FAST_]
+Schneller
+
+[_TXT_MENU_SPEED_FASTEST_]
+Schnell
+
+[_TXT_MENU_SPEED_NORMAL_]
+Normal
+
+[_TXT_MENU_SPEED_SLOW_]
+Langsamer
+
+[_TXT_MENU_SPEED_SLOWEST_]
+Langsam
+
+[_TXT_MENU_STORY_]
+Story
+
+[_TXT_NEW_EPISODE_]
+>> NEU <<
+
+[_TXT_NEW_EPISODE_INSTALLED_]
+Neue Episode installiert:
+
+[_TXT_NEW_PATCH_INSTALLED_]
+Neuer Patch installiert:
+
+[_TXT_OFF_]
+Aus
+
+[_TXT_ON_]
+An
+
+[_TXT_POINTS_]
+Punkte
+
+[_TXT_PRESS_ENTER_]
+Drücke bitte <ENTER>, <ESC> oder eine MAUSTASTE um das Menü anzuzeigen.
+
+[_TXT_RINGS_OFF_]
+Aus
+
+[_TXT_RINGS_ON_]
+An
+
+[_TXT_ROOM_DARKNESS_FULL_]
+100%
+
+[_TXT_ROOM_DARKNESS_HALF_]
+50%
+
+[_TXT_ROOM_DARKNESS_NONE_]
+Aus
+
+[_TXT_ROOM_MUSIC_NATURE_]
+Naturgeräusche
+
+[_TXT_ROOM_MUSIC_NONE_]
+Keine
+
+[_TXT_SET_DESC_IN_INFO_FILE_]
+
+
+[_TXT_STATUS_LIVES_]
+Leben
+
+[_TXT_STATUS_POINTS_]
+Punkte
+
+[_TXT_TOO_MUCH_GOLD_]
+Soviele Goldbarren sind viel zu schwer für Dich.
+
+[_TXT_TOO_MUCH_MUNITION_]
+Du kannst nicht soviel Munition mit Dir herumschleppen.
+
+[_TXT_WIN_CONDITION_0_]
+Nur Flagge betreten
+
+[_TXT_WIN_CONDITION_1_]
+Flagge mit einem Ring betreten
+
+[_TXT_WIN_CONDITION_2_]
+Flagge mit zwei Ringen betreten
+
+[_TXT_WIN_CONDITION_3_]
+Flagge mit drei Ringen betreten
+
+[_TXT_WIN_CONDITION_4_]
+Flagge mit vier Ringen betreten
+
+[_TXT_WINDOW_]
+Fenstermodus
+
+[_USED_DOPPELGANGER_]
+Waaah! Was ist denn das? Du hast Dir einen Doppelgänger produziert! Scheint aber ziemlich verwirrt zu sein, dem Tanzstil nach zu urteilen...
+
+[_USED_LAMP_]
+Gratuliere! Du sprachst 'Licht!' ... und es ward Licht!
+
+[_USED_TREE_]
+Jetzt aber schnell weg, bevor sich diese lästigen Sperren wieder schließen!

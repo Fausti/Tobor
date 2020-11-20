@@ -369,8 +369,16 @@ class FileEpisode {
 		if (FileSystem.isDirectory(path.toString())) return true;
 		return false;
 	}
+	
 	public static function isZipFile(path:Path):Bool {
 		if (path.ext.toLowerCase() == "zip") return true;
+		return false;
+	}
+	
+	public static function isPatchFile(fileName:String):Bool {
+		var path:Path = new Path(fileName);
+		
+		if (path.ext.toLowerCase() == "patch") return true;
 		return false;
 	}
 	
