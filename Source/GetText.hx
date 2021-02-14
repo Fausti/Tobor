@@ -47,7 +47,7 @@ class GetText {
 			if (de != null) {
 				var text = Reflect.field(de, "de");
 				
-				db.set(id, text);
+				db.set(id, text, false);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ class GetText {
 				var text:String = Reflect.field(de, "de");
 				
 				if (text != null) text.replaceAll("    ", "____");
-				db_world.set(newID, text);
+				db_world.set(newID, text, false);
 			}
 		}
 	}
@@ -88,7 +88,7 @@ class GetText {
 			if (line.indexOf("[_") == 0) {
 				if (id != null) {
 					if (text == null) text = id;
-					db.set(id, StringTools2.rtrimLF(text));
+					db.set(id, StringTools2.rtrimLF(text), false);
 					
 					id = null;
 					text = null;
@@ -106,7 +106,7 @@ class GetText {
 		
 		if (id != null) {
 			if (text == null) text = id;
-			db.set(id, StringTools2.rtrimLF(text));
+			db.set(id, StringTools2.rtrimLF(text), false);
 			
 			id = null;
 			text = null;
@@ -128,7 +128,7 @@ class GetText {
 					if (text == null) text = id;
 					
 					text = StringTools2.rtrimLF(text);
-					db_world.set(id, text);
+					db_world.set(id, text, false);
 					
 					id = null;
 					text = null;
@@ -148,7 +148,7 @@ class GetText {
 			if (text == null) text = id;
 					
 					text = StringTools2.rtrimLF(text);
-					db_world.set(id, text);
+					db_world.set(id, text, false);
 					
 					id = null;
 					text = null;
@@ -219,12 +219,18 @@ class TextDatabase {
 		return dict.get(id);
 	}
 	
-	public function set(id:String, txt:String) {
+	public function set(id:String, txt:String, missing:Bool) {
 		if (id == null || txt == null) return;
+		
+		if (id == txt) {
+			if (!missing) return;
+		}
+
 		if (dict.exists(id)) {
-			if (dict.get(id) == id) return;
+			if (dict.get(id) == txt) return;
 		}
 		
+		trace("adding: " + id + " -> " + txt);
 		dict.set(id, txt);
 	}
 	

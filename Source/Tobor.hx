@@ -102,14 +102,11 @@ class Tobor extends LimeGame {
 		
 		GetText.loadJson(Files.loadFromFile("translation.json"));
 		
-		try 
-		{
-			// GetText.load(Assets.getText("assets/translation.json"));
-			GetText.load(Assets.getText("lang." + defaultLocale));
+		try {
+			GetText.load(Assets.getText("assets/lang." + defaultLocale));
 		}
-		catch (err:Dynamic)
-		{
-			
+		catch (err:Dynamic)	{
+			trace(err);
 		}
 		
 		GetText.load(Files.loadFromFile("lang." + defaultLocale));
