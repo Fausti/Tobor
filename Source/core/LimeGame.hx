@@ -1,11 +1,11 @@
 package core;
 
+import lime.graphics.WebGLRenderContext;
 import lime.utils.Assets;
 import lime.graphics.Image;
 import lime.graphics.ImageBuffer;
 import lime.graphics.PixelFormat;
 import lime.utils.UInt8Array;
-import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLUniformLocation;
 import lime.graphics.ImageFileFormat;
 
@@ -50,7 +50,7 @@ class LimeGame {
 		var pixelsIn = new UInt8Array(4 * __application.window.width * __application.window.height);
 		var pixelsOut = new UInt8Array(4 * __application.window.width * __application.window.height);
 		
-		GL.readPixels(0, 0, __application.window.width, __application.window.height, GL.RGBA, GL.UNSIGNED_BYTE, pixelsIn);
+		Gfx.gl.readPixels(0, 0, __application.window.width, __application.window.height, Gfx.gl.RGBA, Gfx.gl.UNSIGNED_BYTE, pixelsIn);
 		
 		// Bild spiegeln
 		for (x in 0 ... __application.window.width) {
@@ -122,17 +122,17 @@ class LimeGame {
 		
 		__frameBuffer.unbind();
 
-		GL.viewport(0, 0, __application.window.width, __application.window.height);
-		GL.clearColor(1, 1, 1, 1.0);
-		GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+		Gfx.gl.viewport(0, 0, __application.window.width, __application.window.height);
+		Gfx.gl.clearColor(1, 1, 1, 1.0);
+		Gfx.gl.clear(Gfx.gl.COLOR_BUFFER_BIT | Gfx.gl.DEPTH_BUFFER_BIT);
 		
 		if (Config.shader == -1) {
 			__defaultShader.use();
 		} else {
 			__upscaleShader[Config.shader].use();
-			GL.uniform2f(__u_Scale[Config.shader], __scaleX, __scaleY);
-			GL.uniform2f(__u_OutputSize[Config.shader], __application.window.width, __application.window.height);
-			GL.uniform2f(__u_InputSize[Config.shader], __framebuffer_w, __framebuffer_h);
+			Gfx.gl.uniform2f(__u_Scale[Config.shader], __scaleX, __scaleY);
+			Gfx.gl.uniform2f(__u_OutputSize[Config.shader], __application.window.width, __application.window.height);
+			Gfx.gl.uniform2f(__u_InputSize[Config.shader], __framebuffer_w, __framebuffer_h);
 		}
 		
 		__frameBuffer.draw(__application.window.width, __application.window.height);

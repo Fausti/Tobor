@@ -1,6 +1,5 @@
 package gfx;
 
-import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
 import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLUniformLocation;
@@ -23,54 +22,54 @@ class Shader {
 		if (sourceVertex == null) return;
 		if (sourceFragment == null) return;
 		
-		var shaderVert = loadShader(GL.VERTEX_SHADER, sourceVertex);
-		var shaderFrag = loadShader(GL.FRAGMENT_SHADER, sourceFragment);
+		var shaderVert = loadShader(Gfx.gl.VERTEX_SHADER, sourceVertex);
+		var shaderFrag = loadShader(Gfx.gl.FRAGMENT_SHADER, sourceFragment);
 		
 		program = linkShader(shaderVert, shaderFrag);
 
-		a_Position = GL.getAttribLocation(program, "a_Position");
-		a_Color = GL.getAttribLocation(program, "a_Color");
-		a_TexCoord0 = GL.getAttribLocation(program, "a_TexCoord0");
+		a_Position = Gfx.gl.getAttribLocation(program, "a_Position");
+		a_Color = Gfx.gl.getAttribLocation(program, "a_Color");
+		a_TexCoord0 = Gfx.gl.getAttribLocation(program, "a_TexCoord0");
 
-		u_camMatrix = GL.getUniformLocation(program, "u_camMatrix");
-		u_Texture0 = GL.getUniformLocation(program, "u_Texture0");
+		u_camMatrix = Gfx.gl.getUniformLocation(program, "u_camMatrix");
+		u_Texture0 = Gfx.gl.getUniformLocation(program, "u_Texture0");
 		
 	}
 	
 	public function getUniformLocation(key:String):GLUniformLocation {
-		return GL.getUniformLocation(program, key);
+		return Gfx.gl.getUniformLocation(program, key);
 	}
 	
 	function loadShader(type:Int, source:String):GLShader {
-		var shader = GL.createShader(type);
+		var shader = Gfx.gl.createShader(type);
 		
-		GL.shaderSource(shader, source);
-		GL.compileShader(shader);
+		Gfx.gl.shaderSource(shader, source);
+		Gfx.gl.compileShader(shader);
 		
-		var status = GL.getShaderParameter(shader, GL.COMPILE_STATUS);
+		var status = Gfx.gl.getShaderParameter(shader, Gfx.gl.COMPILE_STATUS);
 		if (status == 0) {
-			trace(GL.getShaderInfoLog(shader));
+			trace(Gfx.gl.getShaderInfoLog(shader));
 		}
 		
 		return shader;
 	}
 	
 	function linkShader(shaderVert:GLShader, shaderFrag:GLShader):GLProgram {
-		var program = GL.createProgram();
+		var program = Gfx.gl.createProgram();
 		
-		GL.attachShader(program, shaderVert);
-		GL.attachShader(program, shaderFrag);
+		Gfx.gl.attachShader(program, shaderVert);
+		Gfx.gl.attachShader(program, shaderFrag);
 		
-		GL.linkProgram(program);
+		Gfx.gl.linkProgram(program);
 		
-		if (GL.getProgramParameter(program, GL.LINK_STATUS) == 0) {
-			trace(GL.getProgramInfoLog(program));
+		if (Gfx.gl.getProgramParameter(program, Gfx.gl.LINK_STATUS) == 0) {
+			trace(Gfx.gl.getProgramInfoLog(program));
 		}
 		
-		GL.validateProgram(program);
+		Gfx.gl.validateProgram(program);
 		
-		if (GL.getProgramParameter(program, GL.VALIDATE_STATUS) == 0) {
-			trace(GL.getProgramInfoLog(program));
+		if (Gfx.gl.getProgramParameter(program, Gfx.gl.VALIDATE_STATUS) == 0) {
+			trace(Gfx.gl.getProgramInfoLog(program));
 		}
 		
 		return program;
@@ -79,12 +78,12 @@ class Shader {
 	public function use() {
 		Shader.current = this;
 		
-		GL.useProgram(program);
+		Gfx.gl.useProgram(program);
 	}
 	
 	public inline function setAttribute(index:Int, size:Int, type:Int, stride:Int, offset:Int) {
-		GL.enableVertexAttribArray(index);
-		GL.vertexAttribPointer(index, size, type, false, stride, offset);
+		Gfx.gl.enableVertexAttribArray(index);
+		Gfx.gl.vertexAttribPointer(index, size, type, false, stride, offset);
 	}
 	
 	public static var current:Shader = null;

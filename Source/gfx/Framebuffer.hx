@@ -1,6 +1,5 @@
 package gfx;
 
-import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLBuffer;
 import lime.graphics.opengl.GLFramebuffer;
 import lime.graphics.opengl.GLTexture;
@@ -61,48 +60,48 @@ class Framebuffer {
 		scaleW = width / this.width;
 		scaleH = height / this.height;
 		
-		texture = GL.createTexture();
-		handle = GL.createFramebuffer();
+		texture = Gfx.gl.createTexture();
+		handle = Gfx.gl.createFramebuffer();
 		
 		// color texture
-		GL.activeTexture(GL.TEXTURE0 + textureUnit);
-		GL.bindTexture(GL.TEXTURE_2D, texture);
+		Gfx.gl.activeTexture(Gfx.gl.TEXTURE0 + textureUnit);
+		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, texture);
 		
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST);	
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_WRAP_S, Gfx.gl.CLAMP_TO_EDGE);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_WRAP_T, Gfx.gl.CLAMP_TO_EDGE);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_MAG_FILTER, Gfx.gl.NEAREST);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_MIN_FILTER, Gfx.gl.NEAREST);	
 		
-		GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, width, height, 0, GL.RGBA, GL.UNSIGNED_BYTE, new UInt8Array(4 * width * height));
+		Gfx.gl.texImage2D(Gfx.gl.TEXTURE_2D, 0, Gfx.gl.RGBA, width, height, 0, Gfx.gl.RGBA, Gfx.gl.UNSIGNED_BYTE, new UInt8Array(4 * width * height));
 		
 		// construct framebuffer
-		GL.bindFramebuffer(GL.FRAMEBUFFER, handle);
-		GL.framebufferTexture2D(GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, texture, 0);
+		Gfx.gl.bindFramebuffer(Gfx.gl.FRAMEBUFFER, handle);
+		Gfx.gl.framebufferTexture2D(Gfx.gl.FRAMEBUFFER, Gfx.gl.COLOR_ATTACHMENT0, Gfx.gl.TEXTURE_2D, texture, 0);
 	
 		// unbind
-		GL.bindFramebuffer(GL.FRAMEBUFFER, null);
+		Gfx.gl.bindFramebuffer(Gfx.gl.FRAMEBUFFER, null);
 		// GL.bindTexture(GL.TEXTURE_2D, null);
 		
 		// check
-		var result:Int = GL.checkFramebufferStatus(GL.FRAMEBUFFER);
-		if (result != GL.FRAMEBUFFER_COMPLETE) {
+		var result:Int = Gfx.gl.checkFramebufferStatus(Gfx.gl.FRAMEBUFFER);
+		if (result != Gfx.gl.FRAMEBUFFER_COMPLETE) {
 
-			GL.deleteFramebuffer(handle);
+			Gfx.gl.deleteFramebuffer(handle);
 
-			if (result == GL.FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
+			if (result == Gfx.gl.FRAMEBUFFER_INCOMPLETE_ATTACHMENT)
 				throw "frame buffer couldn't be constructed: incomplete attachment";
-			if (result == GL.FRAMEBUFFER_INCOMPLETE_DIMENSIONS)
+			if (result == Gfx.gl.FRAMEBUFFER_INCOMPLETE_DIMENSIONS)
 				throw "frame buffer couldn't be constructed: incomplete dimensions";
-			if (result == GL.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
+			if (result == Gfx.gl.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT)
 				throw "frame buffer couldn't be constructed: missing attachment";
-			if (result == GL.FRAMEBUFFER_UNSUPPORTED)
+			if (result == Gfx.gl.FRAMEBUFFER_UNSUPPORTED)
 				throw "frame buffer couldn't be constructed: unsupported combination of formats";
 			throw "frame buffer couldn't be constructed: unknown error " + result;
 		}
 		
 		ready = true;
 		
-		buffer = GL.createBuffer();
+		buffer = Gfx.gl.createBuffer();
 		
 		var x0 = 0;
 		var x1 = scaleW;
@@ -135,9 +134,10 @@ class Framebuffer {
 			1, 1, 1, 1,
 		];
 		
-		GL.bindBuffer(GL.ARRAY_BUFFER, buffer);
-		GL.bufferData(GL.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), GL.STATIC_DRAW);
-		GL.bindBuffer(GL.ARRAY_BUFFER, null);
+		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, buffer);
+		// Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), Gfx.gl.STATIC_DRAW);
+		Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, new Float32Array(vertices), Gfx.gl.STATIC_DRAW);
+		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, null);
 		
 		matrix = new Matrix4();
 		matrix.createOrtho(0, 1, 0, 1, -1000, 1000);
@@ -147,23 +147,23 @@ class Framebuffer {
 	public function bind() {
 		if (!ready) return;
 		
-		GL.bindFramebuffer(GL.FRAMEBUFFER, handle);
+		Gfx.gl.bindFramebuffer(Gfx.gl.FRAMEBUFFER, handle);
 	}
 	
 	public function unbind() {
 		if (!ready) return;
 		
-		GL.bindFramebuffer(GL.FRAMEBUFFER, null);
+		Gfx.gl.bindFramebuffer(Gfx.gl.FRAMEBUFFER, null);
 	}
 	
 	public function draw(w:Int, h:Int, ?c:Color = null) {
-		GL.activeTexture(GL.TEXTURE0 + textureUnit);
-		GL.bindTexture(GL.TEXTURE_2D, texture);
+		Gfx.gl.activeTexture(Gfx.gl.TEXTURE0 + textureUnit);
+		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, texture);
 		
-		GL.uniform1i(Shader.current.u_Texture0, textureUnit);
-		GL.uniformMatrix4fv(Shader.current.u_camMatrix, 1, false, matrix);
+		Gfx.gl.uniform1i(Shader.current.u_Texture0, textureUnit);
+		Gfx.gl.uniformMatrix4fv(Shader.current.u_camMatrix, false, matrix);
 		
-		GL.bindBuffer(GL.ARRAY_BUFFER, buffer);
+		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, buffer);
 		
 		if (c != null) {
 			for (i in 0 ... 6) {
@@ -173,16 +173,17 @@ class Framebuffer {
 				vertices[i * 8 + 7] = c.a;
 			}
 			
-			GL.bufferData(GL.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), GL.STATIC_DRAW);
+			// Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), Gfx.gl.STATIC_DRAW);
+			Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, new Float32Array(vertices), Gfx.gl.STATIC_DRAW);
 		}
 		
-		Shader.current.setAttribute(Shader.current.a_Position, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
-		Shader.current.setAttribute(Shader.current.a_TexCoord0, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
-		Shader.current.setAttribute(Shader.current.a_Color, 4, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 4 * Float32Array.BYTES_PER_ELEMENT);
+		Shader.current.setAttribute(Shader.current.a_Position, 2, Gfx.gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
+		Shader.current.setAttribute(Shader.current.a_TexCoord0, 2, Gfx.gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+		Shader.current.setAttribute(Shader.current.a_Color, 4, Gfx.gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 4 * Float32Array.BYTES_PER_ELEMENT);
 		
-		GL.drawArrays(GL.TRIANGLES, 0, 6);
+		Gfx.gl.drawArrays(Gfx.gl.TRIANGLES, 0, 6);
 		
-		GL.bindBuffer(GL.ARRAY_BUFFER, null);
-		GL.bindTexture(GL.TEXTURE_2D, null);
+		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, null);
+		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, null);
 	}
 }

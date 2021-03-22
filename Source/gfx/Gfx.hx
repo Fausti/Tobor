@@ -1,7 +1,8 @@
 package gfx;
 
 import lime.graphics.Image;
-import lime.graphics.opengl.GL;
+import lime.graphics.WebGL2RenderContext;
+import lime.graphics.WebGLRenderContext;
 import lime.math.Matrix4;
 import lime.math.Rectangle;
 import lime.utils.Assets;
@@ -13,6 +14,8 @@ import gfx.Color;
  * @author Matthias Faust
  */
 class Gfx {
+	public static var gl:WebGLRenderContext;
+	
 	private static var _shader:Shader;
 	
 	public static var _texture:Texture;
@@ -90,7 +93,7 @@ class Gfx {
 		_texture = texture;
 		
 		texture.bind();
-		GL.uniform1i(_shader.u_Texture0, GL.TEXTURE0 + texture.textureUnit);
+		gl.uniform1i(_shader.u_Texture0, gl.TEXTURE0 + texture.textureUnit);
 	}
 	
 	public static inline function setShader(shader:Shader) {
@@ -114,13 +117,14 @@ class Gfx {
 			return;
 		}
 		
-		GL.uniformMatrix4fv(_shader.u_camMatrix, 1, false, _matrix);
-		GL.viewport(x, y, w, h);
+		// gl.uniformMatrix4fv(_shader.u_camMatrix, 1, false, _matrix);
+		gl.uniformMatrix4fv(_shader.u_camMatrix, false, _matrix);
+		gl.viewport(x, y, w, h);
 	}
 	
 	public static function clear(color:Color) {
-		GL.clearColor(color.r, color.g, color.b, color.a);
-		GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+		gl.clearColor(color.r, color.g, color.b, color.a);
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	}
 	
 	public static inline function drawTexture(x:Float, y:Float, w:Float, h:Float, rect:Rectangle, ?color:Color = null) {

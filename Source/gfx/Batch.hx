@@ -3,7 +3,6 @@ package gfx;
 import lime.utils.Float32Array;
 import lime.utils.Int16Array;
 import lime.graphics.opengl.GLBuffer;
-import lime.graphics.opengl.GL;
 
 /**
  * ...
@@ -35,31 +34,33 @@ class Batch {
 		
 		clear();
 		
-		vertexBuffer = GL.createBuffer();
-		indexBuffer = GL.createBuffer();
+		vertexBuffer = Gfx.gl.createBuffer();
+		indexBuffer = Gfx.gl.createBuffer();
 	}
 	
 	public function bind() {
-		GL.bindBuffer(GL.ARRAY_BUFFER, vertexBuffer);
+		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, vertexBuffer);
 		if (needRedraw) {
-			GL.bufferData(GL.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, getVertices(), GL.STATIC_DRAW);
+			// Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, getVertices(), Gfx.gl.STATIC_DRAW);
+			Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, getVertices(), Gfx.gl.STATIC_DRAW);
 		}
 		
 		if (isIndexed) {
-			GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, indexBuffer);
+			Gfx.gl.bindBuffer(Gfx.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 			if (needRedraw) {
-				GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, indices.length * Int16Array.BYTES_PER_ELEMENT, getIndices(), GL.STATIC_DRAW);
+				// Gfx.gl.bufferData(Gfx.gl.ELEMENT_ARRAY_BUFFER, indices.length * Int16Array.BYTES_PER_ELEMENT, getIndices(), Gfx.gl.STATIC_DRAW);
+				Gfx.gl.bufferData(Gfx.gl.ELEMENT_ARRAY_BUFFER, getIndices(), Gfx.gl.STATIC_DRAW);
 			}
 		}
 		
-		Shader.current.setAttribute(Shader.current.a_Position, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
-		Shader.current.setAttribute(Shader.current.a_TexCoord0, 2, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
-		Shader.current.setAttribute(Shader.current.a_Color, 4, GL.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 4 * Float32Array.BYTES_PER_ELEMENT);
+		Shader.current.setAttribute(Shader.current.a_Position, 2, Gfx.gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 0);
+		Shader.current.setAttribute(Shader.current.a_TexCoord0, 2, Gfx.gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
+		Shader.current.setAttribute(Shader.current.a_Color, 4, Gfx.gl.FLOAT, 8 * Float32Array.BYTES_PER_ELEMENT, 4 * Float32Array.BYTES_PER_ELEMENT);
 	}
 	
 	public function draw() {
 		if (isIndexed) {
-			GL.drawElements(GL.TRIANGLES, length, GL.UNSIGNED_SHORT, 0);
+			Gfx.gl.drawElements(Gfx.gl.TRIANGLES, length, Gfx.gl.UNSIGNED_SHORT, 0);
 		}
 		
 		needRedraw = false;

@@ -1,5 +1,6 @@
 package core;
 import lime.graphics.RenderContext;
+import lime.graphics.WebGLRenderContext;
 import lime.math.Vector2;
 import lime.system.Display;
 import lime.system.System;
@@ -7,6 +8,7 @@ import lime.ui.GamepadAxis;
 import lime.ui.GamepadButton;
 import lime.ui.MouseWheelMode;
 import lime.ui.Touch;
+import lime.utils.Log;
 
 import lime.app.Application;
 import lime.ui.Gamepad;
@@ -34,6 +36,8 @@ class LimeApplication extends Application {
 	override public function onWindowCreate():Void {
 		switch(this.window.context.type) {
 			case OPENGL, OPENGLES, WEBGL:
+				trace(window.context.type + " " + window.context.version);
+				Gfx.gl = window.context.webgl;
 				init();
 				
 			default:
@@ -66,7 +70,10 @@ class LimeApplication extends Application {
 		
 		switch(window.context.type) {
 			case OPENGL, OPENGLES, WEBGL:
-				if (game != null) game.__render();
+				if (game != null) {
+					Gfx.gl = window.context.webgl;
+					game.__render();
+				}
 				
 			default:
 		}

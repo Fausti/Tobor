@@ -1,6 +1,5 @@
 package gfx;
 
-import lime.graphics.opengl.GL;
 import lime.graphics.Image;
 import lime.graphics.opengl.GLTexture;
 import lime.math.Rectangle;
@@ -31,21 +30,21 @@ class Texture {
 	public var data:UInt8Array = null;
 	
 	public function new(?textureUnit:Int = 0) {
-		handle = GL.createTexture();
+		handle = Gfx.gl.createTexture();
 		
 		this.textureUnit = textureUnit;
 	}
 	
 	public function bind() {
-		GL.activeTexture(GL.TEXTURE0 + textureUnit);
-		GL.bindTexture(GL.TEXTURE_2D, handle);
+		Gfx.gl.activeTexture(Gfx.gl.TEXTURE0 + textureUnit);
+		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, handle);
 	}
 	
 	public function prepare() {
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
-		GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_WRAP_S, Gfx.gl.CLAMP_TO_EDGE);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_WRAP_T, Gfx.gl.CLAMP_TO_EDGE);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_MAG_FILTER, Gfx.gl.NEAREST);
+		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_MIN_FILTER, Gfx.gl.NEAREST);
 	}
 	
 	public function createFromImage(img:Image) {
@@ -56,9 +55,9 @@ class Texture {
 		prepare();
 		
 		#if js
-			GL.texImage2D (GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, GL.UNSIGNED_BYTE, img.src);
+			Gfx.gl.texImage2D (Gfx.gl.TEXTURE_2D, 0, Gfx.gl.RGBA, Gfx.gl.RGBA, Gfx.gl.UNSIGNED_BYTE, img.src);
 		#else
-			GL.texImage2D (GL.TEXTURE_2D, 0, GL.RGBA, img.buffer.width, img.buffer.height, 0, GL.RGBA, GL.UNSIGNED_BYTE, img.data);
+			Gfx.gl.texImage2D (Gfx.gl.TEXTURE_2D, 0, Gfx.gl.RGBA, img.buffer.width, img.buffer.height, 0, Gfx.gl.RGBA, Gfx.gl.UNSIGNED_BYTE, img.data);
 		#end
 	}
 	
@@ -87,7 +86,7 @@ class Texture {
 	public function update() {
 		if (data == null) return;
 		
-		GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, _width, _height, 0, GL.RGBA, GL.UNSIGNED_BYTE, data);
+		Gfx.gl.texImage2D(Gfx.gl.TEXTURE_2D, 0, Gfx.gl.RGBA, _width, _height, 0, Gfx.gl.RGBA, Gfx.gl.UNSIGNED_BYTE, data);
 	}
 	
 	public function setPixel(x:Int, y:Int, c:Color) {
