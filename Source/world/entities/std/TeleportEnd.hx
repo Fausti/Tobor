@@ -66,7 +66,7 @@ class TeleportEnd extends EntityStatic implements IContainer {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) return true;
 		
 		return super.canEnter(e, direction, speed);
 	}

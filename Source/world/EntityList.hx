@@ -54,19 +54,19 @@ class EntityList {
 			listAll.push(e);
 		}
 		
-		if (Std.is(e, EntityDynamic)) {
+		if (Std.isOfType(e, EntityDynamic)) {
 			if (listTicking.indexOf(e) == -1) {
 				listTicking.push(e);
 			}
 		}
 		
-		if (Std.is(e, IElectric)) {
+		if (Std.isOfType(e, IElectric)) {
 			if (listElectric.indexOf(e) == -1) {
 				listElectric.push(e);
 			}
 		}
 		
-		if (Std.is(e, EntityAI)) {
+		if (Std.isOfType(e, EntityAI)) {
 			if (listAI.indexOf(e) == -1) {
 				listAI.push(e);
 			}
@@ -96,13 +96,13 @@ class EntityList {
 	
 	public function removeState(cl:Dynamic) {
 		for (e in listAll) {
-			if (Std.is(e, cl)) {
+			if (Std.isOfType(e, cl)) {
 				remove(e);
 			}
 		}
 		
 		for (e in listState) {
-			if (Std.is(e, cl)) {
+			if (Std.isOfType(e, cl)) {
 				listState.remove(e);
 			}
 		}
@@ -117,7 +117,7 @@ class EntityList {
 			});
 		} else {
 			listTarget = listAll.filter(function(e):Bool {
-				return e.gridX == Std.int(x) && e.gridY == Std.int(y) && !Std.is(e, withoutType);
+				return e.gridX == Std.int(x) && e.gridY == Std.int(y) && !Std.isOfType(e, withoutType);
 			});
 		}
 		
@@ -152,7 +152,7 @@ class EntityList {
 		for (e in listAll) {
 			if (e != null) {
 				// Explosionen und Kugeln werden nicht gesichtert!
-				if (!Std.is(e, Bullet) && !Std.is(e, Explosion)) listState.push(e.clone());
+				if (!Std.isOfType(e, Bullet) && !Std.isOfType(e, Explosion)) listState.push(e.clone());
 			}
 		}
 	}

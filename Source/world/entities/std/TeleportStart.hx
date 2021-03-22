@@ -81,7 +81,7 @@ class TeleportStart extends EntityStatic implements IContainer {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (content != null) {
 				switch(type) {
 					case 0:
@@ -94,13 +94,13 @@ class TeleportStart extends EntityStatic implements IContainer {
 			return true;
 		}
 		
-		if (Std.is(e, EntityAI)) return true;
+		if (Std.isOfType(e, EntityAI)) return true;
 		
 		return super.canEnter(e, direction, speed);
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			
 			if (content == null) {
 				getWorld().teleportFrom(this);

@@ -296,12 +296,12 @@ class Robot extends EntityAI implements IEnemy {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Android)) return true;
-		if (Std.is(e, Charlie)) return true;
-		if (Std.is(e, Doppelganger)) return true;
-		if (Std.is(e, ElectricFence)) return true;
+		if (Std.isOfType(e, Android)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
+		if (Std.isOfType(e, Doppelganger)) return true;
+		if (Std.isOfType(e, ElectricFence)) return true;
 		
-		if (Std.is(e, Robot)) {
+		if (Std.isOfType(e, Robot)) {
 			if (Utils.chance(10)) return true;
 		}
 		
@@ -311,7 +311,7 @@ class Robot extends EntityAI implements IEnemy {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.isOfType(e, Robot) || Std.isOfType(e, Android)) {
 			// e.die();
 			if (Utils.chance(5)) stress = stress + 1;
 		}

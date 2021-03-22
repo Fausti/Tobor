@@ -21,11 +21,11 @@ class BedrockPath extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
-		if (Std.is(e, EntityAI)) return true;
+		if (Std.isOfType(e, EntityAI)) return true;
 		
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
-		if (Std.is(e, EntityCollectable)) return true;
+		if (Std.isOfType(e, EntityCollectable)) return true;
 		
 		return false;
 	}

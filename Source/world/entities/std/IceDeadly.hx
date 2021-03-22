@@ -16,7 +16,7 @@ class IceDeadly extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, Robot) || Std.isOfType(e, Android)) {
 			return true;
 		}
 		
@@ -26,7 +26,7 @@ class IceDeadly extends EntityFloor {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (!e.alive || !e.visible) return;
 		
-		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, Robot) || Std.isOfType(e, Android)) {
 			e.die();
 		}
 	}

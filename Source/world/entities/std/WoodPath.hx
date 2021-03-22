@@ -27,13 +27,13 @@ class WoodPath extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
-		if (Std.is(e, EntityAI)) return true;
+		if (Std.isOfType(e, EntityAI)) return true;
 		
-		if (Std.is(e, Charlie) && getInventory().hasItem("OBJ_SHOES")) return true;
+		if (Std.isOfType(e, Charlie) && getInventory().hasItem("OBJ_SHOES")) return true;
 		
-		if (Std.is(e, EntityCollectable)) return true;
+		if (Std.isOfType(e, EntityCollectable)) return true;
 		
-		if (Std.is(e, ElectricFence)) return true;
+		if (Std.isOfType(e, ElectricFence)) return true;
 		
 		return false;
 	}

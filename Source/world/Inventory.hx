@@ -267,7 +267,7 @@ class Inventory {
 				e.content = item.content;
 				e.setRoom(world.room);
 		
-				if (!Std.is(e, EntityItem)) {
+				if (!Std.isOfType(e, EntityItem)) {
 					trace("Item is not an item!");
 					return;
 				}

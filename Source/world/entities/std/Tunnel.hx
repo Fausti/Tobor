@@ -26,19 +26,19 @@ class Tunnel extends EntityFloor {
 	
 	override function canCombine(e:Entity, ?reverse:Bool = false):Bool {
 		var cl = Type.getClass(this);
-		var sameClass = Std.is(e, cl);
+		var sameClass = Std.isOfType(e, cl);
 		
 		if (sameClass) return false;
 		
-		if (!sameClass && Std.is(e, Sand)) {
+		if (!sameClass && Std.isOfType(e, Sand)) {
 			return true;
-		} else if (!sameClass && Std.is(e, Grass)) {
+		} else if (!sameClass && Std.isOfType(e, Grass)) {
 			return true;
-		} else if (!sameClass && Std.is(e, Path)) {
+		} else if (!sameClass && Std.isOfType(e, Path)) {
 			return true;
-		} else if (!sameClass && Std.is(e, Water)) {
+		} else if (!sameClass && Std.isOfType(e, Water)) {
 			return true;
-		} else if (!sameClass && Std.is(e, MountainPath)) {
+		} else if (!sameClass && Std.isOfType(e, MountainPath)) {
 			return true;
 		}
 		
@@ -47,27 +47,27 @@ class Tunnel extends EntityFloor {
 	
 	override function doCombine(e:Entity, ?reverse:Bool = false) {
 		var cl = Type.getClass(this);
-		var sameClass = Std.is(e, cl);
+		var sameClass = Std.isOfType(e, cl);
 		
 		var newType:Int = -1;
 		var newSubType:Int = -1;
 		
 		if (sameClass) return;
 		
-		if (!sameClass && Std.is(e, Water)) {
+		if (!sameClass && Std.isOfType(e, Water)) {
 			switch(e.type) {
 				case 0:
 					newSubType = 16;
 				case 1:
 					newSubType = 17;
 			}
-		} else if (!sameClass && Std.is(e, Sand)) {
+		} else if (!sameClass && Std.isOfType(e, Sand)) {
 			newSubType = 1;
-		} else if (!sameClass && Std.is(e, Grass)) {
+		} else if (!sameClass && Std.isOfType(e, Grass)) {
 			newSubType = 5;
-		} else if (!sameClass && Std.is(e, Path)) {
+		} else if (!sameClass && Std.isOfType(e, Path)) {
 			newSubType = 10;
-		} else if (!sameClass && Std.is(e, MountainPath)) {
+		} else if (!sameClass && Std.isOfType(e, MountainPath)) {
 			newSubType = 18;
 		}
 		
@@ -81,13 +81,13 @@ class Tunnel extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (!Std.is(e, Charlie)) return;
+		if (!Std.isOfType(e, Charlie)) return;
 		
 		var walkSpeed:Float = 4;
 		

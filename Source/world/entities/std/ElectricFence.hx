@@ -34,14 +34,14 @@ class ElectricFence extends EntityPushable implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
-			if (Std.is(e, Robot)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) {
+			if (Std.isOfType(e, Robot)) {
 				// steht Charlie auf dem Zaun?
 				if (getPlayer().gridX == x && getPlayer().gridY == y) return true;
 				
 				// ... Roboter haben Hemmungen in den Zaun zu laufen!
 				if (Utils.chance(85)) return false;
-			} else if (Std.is(e, Android)) {
+			} else if (Std.isOfType(e, Android)) {
 				return false;
 			}
 			
@@ -53,10 +53,10 @@ class ElectricFence extends EntityPushable implements IElectric {
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (type == 0) {
-			if (Std.is(e, EntityAI)) {
+			if (Std.isOfType(e, EntityAI)) {
 				e.die();
 				die();
-			} else if (Std.is(e, Charlie)) {
+			} else if (Std.isOfType(e, Charlie)) {
 				if (!getPlayer().hasOverall()) {
 					
 					if (getWorld().checkFirstUse("KILLED_BY_EFENCE")) {

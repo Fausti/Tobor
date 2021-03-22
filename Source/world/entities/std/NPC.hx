@@ -114,7 +114,7 @@ class NPC extends EntityAI implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
 		return false;
 	}
@@ -122,7 +122,7 @@ class NPC extends EntityAI implements IElectric {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (!e.alive) return;
 		if (!e.visible) return;
-		if (!Std.is(e, Charlie)) return;
+		if (!Std.isOfType(e, Charlie)) return;
 		
 		if (timeLeft == 0.0) {
 			if (flag != Marker.MARKER_NO) {

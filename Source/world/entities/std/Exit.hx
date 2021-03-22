@@ -44,7 +44,7 @@ class Exit extends EntityDynamic {
 		if (room.treeTimer > 0.0) return true;
 		if (room.robots != 0) return false;
 		
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) return true;
 		
 		return false;
 	}

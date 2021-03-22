@@ -18,7 +18,7 @@ class Plant extends EntityStatic {
 	}
 
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (getInventory().hasItem("OBJ_SICKLE")) return true;
 		}
 		
@@ -26,7 +26,7 @@ class Plant extends EntityStatic {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (getInventory().hasItem("OBJ_SICKLE")) {
 				if (Utils.chance(25)) spawnPlants();
 				die();

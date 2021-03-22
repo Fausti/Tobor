@@ -63,7 +63,7 @@ class Bullet extends EntityDynamic {
 				var will_die:Bool = false;
 				
 				for (ai in ais) {
-					if (Std.is(ai, Scorpion)) {
+					if (Std.isOfType(ai, Scorpion)) {
 						if (ai.type > 0) {
 							ai.die();
 							will_die = true;
@@ -192,69 +192,69 @@ class Bullet extends EntityDynamic {
 	function onHit(other:Entity, direction:Vector2) {
 		if (!alive) return;
 		
-		if (Std.is(other, Bullet)) {
+		if (Std.isOfType(other, Bullet)) {
 			
-		} else if (Std.is(other, Isolator)) {
+		} else if (Std.isOfType(other, Isolator)) {
 			other.canEnter(this, direction, (BULLET_SPEED));
 			die();
-		} else if (Std.is(other, IceBlock)) {
+		} else if (Std.isOfType(other, IceBlock)) {
 			other.canEnter(this, direction, (BULLET_SPEED));
 			die();
-		} else if (Std.is(other, Tunnel)) {
+		} else if (Std.isOfType(other, Tunnel)) {
 			die();
-		} else if (Std.is(other, ElectricFence)) {
+		} else if (Std.isOfType(other, ElectricFence)) {
 			other.die();
 			die();
 			
 			room.spawnEntity(x, y, new Explosion());
 			Sound.play(Sound.SND_EXPLOSION_ROBOT);
-		} else if (Std.is(other, Skull)) {
+		} else if (Std.isOfType(other, Skull)) {
 			other.die();
 			die();
 			
 			room.spawnEntity(x, y, new Explosion());
 			Sound.play(Sound.SND_EXPLOSION_ROBOT);
-		} else if (Std.is(other, Scorpion)) {
+		} else if (Std.isOfType(other, Scorpion)) {
 			if (other.type > 0) {
 				other.die();
 				die();
 			}
-		} else if (Std.is(other, EntityAI)) {
+		} else if (Std.isOfType(other, EntityAI)) {
 			if (alive) {
 				other.die();
 				die();
 			}
-		} else if (Std.is(other, Munition) || Std.is(other, Explosion) || Std.is(other, Grate)) {
+		} else if (Std.isOfType(other, Munition) || Std.isOfType(other, Explosion) || Std.isOfType(other, Grate)) {
 			// Nüscht...
-		} else if (Std.is(other, Water) || Std.is(other, WaterDeadly) || Std.is(other, WaterIsolator)) {
+		} else if (Std.isOfType(other, Water) || Std.isOfType(other, WaterDeadly) || Std.isOfType(other, WaterIsolator)) {
 			if (other.subType > 0) {
 				if (!other.canEnterSubType(this, direction, Bullet.BULLET_SPEED)) {
 					die();
 				}
 			}
-		} else if (Std.is(other, Wall)) {
+		} else if (Std.isOfType(other, Wall)) {
 			die();
-		} else if (Std.is(other, Cave)) {
+		} else if (Std.isOfType(other, Cave)) {
 			die();
-		} else if (Std.is(other, Bedrock)) {
+		} else if (Std.isOfType(other, Bedrock)) {
 			die();
-		} else if (Std.is(other, Mountain)) {
+		} else if (Std.isOfType(other, Mountain)) {
 			die();
-		} else if (Std.is(other, Wood)) {
+		} else if (Std.isOfType(other, Wood)) {
 			die();
-		} else if (Std.is(other, EntityFloor)) {
+		} else if (Std.isOfType(other, EntityFloor)) {
 			if (other.subType > 0) {
 				if (!other.canEnterSubType(this, direction, Bullet.BULLET_SPEED)) {
 					die();
 				}
 			}
-		} else if (Std.is(other, Target)) {
+		} else if (Std.isOfType(other, Target)) {
 			if (other.flag != Marker.MARKER_NO) {
 				room.switchStatus(other.flag);
 			}
 			
 			die();
-		} else if (Std.is(other, Mirror)) {
+		} else if (Std.isOfType(other, Mirror)) {
 			var bullet:Bullet = new Bullet();
 			room.spawnEntity(x, y, bullet);
 			
@@ -270,7 +270,7 @@ class Bullet extends EntityDynamic {
 			bullet.move(newDir, (Bullet.BULLET_SPEED));
 				
 			die();
-		} else if (Std.is(other, AndroidEgg)) {
+		} else if (Std.isOfType(other, AndroidEgg)) {
 			room.spawnEntity(other.x, other.y, new Explosion());
 			var rob:Robot = new Robot();
 			room.spawnEntity(other.x, other.y, rob);
@@ -283,7 +283,7 @@ class Bullet extends EntityDynamic {
 	}
 	
 	function onFallDown(other:Entity) {
-		if (Std.is(other, Munition)) {
+		if (Std.isOfType(other, Munition)) {
 			if (other.type < 5) {
 				other.type++;
 			} else {

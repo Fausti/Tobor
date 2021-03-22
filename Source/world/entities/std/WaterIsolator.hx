@@ -20,7 +20,7 @@ class WaterIsolator extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, Isolator) || Std.is(e, EntityAI)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, Isolator) || Std.isOfType(e, EntityAI)) {
 			return true;
 		}
 		

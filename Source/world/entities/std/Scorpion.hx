@@ -103,7 +103,7 @@ class Scorpion extends EntityAI implements IEnemy {
 			var onSand:Bool = false;
 			
 			for (e in room.getAllEntitiesAt(x, y, this)) {
-				if (Std.is(e, Sand)) onSand = true;
+				if (Std.isOfType(e, Sand)) onSand = true;
 			}
 			
 			if (onSand) {
@@ -149,11 +149,11 @@ class Scorpion extends EntityAI implements IEnemy {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Android)) return true;
-		if (Std.is(e, Charlie)) return true;
-		if (Std.is(e, ElectricFence)) return true;
+		if (Std.isOfType(e, Android)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
+		if (Std.isOfType(e, ElectricFence)) return true;
 		
-		if (Std.is(e, Robot)) {
+		if (Std.isOfType(e, Robot)) {
 			if (Utils.chance(10)) return true;
 		}
 		
@@ -163,7 +163,7 @@ class Scorpion extends EntityAI implements IEnemy {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Robot) || Std.is(e, Android) || Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Robot) || Std.isOfType(e, Android) || Std.isOfType(e, Charlie)) {
 			e.die();
 			// if (Utils.chance(5)) stress = stress + 1;
 		}

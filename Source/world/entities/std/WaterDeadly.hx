@@ -53,13 +53,13 @@ class WaterDeadly extends EntityDynamic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Shark)) return true;
+		if (Std.isOfType(e, Shark)) return true;
 		
-		return Std.is(e, Charlie);
+		return Std.isOfType(e, Charlie);
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie) && e.visible) {
+		if (Std.isOfType(e, Charlie) && e.visible) {
 			// "Wasserwandeln"
 			if (getWorld().checkRingEffect(1)) return;
 			

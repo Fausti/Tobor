@@ -61,7 +61,7 @@ class Entity {
 		alive = false;
 		
 		// dynamische Objekte werden durch Room.update() gelöscht
-		if (Std.is(this, EntityStatic)) room.removeEntity(this);
+		if (Std.isOfType(this, EntityStatic)) room.removeEntity(this);
 	}
 	
 	inline function hasData(data:Dynamic, id:String):Bool {
@@ -317,13 +317,13 @@ class Entity {
 	// Water
 	
 	public function setDrift(f:Int) {
-		if (Std.is(this, Water)) this.drift = f;
+		if (Std.isOfType(this, Water)) this.drift = f;
 	}
 	
 	// Electric stuff
 	
 	public function setMarker(f:Int) {
-		if (Std.is(this, IElectric)) {
+		if (Std.isOfType(this, IElectric)) {
 			this.flag = f;
 			onSetMarker(f);
 		}
@@ -336,7 +336,7 @@ class Entity {
 	// Content
 	
 	public function setContent(s:String) {
-		if (Std.is(this, IContainer)) {
+		if (Std.isOfType(this, IContainer)) {
 			this.content = s;
 			onSetContent(s);
 		}
@@ -415,29 +415,29 @@ class Entity {
 	
 	function checkCombine(e:Entity, ?reverse:Bool = false):Bool {
 		var cl = Type.getClass(this);
-		var sameClass = Std.is(e, cl);
+		var sameClass = Std.isOfType(e, cl);
 		
 		if (sameClass) return true;
 		
-		if (!sameClass && Std.is(e, Sand)) {
+		if (!sameClass && Std.isOfType(e, Sand)) {
 			if (!reverse) return true;
 			if (e.isHalfTile()) return true;
-		} else if (!sameClass && Std.is(e, Wood)) {
+		} else if (!sameClass && Std.isOfType(e, Wood)) {
 			if (!reverse) return true;
 			if (e.isHalfTile()) return true;
-		} else if (!sameClass && Std.is(e, Grass)) {
+		} else if (!sameClass && Std.isOfType(e, Grass)) {
 			if (!reverse) return true;
-		} else if (!sameClass && Std.is(e, MountainPath)) {
+		} else if (!sameClass && Std.isOfType(e, MountainPath)) {
 			if (!reverse) return true;
-		} else if (!sameClass && Std.is(e, Mountain)) {
-			if (!reverse) return true;
-			if (e.isHalfTile()) return true;
-		} else if (!sameClass && Std.is(e, Path)) {
-			if (!reverse) return true;
-		} else if (!sameClass && Std.is(e, Wall)) {
+		} else if (!sameClass && Std.isOfType(e, Mountain)) {
 			if (!reverse) return true;
 			if (e.isHalfTile()) return true;
-		} else if (!sameClass && Std.is(e, Water)) {
+		} else if (!sameClass && Std.isOfType(e, Path)) {
+			if (!reverse) return true;
+		} else if (!sameClass && Std.isOfType(e, Wall)) {
+			if (!reverse) return true;
+			if (e.isHalfTile()) return true;
+		} else if (!sameClass && Std.isOfType(e, Water)) {
 			if (!reverse) return true;
 			if (e.isHalfTile()) return true;
 		}
@@ -447,7 +447,7 @@ class Entity {
 	
 	function combine(e:Entity, ?reverse:Bool = false) {
 		var cl = Type.getClass(this);
-		var sameClass = Std.is(e, cl);
+		var sameClass = Std.isOfType(e, cl);
 		
 		var newType:Int = -1;
 		var newSubType:Int = -1;
@@ -463,7 +463,7 @@ class Entity {
 			if (!isHalfTile()) return;
 		}
 		
-		if (!sameClass && Std.is(e, Water)) {
+		if (!sameClass && Std.isOfType(e, Water)) {
 			if (reverse) newType = fixType(e);
 			
 			switch(e.type) {
@@ -472,11 +472,11 @@ class Entity {
 				case 1:
 					newSubType = 17;
 			}
-		} else if (!sameClass && Std.is(e, Sand)) {
+		} else if (!sameClass && Std.isOfType(e, Sand)) {
 			if (reverse) newType = fixType(e);
 			
 			newSubType = 1;
-		} else if (!sameClass && Std.is(e, Wood)) {
+		} else if (!sameClass && Std.isOfType(e, Wood)) {
 			if (reverse) newType = fixType(e);
 			
 			switch(e.type) {
@@ -489,11 +489,11 @@ class Entity {
 			default:
 				newSubType = 2 + Std.random(3);
 			}
-		} else if (!sameClass && Std.is(e, Grass)) {
+		} else if (!sameClass && Std.isOfType(e, Grass)) {
 			newSubType = 5;
-		} else if (!sameClass && Std.is(e, MountainPath)) {
+		} else if (!sameClass && Std.isOfType(e, MountainPath)) {
 			newSubType = 18;
-		} else if (!sameClass && Std.is(e, Mountain)) {
+		} else if (!sameClass && Std.isOfType(e, Mountain)) {
 			if (reverse) newType = fixType(e);
 			
 			switch(e.type) {
@@ -508,9 +508,9 @@ class Entity {
 				default:
 					newSubType = 6 + Std.random(4);
 			}
-		} else if (!sameClass && Std.is(e, Path)) {
+		} else if (!sameClass && Std.isOfType(e, Path)) {
 			newSubType = 10;
-		} else if (!sameClass && Std.is(e, Wall)) {
+		} else if (!sameClass && Std.isOfType(e, Wall)) {
 			if (reverse) newType = fixType(e);
 			
 			switch(e.type) {

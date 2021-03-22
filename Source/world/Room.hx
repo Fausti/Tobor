@@ -95,7 +95,7 @@ class Room {
 		// Anzahl lebender Roboter
 		robots = 0;
 		for (e in entities.getTicking()) {
-			if (Std.is(e, Robot) || Std.is(e, Android)) robots++;
+			if (Std.isOfType(e, Robot) || Std.isOfType(e, Android)) robots++;
 		}
 		
 		for (e in entities.getTicking()) {
@@ -124,7 +124,7 @@ class Room {
 			//var atPlayerPos:Array<Entity> = findEntityAt(world.player.x, world.player.y, EntityRoof);
 			var atPlayerPos:Array<Entity> = getCollisionsAt(world.player.x, world.player.y);
 			for (e in atPlayerPos) {
-				if (Std.is(e, EntityRoof)) {
+				if (Std.isOfType(e, EntityRoof)) {
 					if (world.player.gridX == e.gridX && world.player.gridY == e.gridY) {
 						underRoof = true;
 						underRoofOld = underRoof;
@@ -262,7 +262,7 @@ class Room {
 	}
 	
 	public function addEntity(e:Entity) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			trace("Player shouldn't added to rooms!");
 			return;
 		}
@@ -275,7 +275,7 @@ class Room {
 	}
 	
 	public function addEntityState(e:Entity) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			trace("Player shouldn't added to rooms!");
 			return;
 		}
@@ -314,7 +314,7 @@ class Room {
 		var listTarget:Array<Entity> = entities.getAt(x, y, without, withoutType);
 		
 		var remTarget:Array<Entity> = listTarget.filter(function (e) {
-			if (!Std.is(e, EntityRoof)) return true; return false;
+			if (!Std.isOfType(e, EntityRoof)) return true; return false;
 		});
 				
 		if (world.player.gridX == x && world.player.gridY == y) remTarget.push(world.player);
@@ -331,7 +331,7 @@ class Room {
 		
 		if (withType != null) {
 			var remTarget:Array<Entity> = listTarget.filter(function (e) {
-				if (Std.is(e, withType)) return true; return false;
+				if (Std.isOfType(e, withType)) return true; return false;
 			});
 			
 			listTarget = remTarget;
@@ -344,7 +344,7 @@ class Room {
 		var listTarget:Array<Entity> = [];
 		
 		for (e in entities.getAll()) {
-			if (Std.is(e, cl)) listTarget.push(e);
+			if (Std.isOfType(e, cl)) listTarget.push(e);
 		}
 		
 		return listTarget;
@@ -354,7 +354,7 @@ class Room {
 		var listTarget:Array<Entity> = [];
 		
 		for (e in entities.getState()) {
-			if (Std.is(e, cl)) listTarget.push(e);
+			if (Std.isOfType(e, cl)) listTarget.push(e);
 		}
 		
 		return listTarget;
@@ -372,10 +372,10 @@ class Room {
 	
 	public function findEntityAt(x:Float, y:Float, cl:Dynamic):Array<Entity> {
 		var listTarget:Array<Entity> = entities.getAll().filter(function(e):Bool {
-			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive && Std.is(e, cl);
+			return e.gridX == Std.int(x) && e.gridY == Std.int(y) && e.alive && Std.isOfType(e, cl);
 		});
 		
-		if (Std.is(world.player, cl)) {
+		if (Std.isOfType(world.player, cl)) {
 			if (world.player.gridX == x && world.player.gridY == y) listTarget.push(world.player);
 		}
 		
@@ -512,7 +512,7 @@ class Room {
 		
 		for (e in entities.getState()) {
 			if (e != null) {
-				if (!Std.is(e, Charlie)) {
+				if (!Std.isOfType(e, Charlie)) {
 					if (e.canSave()) {
 						data.push(e.saveData());
 					}
@@ -540,7 +540,7 @@ class Room {
 	public function findStartPosition():ActionTarget {
 		if (saveData == null) {
 			for (e in entities.getState()) {
-				if (Std.is(e, StartPosition)) {
+				if (Std.isOfType(e, StartPosition)) {
 					var at:ActionTarget = new ActionTarget();
 					at.gridX = Std.int(e.x);
 					at.gridY = Std.int(e.y);
@@ -568,7 +568,7 @@ class Room {
 	// Treppe im geladenen Raum suchen...
 	function findStairsOld(stairsX:Int, stairsY:Int, stairsType:Int):Entity {
 		for (e in entities.getState()) {
-			if (Std.is(e, Stairs)) {
+			if (Std.isOfType(e, Stairs)) {
 				if (e.type == stairsType && e.gridX == stairsX && e.gridY == stairsY) {
 					return e;
 				}

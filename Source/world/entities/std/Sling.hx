@@ -17,7 +17,7 @@ class Sling extends EntityItem {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (room.world.inventory.hasGroup("OBJ_MUNITION")) {
 				room.world.inventory.removeMunition(1);
 				

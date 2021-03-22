@@ -22,7 +22,7 @@ class Dealer extends NPC implements IContainer {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (!e.alive) return;
 		if (!e.visible) return;
-		if (!Std.is(e, Charlie)) return;
+		if (!Std.isOfType(e, Charlie)) return;
 		
 		if (timeLeft == 0.0) {
 			if (content != null) {

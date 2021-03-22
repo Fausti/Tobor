@@ -68,7 +68,7 @@ class Doppelganger extends EntityAI {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) return true;
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, Robot) || Std.isOfType(e, Android)) return true;
 		
 		return false;
 	}
@@ -76,7 +76,7 @@ class Doppelganger extends EntityAI {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.isOfType(e, Robot) || Std.isOfType(e, Android)) {
 			// e.die();
 			die();
 		}

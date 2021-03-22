@@ -44,13 +44,13 @@ class Stairs extends EntityStatic {
 	}
 
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) return true;
 		
 		return super.canEnter(e, direction, speed);
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (!e.visible) return;
 			
 			switch(type) {

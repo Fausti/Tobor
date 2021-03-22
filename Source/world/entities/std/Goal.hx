@@ -36,13 +36,13 @@ class Goal extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
 		return super.canEnter(e, direction, speed);
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			getWorld().checkWinCondition();
 		}
 	}

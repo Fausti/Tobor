@@ -37,9 +37,9 @@ class Ice extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, ElectricFence)) return true;
+		if (Std.isOfType(e, ElectricFence)) return true;
 		
-		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, Robot) || Std.isOfType(e, Android)) {
 			var canMove:Bool = true;
 			var onMe = room.getAllEntitiesAt(x, y, this);
 			
@@ -56,7 +56,7 @@ class Ice extends EntityFloor {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (!e.alive || !e.visible) return;
 		
-		if (Std.is(e, Charlie) || Std.is(e, Robot) || Std.is(e, Android)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, Robot) || Std.isOfType(e, Android)) {
 			if (room.getAllEntitiesAt(x, y, e, EntityStatic).length > 1) {
 				return;
 			}
@@ -65,11 +65,11 @@ class Ice extends EntityFloor {
 			var canMove:Bool = false;
 
 			var spd:Float = 0;
-			if (Std.is(e, Charlie)) {
+			if (Std.isOfType(e, Charlie)) {
 				spd = Charlie.PLAYER_SPEED;
-			} else if (Std.is(e, Robot)) {
+			} else if (Std.isOfType(e, Robot)) {
 				spd = Robot.SPEED;
-			} else if (Std.is(e, Android)) {
+			} else if (Std.isOfType(e, Android)) {
 				spd = Android.SPEED;
 			}
 			

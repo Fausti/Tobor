@@ -22,22 +22,22 @@ class Door extends EntityStatic {
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
 		// Charlie nur mit Schlüssel
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			return room.world.inventory.hasItem("OBJ_KEY#" + type);
 		}
 		
 		// Roboter nur wenn Charlie AUF der Tür steht
-		if (Std.is(e, Robot)) {
+		if (Std.isOfType(e, Robot)) {
 			if (getPlayer().gridX == gridX && getPlayer().gridY == gridY) return true;
 		}
 		
-		if (Std.is(e, Android)) return true;
+		if (Std.isOfType(e, Android)) return true;
 		
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie) && e.visible) {
+		if (Std.isOfType(e, Charlie) && e.visible) {
 			if (room.world.inventory.hasItem("OBJ_KEY#" + type)) {
 				Sound.play(Sound.SND_OPEN_DOOR);
 			
@@ -53,7 +53,7 @@ class Door extends EntityStatic {
 			return;
 		}
 		
-		if (Std.is(e, Android)) {
+		if (Std.isOfType(e, Android)) {
 			if (getPlayer().visible) Sound.play(Sound.SND_OPEN_DOOR);
 			return;
 		}

@@ -558,7 +558,7 @@ class ObjectFactory {
 		
 		if (d == null) d = {};
 		
-		if (Std.is(c, String)) {
+		if (Std.isOfType(c, String)) {
 			_class = cast Type.resolveClass(c);
 			
 			if (_class == null) {
@@ -576,9 +576,9 @@ class ObjectFactory {
 		// Objekte nach Typ filtern...
 		var e = Type.createEmptyInstance(_class);
 		if (e != null) {
-			if (Std.is(e, EntityItem)) {
+			if (Std.isOfType(e, EntityItem)) {
 				listItems.push(ot);
-			} else if (Std.is(e, EntityFloor)) {
+			} else if (Std.isOfType(e, EntityFloor)) {
 				listFloors.push(ot);
 			}
 		}
@@ -631,7 +631,7 @@ class ObjectFactory {
 	public function create(id:Dynamic):Entity {
 		var oe:ObjectTemplate;
 		
-		if (Std.is(id, String)) {
+		if (Std.isOfType(id, String)) {
 			oe = list.get(id);
 		} else {
 			oe = get(cast id);
@@ -691,7 +691,7 @@ class ObjectTemplate {
 		
 		var e = Type.createEmptyInstance(c);
 		if (e != null) {
-			if (Std.is(e, EntityItem)) {
+			if (Std.isOfType(e, EntityItem)) {
 				var temp:String = GetText.get(id + "_DESC");
 				temp = GetText.get(id.split("#")[0] + "_PICKUP");
 			}

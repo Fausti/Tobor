@@ -32,19 +32,19 @@ class Sand extends EntityFloor {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) return true;
-		if (Std.is(e, EntityCollectable)) return true;
-		if (Std.is(e, ElectricFence)) return true;
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) return true;
+		if (Std.isOfType(e, EntityCollectable)) return true;
+		if (Std.isOfType(e, ElectricFence)) return true;
 		
 		return false;
 	}
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
 		// Wenn Ring#2 im Inventar und Ringeffekte aktiv, keine Verlangsamung
-		if (getWorld().checkRingEffect(3) && Std.is(e, Charlie)) return;
+		if (getWorld().checkRingEffect(3) && Std.isOfType(e, Charlie)) return;
 		
 		// Wenn Nahrungstimer aktiv, keine Verlangsamung
-		if (getWorld().food > 0 && Std.is(e, Charlie)) return;
+		if (getWorld().food > 0 && Std.isOfType(e, Charlie)) return;
 		
 		var ee:EntityMoveable = cast e;
 		ee.changeSpeed((speed) / 2);

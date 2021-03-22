@@ -517,7 +517,7 @@ class EditorScreen extends PlayScreen {
 		if (!editMode) {
 			renderStatusLine();
 		} else {
-			if (dialog == null || Std.is(dialog, DialogMenu)) {
+			if (dialog == null || Std.isOfType(dialog, DialogMenu)) {
 				renderMenuBar();
 			}
 		}
@@ -1036,7 +1036,7 @@ class EditorScreen extends PlayScreen {
 	function addEntity(e:Entity, template:ObjectTemplate) {
 		changed = true;
 		
-		if (Std.is(e, EntityItem)) {
+		if (Std.isOfType(e, EntityItem)) {
 			var container:Array<Entity> = game.world.room.findEntityAt(e.x, e.y, IContainer);
 			if (container.length > 0) {
 				for (ce in container) {
@@ -1057,7 +1057,7 @@ class EditorScreen extends PlayScreen {
 			if (o.z == e.z) {
 				if (!autoTiling) return;
 				else {
-					if (!Std.is(o, template.classPath)) return;
+					if (!Std.isOfType(o, template.classPath)) return;
 					else {
 						game.world.room.removeEntity(o);
 					}
@@ -1065,7 +1065,7 @@ class EditorScreen extends PlayScreen {
 			}
 		}
 		
-		if (Std.is(e, StartPosition)) {
+		if (Std.isOfType(e, StartPosition)) {
 			game.world.clearStartPositions();
 		}
 		

@@ -17,9 +17,9 @@ class Isolator extends EntityPushable {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, IceBlock)) return false;
+		if (Std.isOfType(e, IceBlock)) return false;
 		
-		if (!(Std.is(e, Charlie) || Std.is(e, EntityPushable) || Std.is(e, Bullet))) return false;
+		if (!(Std.isOfType(e, Charlie) || Std.isOfType(e, EntityPushable) || Std.isOfType(e, Bullet))) return false;
 		if (isOutsideMap(x + direction.x, y + direction.y)) return false;
 		
 		var atTarget:Array<Entity> = room.getCollisionsAt(x + direction.x, y + direction.y);
@@ -34,6 +34,6 @@ class Isolator extends EntityPushable {
 	}
 	
 	override public function hasWeight():Bool {
-		return (!Std.is(this, SoftIsolator));
+		return (!Std.isOfType(this, SoftIsolator));
 	}
 }

@@ -101,7 +101,7 @@ class PlayScreen extends GameScreen {
 		
 		getWorld().update(deltaTime);
 		
-		if (!Std.is(this, EditorScreen)) {
+		if (!Std.isOfType(this, EditorScreen)) {
 			if (getWorld().lives <= 0) {
 				var d:DialogMessage = new DialogMessage(this, 0, 0, GetText.get("TXT_EPISODE_LOST"), false);
 				
@@ -374,7 +374,7 @@ class PlayScreen extends GameScreen {
 	}
 	
 	function askForName() {
-		if (Std.is(this, EditorScreen)) return;
+		if (Std.isOfType(this, EditorScreen)) return;
 		if (getWorld().playerName != null) {
 			showRoomName();
 			return;
@@ -411,7 +411,7 @@ class PlayScreen extends GameScreen {
 	}
 	
 	public function showRoomName(?force:Bool = false) {
-		if (Std.is(this, EditorScreen)) return;
+		if (Std.isOfType(this, EditorScreen)) return;
 		
 		if (!getWorld().roomVisited() || force) {
 			var roomName:String = getRoom().getName();

@@ -38,6 +38,10 @@ class LimeApplication extends Application {
 			case OPENGL, OPENGLES, WEBGL:
 				trace(window.context.type + " " + window.context.version);
 				Gfx.gl = window.context.webgl;
+				
+				var supported_extensions = Gfx.gl.getSupportedExtensions();
+				trace(supported_extensions);
+				
 				init();
 				
 			default:

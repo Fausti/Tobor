@@ -30,7 +30,7 @@ class ElectricDoor extends EntityStatic implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) {
 			if (type == 1) return true;
 		}
 		
@@ -38,7 +38,7 @@ class ElectricDoor extends EntityStatic implements IElectric {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			Sound.play(Sound.SND_OPEN_DOOR);
 		}
 		

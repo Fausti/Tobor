@@ -17,13 +17,13 @@ class Skull extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			for (xx in Std.int(x - 1) ... Std.int(x + 2)) {
 				for (yy in Std.int(y - 1) ... Std.int(y + 2)) {
 					spawnFence(xx, yy);
@@ -41,8 +41,8 @@ class Skull extends EntityStatic {
 		var onTarget = room.getEntitiesAt(fx, fy, null, EntityAI);
 		
 		for (e in onTarget) {
-			if (!Std.is(e, EntityFloor)) return;
-			if (Std.is(e, Water)) return;
+			if (!Std.isOfType(e, EntityFloor)) return;
+			if (Std.isOfType(e, Water)) return;
 			
 			if (!e.canEnter(fence, Direction.NONE)) return;
 		}

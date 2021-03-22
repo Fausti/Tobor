@@ -117,21 +117,21 @@ class Water extends EntityFloor implements IElectric {
 			}
 		}
 		
-		if (Std.is(e, Shark)) return true;
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Shark)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
 		if (type == 0 || type == 1) {
-			if (Std.is(e, EntityPushable)) return true;
+			if (Std.isOfType(e, EntityPushable)) return true;
 		}
 		
-		if (Std.is(e, Bullet)) return true;
+		if (Std.isOfType(e, Bullet)) return true;
 		
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
 		// Wasser reagiert nur auf Charlie wenn er sichtbar ist!
-		if (Std.is(e, Charlie) && e.visible) {
+		if (Std.isOfType(e, Charlie) && e.visible) {
 			if (getInventory().hasItem("OBJ_BUCKET#0")) {
 				
 				var count:Int = getInventory().getCount("OBJ_BUCKET#0");
@@ -182,9 +182,9 @@ class Water extends EntityFloor implements IElectric {
 			while (!canMove) {
 				canMove = c.move(Direction.getRandom(), Charlie.PLAYER_SPEED / 2);
 			}
-		} else if (Std.is(e, EntityPushable)) {
-			if (Std.is(e, Isolator)) {
-				if (Std.is(e, SoftIsolator)) {
+		} else if (Std.isOfType(e, EntityPushable)) {
+			if (Std.isOfType(e, Isolator)) {
+				if (Std.isOfType(e, SoftIsolator)) {
 					e.die();
 				} else {
 					if (type == 0) {
@@ -204,7 +204,7 @@ class Water extends EntityFloor implements IElectric {
 	}
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 				var c:Charlie = cast e;
 				c.changeSpeed(Charlie.PLAYER_SPEED / 2);
@@ -213,7 +213,7 @@ class Water extends EntityFloor implements IElectric {
 	}
 	
 	override public function onLeave(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (room.getInventory().hasItem("OBJ_FLIPPERS")) {
 				var c:Charlie = cast e;
 				c.changeSpeed(Charlie.PLAYER_SPEED / 2);

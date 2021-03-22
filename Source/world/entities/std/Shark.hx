@@ -79,8 +79,8 @@ class Shark extends EntityAI {
 					if (!e.canEnter(this, direction, speed)) return false;
 					
 					// auf Wasser prüfen!
-					if (Std.is(e, WaterDeadly)) numWater++;
-					else if (Std.is(e, Water)) {
+					if (Std.isOfType(e, WaterDeadly)) numWater++;
+					else if (Std.isOfType(e, Water)) {
 						if (e.type == 0 || e.type == 1) numWater++;
 					}
 				}
@@ -153,7 +153,7 @@ class Shark extends EntityAI {
 		var inWater:Bool = false;
 		
 		for (e in room.getEntitiesAt(getPlayer().x, getPlayer().y)) {
-			if (Std.is(e, Water)) inWater = true;
+			if (Std.isOfType(e, Water)) inWater = true;
 		}
 		
 		if (inWater) {
@@ -235,7 +235,7 @@ class Shark extends EntityAI {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) return true;
+		if (Std.isOfType(e, Charlie)) return true;
 		
 		return false;
 	}
@@ -246,7 +246,7 @@ class Shark extends EntityAI {
 		
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			e.die();
 			
 			if (getWorld().checkFirstUse("KILLED_BY_SHARK")) {

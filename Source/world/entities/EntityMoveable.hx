@@ -143,8 +143,8 @@ class EntityMoveable extends EntityDynamic {
 			
 			// Sortieren, damit Schleuder als erstes eingesammelt wird!
 			atTarget.sort(function (a, b) {
-				if (Std.is(a, Sling) && !Std.is(b, Sling)) return -1;
-				if (Std.is(b, Sling) && !Std.is(a, Sling)) return 1;
+				if (Std.isOfType(a, Sling) && !Std.isOfType(b, Sling)) return -1;
+				if (Std.isOfType(b, Sling) && !Std.isOfType(a, Sling)) return 1;
 				return 0;
 			});
 			
@@ -160,7 +160,7 @@ class EntityMoveable extends EntityDynamic {
 					} else {
 						e.onEnter(this, oldDirection);
 					}
-				} else if (Std.is(this, Charlie) && Std.is(e, Tunnel)) {
+				} else if (Std.isOfType(this, Charlie) && Std.isOfType(e, Tunnel)) {
 					// Sonderfall Tunnel
 					e.onEnter(this, oldDirection);
 				}

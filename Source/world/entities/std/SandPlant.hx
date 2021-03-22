@@ -25,9 +25,9 @@ class SandPlant extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
-		if (Std.is(e, EntityAI) && type > 0) return true;
+		if (Std.isOfType(e, EntityAI) && type > 0) return true;
 		
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (type == 0) {
 				if (getInventory().hasItem("OBJ_KNIFE")) return true;
 				return false;
@@ -40,7 +40,7 @@ class SandPlant extends EntityStatic {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (type == 0) {
 				if (getInventory().hasItem("OBJ_KNIFE")) {
 					die();
@@ -55,10 +55,10 @@ class SandPlant extends EntityStatic {
 	
 	override public function willEnter(e:Entity, direction:Vector2, ?speed:Float = 0) {
 		// Wenn Ring#2 im Inventar und Ringeffekte aktiv, keine Verlangsamung
-		if (getWorld().checkRingEffect(3) && Std.is(e, Charlie)) return;
+		if (getWorld().checkRingEffect(3) && Std.isOfType(e, Charlie)) return;
 		
 		// Wenn Nahrungstimer aktiv, keine Verlangsamung
-		if (getWorld().food > 0 && Std.is(e, Charlie)) return;
+		if (getWorld().food > 0 && Std.isOfType(e, Charlie)) return;
 		
 		var ee:EntityMoveable = cast e;
 		ee.changeSpeed((speed) / 2);

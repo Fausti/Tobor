@@ -34,11 +34,11 @@ class Munition extends EntityItem {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			onPickup();
-		} else if (Std.is(e, EntityAI)) {
+		} else if (Std.isOfType(e, EntityAI)) {
 			// NPCs schießen nicht!
-			if (Std.is(e, NPC)) return;
+			if (Std.isOfType(e, NPC)) return;
 			
 			var bullet:Bullet = new Bullet();
 			room.spawnEntity(x, y, bullet);

@@ -17,12 +17,12 @@ class Bank extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie) && getWorld().gold > 0) return true;
+		if (Std.isOfType(e, Charlie) && getWorld().gold > 0) return true;
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie) && getWorld().gold > 0) {
+		if (Std.isOfType(e, Charlie) && getWorld().gold > 0) {
 			var gold:Int = Std.int(Math.min(getWorld().gold, 40));
 			
 			getWorld().gold = getWorld().gold - gold;

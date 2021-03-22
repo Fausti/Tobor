@@ -13,7 +13,7 @@ class EntityCollectable extends EntityStatic {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, EntityPushable)) {
+		if (Std.isOfType(e, EntityPushable)) {
 			return false;
 		}
 		
@@ -23,7 +23,7 @@ class EntityCollectable extends EntityStatic {
 	override public function onEnter(e:Entity, direction:Vector2) {
 		if (!e.visible || !e.alive) return;
 		
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			onPickup();
 			die();
 		}

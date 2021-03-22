@@ -37,7 +37,7 @@ class ThermoPlate extends EntityFloor implements IElectric {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (type == 0) {
 				// "Hitzeschutz"
 				if (getWorld().checkRingEffect(0)) return true;
@@ -47,14 +47,14 @@ class ThermoPlate extends EntityFloor implements IElectric {
 			return true;
 		}
 		
-		if (Std.is(e, Robot) || Std.is(e, IceBlock)) return true;
-		if (Std.is(e, EntityCollectable)) return true;
+		if (Std.isOfType(e, Robot) || Std.isOfType(e, IceBlock)) return true;
+		if (Std.isOfType(e, EntityCollectable)) return true;
 		
 		return false;
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, IceBlock)) {
+		if (Std.isOfType(e, IceBlock)) {
 			if (type == 0) {
 				e.die();
 			}

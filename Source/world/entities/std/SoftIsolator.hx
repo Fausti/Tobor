@@ -14,16 +14,16 @@ class SoftIsolator extends Isolator {
 	}
 
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (!(Std.is(e, Charlie) || Std.is(e, EntityPushable) || Std.is(e, Bullet) || Std.is(e, EntityAI))) return false;
+		if (!(Std.isOfType(e, Charlie) || Std.isOfType(e, EntityPushable) || Std.isOfType(e, Bullet) || Std.isOfType(e, EntityAI))) return false;
 		if (isOutsideMap(x + direction.x, y + direction.y)) {
-			if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+			if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 		
-		if (Std.is(e, Charlie) || Std.is(e, EntityAI)) {
+		if (Std.isOfType(e, Charlie) || Std.isOfType(e, EntityAI)) {
 			return true;
 		}
 		

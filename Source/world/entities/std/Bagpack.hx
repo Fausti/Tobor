@@ -47,7 +47,7 @@ class Bagpack extends EntityItem implements IContainer {
 	}
 	
 	override public function onEnter(e:Entity, direction:Vector2) {
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			if (!getInventory().hasItem(getID())) {
 				onPickup();
 				die();

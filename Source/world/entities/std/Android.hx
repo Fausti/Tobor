@@ -122,12 +122,12 @@ class Android extends EntityAI implements IEnemy {
 	}
 	
 	override public function canEnter(e:Entity, direction:Vector2, ?speed:Float = 0):Bool {
-		if (Std.is(e, Android)) return false;
-		if (Std.is(e, Charlie)) return true;
-		if (Std.is(e, Doppelganger)) return true;
-		if (Std.is(e, ElectricFence)) return true;
+		if (Std.isOfType(e, Android)) return false;
+		if (Std.isOfType(e, Charlie)) return true;
+		if (Std.isOfType(e, Doppelganger)) return true;
+		if (Std.isOfType(e, ElectricFence)) return true;
 		
-		if (Std.is(e, Robot)) {
+		if (Std.isOfType(e, Robot)) {
 			if (Utils.chance(10)) return true;
 		}
 		
@@ -140,11 +140,11 @@ class Android extends EntityAI implements IEnemy {
 		
 		// if (isMoving()) return;
 		
-		if (Std.is(e, Robot)) {
+		if (Std.isOfType(e, Robot)) {
 			e.die();			
 		}
 		
-		if (Std.is(e, Charlie)) {
+		if (Std.isOfType(e, Charlie)) {
 			e.die();
 			
 			if (getWorld().checkFirstUse("KILLED_BY_ANDROID")) {

@@ -104,12 +104,12 @@ class GameScreen extends Screen {
 		var menu = new DialogMenu(this, atX, atY, [
 			[GetText.get("TXT_OFF"), "", function () {
 				Config.setColoredKeys(false);
-				if (Std.is(game.getScreen(), PlayScreen)) game.world.inventory.refresh(game.world.factory);
+				if (Std.isOfType(game.getScreen(), PlayScreen)) game.world.inventory.refresh(game.world.factory);
 				hideDialog();
 			}],
 			[GetText.get("TXT_ON"), "", function () {
 				Config.setColoredKeys(true);
-				if (Std.is(game.getScreen(), PlayScreen)) game.world.inventory.refresh(game.world.factory);
+				if (Std.isOfType(game.getScreen(), PlayScreen)) game.world.inventory.refresh(game.world.factory);
 				hideDialog();
 			}],
 		]);
