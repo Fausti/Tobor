@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="The Game of Tobor" package="de.netzweh.tobor" version="52" company="Netzweh" />
+	<meta title="The Game of Tobor" package="de.netzweh.tobor" version="100" company="Netzweh" />
 	<app main="Main" path="Export" file="Tobor" />
 	
 	<!-- <window width="960" height="522" orientation="landscape" resizable="true" fps="60" vsync="false" background="0xFFFFFF"/> -->
@@ -24,5 +24,5 @@
 	<icon path="icon-1024.png" size="1024" embed="true" />
 	<icon path="icon-16.png" size="16" embed="true" />
 	
-	<template path="Include/games/Prototyp Alpha.zip" rename="games/Prototyp Alpha.zip" />
+	<template path="Include/games/Prototyp Alpha NEU.zip" rename="games/Prototyp Alpha NEU.zip" />
 </project>

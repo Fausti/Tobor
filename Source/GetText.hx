@@ -114,7 +114,7 @@ class GetText {
 	}
 	
 	public static function loadForWorld(content:String) {
-		var lines:Array<String> = content.split("\n");
+		var lines:Array<String> = content.replaceAll("\r\n", "\n").split("\n");
 		
 		var id:String = null;
 		var text:String = null;
