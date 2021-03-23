@@ -24,5 +24,14 @@
 	<icon path="icon-1024.png" size="1024" embed="true" />
 	<icon path="icon-16.png" size="16" embed="true" />
 	
-	<template path="Include/games/Prototyp Alpha NEU.zip" rename="games/Prototyp Alpha NEU.zip" />
+	<template path="Include/games/Episode 1 - Roboterinvasion.zip" rename="games/Episode 1 - Roboterinvasion.zip" />
+	<template path="Include/games/Episode 2 - Die grosse Wueste.zip" rename="games/Episode 2 - Die grosse Wueste.zip" />
+	<template path="Include/games/Episode 3 - Das verborgene Tal.zip" rename="games/Episode 3 - Das verborgene Tal.zip" />
+	
+	<template path="Include/games/Insel der Ruinen.zip" rename="games/Insel der Ruinen.zip" />
+	<template path="Include/games/Reich der Ruinen.zip" rename="games/Reich der Ruinen.zip" />
+	
+	<template path="Include/games/Die Flucht.zip" rename="games/Die Flucht.zip" />
+	<template path="Include/games/Prototyp Alpha.zip" rename="games/Prototyp Alpha.zip" />
+	<template path="Include/games/Junior.zip" rename="games/Junior.zip" />
 </project>
