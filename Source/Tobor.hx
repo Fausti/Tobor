@@ -79,8 +79,11 @@ class Tobor extends LimeGame {
 		
 		__framebuffer_w = SCREEN_WIDTH;
 		__framebuffer_h = SCREEN_HEIGHT;
-		
-		Tobor.locale = cast(Locale.currentLocale, String).split("_")[0];
+
+		// MacOS Fix:
+
+		// Tobor.locale = cast(Locale.currentLocale, String).split("_")[0];
+		Tobor.locale = Locale.currentLocale.language;
 	}
 	
 	override public function init() {
