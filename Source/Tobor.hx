@@ -214,7 +214,7 @@ class Tobor extends LimeGame {
 			Gfx.gl.uniform2f(lightShader_u_Scale, 1, 1);
 			Gfx.gl.uniform2f(lightShader_u_OutputSize, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 			Gfx.gl.uniform2f(lightShader_u_InputSize, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
-			Gfx.gl.uniform1i(Shader.current.u_Texture0, Gfx._texture.textureUnit);
+			Gfx.gl.uniform1i(Shader.current.u_Texture0, 0);
 			
 			Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 			
@@ -246,12 +246,12 @@ class Tobor extends LimeGame {
 			// lightBuffer zeichnen
 			Gfx.setShader(shader);
 			getFrameBuffer().bind();
-			Gfx.gl.uniform1i(Shader.current.u_Texture0, lightBuffer.textureUnit);
+			Gfx.gl.uniform1i(Shader.current.u_Texture0, 0);
 			
 			Gfx.gl.blendFunc(Gfx.gl.DST_COLOR, Gfx.gl.ZERO);
 			lightBuffer.draw(Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 		
-			Gfx.gl.uniform1i(Shader.current.u_Texture0, Gfx._texture.textureUnit);
+			Gfx.gl.uniform1i(Shader.current.u_Texture0, 0);
 			// Gfx.setShader(shader);
 			Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
 			Gfx.setTexture(Gfx._texture);

@@ -93,7 +93,7 @@ class Gfx {
 		_texture = texture;
 		
 		texture.bind();
-		gl.uniform1i(_shader.u_Texture0, gl.TEXTURE0 + texture.textureUnit);
+		gl.uniform1i(_shader.u_Texture0, 0);
 	}
 	
 	public static inline function setShader(shader:Shader) {

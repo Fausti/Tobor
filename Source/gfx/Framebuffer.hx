@@ -34,8 +34,6 @@ class Framebuffer {
 	var vertices:Array<Float>;
 	
 	public function new(width:Int, height:Int, ?textureUnit:Int = 1) {
-		this.textureUnit = textureUnit;
-		
 		// gewünschte Größe merken
 		
 		this.width = width;
@@ -64,7 +62,6 @@ class Framebuffer {
 		handle = Gfx.gl.createFramebuffer();
 		
 		// color texture
-		Gfx.gl.activeTexture(Gfx.gl.TEXTURE0 + textureUnit);
 		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, texture);
 		
 		Gfx.gl.texParameteri (Gfx.gl.TEXTURE_2D, Gfx.gl.TEXTURE_WRAP_S, Gfx.gl.CLAMP_TO_EDGE);
@@ -157,10 +154,9 @@ class Framebuffer {
 	}
 	
 	public function draw(w:Int, h:Int, ?c:Color = null) {
-		Gfx.gl.activeTexture(Gfx.gl.TEXTURE0 + textureUnit);
 		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, texture);
 		
-		Gfx.gl.uniform1i(Shader.current.u_Texture0, textureUnit);
+		Gfx.gl.uniform1i(Shader.current.u_Texture0, 0);
 		Gfx.gl.uniformMatrix4fv(Shader.current.u_camMatrix, false, matrix);
 		
 		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, buffer);
