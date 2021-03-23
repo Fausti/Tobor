@@ -33,8 +33,12 @@ class Files {
 	public static function getFiles(dirName:String, ext:String, ?list:Array<Path> = null):Array<Path> {
 		if (list == null) list = [];
 		
+		// MacOS Fix:
+		dirName = FileSystem.absolutePath(dirName);
+
 		for (fileName in FileSystem.readDirectory(dirName)) {
-			var path = new Path(dirName + "/" + fileName);
+			// var path = new Path(dirName + "/" + fileName);
+			var path = new Path(Path.join([dirName, fileName]));
 			
 			if (ext != "*") {
 				if (path.ext == ext && !FileSystem.isDirectory(path.toString())) {
@@ -101,7 +105,10 @@ class Files {
 	
 	public static function loadFileAsBytes(fileName:String):Bytes {
 		var content:Bytes = null;
-			
+		
+		// MacOS Fix:
+		fileName = FileSystem.absolutePath(fileName);
+		
 		if (FileSystem.exists(fileName)) {
 			var fin = File.read(fileName, true);
 			content = fin.readAll();
@@ -116,12 +123,16 @@ class Files {
 	public static function loadFromFile(fileName:String):String {
 		var fin:FileInput;
 
+		// MacOS Fix:
+		fileName = FileSystem.absolutePath(fileName);
+		
 		try 
 		{
 			fin = File.read(fileName, false);
 		}
 		catch (err:Dynamic)
 		{
+			trace(fileName + " not found!");
 			return null;
 		}
 		
