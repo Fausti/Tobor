@@ -15,7 +15,7 @@ import haxe.zip.Reader;
  * @author Matthias Faust
  */
 class FileEpisode {
-	public var name:String = "";
+	private var name:String = "";
 	public var desc:String = "";
 	
 	var root:String = "";
@@ -327,6 +327,15 @@ class FileEpisode {
 	
 	public function getName(?l:Int = -1):String {
 		if (isEditor) return StringTools.rpad(GetText.get("TXT_NEW_EPISODE"), ".", l);
+		
+		// MacOS fix:
+		name = name.replaceAll("a\u0308", "ä");
+		name = name.replaceAll("o\u0308", "ö");
+		name = name.replaceAll("u\u0308", "ü");
+		
+		name = name.replaceAll("A\u0308", "Ä");
+		name = name.replaceAll("O\u0308", "Ö");
+		name = name.replaceAll("U\u0308", "Ü");
 		
 		if (l == -1) {
 			return name;
