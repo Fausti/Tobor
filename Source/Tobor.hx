@@ -272,7 +272,18 @@ class Tobor extends LimeGame {
 			title = "The Game of Tobor - Version B" + __application.meta.get('version');
 		}
 		
-		__application.window.title = title;
+		title = title.replaceAll("ä", "ae");
+		title = title.replaceAll("ö", "oe");
+		title = title.replaceAll("ü", "ue");
+		title = title.replaceAll("ß", "ss");
+		title = title.replaceAll("Ä", "Ae");
+		title = title.replaceAll("Ö", "Oe");
+		title = title.replaceAll("Ü", "Ue");
+		
+		var caption:StringBuf = new StringBuf();
+		caption.addSub(title, 0, title.length);
+		
+		__application.window.title = caption.toString();
 	}
 	
 	public function setScreen(newScreen:Screen) {
