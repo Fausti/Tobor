@@ -24,6 +24,8 @@
 	<icon path="icon-1024.png" size="1024" embed="true" />
 	<icon path="icon-16.png" size="16" embed="true" />
 	
+	<template path="Include/games/Der Gefaengnisausbruch.zip" rename="games/Der Gefaengnisausbruch.zip" />
+	
 	<template path="Include/games/Episode 1 - Roboterinvasion.zip" rename="games/Episode 1 - Roboterinvasion.zip" />
 	<template path="Include/games/Episode 2 - Die grosse Wueste.zip" rename="games/Episode 2 - Die grosse Wueste.zip" />
 	<template path="Include/games/Episode 3 - Das verborgene Tal.zip" rename="games/Episode 3 - Das verborgene Tal.zip" />
