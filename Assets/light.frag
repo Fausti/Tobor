@@ -1,3 +1,4 @@
+#version 120
 uniform sampler2D u_Texture0;
 		
 varying vec2 v_TexCoord;
