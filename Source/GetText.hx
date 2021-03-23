@@ -230,7 +230,7 @@ class TextDatabase {
 			if (dict.get(id) == txt) return;
 		}
 		
-		trace("adding: " + id + " -> " + txt);
+		// trace("adding: " + id + " -> " + txt);
 		dict.set(id, txt);
 	}
 	
