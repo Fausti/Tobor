@@ -316,9 +316,9 @@ class DialogInventory extends Dialog {
 			// trace(action);
 			if (action != null) {
 				if (actionIndex == index) {
-					Tobor.fontSmall.drawString(offsetX + Tobor.frameSmall.sizeX, offsetY, action, Color.YELLOW, Color.BLACK);
+					Tobor.fontSmall.drawShadowString(offsetX + Tobor.frameSmall.sizeX, offsetY, action, Color.YELLOW, Color.BLACK);
 				} else {
-					Tobor.fontSmall.drawString(offsetX + Tobor.frameSmall.sizeX, offsetY, action, Color.BLACK);
+					Tobor.fontSmall.drawShadowString(offsetX + Tobor.frameSmall.sizeX, offsetY, action, Color.BLACK);
 				}
 			}
 			

@@ -132,9 +132,9 @@ class DialogMessage extends Dialog {
 		var i = 0;
 		for (line in lines) {
 			if (smallFont) {
-				Tobor.fontSmall.drawString(x + 16 + offsetX, y + 12 + i * 12, line, Color.BLACK);
+				Tobor.fontSmall.drawShadowString(x + 16 + offsetX, y + 12 + i * 12, line, Color.BLACK);
 			} else {
-				Tobor.fontBig.drawString(x + 16 + offsetX, y + 12 + i * 12, line, Color.BLACK);
+				Tobor.fontBig.drawShadowString(x + 16 + offsetX, y + 12 + i * 12, line, Color.BLACK);
 			}
 			i++;
 		}

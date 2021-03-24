@@ -208,7 +208,7 @@ class PlayScreen extends GameScreen {
 		}
 		
 		Tobor.frameBig.drawBox(14 * Tobor.TILE_WIDTH, 12 * Tobor.TILE_HEIGHT, 12, 5);
-		Tobor.fontBig.drawString(15 * Tobor.TILE_WIDTH, 13 * Tobor.TILE_HEIGHT, "Lade...", Color.BLACK, Color.WHITE);
+		Tobor.fontBig.drawShadowString(15 * Tobor.TILE_WIDTH, 13 * Tobor.TILE_HEIGHT, "Lade...", Color.BLACK, Color.WHITE);
 		
 		for (x in 0 ... 10) {
 			if (x < Std.int(percent / 10)) {
@@ -244,6 +244,8 @@ class PlayScreen extends GameScreen {
 	}
 	
 	function renderStatusLine() {
+		var marginTop:Int = 1;
+
 		for (x in 0 ... 8) {
 			Gfx.drawSprite(x * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
 			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_ISOLATOR);
@@ -267,7 +269,7 @@ class PlayScreen extends GameScreen {
 		if (garlic > 0) {
 			if (garlic < 100) {
 				var strGarlic:String = StringTools.lpad(Std.string(garlic), "0", 2);
-				Tobor.fontSmall.drawString(200, 0, strGarlic, Color.BLACK);
+				Tobor.fontSmall.drawShadowString(200, marginTop, strGarlic, Color.BLACK);
 			} else {
 				Gfx.drawSprite(200, 0, SPR_GARLIC);
 			}
@@ -276,18 +278,18 @@ class PlayScreen extends GameScreen {
 		}
 		
 		var strStatus:String = TXT_STATUS_POINTS + " " + StringTools.lpad(Std.string(punkte), "0", 8) + " " + TXT_STATUS_LIVES + " " + Std.string(leben);
-		Tobor.fontSmall.drawString(224, 0, strStatus, Color.BLACK);
+		Tobor.fontSmall.drawShadowString(224, marginTop, strStatus, Color.BLACK);
 		
 		var gold = getWorld().gold; // game.world.player.gold;
 		if (gold > 0) {
 			Gfx.drawSprite(416, 0, SPR_GOLD);
-			Tobor.fontSmall.drawString(416 + 24, 0, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
+			Tobor.fontSmall.drawShadowString(416 + 24, marginTop, StringTools.lpad(Std.string(gold), " ", 3), Color.BLACK);
 		}
 		
 		var weight = getInventory().size; // game.world.player.inventory.length;
 		var strWeight:String = StringTools.lpad(Std.string(weight), " ", 2);
 		Gfx.drawSprite(471, 0, SPR_BAG);
-		Tobor.fontSmall.drawString(488, 0, strWeight, Color.BLACK);
+		Tobor.fontSmall.drawShadowString(488, marginTop, strWeight, Color.BLACK);
 	}
 	
 	function showMainMenu(atX:Int = 320, atY:Int = 166) {

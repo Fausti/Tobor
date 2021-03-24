@@ -25,7 +25,7 @@ class Highscore {
 			scoreString += ": " + StringTools.lpad(Std.string(s.points), " ", 7); 
 			scoreString += " (" + StringTools.lpad(Std.string(s.rooms), " ", 2) + ")";
 
-			Tobor.fontBig.drawString(x, y + index * 10, scoreString, Color.BLACK, Color.WHITE);
+			Tobor.fontBig.drawShadowString(x, y + index * 10, scoreString, Color.BLACK, Color.WHITE);
 			index++;
 		}
 	}

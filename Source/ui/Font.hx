@@ -61,7 +61,35 @@ class Font {
 	
 	// Schattenvariante
 	
-	inline function drawShadowChar(x:Float, y:Float, charIndex:Int, bg:Color = null) {
+	inline function drawShadowChar(x:Float, y:Float, charIndex:Int, fg:Color = null, bg:Color = null) {
+		if (fg == null) fg = Color.BLACK;
+		if (bg == null) bg = Color.NONE;
+		
+		// Hintergrund zeichnen
+		if (bg != Color.NONE) Gfx.drawSprite(x, y, tileBG, bg);
+
+		// Schattenalpha
+		var fgs = fg.copy();
+		fgs.a = 0.33;
+		
+		// Char zeichnen
+		Gfx.drawSprite(x + 1, y + 1, chars[charIndex], fgs);
+		Gfx.drawSprite(x, y, chars[charIndex], fg);
+	}
+	
+	public inline function drawShadowString(x:Float, y:Float, text:String, fg:Color = null, bg:Color = null) {
+		var posX:Float = x;
+		var posY:Float = y;
+		
+		for (i in 0 ... text.length) {
+			drawShadowChar(posX, posY, GLYPHS.indexOf(text.charAt(i)), fg, bg);
+			posX += glyphW;
+		}
+	}
+
+	// Schattenvariante ALT
+	
+	inline function drawShadowChar2(x:Float, y:Float, charIndex:Int, bg:Color = null) {
 		if (bg == null) bg = Color.NONE;
 		
 		// Hintergrund zeichnen
@@ -73,7 +101,7 @@ class Font {
 		Gfx.drawSprite(x + 1, y + 1, chars[charIndex], Color.DARK_GRAY);
 	}
 	
-	public inline function drawShadowString(x:Float, y:Float, text:String, bg:Color = null) {
+	public inline function drawShadowString2(x:Float, y:Float, text:String, bg:Color = null) {
 		var posX:Float = x;
 		var posY:Float = y;
 		

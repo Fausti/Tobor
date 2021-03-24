@@ -32,6 +32,11 @@ class Color {
 		this.b = b;
 		this.a = a;
 	}
+
+	public function copy():Color {
+		var c = new Color(r, g, b, a);
+		return c;
+	}
 	
 	public static var NONE = new Color(0, 0, 0, 0);
 	

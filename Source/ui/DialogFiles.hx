@@ -50,7 +50,7 @@ class DialogFiles extends DialogMessage {
 				fg = Color.YELLOW;
 			}
 			
-			Tobor.fontSmall.drawString(x + 16 + offsetX, y + 12 * ( lines.length + 2 ) + i * 12, files[begin + i].rpad(" ", (w - 2) * 2 - 3), fg, bg);
+			Tobor.fontSmall.drawShadowString(x + 16 + offsetX, y + 12 * ( lines.length + 2 ) + i * 12, files[begin + i].rpad(" ", (w - 2) * 2 - 3), fg, bg);
 		}
 		
 		if (files.length > countFiles) {
