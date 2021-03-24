@@ -1,5 +1,6 @@
 package screens;
 
+import haxe.ds.ArraySort;
 import ui.DialogMessage;
 import ui.DialogInput;
 import ui.Screen;
@@ -87,6 +88,13 @@ class EpisodesScreen extends Screen {
 			}
 		}
 		
+		// Episoden alphabetisch sortieren
+		ArraySort.sort(episoden, function(a, b):Int {
+			if (a.getName() > b.getName()) return 1;
+			else if (a.getName() < b.getName()) return -1;
+			return 0;
+		});
+
 		// Editor - Episode xD
 		var fe:FileEpisode = new FileEpisode(null);
 		episoden.push(fe);
