@@ -178,6 +178,10 @@ class GetText {
 		
 		return out;
 	}
+
+	public static function clearWorld() {
+		db_world.clear();
+	}
 }
 
 class TextDatabase {

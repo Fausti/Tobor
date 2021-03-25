@@ -47,6 +47,8 @@ class EpisodesScreen extends Screen {
 	public function new(game:Tobor) {
 		super(game);
 		
+		GetText.clearWorld();
+		
 		game.setTitle();
 		
 		Gfx.resetTexture();
