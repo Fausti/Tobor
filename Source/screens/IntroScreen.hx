@@ -44,16 +44,33 @@ class IntroScreen extends GameScreen {
 		Sound.stopMusicAll();
 		
 		if (game.world != null) {
+			var img1:Image = null;
+			
 			if (game.world.file.hasTexture()) {
 				var bytes = game.world.file.loadFileAsBytes("tileset.png");
 				var image:Image = Image.fromBytes(bytes);
 				
 				if (image != null) {
 					if (image.width == 256 && image.height == 512) {
-						Gfx.loadTextureFrom(image);
+						img1 = image;
 					}
 				}
 			}
+			
+			var img2:Image = null;
+			
+			if (game.world.file.hasTextureExtra()) {
+				var bytes = game.world.file.loadFileAsBytes("tileset-extra.png");
+				var image:Image = Image.fromBytes(bytes);
+				
+				if (image != null) {
+					if (image.width == 256 && image.height == 512) {
+						img2 = image;
+					}
+				}
+			}
+			
+			Gfx.loadTextureFrom(img1, img2);
 		}
 		
 		bgSprite = Gfx.getSprite(160, 12, Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT);

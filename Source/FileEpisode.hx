@@ -179,6 +179,24 @@ class FileEpisode {
 		return false;
 	}
 	
+	public function hasTextureExtra():Bool {
+		if (isZIP) {
+			var file:FileInput = File.read(root);
+			var unzip:Reader = new Reader(file);
+			var files = unzip.read();
+
+			for (e in files) {
+				if (e.fileName.endsWithIgnoreCase("tileset-extra.png")) return true;
+			}
+		} else {
+			var fileName = root + "/" + "tileset-extra.png";
+			
+			if (FileSystem.exists(fileName)) return true;
+		}
+		
+		return false;
+	}
+	
 	public function saveFile(fileName:String, content:String) {
 		// können nicht in ZIP Archive speichern
 		if (isZIP) return;

@@ -5,6 +5,7 @@ import lime.graphics.WebGL2RenderContext;
 import lime.graphics.WebGLRenderContext;
 import lime.math.Matrix4;
 import lime.math.Rectangle;
+import lime.math.Vector2;
 import lime.utils.Assets;
 
 import gfx.Color;
@@ -20,6 +21,9 @@ class Gfx {
 	
 	public static var _texture:Texture;
 	private static var _textureDefault:Texture;
+	
+	public static var _defaultImage1:Image;
+	public static var _defaultImage2:Image;
 	
 	private static var _matrix:Matrix4;
 	private static var _batch:Batch;
@@ -56,9 +60,24 @@ class Gfx {
 		if (_textureDefault != null) _texture = _textureDefault;
 	}
 	
-	public static function loadTexture(fileName:String) {
+	public static function loadTexture(fileName:String, ?extraName:String = null) {
 		var texture:Texture = new Texture();
-		texture.createFromImage(Assets.getImage(fileName));
+		
+		var img1:Image = Assets.getImage(fileName);
+		_defaultImage1 = img1;
+		
+		var img2:Image = null;
+		if (extraName != null) img2 = Assets.getImage(extraName);
+		
+		var img:Image = new Image(null, 0, 0, 256, 2 * 512);
+		img.copyPixels(img1, new Rectangle(0, 0, 256, 512), new Vector2(0, 0));
+		
+		if (img2 != null) {
+			img.copyPixels(img2, new Rectangle(0, 0, 256, 512), new Vector2(0, 512));
+			_defaultImage2 = img2;
+		}
+		
+		texture.createFromImage(img);
 		
 		if (texture != null) {
 			_texture = texture;
@@ -68,8 +87,21 @@ class Gfx {
 		return texture;
 	}
 	
-	public static function loadTextureFrom(image:Image) {
+	public static function loadTextureFrom(img1:Image, ?img2:Image = null) {
 		var texture:Texture = new Texture();
+		
+		var image:Image = new Image(null, 0, 0, 256, 2 * 512);
+		if (img1 != null) {
+			image.copyPixels(img1, new Rectangle(0, 0, 256, 512), new Vector2(0, 0));
+		} else {
+			image.copyPixels(Gfx._defaultImage1, new Rectangle(0, 0, 256, 512), new Vector2(0, 0));
+		}
+		
+		if (img2 != null) {
+			image.copyPixels(img2, new Rectangle(0, 0, 256, 512), new Vector2(0, 512));
+		} else {
+			image.copyPixels(Gfx._defaultImage2, new Rectangle(0, 0, 256, 512), new Vector2(0, 512));
+		}
 		
 		if (image != null) {
 			texture.createFromImage(image);

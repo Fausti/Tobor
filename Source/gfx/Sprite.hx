@@ -17,7 +17,7 @@ class Sprite {
 	
 	public function new(?texture:Texture = null, ?x:Int = 0, ?y:Int = 0, ?w:Int = 0, ?h:Int = 0, ?scale:Float = 1.0) {
 		var texWidth:Int = 256;
-		var texHeight:Int = 512;
+		var texHeight:Int = 512 * 2;
 		
 		if (texture != null) {
 			texWidth = texture.width;

@@ -123,6 +123,7 @@ class Tobor extends LimeGame {
 		
 		Gfx.setup(SCREEN_WIDTH, SCREEN_HEIGHT);
 		
+		/*
 		var bytes = Files.loadFileAsBytes("tileset.png");
 		
 		if (bytes != null) {
@@ -134,8 +135,9 @@ class Tobor extends LimeGame {
 				}
 			}
 		}
+		*/
 		
-		if (texture == null) texture = Gfx.loadTexture("assets/tileset.png");
+		if (texture == null) texture = Gfx.loadTexture("assets/tileset.png", "assets/tileset-extra.png");
 		
 		shader = Shader.createDefaultShader();
 		
@@ -156,6 +158,10 @@ class Tobor extends LimeGame {
 		
 		SPR_LIGHT_OVERLAY = Gfx.getSprite(176, 456, 64, 48);
 		lightColor = new Color(0, 0, 0, 1);
+	}
+	
+	public function loadTilesets(fileName1:String, fileName2:String):Texture {
+		return null;
 	}
 	
 	function collectGarbage() {
