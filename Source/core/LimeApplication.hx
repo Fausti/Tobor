@@ -1,6 +1,5 @@
 package core;
 import lime.graphics.RenderContext;
-import lime.graphics.WebGLRenderContext;
 import lime.math.Vector2;
 import lime.system.Display;
 import lime.system.System;
@@ -8,14 +7,12 @@ import lime.ui.GamepadAxis;
 import lime.ui.GamepadButton;
 import lime.ui.MouseWheelMode;
 import lime.ui.Touch;
-import lime.utils.Log;
 
 import lime.app.Application;
 import lime.ui.Gamepad;
 
 import lime.ui.KeyModifier;
 import lime.ui.KeyCode;
-import lime.ui.Window;
 
 /**
  * ...

@@ -71,6 +71,8 @@ class Tobor extends LimeGame {
 	var SPR_LIGHT_OVERLAY:Sprite;
 	public var lightColor:Color;
 	var listLights:Array<Rectangle>;
+
+	var SPR_NONE:Sprite;
 	
 	public function new() {
 		super();
@@ -158,6 +160,8 @@ class Tobor extends LimeGame {
 		
 		SPR_LIGHT_OVERLAY = Gfx.getSprite(176, 456, 64, 48);
 		lightColor = new Color(0, 0, 0, 1);
+
+		SPR_NONE = Gfx.getSprite(0, 0);
 	}
 	
 	public function loadTilesets(fileName1:String, fileName2:String):Texture {
@@ -203,11 +207,14 @@ class Tobor extends LimeGame {
 		Gfx.setShader(shader);
 		Gfx.setTexture(Gfx._texture); // texture
 		
-		Gfx.clear(Color.WHITE);
 		Gfx.setViewport(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT);
-		
+		Gfx.clear(Color.BLACK);
+
 		// Spielfeld zeichnen
 		Gfx.begin(batch);
+			// Weißen Hintergrund zeichnen
+			Gfx.drawTexture(0, 0, Tobor.SCREEN_WIDTH, Tobor.SCREEN_HEIGHT, SPR_NONE.uv, Color.WHITE);
+
 		if (this.screen != null) {
 			this.screen.render();
 		}
