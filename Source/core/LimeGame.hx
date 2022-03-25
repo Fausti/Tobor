@@ -126,14 +126,7 @@ class LimeGame {
 		Gfx.gl.clearColor(1, 1, 1, 1.0);
 		Gfx.gl.clear(Gfx.gl.COLOR_BUFFER_BIT | Gfx.gl.DEPTH_BUFFER_BIT);
 		
-		if (Config.shader == -1) {
-			__defaultShader.use();
-		} else {
-			__upscaleShader[Config.shader].use();
-			Gfx.gl.uniform2f(__u_Scale[Config.shader], __scaleX, __scaleY);
-			Gfx.gl.uniform2f(__u_OutputSize[Config.shader], __application.window.width, __application.window.height);
-			Gfx.gl.uniform2f(__u_InputSize[Config.shader], __framebuffer_w, __framebuffer_h);
-		}
+		__defaultShader.use();
 		
 		__frameBuffer.draw(__application.window.width, __application.window.height);
 	}

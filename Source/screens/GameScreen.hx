@@ -197,9 +197,11 @@ class GameScreen extends Screen {
 			[GetText.get("TXT_MENU_SPEED"), ">>", function () {
 				showSpeedMenu(atX, atY);
 			}],
+			/*
 			[GetText.get("TXT_MENU_SHADER"), ">>", function () {
 				showShaderMenu(atX, atY);
 			}],
+			*/
 			[GetText.get("TXT_MENU_LIGHT"), ">>", function () {
 				showLightMenu(atX, atY);
 			}],
