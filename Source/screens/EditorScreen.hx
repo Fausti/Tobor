@@ -560,8 +560,8 @@ class EditorScreen extends PlayScreen {
 			Gfx.drawSprite((39 - x) * Tobor.TILE_WIDTH, 0, SPR_EFENCE);
 			
 			// aktives Objekt
-			Tobor.fontBig.drawShadowString(9 * 16 + 8, 1, "[", Color.BLACK);
-			Tobor.fontBig.drawShadowString(11 * 16 - 4, 1, "]", Color.BLACK);
+			Tobor.fontBig.drawString(9 * 16 + 8, 0, "[", Color.BLACK);
+			Tobor.fontBig.drawString(11 * 16 - 4, 0, "]", Color.BLACK);
 			
 			Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, Config.colorKeys?game.world.factory.get(currentTile).spr:game.world.factory.get(currentTile).sprBlack);
 			// Gfx.drawSprite(10 * Tobor.TILE_WIDTH, 0, SPR_SELECTOR);
@@ -594,13 +594,13 @@ class EditorScreen extends PlayScreen {
 					+ Std.string(game.world.room.position.y) 
 					+ Std.string(game.world.room.position.z);
 				
-				Tobor.fontSmall.drawShadowString(224 + 64, 1, roomCoords, Color.BLACK);
+				Tobor.fontSmall.drawString(224 + 64, 0, roomCoords, Color.BLACK);
 			}
 			
 			// Cursor Koordinaten
 			if (cursorY > 0) {
 				var strCoords:String = "" + StringTools.lpad(Std.string(cursorX), "0", 2) + ", " + StringTools.lpad(Std.string(cursorY - 1), "0", 2);
-				Tobor.fontSmall.drawShadowString(48 + 16, 1, strCoords, Color.BLACK, Color.WHITE);
+				Tobor.fontSmall.drawString(48 + 16, 1, strCoords, Color.BLACK, Color.WHITE);
 			}
 		
 			renderObjectCount();
@@ -617,7 +617,7 @@ class EditorScreen extends PlayScreen {
 		countEntities = game.world.room.length;
 		
 		var strStatus:String = GetText.get("TXT_EDITOR_OBJECTS") + ": " + StringTools.lpad(Std.string(countEntities), "0", 4);
-		Tobor.fontSmall.drawShadowString(524, 1, strStatus, Color.BLACK, Color.WHITE);
+		Tobor.fontSmall.drawString(524, 1, strStatus, Color.BLACK, Color.WHITE);
 	}
 	
 	override function showMainMenu(atX:Int = 320, atY:Int = 166) {

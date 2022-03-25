@@ -191,9 +191,9 @@ class DialogRooms extends Dialog {
 		
 		var room:Room = world.rooms.find(roomX, roomY, roomZ);
 		if (room == null) {
-			Tobor.fontSmall.drawShadowString(9 * Tobor.TILE_WIDTH, 1, GetText.get("TXT_EDITOR_NO_ROOM"), Color.BLACK);
+			Tobor.fontSmall.drawString(9 * Tobor.TILE_WIDTH, 0, GetText.get("TXT_EDITOR_NO_ROOM"), Color.BLACK);
 		} else {
-			Tobor.fontSmall.drawShadowString(9 * Tobor.TILE_WIDTH, 1, room.getName(), Color.BLACK);
+			Tobor.fontSmall.drawString(9 * Tobor.TILE_WIDTH, 0, room.getName(), Color.BLACK);
 		}
 		
 		// Raumauswahl
@@ -238,7 +238,7 @@ class DialogRooms extends Dialog {
 		Gfx.drawSprite(offsetX + 0 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_SELECTOR_ROOM_SW, active?Color.GREEN:Color.WHITE);
 		Gfx.drawSprite(offsetX + 1 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_SELECTOR_ROOM_SE, active?Color.GREEN:Color.WHITE);
 		
-		Tobor.fontSmall.drawShadowString(offsetX + 4, offsetY + 7, rx + "" + ry + "" + roomZ, Color.BLACK, Color.NONE);
+		Tobor.fontSmall.drawString(offsetX + 4, offsetY + 7, rx + "" + ry + "" + roomZ, Color.BLACK, Color.NONE);
 	}
 	
 	function drawEmpty(offsetX:Int, offsetY:Int, rx:Int, ry:Int) {
@@ -250,6 +250,6 @@ class DialogRooms extends Dialog {
 		Gfx.drawSprite(offsetX + 0 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_NONE, Color.GREEN);
 		Gfx.drawSprite(offsetX + 1 * Tobor.TILE_WIDTH, offsetY + 1 * Tobor.TILE_HEIGHT, SPR_NONE, Color.GREEN);
 		
-		Tobor.fontSmall.drawShadowString(offsetX + 4, offsetY + 7, rx + "" + ry + "" + roomZ, Color.DARK_GRAY, Color.NONE);
+		Tobor.fontSmall.drawString(offsetX + 4, offsetY + 7, rx + "" + ry + "" + roomZ, Color.DARK_GRAY, Color.NONE);
 	}
 }

@@ -161,8 +161,8 @@ class IntroScreen extends GameScreen {
 	}
 	
 	override public function renderUI() {
-		Tobor.fontBig.drawShadowString(centerX, 36, episodeName, Color.BLACK, Color.WHITE);
-		if (episodeDesc != "  ") Tobor.fontSmall.drawShadowString(centerXDesc, 60, episodeDesc, Color.BLACK, Color.WHITE);
+		Tobor.fontBig.drawString(centerX, 36, episodeName, Color.BLACK, Color.WHITE);
+		if (episodeDesc != "  ") Tobor.fontSmall.drawString(centerXDesc, 60, episodeDesc, Color.BLACK, Color.WHITE);
 		
 		Gfx.drawTexture(32, 60 + 24, 592 - 32, 264 - 60 - 24, SPR_NONE.uv, Color.WHITE);
 		
@@ -187,7 +187,7 @@ class IntroScreen extends GameScreen {
 		}
 		
 		var text:String = scrollingText.substr(scrollingPosition, 38 * 2).rpad(" ", 38 * 2);
-		Tobor.fontSmall.drawShadowString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
+		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
 		
 		super.renderUI();
 	}

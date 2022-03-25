@@ -31,8 +31,8 @@ class DialogInput extends DialogMessage {
 	override public function render() {
 		super.render();
 		
-		Tobor.fontBig.drawShadowString(this.x + offsetX + 16, this.y + (12 * (this.h - 2)), chars, Color.BLACK, Color.NEON_GREEN);
-		Tobor.fontBig.drawShadowString(this.x + offsetX + 16 + index * 16, this.y + (12 * (this.h - 2)), chars.charAt(index), Color.WHITE, Color.BLACK);
+		Tobor.fontBig.drawString(this.x + offsetX + 16, this.y + (12 * (this.h - 2)), chars, Color.BLACK, Color.NEON_GREEN);
+		Tobor.fontBig.drawString(this.x + offsetX + 16 + index * 16, this.y + (12 * (this.h - 2)), chars.charAt(index), Color.WHITE, Color.BLACK);
 	}
 	
 	override public function update(deltaTime:Float) {

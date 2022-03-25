@@ -56,9 +56,9 @@ class Menu {
 		
 		for (i in 0 ... items.length) {
 			if (i == selected) {
-				Tobor.fontSmall.drawShadowString(x, y + i * 10, items[i].text, Color.YELLOW, Color.BLACK);
+				Tobor.fontSmall.drawString(x, y + i * 10, items[i].text, Color.YELLOW, Color.BLACK);
 			} else {
-				Tobor.fontSmall.drawShadowString(x, y + i * 10, items[i].text, Color.BLACK, Color.WHITE);
+				Tobor.fontSmall.drawString(x, y + i * 10, items[i].text, Color.BLACK, Color.WHITE);
 			}
 		}
 	}

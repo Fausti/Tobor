@@ -171,7 +171,7 @@ class DialogTiles extends Dialog {
 		
 		Gfx.drawTexture(16, 28 * 12, 40 * Tobor.TILE_WIDTH, Tobor.TILE_HEIGHT, SPR_NONE.uv, Color.GREEN);
 		
-		Tobor.fontSmall.drawShadowString(0, 28 * 12 + 1, "    " + c.editorName, Color.BLACK);
+		Tobor.fontSmall.drawString(0, 28 * 12 + 1, "    " + c.editorName, Color.BLACK);
 		Gfx.drawSprite(0, 28 * 12, c.spr);
 	}
 	

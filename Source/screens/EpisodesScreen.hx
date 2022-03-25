@@ -289,7 +289,7 @@ class EpisodesScreen extends Screen {
 		
 		Gfx.drawTexture(boxX * Tobor.TILE_WIDTH, boxY * Tobor.TILE_HEIGHT, boxW * Tobor.TILE_WIDTH, boxH * Tobor.TILE_HEIGHT, SPR_NONE.uv);
 		
-		Tobor.fontBig.drawShadowString(8 + (boxX + 1) * Tobor.TILE_WIDTH, 4 + (boxY + 1) * Tobor.TILE_HEIGHT, "The game of", Color.BLACK, Color.WHITE);
+		Tobor.fontBig.drawString(8 + (boxX + 1) * Tobor.TILE_WIDTH, 4 + (boxY + 1) * Tobor.TILE_HEIGHT, "The game of", Color.BLACK);
 		
 		Gfx.drawSprite(16 + (boxX + 1) * Tobor.TILE_WIDTH, 6 + (boxY + 2) * Tobor.TILE_HEIGHT, SPR_T);
 		Gfx.drawSprite(16 + (boxX + 3) * Tobor.TILE_WIDTH, 6 + (boxY + 2) * Tobor.TILE_HEIGHT, SPR_O);
@@ -327,11 +327,11 @@ class EpisodesScreen extends Screen {
 				if ((i + begin) == index) {
 					if (i == mouseOver) {
 						Gfx.drawTexture(x + 16, y + 12, 33 * 16, 12 * 2, SPR_NONE.uv, Color.NEON_GREEN);
-						Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.BLACK, Color.NEON_GREEN);
+						Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.NEON_GREEN);
 						Tobor.fontSmall.drawString(x + 16, y + 12 + 12, ep.getDesc(66), Color.BLACK, Color.NEON_GREEN);
 					} else {
 						Gfx.drawTexture(x + 16, y + 12, 33 * 16, 12 * 2, SPR_NONE.uv, Color.ORANGE);
-						Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.BLACK, Color.ORANGE);
+						Tobor.fontBig.drawShadowString(x + 16, y + 12, ep.getName(33), Color.ORANGE);
 						Tobor.fontSmall.drawString(x + 16, y + 12 + 12, ep.getDesc(66), Color.BLACK, Color.ORANGE);
 					}
 
@@ -367,7 +367,7 @@ class EpisodesScreen extends Screen {
 		}
 		
 		var text:String = scrollingText.substr(scrollingPosition, 38 * 2).rpad(" ", 38 * 2);
-		Tobor.fontSmall.drawShadowString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
+		Tobor.fontSmall.drawString(16, 27 * Tobor.TILE_HEIGHT, text, Color.DARK_RED, Color.ORANGE);
 		
 		super.renderUI();
 	}
