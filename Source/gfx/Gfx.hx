@@ -25,8 +25,7 @@ class Gfx {
 	public static var _defaultImage1:Image;
 	public static var _defaultImage2:Image;
 	
-	private static var _matrix:Matrix4 = new Matrix4();
-	public static var _matrix_framebuffer:Matrix4 = new Matrix4();
+	private static var _matrix:Matrix4;
 	private static var _batch:Batch;
 	private static var _color:Color = Color.WHITE;
 	
@@ -39,8 +38,8 @@ class Gfx {
 		_width = w;
 		_height = h;
 		
+		_matrix = new Matrix4();
 		_matrix.createOrtho(0, w, h, 0, -1000, 1000);
-		_matrix_framebuffer.createOrtho(0, 1, 0, 1, -1000, 1000);
 	}
 	
 	public static inline function begin(batch:Batch) {
@@ -232,13 +231,5 @@ class Gfx {
 		}
 		
 		return list;
-	}
-
-	public static inline function screenWidth():Int {
-		return _width;
-	}
-
-	public static inline function screenHeight():Int {
-		return _height;
 	}
 }

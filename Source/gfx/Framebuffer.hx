@@ -21,6 +21,8 @@ class Framebuffer {
 	public var scaleW:Float;
 	public var scaleH:Float;
 	
+	public var matrix:Matrix4;
+	
 	public var texture:GLTexture;
 	public var handle:GLFramebuffer;
 	public var buffer:GLBuffer;
@@ -133,6 +135,10 @@ class Framebuffer {
 		// Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, vertices.length * Float32Array.BYTES_PER_ELEMENT, new Float32Array(vertices), Gfx.gl.STATIC_DRAW);
 		Gfx.gl.bufferData(Gfx.gl.ARRAY_BUFFER, new Float32Array(vertices), Gfx.gl.STATIC_DRAW);
 		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, null);
+		
+		matrix = new Matrix4();
+		matrix.createOrtho(0, 1, 0, 1, -1000, 1000);
+		// matrix = Matrix4.createOrtho(0, this.width, 0, this.height, -1000, 1000);
 	}
 	
 	public function bind() {
@@ -151,7 +157,7 @@ class Framebuffer {
 		Gfx.gl.bindTexture(Gfx.gl.TEXTURE_2D, texture);
 		
 		Gfx.gl.uniform1i(Shader.current.u_Texture0, 0);
-		Gfx.gl.uniformMatrix4fv(Shader.current.u_camMatrix, false, Gfx._matrix_framebuffer);
+		Gfx.gl.uniformMatrix4fv(Shader.current.u_camMatrix, false, matrix);
 		
 		Gfx.gl.bindBuffer(Gfx.gl.ARRAY_BUFFER, buffer);
 		

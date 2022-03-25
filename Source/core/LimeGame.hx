@@ -1,6 +1,5 @@
 package core;
 
-import lime.math.Matrix4;
 import lime.graphics.WebGLRenderContext;
 import lime.utils.Assets;
 import lime.graphics.Image;
@@ -34,8 +33,6 @@ class LimeGame {
 	
 	private var __scaleX:Float = 1;
 	private var __scaleY:Float = 1;
-	private var __offsetX:Float = 0;
-	private var __offsetY:Float = 0;
 	
 	public function new() {
 		
@@ -126,7 +123,7 @@ class LimeGame {
 		__frameBuffer.unbind();
 
 		Gfx.gl.viewport(0, 0, __application.window.width, __application.window.height);
-		Gfx.gl.clearColor(0, 0, 0, 1.0);
+		Gfx.gl.clearColor(1, 1, 1, 1.0);
 		Gfx.gl.clear(Gfx.gl.COLOR_BUFFER_BIT | Gfx.gl.DEPTH_BUFFER_BIT);
 		
 		if (Config.shader == -1) {
@@ -145,33 +142,6 @@ class LimeGame {
 	private function __resize(width:Int, height:Int) {
 		__scaleX = width / __framebuffer_w;
 		__scaleY = height / __framebuffer_h;
-
-		var screenW = Gfx.screenWidth();
-		var screenH = Gfx.screenHeight();
-
-		if (screenW > 0 && screenH > 0) {
-			var ratioW:Float = width / screenW;
-			var ratioH:Float = height / screenH;
-
-			var scale:Int = Math.floor(Math.min(ratioW, ratioH));
-			if (scale < 1) scale = 1;
-
-			var fitWidth:Int = screenW * scale;
-			var fitHeight:Int = screenH * scale;
-
-			var restW:Float = width - fitWidth;
-			var restH:Float = height - fitHeight;
-
-			var offsetRestW:Float = (restW / fitWidth) / 2;
-			var offsetRestH:Float = (restH / fitHeight) / 2;
-
-			Gfx._matrix_framebuffer.createOrtho(-offsetRestW, 1 + offsetRestW, -offsetRestH, 1 + offsetRestH, -1000, 1000);
-
-			__offsetX = offsetRestW * screenW;
-			__offsetY = offsetRestH * screenH;
-			__scaleX = fitWidth / screenW;
-			__scaleY = fitHeight / screenH;
-		}
 		
 		resize(width, height);
 	}
@@ -207,9 +177,8 @@ class LimeGame {
 	}
 	
 	public function onMouseMove(x:Float, y:Float) {
-		// Mauskoordinaten zu Spielfensterkoordinaten umrechnen
-		if (x >= 0) Input.mouseX = Std.int((x / __scaleX) - __offsetX); else Input.mouseX = 0;
-		if (y >= 0) Input.mouseY = Std.int((y / __scaleY) - __offsetY); else Input.mouseY = 0;
+		if (x >= 0) Input.mouseX = Std.int(x / __scaleX); else Input.mouseX = 0;
+		if (y >= 0) Input.mouseY = Std.int(y / __scaleY); else Input.mouseY = 0;
 	}
 	
 	public function onMouseButtonDown(x:Float, y:Float, button:Int) {
